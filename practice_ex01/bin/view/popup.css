@@ -1,0 +1,15 @@
+.table-column {
+	-fx-font-size: 14;
+}
+
+.combo-box {
+	-fx-font-size: 14;
+}
+
+.table-cell {
+  -fx-alignment: CENTER;
+}
+
+#tcName {
+	-fx-alignment: CENTER-LEFT;
+}
