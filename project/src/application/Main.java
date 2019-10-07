@@ -16,16 +16,12 @@ import javafx.fxml.JavaFXBuilderFactory;
 
 public class Main extends Application {
 	private NhanVienDTO nhanVien;
-	private Parent root;
 	private Stage window = new Stage();
-	public Parent createScene() throws Exception {
-		gotoLogin();
-		return root;
-	}
 	
 	public NhanVienDTO getNhanVien() {
 		return nhanVien;
 	}
+	
 	public void setNhanVien(NhanVienDTO nhanVien) {
 		this.nhanVien = nhanVien;
 		
@@ -33,7 +29,6 @@ public class Main extends Application {
 			gotoMainApp();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			System.out.println("Lỗi phân quyền");
 			e.printStackTrace();
 		}
 	}
@@ -43,20 +38,21 @@ public class Main extends Application {
                 (LoginController)replaceSceneContent("loginForm.fxml");
             login.setApp(this);
     }
+	
 	private void gotoMainApp() throws Exception {
 		MainController mainapp = (MainController)replaceSceneContent("main.fxml");
 		mainapp.setApp(this);
 	}
+	
 	public void logOut() throws Exception {
 		gotoLogin();
-		System.out.println("Logout!");
 	}
 	
 	private Initializable replaceSceneContent(String fxml) throws Exception {
 	        FXMLLoader loader = new FXMLLoader(getClass().getResource(fxml));
 	        loader.setLocation(Main.class.getResource(fxml));
 	        loader.setBuilderFactory(new JavaFXBuilderFactory());
-	        root = (Parent) loader.load();
+	        Parent root = (Parent) loader.load();
 	        switch(fxml) {
 	        case "main.fxml":
 	        	root.getStylesheets().add(Main.class.getResource("main.css").toExternalForm());
