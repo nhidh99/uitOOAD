@@ -10,4 +10,11 @@ public class LoaiDichVuBUS {
 	public static List<LoaiDichVuDTO> getDSLoaiDichVu() throws SQLException {
 		return LoaiDichVuDAO.getDSLoaiDichVu();
 	}
+
+	public static boolean deleteLoaiDichVu(Integer maLoaiDichVu) throws SQLException {
+		if (LoaiDichVuDAO.checkLoaiDichVu(maLoaiDichVu)) {
+			return false;
+		}
+		return LoaiDichVuDAO.deleteLoaiDichVu(maLoaiDichVu);
+	}
 }

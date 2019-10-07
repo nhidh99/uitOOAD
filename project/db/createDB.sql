@@ -33,7 +33,7 @@ CREATE TABLE `nhanvien` (
   `SoDienThoai` varchar(45) NOT NULL,
   `Email` varchar(45) NOT NULL,
   `DiaChi` varchar(45) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `QuyenHan` varchar(45) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `ChucVu` varchar(45) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   PRIMARY KEY (`MaNhanVien`),
   UNIQUE KEY `TenTaiKhoan_UNIQUE` (`TenTaiKhoan`)
 ) ENGINE=InnoDB AUTO_INCREMENT=12001 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -95,8 +95,8 @@ CREATE TABLE `phieuthue` (
   `CMND` varchar(45) NOT NULL,
   `SoDienThoai` varchar(45) NOT NULL,
   `Email` varchar(45) NOT NULL,
-  `ThanhToanCoc` tinyint(1) NOT NULL,
-  `GhiChu` varchar(45) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `ThanhToanCoc` tinyint(1) NOT NULL DEFAULT '0',
+  `GhiChu` varchar(45) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
   PRIMARY KEY (`MaPhieuThue`),
   KEY `fk_pt_nv_idx` (`MaNhanVien`),
   CONSTRAINT `fk_pt_nv` FOREIGN KEY (`MaNhanVien`) REFERENCES `nhanvien` (`MaNhanVien`)
@@ -105,7 +105,7 @@ CREATE TABLE `phieuthue` (
 CREATE TABLE `loaidichvu` (
   `MaLoaiDichVu` int(11) NOT NULL AUTO_INCREMENT,
   `TenLoaiDichVu` varchar(45) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `KhaDung` tinyint(1) NOT NULL DEFAULT 1,
+  `KhaDung` tinyint(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`MaLoaiDichVu`)
 ) ENGINE=InnoDB AUTO_INCREMENT=17001 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
@@ -118,18 +118,19 @@ CREATE TABLE `nhacungcap` (
 
 CREATE TABLE `dichvu` (
   `MaDichVu` int(11) NOT NULL AUTO_INCREMENT,
+  `TenDichVu` varchar(45) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `DonViTinh` varchar(45) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `SoLuongTon` int(10) unsigned NOT NULL,
   `DonGia` decimal(15,0) NOT NULL,
   `MaLoaiDichVu` int(11) NOT NULL,
   `MaNhaCungCap` int(11) DEFAULT NULL,
-  `KhaDung` tinyint(1) NOT NULL DEFAULT 1,
+  `KhaDung` tinyint(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`MaDichVu`),
   KEY `fk_dv_ldv_idx` (`MaLoaiDichVu`),
   KEY `fk_dv_ncc_idx` (`MaNhaCungCap`),
   CONSTRAINT `fk_dv_ldv` FOREIGN KEY (`MaLoaiDichVu`) REFERENCES `loaidichvu` (`MaLoaiDichVu`),
-  CONSTRAINT `fk_dv_ncc` FOREIGN KEY (`MaNhaCungCap`) REFERENCES `nhacungcap` (`MaNhaCungCap`)
-) ENGINE=InnoDB AUTO_INCREMENT=19001 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  CONSTRAINT `fk_dv_ncc` FOREIGN KEY (`MaNhaCungCap`) REFERENCES `nhacungcap` (`MaNhaCungCap`) ON DELETE SET NULL
+) ENGINE=InnoDB AUTO_INCREMENT=19002 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 CREATE TABLE `ptck_phong` (
   `MaPTCKPhong` int(11) NOT NULL AUTO_INCREMENT,
@@ -169,4 +170,3 @@ CREATE TABLE `thamso` (
   `PhuThuTraPhongTre` float unsigned NOT NULL,
   `SoNgayTraCoc` int(10) unsigned NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
