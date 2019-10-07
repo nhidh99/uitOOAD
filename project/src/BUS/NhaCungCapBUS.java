@@ -10,4 +10,11 @@ public class NhaCungCapBUS {
 	public static List<NhaCungCapDTO> getDSNhaCungCap() throws SQLException {
 		return NhaCungCapDAO.getDSNhaCungCap();
 	}
+	
+	public static boolean deleteNhaCungCap(Integer maNhaCungCap) throws SQLException {
+//		if(NhaCungCapDAO.checkNhaCungCap(maNhaCungCap)) {
+//			return false;
+//		}
+		return NhaCungCapDAO.deleteNhaCungCap(maNhaCungCap);
+	}
 }
