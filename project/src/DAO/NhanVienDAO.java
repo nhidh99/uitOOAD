@@ -4,6 +4,8 @@ import java.sql.*;
 import java.util.*;
 import DTO.NhanVienDTO;
 import helper.DBHelper;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 
 public class NhanVienDAO {
 	public static List<NhanVienDTO> getDSNhanVien() throws SQLException {
@@ -25,6 +27,25 @@ public class NhanVienDAO {
 		}
 		conn.close();
 		return output;
+	}
+	
+	public static boolean deleteNhanVien(NhanVienDTO nhanVien) throws SQLException {
+		if(nhanVien.getChucVu().equals("Quản lí")) {
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Lỗi");
+			alert.setHeaderText("Không thể xóa người cùng chức vụ!");
+			alert.showAndWait();	
+			return false;
+		}
+		else
+		{
+			Connection conn = DBHelper.getConnection();
+			Statement statement = conn.createStatement();
+			String query = "Delete from NhanVien where MaNhanVien = '" + nhanVien.getMaNhanVien().toString() + "'";
+			int result = statement.executeUpdate(query);
+			conn.close();
+			return result > 0;
+		}
 	}
 	
 	public static NhanVienDTO DangNhap(String taikhoan, String matkhau) throws SQLException {

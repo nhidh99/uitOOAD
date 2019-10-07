@@ -14,20 +14,14 @@ import application.Main;
 
 public class LoginController extends AnchorPane implements Initializable {
 	private Main app;
-	boolean isSuccess = false;
-	@FXML
-	private Button btnLogin;
-	@FXML
-	private Button btnCancel;
 	@FXML 
-	private TextField tfUsername;
+	private TextField tfDN_TenTaiKhoan;
 	@FXML
-	private PasswordField tfPassword;
+	private PasswordField pfDN_MatKhau;
 	
 	
-	@FXML 
-	public void btnHandleLogin() throws Exception {
-		NhanVienDTO nhanVien = NhanVienBUS.DangNhap(tfUsername.getText(), tfPassword.getText());
+	public void handleDangNhap() throws Exception {
+		NhanVienDTO nhanVien = NhanVienBUS.DangNhap(tfDN_TenTaiKhoan.getText(), pfDN_MatKhau.getText());
 		if(nhanVien != null) {
 			app.setNhanVien(nhanVien);
 		}
@@ -41,15 +35,13 @@ public class LoginController extends AnchorPane implements Initializable {
 		this.app = app;
 	}
 	
-	@FXML 
-	public void btnHandleCancel() {
-		tfUsername.clear();
-		tfPassword.clear();
+	public void handleThoat() {
+		System.exit(0);
 	}
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		tfUsername.setPromptText("username");
-		tfPassword.setPromptText("password");
+		tfDN_TenTaiKhoan.setPromptText("username");
+		pfDN_MatKhau.setPromptText("password");
 	}
 }

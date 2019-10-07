@@ -13,4 +13,7 @@ public class NhanVienBUS {
 	public static NhanVienDTO DangNhap(String taikhoan, String matkhau ) throws SQLException {
 		return NhanVienDAO.DangNhap(taikhoan, matkhau);
 	}
+	public static boolean deleteNhanVien(NhanVienDTO nhanVien) throws SQLException {
+		return NhanVienDAO.deleteNhanVien(nhanVien);
+	}
 }

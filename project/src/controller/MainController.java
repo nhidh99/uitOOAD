@@ -278,6 +278,28 @@ public class MainController implements Initializable {
 		}
 	}
 	
+	public void handleXoaNhanVien() {
+		NhanVienDTO nv = tvNhanVien.getSelectionModel().getSelectedItem();
+		if(nv!=null) {
+		try {
+			if(NhanVienBUS.deleteNhanVien(nv)) {
+				Alert alert = new Alert(AlertType.INFORMATION);
+				alert.setTitle("Thông báo");
+				alert.setHeaderText("Đã xóa thành công!");
+				alert.showAndWait();	
+				loadTableNhanVien();
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Lỗi");
+			alert.setHeaderText("Không thể tải danh sách tham số!");
+			alert.setContentText("Lỗi database!");
+			alert.showAndWait();	
+			e.printStackTrace();
+		}
+		}
+	} 
 	public void btnNV_XuLy_DangXuat() throws Exception {
 		app.logOut();
 	}

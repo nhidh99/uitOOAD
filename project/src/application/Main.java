@@ -60,19 +60,18 @@ public class Main extends Application {
 	        switch(fxml) {
 	        case "main.fxml":
 	        	root.getStylesheets().add(Main.class.getResource("main.css").toExternalForm());
-	        	window.setWidth(1280);
-	        	window.setHeight(800);
+	        	window.setResizable(true);
+	        	window.setScene(new Scene(root, 1280, 800));
 	        	break;
 	        case "loginForm.fxml":
-	        	window.setWidth(600);
-	        	window.setHeight(400);
+	        	window.setResizable(false);
+	        	window.setScene(new Scene(root));
 	        	break;
 	        default:
 	        	break;
 	        }
-	        window.setScene(new Scene(root));
+	        
 	        window.centerOnScreen();
-	        window.sizeToScene();
 	        return (Initializable)loader.getController();
 	}
 	
