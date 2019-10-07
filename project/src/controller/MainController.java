@@ -6,6 +6,7 @@ import java.util.ResourceBundle;
 
 import BUS.*;
 import DTO.*;
+import application.Main;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -14,6 +15,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 
 public class MainController implements Initializable {
 	@FXML TableView <NhanVienDTO> tvNhanVien;
@@ -50,6 +53,35 @@ public class MainController implements Initializable {
 	@FXML TableColumn<LoaiPhongDTO, Integer> tcLP_SoKhachToiDa;
 	@FXML TableColumn<LoaiPhongDTO, Integer> tcLP_DonGia;
 	
+	//Thêm từ đây
+	@FXML Label lbNV_MaNhanVien;
+	@FXML Label lbNV_TenNhanVien;
+	@FXML Label lbNV_CMND;
+	@FXML Label lbNV_DiaChi;
+	@FXML Label lbNV_Email;
+	@FXML Label lbNV_SoDienThoai;
+	@FXML Label lbNV_ChucVu;
+	
+	@FXML Tab tabNV_DanhMucTaiKhoan;
+	@FXML Tab tabPhong;
+	@FXML Tab tabTraCuu;
+	@FXML Tab tabPhieuThue;
+	@FXML Tab tabThietLap;
+	@FXML Tab tabDichVu;
+	@FXML Tab tabThongKe;
+	
+	@FXML TabPane tpNV_ThongTinTaiKhoan;
+	@FXML TabPane tpMain;
+	
+	@FXML Button btnNV_DangXuat;
+	@FXML Button btnPhong_Them;
+	@FXML Button btnPhong_Xoa;
+	@FXML Button btnDichVu_Them;
+	@FXML Button btnDichVu_Xoa;
+	@FXML Button btnDichVu_Sua;
+	
+	private Main app;
+	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		initTables();
@@ -69,6 +101,11 @@ public class MainController implements Initializable {
 		loadTableNhaCungCap();
 		loadTableLoaiDichVu();
 		loadTableThamSo();
+	}
+	
+	private void loadPrivileges() {
+		loadTabQuanLiTaiKhoan();
+		loadPhanQuyen();
 	}
 	
 	private void initTableNhanVien() {
@@ -191,5 +228,57 @@ public class MainController implements Initializable {
 			alert.setContentText("Lỗi database!");
 			alert.showAndWait();			
 		}
+	}
+	
+	//Thêm từ đây
+	public void setApp(Main app) {
+		this.app = app;
+		loadPrivileges();
+	}
+	
+	public void loadTabQuanLiTaiKhoan() {
+			NhanVienDTO nv = app.getNhanVien();
+			lbNV_MaNhanVien.setText(nv.getMaNhanVien().toString());
+			lbNV_TenNhanVien.setText(nv.getTenNhanVien());
+			lbNV_CMND.setText(nv.getCMND());
+			lbNV_DiaChi.setText(nv.getDiaChi());
+			lbNV_Email.setText(nv.getEmail());
+			lbNV_SoDienThoai.setText(nv.getSoDienThoai());
+			lbNV_ChucVu.setText(nv.getChucVu());
+	}
+	
+	public void loadPhanQuyen() {
+		NhanVienDTO nv = app.getNhanVien();
+		switch(nv.getChucVu()) 
+		{
+		case "Lễ tân":
+		{
+			tpNV_ThongTinTaiKhoan.getTabs().remove(tabNV_DanhMucTaiKhoan);
+			tpMain.getTabs().removeAll(tabThietLap,tabThongKe);
+			VBox vb = (VBox)btnPhong_Them.getParent();
+			vb.getChildren().remove(btnPhong_Them);
+			HBox hbPhong = (HBox)btnPhong_Xoa.getParent();
+			hbPhong.getChildren().remove(btnPhong_Xoa);
+			HBox hbDichVu = (HBox)btnDichVu_Them.getParent();
+			hbDichVu.getChildren().removeAll(btnDichVu_Them, btnDichVu_Xoa);
+			btnDichVu_Sua.setText("⚙ NHẬP HÀNG");
+			break;
+		}
+		case "Kế toán":
+		{
+			tpNV_ThongTinTaiKhoan.getTabs().remove(tabNV_DanhMucTaiKhoan);
+			tpMain.getTabs().removeAll(tabThietLap,tabPhong,tabPhieuThue, tabTraCuu);
+			HBox hbDichVu = (HBox)btnDichVu_Them.getParent();
+			hbDichVu.getChildren().removeAll(btnDichVu_Them, btnDichVu_Xoa);
+			btnDichVu_Sua.setText("⚙ NHẬP HÀNG");
+			break;
+		}
+		default:
+			break;
+		}
+	}
+	
+	public void btnNV_XuLy_DangXuat() throws Exception {
+		app.logOut();
 	}
 }

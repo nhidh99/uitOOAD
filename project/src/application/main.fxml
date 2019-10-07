@@ -29,9 +29,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<TabPane prefHeight="800.0" prefWidth="1280.0" side="LEFT" stylesheets="@main.css" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainController">
+<TabPane fx:id="tpMain" prefHeight="800.0" prefWidth="1280.0" side="LEFT" stylesheets="@main.css" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainController">
   <tabs>
-    <Tab id="main-tab" text="🏨  PHÒNG KHÁCH SẠN">
+    <Tab id="main-tab" fx:id="tabPhong" text="🏨  PHÒNG KHÁCH SẠN">
          <content>
             <BorderPane prefHeight="624.0" prefWidth="976.0">
                <left>
@@ -196,7 +196,7 @@
                               <Insets bottom="20.0" />
                            </BorderPane.margin>
                            <children>
-                              <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="32.0" prefWidth="662.0" text="🏡 THÊM PHÒNG" textFill="#00868b">
+                              <Button fx:id="btnPhong_Them" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="32.0" prefWidth="662.0" text="🏡 THÊM PHÒNG" textFill="#00868b">
                                  <effect>
                                     <Blend />
                                  </effect>
@@ -332,7 +332,7 @@
                                           </Label>
                                           <HBox alignment="CENTER" prefHeight="40.0" prefWidth="608.0" spacing="10.0" GridPane.columnSpan="6" GridPane.rowIndex="3">
                                              <children>
-                                                <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefWidth="220.0" text="🗑 XOÁ PHÒNG" textAlignment="CENTER" textFill="BROWN">
+                                                <Button fx:id="btnPhong_Xoa" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefWidth="220.0" text="🗑 XOÁ PHÒNG" textAlignment="CENTER" textFill="BROWN">
                                                    <font>
                                                       <Font name="System Bold" size="20.0" />
                                                    </font></Button>
@@ -840,7 +840,7 @@
             </BorderPane>
          </content>
     </Tab>
-      <Tab id="main-tab" text="🔍  TRA CỨU THUÊ PHÒNG">
+      <Tab id="main-tab" fx:id="tabTraCuu" text="🔍  TRA CỨU THUÊ PHÒNG">
          <content>
             <BorderPane prefHeight="624.0" prefWidth="976.0">
                <left>
@@ -1293,7 +1293,7 @@
             </BorderPane>
          </content>
       </Tab>
-      <Tab id="main-tab" text="🔖  PHIẾU THUÊ PHÒNG">
+      <Tab id="main-tab" fx:id="tabPhieuThue" text="🔖  PHIẾU THUÊ PHÒNG">
          <content>
             <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE">
               <tabs>
@@ -2136,7 +2136,7 @@
          <content>
             <BorderPane prefHeight="200.0" prefWidth="200.0">
                <center>
-                  <TabPane BorderPane.alignment="CENTER">
+                  <TabPane fx:id="tpNV_ThongTinTaiKhoan" BorderPane.alignment="CENTER">
                      <tabs>
                         <Tab closable="false" text="👤  THÔNG TIN TÀI KHOẢN">
                            <content>
@@ -2180,7 +2180,7 @@
                                                 <Font name="System Bold" size="20.0" />
                                              </font>
                                           </Label>
-                                          <Label text="1829028141" GridPane.columnIndex="3" GridPane.rowIndex="2">
+                                          <Label fx:id="lbNV_MaNhanVien" text="1829028141" GridPane.columnIndex="3" GridPane.rowIndex="2">
                                              <font>
                                                 <Font size="20.0" />
                                              </font>
@@ -2195,7 +2195,7 @@
                                                 <Font name="System Bold" size="20.0" />
                                              </font>
                                           </Label>
-                                          <Label text="Đinh Hoàng Nhi" GridPane.columnIndex="3" GridPane.rowIndex="3">
+                                          <Label fx:id="lbNV_TenNhanVien" text="Đinh Hoàng Nhi" GridPane.columnIndex="3" GridPane.rowIndex="3">
                                              <font>
                                                 <Font size="20.0" />
                                              </font>
@@ -2205,7 +2205,7 @@
                                                 <Font name="System Bold" size="20.0" />
                                              </font>
                                           </Label>
-                                          <Label text="17520853" GridPane.columnIndex="3" GridPane.rowIndex="4">
+                                          <Label fx:id="lbNV_CMND" text="17520853" GridPane.columnIndex="3" GridPane.rowIndex="4">
                                              <font>
                                                 <Font size="20.0" />
                                              </font>
@@ -2220,7 +2220,7 @@
                                                 <Font name="System Bold" size="20.0" />
                                              </font>
                                           </Label>
-                                          <Label text="Cần Thạnh, Cần Giờ" GridPane.columnIndex="3" GridPane.rowIndex="5">
+                                          <Label fx:id="lbNV_DiaChi" text="Cần Thạnh, Cần Giờ" GridPane.columnIndex="3" GridPane.rowIndex="5">
                                              <font>
                                                 <Font size="20.0" />
                                              </font>
@@ -2235,7 +2235,7 @@
                                                 <Font name="System Bold" size="20.0" />
                                              </font>
                                           </Label>
-                                          <Label text="nhidh99@gmail.com" GridPane.columnIndex="3" GridPane.rowIndex="6">
+                                          <Label fx:id="lbNV_Email" text="nhidh99@gmail.com" GridPane.columnIndex="3" GridPane.rowIndex="6">
                                              <font>
                                                 <Font size="20.0" />
                                              </font>
@@ -2250,7 +2250,7 @@
                                                 <Font name="System Bold" size="20.0" />
                                              </font>
                                           </Label>
-                                          <Label text="0336887109" GridPane.columnIndex="3" GridPane.rowIndex="7">
+                                          <Label fx:id="lbNV_SoDienThoai" text="0336887109" GridPane.columnIndex="3" GridPane.rowIndex="7">
                                              <font>
                                                 <Font size="20.0" />
                                              </font>
@@ -2265,7 +2265,7 @@
                                                 <Font name="System Bold" size="20.0" />
                                              </font>
                                           </Label>
-                                          <Label text="Chủ khách sạn" GridPane.columnIndex="3" GridPane.rowIndex="8">
+                                          <Label fx:id="lbNV_ChucVu" text="Chủ khách sạn" GridPane.columnIndex="3" GridPane.rowIndex="8">
                                              <font>
                                                 <Font size="20.0" />
                                              </font>
@@ -2282,7 +2282,7 @@
                                                       <Font name="System Bold" size="20.0" />
                                                    </font>
                                                 </Button>
-                                                <Button alignment="CENTER" mnemonicParsing="false" prefHeight="32.0" prefWidth="490.0" text="  🔒 ĐĂNG XUẤT" textFill="BROWN">
+                                                <Button fx:id="btnNV_DangXuat" alignment="CENTER" mnemonicParsing="false" onAction="#btnNV_XuLy_DangXuat" prefHeight="32.0" prefWidth="490.0" text="  🔒 ĐĂNG XUẤT" textFill="BROWN">
                                                    <font>
                                                       <Font name="System Bold" size="20.0" />
                                                    </font>
@@ -2318,7 +2318,7 @@
                               </AnchorPane>
                            </content>
                         </Tab>
-                        <Tab closable="false" text="✍  DANH MỤC TÀI KHOẢN">
+                        <Tab fx:id="tabNV_DanhMucTaiKhoan" closable="false" text="✍  DANH MỤC TÀI KHOẢN">
                            <content>
                               <BorderPane prefHeight="298.0" prefWidth="1080.0">
                                  <bottom>
@@ -2371,7 +2371,7 @@
             </BorderPane>
          </content>
       </Tab>
-      <Tab id="main-tab" text="⚙  BẢNG THIẾT LẬP">
+      <Tab id="main-tab" fx:id="tabThietLap" text="⚙  BẢNG THIẾT LẬP">
          <content>
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>
@@ -2696,7 +2696,7 @@
             </AnchorPane>
          </content>
       </Tab>
-      <Tab id="main-tab" text="🎲  BẢNG DỊCH VỤ">
+      <Tab id="main-tab" fx:id="tabDichVu" text="🎲  BẢNG DỊCH VỤ">
          <content>
             <BorderPane prefHeight="200.0" prefWidth="200.0">
                <center>
@@ -2721,15 +2721,15 @@
                <bottom>
                   <HBox alignment="CENTER" prefHeight="40.0" prefWidth="200.0" spacing="10.0" BorderPane.alignment="CENTER">
                      <children>
-                        <Button alignment="CENTER" mnemonicParsing="false" prefWidth="275.0" text="🎲  THÊM DỊCH VỤ" textFill="#00868b">
+                        <Button fx:id="btnDichVu_Them" alignment="CENTER" mnemonicParsing="false" prefWidth="275.0" text="🎲  THÊM DỊCH VỤ" textFill="#00868b">
                            <font>
                               <Font name="System Bold" size="20.0" />
                            </font></Button>
-                        <Button alignment="CENTER" mnemonicParsing="false" prefWidth="275.0" text="🗑  XOÁ DỊCH VỤ" textFill="BROWN">
+                        <Button fx:id="btnDichVu_Xoa" alignment="CENTER" mnemonicParsing="false" prefWidth="275.0" text="🗑  XOÁ DỊCH VỤ" textFill="BROWN">
                            <font>
                               <Font name="System Bold" size="20.0" />
                            </font></Button>
-                        <Button alignment="CENTER" mnemonicParsing="false" prefWidth="275.0" text="⚙  SỬA DỊCH VỤ" textFill="#427921">
+                        <Button fx:id="btnDichVu_Sua" alignment="CENTER" mnemonicParsing="false" prefWidth="275.0" text="⚙  SỬA DỊCH VỤ" textFill="#427921">
                            <font>
                               <Font name="System Bold" size="20.0" />
                            </font></Button>
@@ -2761,7 +2761,7 @@
                </effect>
             </BorderPane>
          </content></Tab>
-      <Tab id="main-tab" text="📚  BÁO CÁO THỐNG KÊ">
+      <Tab id="main-tab" fx:id="tabThongKe" text="📚  BÁO CÁO THỐNG KÊ">
          <content>
             <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE">
               <tabs>

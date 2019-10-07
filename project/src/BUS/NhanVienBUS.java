@@ -10,4 +10,7 @@ public class NhanVienBUS {
 	public static List<NhanVienDTO> getDSNhanVien() throws SQLException {
 		return NhanVienDAO.getDSNhanVien();
 	}
+	public static NhanVienDTO DangNhap(String taikhoan, String matkhau ) throws SQLException {
+		return NhanVienDAO.DangNhap(taikhoan, matkhau);
+	}
 }
