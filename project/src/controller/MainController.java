@@ -87,11 +87,7 @@ public class MainController implements Initializable {
 		initTables();
 		loadTables();
 	}
-<<<<<<< Updated upstream
 	
-=======
-
->>>>>>> Stashed changes
 	private boolean confirmDialog(String content) {
 		Alert dialog = new Alert(AlertType.CONFIRMATION);
 		dialog.setTitle("Xác nhận");
@@ -269,8 +265,6 @@ public class MainController implements Initializable {
 			alert.setHeaderText("Không thể xóa loại phòng!");
 			alert.setContentText("Vui lòng chọn loại phòng cần xóa!");
 			alert.showAndWait();
-<<<<<<< Updated upstream
-=======
 		}
 	}
 
@@ -308,7 +302,6 @@ public class MainController implements Initializable {
 			alert.setHeaderText("Không thể xóa loại dịch vụ!");
 			alert.setContentText("Vui lòng chọn loại dịch vụ cần xóa!");
 			alert.showAndWait();
->>>>>>> Stashed changes
 		}
 	}
 }
