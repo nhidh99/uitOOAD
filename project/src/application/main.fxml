@@ -2409,7 +2409,7 @@
                            <bottom>
                               <HBox alignment="CENTER" prefHeight="45.0" prefWidth="200.0" spacing="10.0" BorderPane.alignment="CENTER">
                                  <children>
-                                    <Button fx:id="btnThemLoaiPhong" alignment="CENTER" mnemonicParsing="false" onAction="#handleThemLoaiPhong" prefHeight="45.0" prefWidth="300.0" text="🎲  THÊM" textFill="#00868b">
+                                    <Button alignment="CENTER" mnemonicParsing="false" prefHeight="45.0" prefWidth="300.0" text="🎲  THÊM" textFill="#00868b">
                                        <font>
                                           <Font name="System Bold" size="20.0" />
                                        </font></Button>
@@ -2417,7 +2417,7 @@
                                        <font>
                                           <Font name="System Bold" size="20.0" />
                                        </font></Button>
-                                    <Button fx:id="btnSuaLoaiPhong" alignment="CENTER" mnemonicParsing="false" onAction="#handleSuaLoaiPhong" prefHeight="45.0" prefWidth="300.0" text="⚙  SỬA" textFill="#427921">
+                                    <Button alignment="CENTER" mnemonicParsing="false" prefHeight="45.0" prefWidth="300.0" text="⚙  SỬA" textFill="#427921">
                                        <font>
                                           <Font name="System Bold" size="20.0" />
                                        </font></Button>
@@ -2469,7 +2469,7 @@
                            <bottom>
                               <HBox alignment="CENTER" prefHeight="45.0" spacing="10.0" BorderPane.alignment="CENTER">
                                  <children>
-                                    <Button fx:id="btnThemLoaiDichVu" alignment="CENTER" mnemonicParsing="false" onAction="#handleThemLoaiDichVu" prefHeight="45.0" prefWidth="300.0" text="🎲 THÊM" textFill="#00868b">
+                                    <Button alignment="CENTER" mnemonicParsing="false" prefHeight="45.0" prefWidth="300.0" text="🎲 THÊM" textFill="#00868b">
                                        <font>
                                           <Font name="System Bold" size="20.0" />
                                        </font></Button>
@@ -2477,7 +2477,7 @@
                                        <font>
                                           <Font name="System Bold" size="20.0" />
                                        </font></Button>
-                                    <Button alignment="CENTER" mnemonicParsing="false" onAction="#handleSuaLoaiDichVu" prefHeight="45.0" prefWidth="300.0" text="⚙  SỬA" textFill="#427921">
+                                    <Button alignment="CENTER" mnemonicParsing="false" prefHeight="45.0" prefWidth="300.0" text="⚙  SỬA" textFill="#427921">
                                        <font>
                                           <Font name="System Bold" size="20.0" />
                                        </font></Button>
@@ -2527,15 +2527,15 @@
                            <bottom>
                               <HBox alignment="CENTER" prefHeight="45.0" spacing="10.0" BorderPane.alignment="CENTER">
                                  <children>
-                                    <Button alignment="CENTER" mnemonicParsing="false" onAction="#handleThemNhaCungCap" prefHeight="45.0" prefWidth="300.0" text="📦  THÊM" textFill="#00868b">
+                                    <Button alignment="CENTER" mnemonicParsing="false" prefHeight="45.0" prefWidth="300.0" text="📦  THÊM" textFill="#00868b">
                                        <font>
                                           <Font name="System Bold" size="20.0" />
                                        </font></Button>
-                                    <Button alignment="CENTER" mnemonicParsing="false" onAction="#handleXoaNhaCungCap" prefHeight="45.0" prefWidth="300.0" text="🗑  XOÁ" textFill="BROWN">
+                                    <Button alignment="CENTER" mnemonicParsing="false"  onAction = "#handleXoaNhaCungCap" prefHeight="45.0" prefWidth="300.0" text="🗑  XOÁ" textFill="BROWN">
                                        <font>
                                           <Font name="System Bold" size="20.0" />
                                        </font></Button>
-                                    <Button alignment="CENTER" mnemonicParsing="false" onAction="#handleSuaNhaCungCap" prefHeight="45.0" prefWidth="300.0" text="⚙  SỬA" textFill="#427921">
+                                    <Button alignment="CENTER" mnemonicParsing="false" prefHeight="45.0" prefWidth="300.0" text="⚙  SỬA" textFill="#427921">
                                        <font>
                                           <Font name="System Bold" size="20.0" />
                                        </font></Button>
@@ -2657,7 +2657,7 @@
                            <bottom>
                               <HBox alignment="CENTER" prefHeight="45.0" spacing="10.0" BorderPane.alignment="CENTER">
                                  <children>
-                                    <Button alignment="CENTER" mnemonicParsing="false" onAction="#handleSuaThamSo" prefHeight="44.0" prefWidth="900.0" text="⚙  SỬA THAM SỐ" textFill="#427921">
+                                    <Button alignment="CENTER" mnemonicParsing="false" prefHeight="44.0" prefWidth="900.0" text="⚙  SỬA THAM SỐ" textFill="#427921">
                                        <font>
                                           <Font name="System Bold" size="20.0" />
                                        </font></Button>

@@ -47,43 +47,4 @@ public class LoaiPhongDAO {
 		conn.close();
 		return true;
 	}
-	
-	public static boolean addLoaiPhong(String tenLoaiPhong, Integer soKhachToiDa, Integer donGia) throws SQLException {
-		Connection conn = DBHelper.getConnection();
-		String query = "INSERT INTO loaiphong (TenLoaiPhong,SoKhachToiDa,DonGia) VALUES (?, ?, ?)";
-		PreparedStatement statement = conn.prepareStatement(query);
-		statement.setString(1, tenLoaiPhong);
-		statement.setInt(2, soKhachToiDa);
-		statement.setInt(3, donGia);
-		statement.execute();
-		conn.close();
-		return true;
-	}
-	
-	public static boolean checkLoaiPhongTonTai(String tenLoaiPhong) throws SQLException {
-		Connection conn = DBHelper.getConnection();
-		String query = "SELECT * FROM loaiphong WHERE TenLoaiPhong = ?";
-		PreparedStatement statement = conn.prepareStatement(query);
-		statement.setString(1, tenLoaiPhong);
-		ResultSet rs = statement.executeQuery();
-		boolean isExist = false;
-		if(rs.next()) {
-			isExist = true;
-		}
-		conn.close();
-		return isExist;
-	}
-	
-	public static boolean updateLoaiPhong(String tenLoaiPhongCu, String tenLoaiPhongMoi, Integer soKhachToiDa, Integer donGia) throws SQLException {
-		Connection conn = DBHelper.getConnection();
-		String query = "UPDATE loaiphong SET TenLoaiPhong = ?, SoKhachToiDa = ?, DonGia = ? WHERE TenLoaiPhong = ?";
-		PreparedStatement statement = conn.prepareStatement(query);
-		statement.setString(1, tenLoaiPhongMoi);
-		statement.setInt(2, soKhachToiDa);
-		statement.setInt(3, donGia);
-		statement.setString(4, tenLoaiPhongCu);
-		statement.execute();
-		conn.close();
-		return true;
-	}
 }

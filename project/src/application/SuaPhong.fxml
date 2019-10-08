@@ -54,9 +54,9 @@
                         <Font name="System Bold" size="20.0" />
                      </font>
                   </Label>
-                  <ChoiceBox fx:id="cbLoaiPhong" prefWidth="150.0" GridPane.columnIndex="2" />
-                  <ChoiceBox fx:id="cbTinhTrang" prefWidth="150.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                  <TextField fx:id="tfGhiChu" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                  <ChoiceBox prefWidth="150.0" GridPane.columnIndex="2" />
+                  <ChoiceBox prefWidth="150.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                  <TextField GridPane.columnIndex="2" GridPane.rowIndex="2" />
                   <Label text="🏷" GridPane.rowIndex="1">
                      <font>
                         <Font size="20.0" />
@@ -83,12 +83,12 @@
    <bottom>
       <HBox alignment="CENTER" prefHeight="58.0" prefWidth="434.0" spacing="15.0" BorderPane.alignment="CENTER">
          <children>
-            <Button mnemonicParsing="false" onAction="#handleBtnXacNhan" prefHeight="35.0" prefWidth="170.0" text="✔ XÁC NHẬN" textFill="#29b20a">
+            <Button mnemonicParsing="false" prefHeight="35.0" prefWidth="170.0" text="✔ XÁC NHẬN" textFill="#29b20a">
                <font>
                   <Font name="System Bold" size="20.0" />
                </font>
             </Button>
-            <Button mnemonicParsing="false" onAction="#handleBtnHuyBo" prefHeight="35.0" prefWidth="170.0" text="❌ HỦY BỎ" textFill="#dd0b0b">
+            <Button mnemonicParsing="false" prefHeight="35.0" prefWidth="170.0" text="❌ HỦY BỎ" textFill="#dd0b0b">
                <font>
                   <Font name="System Bold" size="20.0" />
                </font>
