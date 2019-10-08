@@ -26,4 +26,16 @@ public class LoaiDichVuDAO {
 		conn.close();
 		return output;
 	}
+	public static Integer getMaLoaiDichVu(String tenLoaiDichVu) throws SQLException {
+		Connection conn = DBHelper.getConnection();
+		Statement statement = conn.createStatement();
+		String query = "SELECT * from LoaiDichVu WHERE TenLoaiDichVu = '" + tenLoaiDichVu +"'";
+		ResultSet rs = statement.executeQuery(query);
+		Integer result = -1;
+		if(rs.next()) {
+			result = rs.getInt("MaLoaiDichVu");
+		}
+		conn.close();
+		return result;
+	}
 }

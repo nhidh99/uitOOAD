@@ -2700,15 +2700,15 @@
          <content>
             <BorderPane prefHeight="200.0" prefWidth="200.0">
                <center>
-                  <TableView prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                  <TableView fx:id="tvDichVu" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                      <columns>
-                        <TableColumn prefWidth="75.0" text="STT" />
+                        <TableColumn fx:id="tcDV_STT" prefWidth="75.0" text="STT" />
                         <TableColumn prefWidth="75.0" text="Mã dịch vụ" visible="false" />
-                        <TableColumn prefWidth="75.0" text="Tên dịch vụ" />
-                        <TableColumn prefWidth="75.0" text="Loại dịch vụ" />
-                        <TableColumn prefWidth="75.0" text="Đơn vị tính" />
-                        <TableColumn prefWidth="75.0" text="Số lượng tồn" />
-                        <TableColumn prefWidth="75.0" text="Đơn giá" />
+                        <TableColumn fx:id="tcDV_TenDichVu" prefWidth="75.0" text="Tên dịch vụ" />
+                        <TableColumn fx:id="tcDV_LoaiDichVu" prefWidth="75.0" text="Loại dịch vụ" />
+                        <TableColumn fx:id="tcDV_DonViTinh" prefWidth="75.0" text="Đơn vị tính" />
+                        <TableColumn fx:id="tcDV_SoLuongTon" prefWidth="75.0" text="Số lượng tồn" />
+                        <TableColumn fx:id="tcDV_DonGia" prefWidth="75.0" text="Đơn giá" />
                      </columns>
                      <columnResizePolicy>
                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -2721,7 +2721,7 @@
                <bottom>
                   <HBox alignment="CENTER" prefHeight="40.0" prefWidth="200.0" spacing="10.0" BorderPane.alignment="CENTER">
                      <children>
-                        <Button fx:id="btnDichVu_Them" alignment="CENTER" mnemonicParsing="false" prefWidth="275.0" text="🎲  THÊM DỊCH VỤ" textFill="#00868b">
+                        <Button fx:id="btnDichVu_Them" alignment="CENTER" mnemonicParsing="false" onAction="#handleThemDichVu" prefWidth="275.0" text="🎲  THÊM DỊCH VỤ" textFill="#00868b">
                            <font>
                               <Font name="System Bold" size="20.0" />
                            </font></Button>

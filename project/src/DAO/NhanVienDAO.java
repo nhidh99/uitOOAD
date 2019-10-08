@@ -23,7 +23,7 @@ public class NhanVienDAO {
 					rs.getString("DiaChi"),
 					rs.getString("Email"),
 					rs.getString("SoDienThoai"),
-					rs.getString("QuyenHan")));
+					rs.getString("ChucVu")));
 		}
 		conn.close();
 		return output;
@@ -62,7 +62,7 @@ public class NhanVienDAO {
 					rs.getString("DiaChi"),
 					rs.getString("Email"),
 					rs.getString("SoDienThoai"),
-					rs.getString("QuyenHan"));
+					rs.getString("ChucVu"));
 		}
 		else {
 			result = null;

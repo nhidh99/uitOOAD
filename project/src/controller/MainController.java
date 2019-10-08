@@ -1,5 +1,6 @@
 package controller;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
@@ -11,12 +12,17 @@ import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 public class MainController implements Initializable {
 	@FXML TableView <NhanVienDTO> tvNhanVien;
@@ -80,6 +86,14 @@ public class MainController implements Initializable {
 	@FXML Button btnDichVu_Xoa;
 	@FXML Button btnDichVu_Sua;
 	
+	@FXML TableView <DichVuDTO> tvDichVu;
+	@FXML TableColumn<DichVuDTO, Integer> tcDV_STT;
+	@FXML TableColumn<DichVuDTO, String> tcDV_TenDichVu;
+	@FXML TableColumn<DichVuDTO, Integer> tcDV_LoaiDichVu;
+	@FXML TableColumn<DichVuDTO, String> tcDV_DonViTinh;
+	@FXML TableColumn<DichVuDTO, Integer> tcDV_SoLuongTon;
+	@FXML TableColumn<DichVuDTO, Integer> tcDV_DonGia;
+	
 	private Main app;
 	
 	@Override
@@ -93,6 +107,7 @@ public class MainController implements Initializable {
 		initTableLoaiPhong();
 		initTableNhaCungCap();
 		initTableLoaiDichVu();
+		initTableDichVu();
 	}
 	
 	private void loadTables() {
@@ -101,6 +116,7 @@ public class MainController implements Initializable {
 		loadTableNhaCungCap();
 		loadTableLoaiDichVu();
 		loadTableThamSo();
+		loadTableDichVu();
 	}
 	
 	private void loadPrivileges() {
@@ -142,6 +158,19 @@ public class MainController implements Initializable {
 		tcNCC_MaNhaCC.setCellValueFactory(new PropertyValueFactory<>("maNhaCungCap"));
 		tcNCC_TenNhaCC.setCellValueFactory(new PropertyValueFactory<>("tenNhaCungCap"));
 		tcNCC_SoDienThoai.setCellValueFactory(new PropertyValueFactory<>("soDienThoai"));
+	}
+	
+	//Thêm table Dịch vụ:
+	
+	private void initTableDichVu() {
+		tcDV_STT.setCellValueFactory(
+				column -> new ReadOnlyObjectWrapper<Integer>(tvDichVu.getItems().indexOf(column.getValue()) + 1));
+		tcDV_TenDichVu.setCellValueFactory(new PropertyValueFactory<>("tenDichVu"));
+		tcDV_LoaiDichVu.setCellValueFactory(new PropertyValueFactory<>("tenLoaiDichVu"));
+		tcDV_DonViTinh.setCellValueFactory(new PropertyValueFactory<>("donViTinh"));
+		tcDV_SoLuongTon.setCellValueFactory(new PropertyValueFactory<>("soLuongTon"));
+		tcDV_DonGia.setCellValueFactory(new PropertyValueFactory<>("donGia"));
+		
 	}
 
 	public void loadTableNhanVien() {
@@ -230,6 +259,23 @@ public class MainController implements Initializable {
 		}
 	}
 	
+	public void loadTableDichVu() {
+		try {
+			ObservableList<DichVuDTO> dsDichVu = FXCollections.observableArrayList();
+			for (DichVuDTO dv : DichVuBUS.getDSDichVu()) {
+				dsDichVu.add(dv);
+			}
+			tvDichVu.setItems(dsDichVu);
+		}
+		catch (SQLException SQLException) {
+			SQLException.printStackTrace();
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Lỗi");
+			alert.setHeaderText("Không thể tải danh sách loại dịch vụ!");
+			alert.setContentText("Lỗi database!");
+			alert.showAndWait();
+		}
+	}
 	//Thêm từ đây
 	public void setApp(Main app) {
 		this.app = app;
@@ -281,25 +327,43 @@ public class MainController implements Initializable {
 	public void handleXoaNhanVien() {
 		NhanVienDTO nv = tvNhanVien.getSelectionModel().getSelectedItem();
 		if(nv!=null) {
-		try {
-			if(NhanVienBUS.deleteNhanVien(nv)) {
+			try {
+				if(NhanVienBUS.deleteNhanVien(nv)) {
+					Alert alert = new Alert(AlertType.INFORMATION);
+					alert.setTitle("Thông báo");
+					alert.setHeaderText("Đã xóa thành công!");
+					alert.showAndWait();	
+					loadTableNhanVien();
+				}
+			} 
+			catch (SQLException e) {
+				// TODO Auto-generated catch block
 				Alert alert = new Alert(AlertType.INFORMATION);
-				alert.setTitle("Thông báo");
-				alert.setHeaderText("Đã xóa thành công!");
+				alert.setTitle("Lỗi");
+				alert.setHeaderText("Không thể tải danh sách tham số!");
+				alert.setContentText("Lỗi database!");
 				alert.showAndWait();	
-				loadTableNhanVien();
+				e.printStackTrace();
 			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			Alert alert = new Alert(AlertType.INFORMATION);
-			alert.setTitle("Lỗi");
-			alert.setHeaderText("Không thể tải danh sách tham số!");
-			alert.setContentText("Lỗi database!");
-			alert.showAndWait();	
-			e.printStackTrace();
-		}
 		}
 	} 
+	
+	public void handleThemDichVu() throws IOException {
+		Stage popUpStage = new Stage();
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/popup.fxml"));
+		//loader.setLocation(Main.class.getResource("popup.fxml"));
+		Parent root = (Parent)loader.load();
+        popUpStage.initModality(Modality.APPLICATION_MODAL);
+		Scene scene = new Scene(root, 736, 461);
+		popUpStage.setScene(scene);
+		
+		 //Get Controller of new PopUp
+        popUpStage.showAndWait();
+        if(!popUpStage.isShowing()) {
+        	loadTableDichVu();
+        }
+	}
+	
 	public void btnNV_XuLy_DangXuat() throws Exception {
 		app.logOut();
 	}

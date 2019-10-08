@@ -10,4 +10,7 @@ public class NhaCungCapBUS {
 	public static List<NhaCungCapDTO> getDSNhaCungCap() throws SQLException {
 		return NhaCungCapDAO.getDSNhaCungCap();
 	}
+	public static Integer getMaNhaCungCap(String tenNhaCungCap) throws SQLException {
+		return NhaCungCapDAO.getMaNhaCungCap(tenNhaCungCap);
+	}
 }

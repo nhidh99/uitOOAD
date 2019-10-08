@@ -10,4 +10,7 @@ public class LoaiDichVuBUS {
 	public static List<LoaiDichVuDTO> getDSLoaiDichVu() throws SQLException {
 		return LoaiDichVuDAO.getDSLoaiDichVu();
 	}
+	public static Integer getMaLoaiDichVu(String tenLoaiDichVu) throws SQLException {
+		return LoaiDichVuDAO.getMaLoaiDichVu(tenLoaiDichVu);
+	}
 }

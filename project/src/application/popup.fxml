@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="461.0" prefWidth="736.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.PopupController">
+   <center>
+      <AnchorPane prefHeight="200.0" prefWidth="500.0" BorderPane.alignment="CENTER">
+         <children>
+            <GridPane alignment="CENTER" hgap="10.0" layoutX="100.0" layoutY="-40.0" prefHeight="200.0" prefWidth="736.0" vgap="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+              <columnConstraints>
+                <ColumnConstraints />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints />
+                <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Label text="Tên dịch vụ: " GridPane.columnIndex="1" GridPane.rowIndex="1">
+                     <font>
+                        <Font name="System Bold" size="20.0" />
+                     </font>
+                     <GridPane.margin>
+                        <Insets />
+                     </GridPane.margin>
+                  </Label>
+                  <Label text="Đơn vị tính: " GridPane.columnIndex="1" GridPane.rowIndex="2">
+                     <font>
+                        <Font name="System Bold" size="20.0" />
+                     </font>
+                  </Label>
+                  <Label text="Đơn giá: " GridPane.columnIndex="1" GridPane.rowIndex="3">
+                     <font>
+                        <Font name="System Bold" size="20.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="tfDV_Ten" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                  <TextField fx:id="tfDV_DonViTinh" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                  <TextField fx:id="tfDV_DonGia" GridPane.columnIndex="2" GridPane.rowIndex="3">
+                     <font>
+                        <Font />
+                     </font>
+                  </TextField>
+                  <Label text="Label" GridPane.rowIndex="1">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Label>
+                  <Label text="Label" GridPane.rowIndex="2">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Label>
+                  <Label text="Label" GridPane.rowIndex="3">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Label>
+                  <Label text="Label" GridPane.columnIndex="3" GridPane.rowIndex="1">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Label>
+                  <Label text="Số lượng tồn: " GridPane.columnIndex="4" GridPane.rowIndex="1">
+                     <font>
+                        <Font name="System Bold" size="20.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="tfDV_SoLuongTon" GridPane.columnIndex="5" GridPane.rowIndex="1" />
+                  <Label text="Label" GridPane.columnIndex="3" GridPane.rowIndex="2">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Label>
+                  <Label text="Loại dịch vụ: " GridPane.columnIndex="4" GridPane.rowIndex="2">
+                     <font>
+                        <Font name="System Bold" size="20.0" />
+                     </font>
+                  </Label>
+                  <Label text="Label" GridPane.columnIndex="3" GridPane.rowIndex="3">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Label>
+                  <Label text="Nhà cung cấp: " GridPane.columnIndex="4" GridPane.rowIndex="3">
+                     <font>
+                        <Font name="System Bold" size="20.0" />
+                     </font>
+                  </Label>
+                  <ComboBox fx:id="cbDV_NhaCungCap" prefWidth="150.0" GridPane.columnIndex="5" GridPane.rowIndex="3" />
+                  <ComboBox fx:id="cbDV_LoaiDichVu" prefWidth="150.0" GridPane.columnIndex="5" GridPane.rowIndex="2" />
+               </children>
+            </GridPane>
+         </children>
+      </AnchorPane>
+   </center>
+   <top>
+      <Label contentDisplay="CENTER" text="THÊM DỊCH VỤ" BorderPane.alignment="CENTER">
+         <font>
+            <Font name="System Bold" size="36.0" />
+         </font>
+      </Label>
+   </top>
+   <bottom>
+      <HBox alignment="CENTER" prefHeight="81.0" prefWidth="739.0" spacing="30.0" BorderPane.alignment="CENTER">
+         <children>
+            <Button mnemonicParsing="false" onAction="#handleXacNhan" prefHeight="44.0" prefWidth="180.0" text="✔ XÁC NHẬN" textFill="#29b20a">
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font>
+            </Button>
+            <Button mnemonicParsing="false" onAction="#handleHuyBo" prefHeight="44.0" prefWidth="180.0" text="❌ HỦY BỎ" textFill="#dd0b0b">
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font>
+            </Button>
+         </children>
+         <BorderPane.margin>
+            <Insets />
+         </BorderPane.margin>
+      </HBox>
+   </bottom>
+</BorderPane>
