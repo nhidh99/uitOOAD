@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="328.0" prefWidth="541.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.SuaLoaiDichVuController">
+   <center>
+      <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <GridPane hgap="15.0" layoutX="40.0" layoutY="24.0" prefWidth="501.0" vgap="15.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="0.0">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="203.0" minWidth="138.0" prefWidth="162.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="276.0" minWidth="211.0" prefWidth="260.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints vgrow="SOMETIMES" />
+                <RowConstraints vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <TextField fx:id="tfLoaiDichVu" prefWidth="50.0" GridPane.columnIndex="2" />
+                  <Label prefHeight="30.0" prefWidth="163.0" text="Nhà Cung Cấp:" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                     <font>
+                        <Font name="System Bold" size="20.0" />
+                     </font>
+                  </Label>
+                  <Label text="Loại Dịch Vụ:" GridPane.columnIndex="1">
+                     <font>
+                        <Font name="System Bold" size="20.0" />
+                     </font>
+                  </Label>
+                  <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" text="🏛">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                     <GridPane.margin>
+                        <Insets left="20.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" text="👥" GridPane.rowIndex="1">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                     <GridPane.margin>
+                        <Insets left="20.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <ChoiceBox fx:id="cbNhaCungCap" prefHeight="25.0" prefWidth="266.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+               </children>
+            </GridPane>
+         </children>
+      </AnchorPane>
+   </center>
+   <top>
+      <Label text="SỬA LOẠI DỊCH VỤ" textAlignment="CENTER" BorderPane.alignment="CENTER">
+         <font>
+            <Font name="System Bold" size="36.0" />
+         </font>
+         <BorderPane.margin>
+            <Insets top="20.0" />
+         </BorderPane.margin>
+      </Label>
+   </top>
+   <bottom>
+      <HBox alignment="CENTER" prefHeight="73.0" prefWidth="600.0" spacing="20.0" BorderPane.alignment="CENTER">
+         <children>
+            <Button fx:id="btnXacNhan" mnemonicParsing="false" onAction="#handleBtnXacNhan" prefHeight="35.0" prefWidth="170.0" text="✔ XÁC NHẬN" textFill="#29b20a">
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnHuyBo" mnemonicParsing="false" onAction="#handleBtnHuyBo" prefHeight="35.0" prefWidth="170.0" text="❌ HỦY BỎ" textFill="#dd0b0b">
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font>
+            </Button>
+         </children>
+      </HBox>
+   </bottom>
+</BorderPane>
