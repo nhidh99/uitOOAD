@@ -28,12 +28,12 @@ public class LoaiPhongDAO {
 
 	public static boolean checkLoaiPhong(Integer maLoaiPhong) throws SQLException {
 		Connection conn = DBHelper.getConnection();
-		String query = "SELECT EXISTS (SELECT 1 FROM Phong WHERE MaLoaiPhong = ? LIMIT 1)";
+		String query = "SELECT EXISTS (SELECT 1 FROM Phong WHERE MaLoaiPhong = ? LIMIT 1) AS 'TonTai'";
 		PreparedStatement statement = conn.prepareStatement(query);
 		statement.setInt(1, maLoaiPhong);
 		ResultSet rs = statement.executeQuery();
 		rs.next();
-		boolean isExist = rs.getBoolean(1);
+		boolean isExist = rs.getBoolean("TonTai");
 		conn.close();
 		return isExist;
 	}

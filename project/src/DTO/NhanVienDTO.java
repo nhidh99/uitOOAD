@@ -10,8 +10,6 @@ public class NhanVienDTO {
 	private SimpleStringProperty email;
 	private SimpleStringProperty soDienThoai;
 	private SimpleStringProperty chucVu;
-	private SimpleStringProperty taiKhoan;
-	private SimpleStringProperty matKhau;
 	
 	public Integer getMaNhanVien() {
 		return maNhanVien.get();
@@ -40,17 +38,9 @@ public class NhanVienDTO {
 	public String getChucVu() {
 		return chucVu.get();
 	}
-
-	public String getTaiKhoan() {
-		return taiKhoan.get();
-	}
-	
-	public String getMatKhau() {
-		return matKhau.get();
-	}
 	
 	public NhanVienDTO(Integer maNhanVien, String tenNhanVien, String cmnd, String diaChi,
-			String email, String soDienThoai, String chucVu, String taiKhoan, String matKhau) {
+			String email, String soDienThoai, String chucVu) {
 		this.maNhanVien = new SimpleIntegerProperty(maNhanVien);
 		this.tenNhanVien = new SimpleStringProperty(tenNhanVien);
 		this.cmnd = new SimpleStringProperty(cmnd);
@@ -58,7 +48,5 @@ public class NhanVienDTO {
 		this.email = new SimpleStringProperty(email);
 		this.soDienThoai = new SimpleStringProperty(soDienThoai);
 		this.chucVu = new SimpleStringProperty(chucVu);
-		this.taiKhoan = new SimpleStringProperty(taiKhoan);
-		this.matKhau = new SimpleStringProperty(matKhau);
 	}
 }
