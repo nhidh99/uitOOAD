@@ -168,15 +168,7 @@ public class MainController implements Initializable {
 		loadComboboxes();
 		loadNhanVienByUsername("nhidh99");
 	}
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-	
-=======
-
->>>>>>> Stashed changes
-=======
-
->>>>>>> Stashed changes
+  
 	private boolean confirmDialog(String content) {
 		Alert dialog = new Alert(AlertType.CONFIRMATION);
 		dialog.setTitle("Xác nhận");
@@ -502,49 +494,9 @@ public class MainController implements Initializable {
 			alert.setHeaderText("Không thể xóa loại phòng!");
 			alert.setContentText("Vui lòng chọn loại phòng cần xóa!");
 			alert.showAndWait();
-<<<<<<< Updated upstream
-=======
 		}
 	}
-
-	// Xóa loại dịch vụ
-	public void handleXoaLoaiDichVu(ActionEvent e) {
-		try {
-			LoaiDichVuDTO loaiDichVu = tvLoaiDichVu.getSelectionModel().getSelectedItem();
-			if (confirmDialog("Xác nhận xóa loại dịch vụ " + loaiDichVu.getTenLoaiDichVu() + "?")) {
-				try {
-					if (LoaiDichVuBUS.deleteLoaiDichVu(loaiDichVu.getMaLoaiDichVu())) {
-						Alert alert = new Alert(AlertType.INFORMATION);
-						alert.setTitle("Thành công");
-						alert.setHeaderText("Xóa loại dịch vụ thành công!");
-						alert.setContentText("Đã xóa loại dịch vụ " + loaiDichVu.getTenLoaiDichVu() + "!");
-						alert.showAndWait();
-						loadTableLoaiDichVu();
-					} else {
-						Alert alert = new Alert(AlertType.INFORMATION);
-						alert.setTitle("Lỗi");
-						alert.setHeaderText("Không thể xóa loại dịch vụ!");
-						alert.setContentText("Vẫn còn dịch vụ loại " + loaiDichVu.getTenLoaiDichVu() + "!");
-						alert.showAndWait();
-					}
-				} catch (SQLException SQLException) {
-					Alert alert = new Alert(AlertType.INFORMATION);
-					alert.setTitle("Lỗi");
-					alert.setHeaderText("Không thể xóa loại dịch vụ!");
-					alert.setContentText("Lỗi database!");
-					alert.showAndWait();
-				}
-			}
-		} catch (NullPointerException NullPointerException) {
-			Alert alert = new Alert(AlertType.INFORMATION);
-			alert.setTitle("Lỗi");
-			alert.setHeaderText("Không thể xóa loại dịch vụ!");
-			alert.setContentText("Vui lòng chọn loại dịch vụ cần xóa!");
-			alert.showAndWait();
->>>>>>> Stashed changes
-		}
-	}
-
+  
 	// Xóa loại dịch vụ
 	public void handleXoaLoaiDichVu(ActionEvent e) {
 		try {
