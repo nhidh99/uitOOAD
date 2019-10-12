@@ -2,23 +2,66 @@ package controller;
 
 import java.net.URL;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
 import BUS.*;
 import DTO.*;
+import controller.nhanvien.SuaNhanVienController;
+import controller.nhanvien.TuyChinhNhanVienController;
+import custom.control.ListRoomDetailPane;
+import custom.control.RoomDetailPane;
+import helper.DateFormatHelper;
+import helper.MoneyFormatHelper;
+import helper.PopUpStageHelper;
 import javafx.beans.property.ReadOnlyObjectWrapper;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.TilePane;
+import javafx.stage.Stage;
+import javafx.util.Callback;
 
 public class MainController implements Initializable {
+
+	@FXML
+	TilePane tpPhong;
+
+	@FXML
+	TabPane tpPhong_ChiTietThue;
+
+	@FXML
+	ComboBox<LoaiPhongDTO> cbbTC_LoaiPhong;
+
+	@FXML
+	DatePicker dpTC_NgayNhan;
+	@FXML
+	DatePicker dpHD_NgayLap;
+	@FXML
+	DatePicker dpPT_NgayLap;
+
+	@FXML
+	Spinner<Integer> snTC_SoDem;
+
+	@FXML
+	Button btnPhong_SuaPhong;
+	@FXML
+	Button btnPhong_DoiPhong;
+	@FXML
+	Button btnPhong_XoaPhong;
+
 	@FXML
 	TableView<NhanVienDTO> tvNhanVien;
 	@FXML
@@ -36,7 +79,25 @@ public class MainController implements Initializable {
 	@FXML
 	TableColumn<NhanVienDTO, String> tcNV_Email;
 	@FXML
+	TableColumn<NhanVienDTO, String> tcNV_TaiKhoan;
+	@FXML
 	TableColumn<NhanVienDTO, String> tcNV_ChucVu;
+
+	@FXML
+	Label lbTC_DonGia;
+
+	@FXML
+	Label lbPhong_MaPhong;
+	@FXML
+	Label lbPhong_TinhTrang;
+	@FXML
+	Label lbPhong_KhachToiDa;
+	@FXML
+	Label lbPhong_LoaiPhong;
+	@FXML
+	Label lbPhong_DonGia;
+	@FXML
+	Label lbPhong_GhiChu;
 
 	@FXML
 	Label lbTS_SoNgayTraCoc;
@@ -48,6 +109,21 @@ public class MainController implements Initializable {
 	Label lbTS_QuaKhach;
 	@FXML
 	Label lbTS_TraPhongTre;
+
+	@FXML
+	Label lbNV_MaNhanVien;
+	@FXML
+	Label lbNV_TenNhanVien;
+	@FXML
+	Label lbNV_CMND;
+	@FXML
+	Label lbNV_DiaChi;
+	@FXML
+	Label lbNV_Email;
+	@FXML
+	Label lbNV_DienThoai;
+	@FXML
+	Label lbNV_ChucVu;
 
 	@FXML
 	TableView<LoaiDichVuDTO> tvLoaiDichVu;
@@ -85,9 +161,14 @@ public class MainController implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		initTables();
+		initComboboxes();
+		initSpinners();
+		initDatePickers();
 		loadTables();
+		loadComboboxes();
+		loadNhanVienByUsername("nhidh99");
 	}
-	
+
 	private boolean confirmDialog(String content) {
 		Alert dialog = new Alert(AlertType.CONFIRMATION);
 		dialog.setTitle("Xác nhận");
@@ -100,18 +181,85 @@ public class MainController implements Initializable {
 	}
 
 	private void initTables() {
+		initTablePhong();
 		initTableNhanVien();
 		initTableLoaiPhong();
 		initTableNhaCungCap();
 		initTableLoaiDichVu();
 	}
 
+	private void initSpinners() {
+		snTC_SoDem.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 30, 1));
+	}
+
+	private void initComboboxes() {
+		cbbTC_LoaiPhong.valueProperty().addListener(new ChangeListener<LoaiPhongDTO>() {
+			@Override
+			public void changed(ObservableValue<? extends LoaiPhongDTO> loaiPhong, LoaiPhongDTO loaiPhongCu,
+					LoaiPhongDTO loaiPhongMoi) {
+				if (loaiPhongMoi == null) {
+					lbTC_DonGia.setText("Theo loại phòng");
+				} else
+					lbTC_DonGia.setText(MoneyFormatHelper.format(loaiPhongMoi.getDonGia(), "VND"));
+			}
+		});
+	}
+
+	private void initDatePickers() {
+		dpTC_NgayNhan.setConverter(DateFormatHelper.getDatePickerFormatter("dd/MM/yyyy"));
+		dpHD_NgayLap.setConverter(DateFormatHelper.getDatePickerFormatter("dd/MM/yyyy"));
+		dpPT_NgayLap.setConverter(DateFormatHelper.getDatePickerFormatter("dd/MM/yyyy"));
+		dpTC_NgayNhan.setValue(LocalDate.now());
+		dpHD_NgayLap.setValue(LocalDate.now());
+		dpPT_NgayLap.setValue(LocalDate.now());
+	}
+
+	private void loadComboboxes() {
+		try {
+			ObservableList<LoaiPhongDTO> dsLoaiPhong = FXCollections.observableArrayList();
+			dsLoaiPhong.add(null);
+			for (LoaiPhongDTO loaiPhong : LoaiPhongBUS.getDSLoaiPhong()) {
+				dsLoaiPhong.add(loaiPhong);
+			}
+
+			Callback<ListView<LoaiPhongDTO>, ListCell<LoaiPhongDTO>> cellFactory = new Callback<ListView<LoaiPhongDTO>, ListCell<LoaiPhongDTO>>() {
+				@Override
+				public ListCell<LoaiPhongDTO> call(ListView<LoaiPhongDTO> lvLoaiPhong) {
+					final ListCell<LoaiPhongDTO> lcLoaiPhong = new ListCell<LoaiPhongDTO>() {
+						@Override
+						protected void updateItem(LoaiPhongDTO loaiPhong, boolean empty) {
+							super.updateItem(loaiPhong, empty);
+							if (loaiPhong != null) {
+								this.setText(loaiPhong.getTenLoaiPhong());
+							} else
+								this.setText("Bất kì");
+						}
+					};
+					return lcLoaiPhong;
+				}
+			};
+
+			cbbTC_LoaiPhong.setButtonCell(cellFactory.call(null));
+			cbbTC_LoaiPhong.setCellFactory(cellFactory);
+			cbbTC_LoaiPhong.setItems(dsLoaiPhong);
+			cbbTC_LoaiPhong.getSelectionModel().selectFirst();
+		} catch (SQLException e) {
+			// do nothing :)
+		}
+	}
+
 	private void loadTables() {
+		loadTablePhong();
 		loadTableNhanVien();
 		loadTableLoaiPhong();
 		loadTableNhaCungCap();
 		loadTableLoaiDichVu();
 		loadTableThamSo();
+	}
+
+	private void initTablePhong() {
+		tpPhong.setHgap(2);
+		tpPhong.setVgap(20);
 	}
 
 	private void initTableNhanVien() {
@@ -122,6 +270,7 @@ public class MainController implements Initializable {
 		tcNV_CMND.setCellValueFactory(new PropertyValueFactory<>("CMND"));
 		tcNV_DiaChi.setCellValueFactory(new PropertyValueFactory<>("diaChi"));
 		tcNV_Email.setCellValueFactory(new PropertyValueFactory<>("email"));
+		tcNV_TaiKhoan.setCellValueFactory(new PropertyValueFactory<>("taiKhoan"));
 		tcNV_SoDienThoai.setCellValueFactory(new PropertyValueFactory<>("soDienThoai"));
 		tcNV_ChucVu.setCellValueFactory(new PropertyValueFactory<>("chucVu"));
 	}
@@ -150,6 +299,67 @@ public class MainController implements Initializable {
 		tcNCC_SoDienThoai.setCellValueFactory(new PropertyValueFactory<>("soDienThoai"));
 	}
 
+	public void loadTablePhong() {
+		class HandleRoomClicked {
+			public void handleChiTietPhong(PhongDTO phong) {
+				showChiTietPhong(phong);
+				updateControlsByTinhTrang(phong.getTinhTrang().getTenTinhTrang());
+			}
+
+			private void showChiTietPhong(PhongDTO phong) {
+				lbPhong_MaPhong.setText(phong.getMaPhong());
+				lbPhong_TinhTrang.setText(phong.getTinhTrang().getTenTinhTrang());
+				lbPhong_KhachToiDa.setText(phong.getLoaiPhong().getSoKhachToiDa().toString());
+				lbPhong_LoaiPhong.setText(phong.getLoaiPhong().getTenLoaiPhong());
+				lbPhong_GhiChu.setText(phong.getGhiChu());
+				lbPhong_DonGia.setText(MoneyFormatHelper.format(phong.getLoaiPhong().getDonGia(), "VND"));
+			}
+
+			private void updateControlsByTinhTrang(String tinhTrangPhong) {
+				try {
+					if (tinhTrangPhong.equals("Thuê")) {
+						tpPhong_ChiTietThue.setVisible(true);
+						btnPhong_DoiPhong.setDisable(false);
+						btnPhong_SuaPhong.setDisable(true);
+						btnPhong_XoaPhong.setDisable(true);
+					} else {
+						tpPhong_ChiTietThue.setVisible(false);
+						btnPhong_DoiPhong.setDisable(true);
+						btnPhong_SuaPhong.setDisable(false);
+						btnPhong_XoaPhong.setDisable(false);
+					}
+				} catch (Exception ex) {
+					// do nothing :)
+				}
+			}
+		}
+
+		try {
+			List<PhongDTO> dsPhong = PhongBUS.getDSPhong();
+			ListRoomDetailPane listPanes = new ListRoomDetailPane(dsPhong);
+			HandleRoomClicked handler = new HandleRoomClicked();
+
+			for (RoomDetailPane pane : listPanes.getPanes()) {
+				pane.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+					@Override
+					public void handle(MouseEvent event) {
+						PhongDTO phong = pane.getPhong();
+						handler.handleChiTietPhong(phong);
+					}
+				});
+				tpPhong.getChildren().add(pane);
+			}
+			PhongDTO phong = listPanes.getPanes().get(0).getPhong();
+			handler.handleChiTietPhong(phong);
+		} catch (SQLException SQLException) {
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Lỗi");
+			alert.setHeaderText("Không thể tải danh sách phòng khách sạn!");
+			alert.setContentText("Lỗi database!");
+			alert.showAndWait();
+		}
+	}
+
 	public void loadTableNhanVien() {
 		try {
 			ObservableList<NhanVienDTO> dsNhanVien = FXCollections.observableArrayList();
@@ -160,7 +370,7 @@ public class MainController implements Initializable {
 		} catch (SQLException SQLException) {
 			Alert alert = new Alert(AlertType.INFORMATION);
 			alert.setTitle("Lỗi");
-			alert.setHeaderText("Không thể tải danh sách loại dịch vụ!");
+			alert.setHeaderText("Không thể tải danh sách nhân viên!");
 			alert.setContentText("Lỗi database!");
 			alert.showAndWait();
 		}
@@ -226,6 +436,25 @@ public class MainController implements Initializable {
 			Alert alert = new Alert(AlertType.INFORMATION);
 			alert.setTitle("Lỗi");
 			alert.setHeaderText("Không thể tải danh sách tham số!");
+			alert.setContentText("Lỗi database!");
+			alert.showAndWait();
+		}
+	}
+
+	public void loadNhanVienByUsername(String username) {
+		try {
+			NhanVienDTO nhanVien = NhanVienBUS.getNhanVienByUsername(username);
+			lbNV_MaNhanVien.setText(nhanVien.getMaNhanVien().toString());
+			lbNV_TenNhanVien.setText(nhanVien.getTenNhanVien());
+			lbNV_CMND.setText(nhanVien.getCMND());
+			lbNV_DiaChi.setText(nhanVien.getDiaChi());
+			lbNV_DienThoai.setText(nhanVien.getSoDienThoai());
+			lbNV_Email.setText(nhanVien.getEmail());
+			lbNV_ChucVu.setText(nhanVien.getChucVu());
+		} catch (SQLException SQLException) {
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Lỗi");
+			alert.setHeaderText("Không thể tải thông tin nhân viên!");
 			alert.setContentText("Lỗi database!");
 			alert.showAndWait();
 		}
@@ -301,6 +530,107 @@ public class MainController implements Initializable {
 			alert.setTitle("Lỗi");
 			alert.setHeaderText("Không thể xóa loại dịch vụ!");
 			alert.setContentText("Vui lòng chọn loại dịch vụ cần xóa!");
+			alert.showAndWait();
+		}
+	}
+
+	// Thêm tài khoản
+	public void handleThemNhanVien(ActionEvent e) {
+		String link = "/application/themNhanVien.fxml";
+		Stage popUpStage = PopUpStageHelper.createPopUpStage(link, 980, 460);
+		popUpStage.getScene().setUserData(this);
+		popUpStage.showAndWait();
+	}
+
+	public void handleSuaNhanVien(ActionEvent e) {
+		try {
+			NhanVienDTO nhanVien = tvNhanVien.getSelectionModel().getSelectedItem();
+			if (nhanVien == null)
+				throw new NullPointerException();
+
+			if (nhanVien.getMaNhanVien().toString().equals(lbNV_MaNhanVien.getText())) {
+				Alert alert = new Alert(AlertType.INFORMATION);
+				alert.setTitle("Lỗi");
+				alert.setHeaderText("Không thể sửa thông tin của mình tại đây!");
+				alert.setContentText("Chỉ có thể sửa thông tin của mình tại thông tin nhân viên");
+				alert.showAndWait();
+			} else {
+				String link = "/application/suaNhanVien.fxml";
+				Stage popUpStage = PopUpStageHelper.createPopUpStage(link, 630, 630);
+				FXMLLoader loader = (FXMLLoader) popUpStage.getUserData();
+				SuaNhanVienController controller = loader.getController();
+				controller.initialize(nhanVien);
+				popUpStage.getScene().setUserData(this);
+				popUpStage.showAndWait();
+			}
+		} catch (NullPointerException NullPointerException) {
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Lỗi");
+			alert.setHeaderText("Không thể sửa nhân viên!");
+			alert.setContentText("Vui lòng chọn nhân viên cần sửa!");
+			alert.showAndWait();
+		}
+	}
+
+	public void handleTuyChinhNhanVien(ActionEvent e) {
+		try {
+			NhanVienDTO nhanVien = NhanVienBUS.getNhanVienById(Integer.parseInt(lbNV_MaNhanVien.getText()));
+			String link = "/application/tuyChinhNhanVien.fxml";
+			Stage popUpStage = PopUpStageHelper.createPopUpStage(link, 980, 460);
+			FXMLLoader loader = (FXMLLoader) popUpStage.getUserData();
+			TuyChinhNhanVienController controller = loader.getController();
+			controller.initialize(nhanVien);
+			popUpStage.getScene().setUserData(this);
+			popUpStage.showAndWait();
+		} catch (SQLException SQLException) {
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Lỗi");
+			alert.setHeaderText("Không thể tải thông tin nhân viên!");
+			alert.setContentText("Lỗi database!");
+			alert.showAndWait();
+		}
+	}
+
+	public void handleXoaNhanVien(ActionEvent e) {
+		try {
+			NhanVienDTO nhanVien = tvNhanVien.getSelectionModel().getSelectedItem();
+			if (nhanVien == null)
+				throw new NullPointerException();
+
+			if (nhanVien.getMaNhanVien().toString().equals(lbNV_MaNhanVien.getText())) {
+				Alert alert = new Alert(AlertType.INFORMATION);
+				alert.setTitle("Lỗi");
+				alert.setHeaderText("Không thể xoá tài khoản của mình!");
+				alert.showAndWait();
+				return;
+			}
+
+			if (confirmDialog(String.format("Xác nhận xoá %s %s?", nhanVien.getChucVu(), nhanVien.getTenNhanVien()))) {
+				if (NhanVienBUS.deleteNhanVien(nhanVien.getMaNhanVien())) {
+					Alert alert = new Alert(AlertType.INFORMATION);
+					alert.setTitle("Thành công");
+					alert.setHeaderText("Xóa nhân viên thành công!");
+					alert.setContentText(String.format("Đã xoá thành công %s %s.", nhanVien.getChucVu(), nhanVien.getTenNhanVien()));
+					alert.showAndWait();
+					loadTableNhanVien();
+				} else {
+					Alert alert = new Alert(AlertType.INFORMATION);
+					alert.setTitle("Lỗi");
+					alert.setHeaderText("Không thể xóa nhân viên!");
+					alert.showAndWait();
+				}
+			}
+		} catch (SQLException SQLException) {
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Lỗi");
+			alert.setHeaderText("Không thể xóa nhân viên!");
+			alert.setContentText("Lỗi database!");
+			alert.showAndWait();
+		} catch (NullPointerException NullPointerException) {
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Lỗi");
+			alert.setHeaderText("Không thể xoá nhân viên!");
+			alert.setContentText("Vui lòng chọn nhân viên cần xoá!");
 			alert.showAndWait();
 		}
 	}

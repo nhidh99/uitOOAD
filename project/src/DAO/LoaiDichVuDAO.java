@@ -30,12 +30,12 @@ public class LoaiDichVuDAO {
 
 	public static boolean checkLoaiDichVu(Integer maLoaiDichVu) throws SQLException {
 		Connection conn = DBHelper.getConnection();
-		String query = "SELECT EXISTS (SELECT 1 FROM DichVu WHERE MaLoaiDichVu = ? LIMIT 1) AS 'TonTai'";
+		String query = "SELECT EXISTS (SELECT 1 FROM DichVu WHERE MaLoaiDichVu = ? LIMIT 1)";
 		PreparedStatement statement = conn.prepareStatement(query);
 		statement.setInt(1, maLoaiDichVu);
 		ResultSet rs = statement.executeQuery();
 		rs.next();
-		boolean isExist = rs.getBoolean("TonTai");
+		boolean isExist = rs.getBoolean(1);
 		conn.close();
 		return isExist;
 	}
