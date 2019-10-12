@@ -3,7 +3,7 @@
 }
 
 .date-picker, .spinner, .combo-box {
-	-fx-font-size: 18;
+	-fx-font-size: 17;
 }
 
 .table-view .table-column {
