@@ -17,4 +17,8 @@ public class LoaiDichVuBUS {
 		}
 		return LoaiDichVuDAO.deleteLoaiDichVu(maLoaiDichVu);
 	}
+
+	public static LoaiDichVuDTO getLoaiDichVuById(Integer maLoaiDichVu) throws SQLException {
+		return LoaiDichVuDAO.getLoaiDichVuById(maLoaiDichVu);
+	}
 }

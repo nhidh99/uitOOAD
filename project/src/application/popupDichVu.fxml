@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Spinner?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.dichvu.DichVuController">
+   <center>
+      <AnchorPane prefHeight="200.0" prefWidth="500.0" BorderPane.alignment="CENTER">
+         <children>
+            <GridPane alignment="CENTER" hgap="10.0" layoutX="30.0" layoutY="125.0" prefHeight="484.0" prefWidth="574.0" vgap="15.0" AnchorPane.bottomAnchor="18.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="-74.0" AnchorPane.topAnchor="125.0">
+              <columnConstraints>
+                <ColumnConstraints />
+                <ColumnConstraints />
+                  <ColumnConstraints />
+                  <ColumnConstraints />
+                  <ColumnConstraints />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints maxHeight="37.0" minHeight="0.0" prefHeight="0.0" />
+                <RowConstraints maxHeight="37.0" minHeight="-Infinity" prefHeight="37.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="37.0" minHeight="-Infinity" prefHeight="37.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="37.0" minHeight="-Infinity" prefHeight="37.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="37.0" minHeight="-Infinity" prefHeight="37.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="37.0" minHeight="-Infinity" prefHeight="37.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="0.0" minHeight="-Infinity" prefHeight="0.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="0.0" minHeight="-Infinity" prefHeight="0.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="0.0" minHeight="-Infinity" prefHeight="0.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Label text="Tên dịch vụ: " GridPane.columnIndex="1" GridPane.rowIndex="1">
+                     <font>
+                        <Font name="System Bold" size="20.0" />
+                     </font>
+                     <GridPane.margin>
+                        <Insets />
+                     </GridPane.margin>
+                  </Label>
+                  <Label text="Đơn vị tính: " GridPane.columnIndex="1" GridPane.rowIndex="2">
+                     <font>
+                        <Font name="System Bold" size="20.0" />
+                     </font>
+                  </Label>
+                  <Label text="Đơn giá: " GridPane.columnIndex="1" GridPane.rowIndex="3">
+                     <font>
+                        <Font name="System Bold" size="20.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="tfTenDichVu" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                     <font>
+                        <Font size="16.0" />
+                     </font></TextField>
+                  <TextField fx:id="tfDonViTinh" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                     <font>
+                        <Font size="16.0" />
+                     </font></TextField>
+                  <TextField fx:id="tfDonGia" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="3">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </TextField>
+                  <ComboBox fx:id="cbbTonKho" prefWidth="200.0" style="-fx-font-size: 16;" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+                  <Spinner fx:id="snSoLuongTon" prefWidth="200.0" style="-fx-font-size: 16;" GridPane.columnIndex="2" GridPane.rowIndex="5" />
+                  <ComboBox fx:id="cbbLoaiDichVu" prefWidth="200.0" style="-fx-font-size: 16;" GridPane.columnIndex="2" GridPane.rowIndex="6" />
+                  <ComboBox fx:id="cbbNhaCungCap" prefWidth="200.0" style="-fx-font-size: 16;" GridPane.columnIndex="2" GridPane.rowIndex="7" />
+                  <Label text="🔖" GridPane.rowIndex="1">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Label>
+                  <Label text="🗳" GridPane.rowIndex="2">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Label>
+                  <Label text="💰" GridPane.rowIndex="3">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Label>
+                  <Label text="📦" GridPane.rowIndex="5">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Label>
+                  <Label text="Số lượng tồn: " GridPane.columnIndex="1" GridPane.rowIndex="5">
+                     <font>
+                        <Font name="System Bold" size="20.0" />
+                     </font>
+                  </Label>
+                  <Label text="🎲" GridPane.rowIndex="6">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Label>
+                  <Label text="Loại dịch vụ: " GridPane.columnIndex="1" GridPane.rowIndex="6">
+                     <font>
+                        <Font name="System Bold" size="20.0" />
+                     </font>
+                  </Label>
+                  <Label text="🚛" GridPane.rowIndex="7">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Label>
+                  <Label text="Nhà cung cấp: " GridPane.columnIndex="1" GridPane.rowIndex="7">
+                     <font>
+                        <Font name="System Bold" size="20.0" />
+                     </font>
+                  </Label>
+                  <Label text="Tồn kho:" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                     <font>
+                        <Font name="System Bold" size="20.0" />
+                     </font>
+                  </Label>
+                  <Label text="🎁" GridPane.rowIndex="4">
+                     <font>
+                        <Font name="System Bold" size="20.0" />
+                     </font>
+                  </Label>
+               </children>
+            </GridPane>
+         </children>
+      </AnchorPane>
+   </center>
+   <top>
+      <Label fx:id="lbTieuDe" contentDisplay="CENTER" text="🎲 THÊM DỊCH VỤ" BorderPane.alignment="CENTER">
+         <font>
+            <Font name="System Bold" size="36.0" />
+         </font>
+         <BorderPane.margin>
+            <Insets top="20.0" />
+         </BorderPane.margin>
+      </Label>
+   </top>
+   <bottom>
+      <HBox alignment="CENTER" prefHeight="81.0" prefWidth="739.0" spacing="20.0" BorderPane.alignment="CENTER">
+         <children>
+            <Button mnemonicParsing="false" onAction="#handleXacNhan" prefHeight="44.0" prefWidth="180.0" text="✔ XÁC NHẬN" textFill="#29b20a">
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font>
+            </Button>
+            <Button mnemonicParsing="false" onAction="#handleHuyBo" prefHeight="44.0" prefWidth="180.0" text="❌ HỦY BỎ" textFill="BROWN">
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font>
+            </Button>
+         </children>
+         <BorderPane.margin>
+            <Insets bottom="10.0" />
+         </BorderPane.margin>
+      </HBox>
+   </bottom>
+</BorderPane>

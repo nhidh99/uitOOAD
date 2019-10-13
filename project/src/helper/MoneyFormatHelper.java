@@ -8,4 +8,10 @@ public class MoneyFormatHelper {
 		String output = formatter.format(value) + " " + unit;
 		return output;
 	}
+	
+	public static String format(Integer value) {
+		DecimalFormat formatter = new DecimalFormat("#,###");
+		String output = formatter.format(value);
+		return output;
+	}
 }

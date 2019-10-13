@@ -49,4 +49,15 @@ public class LoaiDichVuDAO {
 		conn.close();
 		return true;
 	}
+
+	public static LoaiDichVuDTO getLoaiDichVuById(Integer maLoaiDichVu) throws SQLException {
+		Connection conn = DBHelper.getConnection();
+		Statement statement = conn.createStatement();
+		String query = "SELECT * FROM LoaiDichVu WHERE MaLoaiDichVu = " + maLoaiDichVu;
+		ResultSet rs = statement.executeQuery(query);
+		rs.next();
+		LoaiDichVuDTO output = new LoaiDichVuDTO(maLoaiDichVu, rs.getString("TenLoaiDichVu"));
+		conn.close();
+		return output;
+	}
 }

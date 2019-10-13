@@ -40,4 +40,8 @@ public class NhanVienBUS {
 	public static boolean deleteNhanVien(Integer id) throws SQLException {
 		return NhanVienDAO.deleteNhanVien(id);
 	}
+	
+	public static boolean checkLoginNhanVien(String username, String password) throws SQLException {
+		return NhanVienDAO.checkLoginNhanVien(username, password);
+	}
 }
