@@ -40,149 +40,12 @@
                         <Insets left="20.0" />
                      </BorderPane.margin>
                      <center>
-                        <ScrollPane hbarPolicy="NEVER" prefHeight="662.0" prefWidth="398.0" BorderPane.alignment="CENTER">
+                        <ScrollPane hbarPolicy="NEVER" prefHeight="602.0" prefWidth="434.0" BorderPane.alignment="CENTER">
                            <content>
-                              <TilePane hgap="30.0" prefWidth="395.0" vgap="30.0">
+                              <TilePane fx:id="tpPhong" hgap="30.0" prefWidth="395.0" vgap="30.0">
                                  <padding>
                                     <Insets bottom="15.0" left="30.0" right="30.0" top="15.0" />
                                  </padding>
-                                 <children>
-                                    <ImageView fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@room.png" />
-                                       </image>
-                                    </ImageView>
-                                    <ImageView fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@room.png" />
-                                       </image>
-                                    </ImageView>
-                                    <ImageView fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@room.png" />
-                                       </image>
-                                    </ImageView>
-                                    <ImageView fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@room.png" />
-                                       </image>
-                                    </ImageView>
-                                    <ImageView fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@room.png" />
-                                       </image>
-                                    </ImageView>
-                                    <ImageView fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@room.png" />
-                                       </image>
-                                    </ImageView>
-                                    <ImageView fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@room.png" />
-                                       </image>
-                                    </ImageView>
-                                    <ImageView fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@room.png" />
-                                       </image>
-                                    </ImageView>
-                                    <ImageView fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@room.png" />
-                                       </image>
-                                    </ImageView>
-                                    <ImageView fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@room.png" />
-                                       </image>
-                                    </ImageView>
-                                    <ImageView fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@room.png" />
-                                       </image>
-                                    </ImageView>
-                                    <ImageView fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@room.png" />
-                                       </image>
-                                    </ImageView>
-                                    <ImageView fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@room.png" />
-                                       </image>
-                                    </ImageView>
-                                    <ImageView fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@room.png" />
-                                       </image>
-                                    </ImageView>
-                                    <ImageView fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@room.png" />
-                                       </image>
-                                    </ImageView>
-                                    <ImageView fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@room.png" />
-                                       </image>
-                                    </ImageView>
-                                    <ImageView fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@room.png" />
-                                       </image>
-                                    </ImageView>
-                                    <ImageView fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@room.png" />
-                                       </image>
-                                    </ImageView>
-                                    <ImageView fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@room.png" />
-                                       </image>
-                                    </ImageView>
-                                    <ImageView fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@room.png" />
-                                       </image>
-                                    </ImageView>
-                                    <ImageView fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@room.png" />
-                                       </image>
-                                    </ImageView>
-                                    <ImageView fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@room.png" />
-                                       </image>
-                                    </ImageView>
-                                    <ImageView fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@room.png" />
-                                       </image>
-                                    </ImageView>
-                                    <ImageView fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@room.png" />
-                                       </image>
-                                    </ImageView>
-                                    <ImageView fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@room.png" />
-                                       </image>
-                                    </ImageView>
-                                    <ImageView fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@room.png" />
-                                       </image>
-                                    </ImageView>
-                                    <ImageView fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@room.png" />
-                                       </image>
-                                    </ImageView>
-                                 </children>
                               </TilePane>
                            </content>
                            <BorderPane.margin>
@@ -196,7 +59,7 @@
                               <Insets bottom="20.0" />
                            </BorderPane.margin>
                            <children>
-                              <Button fx:id="btnPhong_Them" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="32.0" prefWidth="662.0" text="🏡 THÊM PHÒNG" textFill="#00868b">
+                              <Button fx:id="btnPhong_ThemPhong" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="32.0" prefWidth="662.0" text="🏡 THÊM PHÒNG" textFill="#00868b">
                                  <effect>
                                     <Blend />
                                  </effect>
@@ -250,11 +113,11 @@
                                     <Insets top="15.0" />
                                  </BorderPane.margin>
                                  <children>
-                                    <GridPane fx:id="main" alignment="CENTER" hgap="15.0" layoutX="0.800000011920929" layoutY="0.5" prefHeight="190.0" prefWidth="464.0" scaleShape="false" vgap="15.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="5.0">
+                                    <GridPane alignment="CENTER" hgap="15.0" layoutX="0.800000011920929" layoutY="0.5" prefHeight="190.0" prefWidth="464.0" scaleShape="false" vgap="15.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="5.0">
                                       <columnConstraints>
                                           <ColumnConstraints halignment="RIGHT" hgrow="NEVER" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="26.0" />
                                         <ColumnConstraints halignment="LEFT" hgrow="NEVER" maxWidth="-Infinity" minWidth="-Infinity" />
-                                        <ColumnConstraints hgrow="NEVER" minWidth="65.0" />
+                                        <ColumnConstraints hgrow="NEVER" maxWidth="-Infinity" minWidth="65.0" />
                                           <ColumnConstraints fillWidth="false" halignment="RIGHT" hgrow="NEVER" />
                                           <ColumnConstraints fillWidth="false" halignment="LEFT" hgrow="NEVER" minWidth="67.99998779296874" />
                                           <ColumnConstraints fillWidth="false" hgrow="NEVER" maxWidth="-Infinity" minWidth="100.0" prefWidth="220.0" />
@@ -266,7 +129,7 @@
                                           <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="35.0" valignment="CENTER" vgrow="SOMETIMES" />
                                       </rowConstraints>
                                        <children>
-                                          <Label text="Số phòng:" GridPane.columnIndex="1">
+                                          <Label text="Mã phòng:" GridPane.columnIndex="1">
                                              <font>
                                                 <Font name="System Bold" size="20.0" />
                                              </font></Label>
@@ -278,15 +141,15 @@
                                              <font>
                                                 <Font name="System Bold" size="20.0" />
                                              </font></Label>
-                                          <Label text="101" GridPane.columnIndex="2">
+                                          <Label fx:id="lbPhong_MaPhong" text="101" GridPane.columnIndex="2">
                                              <font>
                                                 <Font size="20.0" />
                                              </font></Label>
-                                          <Label text="Thuê" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                                          <Label fx:id="lbPhong_TinhTrang" text="Thuê" GridPane.columnIndex="2" GridPane.rowIndex="1">
                                              <font>
                                                 <Font size="20.0" />
                                              </font></Label>
-                                          <Label text="Double" GridPane.columnIndex="5">
+                                          <Label fx:id="lbPhong_LoaiPhong" text="Double" GridPane.columnIndex="5">
                                              <font>
                                                 <Font size="20.0" />
                                              </font></Label>
@@ -310,7 +173,7 @@
                                                 <Font name="System Bold" size="20.0" />
                                              </font>
                                           </Label>
-                                          <Label text="4" GridPane.columnIndex="2" GridPane.rowIndex="2" GridPane.valignment="TOP">
+                                          <Label fx:id="lbPhong_KhachToiDa" text="4" GridPane.columnIndex="2" GridPane.rowIndex="2" GridPane.valignment="TOP">
                                              <GridPane.margin>
                                                 <Insets />
                                              </GridPane.margin>
@@ -318,11 +181,11 @@
                                                 <Font size="20.0" />
                                              </font>
                                           </Label>
-                                          <Label text="300,000 VND" GridPane.columnIndex="5" GridPane.rowIndex="1">
+                                          <Label fx:id="lbPhong_DonGia" text="300,000 VND" GridPane.columnIndex="5" GridPane.rowIndex="1">
                                              <font>
                                                 <Font size="20.0" />
                                              </font></Label>
-                                          <Label minWidth="150.0" text="Phòng dành riêng cho nhân viên khách sạn" wrapText="true" GridPane.columnIndex="5" GridPane.rowIndex="2" GridPane.valignment="TOP">
+                                          <Label fx:id="lbPhong_GhiChu" minWidth="150.0" text="Phòng dành riêng cho nhân viên khách sạn" wrapText="true" GridPane.columnIndex="5" GridPane.rowIndex="2" GridPane.valignment="TOP">
                                              <GridPane.margin>
                                                 <Insets />
                                              </GridPane.margin>
@@ -332,15 +195,15 @@
                                           </Label>
                                           <HBox alignment="CENTER" prefHeight="40.0" prefWidth="608.0" spacing="10.0" GridPane.columnSpan="6" GridPane.rowIndex="3">
                                              <children>
-                                                <Button fx:id="btnPhong_Xoa" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefWidth="220.0" text="🗑 XOÁ PHÒNG" textAlignment="CENTER" textFill="BROWN">
+                                                <Button fx:id="btnPhong_XoaPhong" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefWidth="220.0" text="🗑 XOÁ PHÒNG" textAlignment="CENTER" textFill="BROWN">
                                                    <font>
                                                       <Font name="System Bold" size="20.0" />
                                                    </font></Button>
-                                                <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefWidth="220.0" text="⚙ SỬA PHÒNG" textAlignment="CENTER" textFill="#00868b">
+                                                <Button fx:id="btnPhong_SuaPhong" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefWidth="220.0" text="⚙ SỬA PHÒNG" textAlignment="CENTER" textFill="#00868b">
                                                    <font>
                                                       <Font name="System Bold" size="20.0" />
                                                    </font></Button>
-                                                <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="32.0" prefWidth="220.0" text="🔄 ĐỔI PHÒNG" textAlignment="CENTER" textFill="#427921">
+                                                <Button fx:id="btnPhong_DoiPhong" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="32.0" prefWidth="220.0" text="🔄 ĐỔI PHÒNG" textAlignment="CENTER" textFill="#427921">
                                                    <font>
                                                       <Font name="System Bold" size="20.0" />
                                                    </font></Button>
@@ -402,7 +265,7 @@
                         </BorderPane>
                      </top>
                      <center>
-                        <TabPane prefHeight="454.0" prefWidth="614.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
+                        <TabPane fx:id="tpPhong_ChiTiet" prefHeight="454.0" prefWidth="614.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
                           <tabs>
                               <Tab text="📋 THÔNG TIN THUÊ">
                                  <content>
@@ -715,14 +578,14 @@
                                  <content>
                                     <BorderPane prefHeight="200.0" prefWidth="200.0">
                                        <center>
-                                          <TableView prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                                          <TableView fx:id="tvPTP_DichVu" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                                             <columns>
-                                              <TableColumn minWidth="-1.0" prefWidth="-1.0" text="STT" />
-                                              <TableColumn minWidth="-1.0" prefWidth="-1.0" text="Dịch vụ" />
-                                                <TableColumn minWidth="-1.0" prefWidth="-1.0" text="Số lượng" />
-                                                <TableColumn minWidth="-1.0" prefWidth="-1.0" text="Đơn vị tính" />
-                                                <TableColumn minWidth="-1.0" prefWidth="-1.0" text="Đơn giá" />
-                                                <TableColumn minWidth="-1.0" prefWidth="-1.0" text="Thành tiền" />
+                                              <TableColumn fx:id="tcPTP_DichVu_STT" minWidth="-1.0" prefWidth="-1.0" text="STT" />
+                                              <TableColumn fx:id="tcPTP_DichVu_Ten" minWidth="-1.0" prefWidth="-1.0" text="Dịch vụ" />
+                                                <TableColumn fx:id="tcPTP_DichVu_SoLuong" minWidth="-1.0" prefWidth="-1.0" text="Số lượng" />
+                                                <TableColumn fx:id="tcPTP_DichVu_DonViTinh" minWidth="-1.0" prefWidth="-1.0" text="Đơn vị tính" />
+                                                <TableColumn fx:id="tcPTP_DichVu_DonGia" minWidth="-1.0" prefWidth="-1.0" text="Đơn giá (VND)" />
+                                                <TableColumn fx:id="tcPTP_DichVu_ThanhTien" minWidth="-1.0" prefWidth="-1.0" text="Thành tiền (VND)" />
                                             </columns>
                                              <columnResizePolicy>
                                                 <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -737,15 +600,15 @@
                                              <children>
                                                 <HBox alignment="CENTER" layoutY="117.0" spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                    <children>
-                                                      <Button alignment="CENTER" mnemonicParsing="false" prefWidth="220.0" text="📦 THÊM DỊCH VỤ" textFill="#1d6666">
+                                                      <Button alignment="CENTER" mnemonicParsing="false" onAction="#handleThemDichVu_PTP" prefWidth="220.0" text="📦 THÊM DỊCH VỤ" textFill="#1d6666">
                                                          <font>
                                                             <Font name="System Bold" size="20.0" />
                                                          </font></Button>
-                                                      <Button alignment="CENTER" mnemonicParsing="false" prefWidth="220.0" text="🗑 XOÁ DỊCH VỤ" textFill="BROWN">
+                                                      <Button alignment="CENTER" mnemonicParsing="false" onAction="#handleXoaDichVu_PTP" prefWidth="220.0" text="🗑 XOÁ DỊCH VỤ" textFill="BROWN">
                                                          <font>
                                                             <Font name="System Bold" size="20.0" />
                                                          </font></Button>
-                                                      <Button alignment="CENTER" mnemonicParsing="false" prefWidth="220.0" text="⚙ SỬA DỊCH VỤ" textFill="#427921">
+                                                      <Button fx:id="handleSuaDichVu_PTP" alignment="CENTER" mnemonicParsing="false" prefWidth="220.0" text="⚙ SỬA DỊCH VỤ" textFill="#427921">
                                                          <font>
                                                             <Font name="System Bold" size="20.0" />
                                                          </font></Button>
@@ -1022,15 +885,18 @@
                      <top>
                         <BorderPane prefHeight="314.0" prefWidth="741.0" BorderPane.alignment="CENTER">
                            <bottom>
-                              <Separator prefHeight="0.0" prefWidth="741.0" BorderPane.alignment="CENTER" />
+                              <Separator prefHeight="0.0" prefWidth="741.0" BorderPane.alignment="CENTER">
+                                 <BorderPane.margin>
+                                    <Insets top="5.0" />
+                                 </BorderPane.margin></Separator>
                            </bottom>
                            <top>
-                              <AnchorPane prefHeight="260.0" prefWidth="741.0" BorderPane.alignment="CENTER">
+                              <AnchorPane prefHeight="355.0" prefWidth="809.0" BorderPane.alignment="CENTER">
                                  <children>
-                                    <GridPane alignment="CENTER" hgap="15.0" prefHeight="330.0" prefWidth="730.0" vgap="5.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <GridPane alignment="CENTER" hgap="15.0" layoutX="7.0" prefHeight="389.0" prefWidth="809.0" vgap="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                        <columnConstraints>
                                           <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="25.0" />
-                                          <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" />
+                                          <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="120.0" />
                                           <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" />
                                        </columnConstraints>
                                        <rowConstraints>
@@ -1043,7 +909,7 @@
                                           <RowConstraints minHeight="60.0" prefHeight="60.0" vgrow="SOMETIMES" />
                                        </rowConstraints>
                                        <children>
-                                          <Label text="Ngày nhận phòng:" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                          <Label text="Ngày nhận:" GridPane.columnIndex="1" GridPane.rowIndex="1">
                                              <font>
                                                 <Font name="System Bold" size="20.0" />
                                              </font></Label>
@@ -1051,7 +917,7 @@
                                              <font>
                                                 <Font name="System Bold" size="20.0" />
                                              </font></Label>
-                                          <Label text="Ngày trả phòng:" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                          <Label text="Ngày trả:" GridPane.columnIndex="1" GridPane.rowIndex="3">
                                              <font>
                                                 <Font name="System Bold" size="20.0" />
                                              </font></Label>
@@ -1063,16 +929,16 @@
                                              <font>
                                                 <Font name="System Bold" size="20.0" />
                                              </font></Label>
-                                          <DatePicker prefWidth="180.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                                          <Spinner fx:id="snTC_SoDem" prefWidth="180.0" GridPane.columnIndex="2" GridPane.rowIndex="2">
                                              <GridPane.margin>
-                                                <Insets right="10.0" />
-                                             </GridPane.margin>
-                                          </DatePicker>
-                                          <Spinner prefHeight="26.0" prefWidth="180.0" GridPane.columnIndex="2" GridPane.rowIndex="2">
-                                             <GridPane.margin>
-                                                <Insets right="10.0" />
+                                                <Insets />
                                              </GridPane.margin>
                                           </Spinner>
+                                          <DatePicker fx:id="dpTC_NgayNhan" prefWidth="180.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                                             <GridPane.margin>
+                                                <Insets />
+                                             </GridPane.margin>
+                                          </DatePicker>
                                           <Label text="Ngày nhận + số đêm" GridPane.columnIndex="2" GridPane.rowIndex="3">
                                              <GridPane.margin>
                                                 <Insets right="10.0" />
@@ -1081,7 +947,7 @@
                                                 <Font size="20.0" />
                                              </font>
                                           </Label>
-                                          <Label text="Theo loại phòng" GridPane.columnIndex="2" GridPane.rowIndex="5">
+                                          <Label fx:id="lbTC_DonGia" text="Theo loại phòng" GridPane.columnIndex="2" GridPane.rowIndex="5">
                                              <GridPane.margin>
                                                 <Insets right="10.0" />
                                              </GridPane.margin>
@@ -1089,7 +955,7 @@
                                                 <Font size="20.0" />
                                              </font>
                                           </Label>
-                                          <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="38.0" prefWidth="430.0" text="🔎 TÌM KIẾM PHÒNG" textAlignment="CENTER" textFill="#427921" GridPane.columnSpan="3" GridPane.rowIndex="6">
+                                          <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="44.0" prefWidth="390.0" text="🔎 TÌM KIẾM PHÒNG" textAlignment="CENTER" textFill="#427921" GridPane.columnSpan="3" GridPane.rowIndex="6">
                                              <GridPane.margin>
                                                 <Insets />
                                              </GridPane.margin>
@@ -1110,25 +976,25 @@
                                           </Label>
                                           <Label text="🚪" GridPane.rowIndex="1">
                                              <font>
-                                                <Font size="16.0" />
+                                                <Font size="20.0" />
                                              </font></Label>
                                           <Label text="🌙" GridPane.rowIndex="2">
                                              <font>
-                                                <Font size="16.0" />
+                                                <Font size="20.0" />
                                              </font></Label>
                                           <Label text="🔒" GridPane.rowIndex="3">
                                              <font>
-                                                <Font size="16.0" />
+                                                <Font size="20.0" />
                                              </font></Label>
                                           <Label text="🏨" GridPane.rowIndex="4">
                                              <font>
-                                                <Font size="16.0" />
+                                                <Font size="20.0" />
                                              </font></Label>
                                           <Label text="💰" GridPane.rowIndex="5">
                                              <font>
-                                                <Font size="16.0" />
+                                                <Font size="20.0" />
                                              </font></Label>
-                                          <ComboBox prefWidth="180.0" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+                                          <ComboBox fx:id="cbbTC_LoaiPhong" prefWidth="180.0" GridPane.columnIndex="2" GridPane.rowIndex="4" />
                                        </children>
                                        <effect>
                                           <Blend />
@@ -1143,15 +1009,18 @@
                         </BorderPane>
                      </top>
                      <center>
-                        <BorderPane BorderPane.alignment="CENTER">
+                        <BorderPane prefHeight="284.0" prefWidth="809.0" BorderPane.alignment="CENTER">
                            <BorderPane.margin>
                               <Insets top="10.0" />
                            </BorderPane.margin>
-                           <center>
-                              <GridPane alignment="TOP_CENTER" hgap="15.0" prefHeight="190.0" prefWidth="730.0" scaleShape="false" vgap="5.0">
+                           <top>
+                              <GridPane alignment="TOP_CENTER" hgap="15.0" prefHeight="190.0" prefWidth="730.0" scaleShape="false" vgap="5.0" BorderPane.alignment="CENTER">
                                  <columnConstraints>
                                     <ColumnConstraints halignment="RIGHT" hgrow="NEVER" maxWidth="31.19999999999999" minWidth="18.399987792968744" prefWidth="25.60002441406249" />
                                     <ColumnConstraints halignment="LEFT" hgrow="NEVER" maxWidth="-Infinity" minWidth="-Infinity" />
+                                    <ColumnConstraints hgrow="NEVER" maxWidth="-Infinity" minWidth="-Infinity" />
+                                    <ColumnConstraints hgrow="NEVER" maxWidth="-Infinity" minWidth="-Infinity" />
+                                    <ColumnConstraints hgrow="NEVER" maxWidth="-Infinity" minWidth="-Infinity" />
                                     <ColumnConstraints hgrow="NEVER" maxWidth="-Infinity" minWidth="-Infinity" />
                                  </columnConstraints>
                                  <rowConstraints>
@@ -1160,9 +1029,8 @@
                                     <RowConstraints maxHeight="-Infinity" minHeight="40.0" valignment="CENTER" vgrow="SOMETIMES" />
                                     <RowConstraints maxHeight="-Infinity" minHeight="40.0" valignment="CENTER" vgrow="SOMETIMES" />
                                     <RowConstraints maxHeight="-Infinity" minHeight="40.0" valignment="CENTER" vgrow="SOMETIMES" />
-                                    <RowConstraints maxHeight="-Infinity" minHeight="40.0" valignment="CENTER" vgrow="SOMETIMES" />
-                                    <RowConstraints maxHeight="-Infinity" minHeight="40.0" valignment="CENTER" vgrow="SOMETIMES" />
-                                    <RowConstraints maxHeight="-Infinity" minHeight="10.0" valignment="CENTER" vgrow="SOMETIMES" />
+                                    <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" valignment="CENTER" vgrow="SOMETIMES" />
+                                    <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="50.0" valignment="CENTER" vgrow="SOMETIMES" />
                                  </rowConstraints>
                                  <children>
                                     <Label text="Số phòng:" GridPane.columnIndex="1" GridPane.rowIndex="1">
@@ -1201,11 +1069,14 @@
                                           <Font size="20.0" />
                                        </font>
                                     </Label>
-                                    <Label text="Đơn giá:" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                                    <Label contentDisplay="TOP" text="Đơn giá:" GridPane.columnIndex="1" GridPane.rowIndex="4">
                                        <font>
                                           <Font name="System Bold" size="20.0" />
-                                       </font></Label>
-                                    <Label text="Tiền cọc:" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                                       </font>
+                                       <GridPane.margin>
+                                          <Insets />
+                                       </GridPane.margin></Label>
+                                    <Label text="Tối đa:" GridPane.columnIndex="4" GridPane.rowIndex="4">
                                        <GridPane.margin>
                                           <Insets />
                                        </GridPane.margin>
@@ -1215,13 +1086,13 @@
                                     </Label>
                                     <Label text="300,000 VND" GridPane.columnIndex="2" GridPane.rowIndex="4">
                                        <GridPane.margin>
-                                          <Insets right="10.0" />
+                                          <Insets />
                                        </GridPane.margin>
                                        <font>
                                           <Font size="20.0" />
                                        </font>
                                     </Label>
-                                    <Label maxHeight="-Infinity" maxWidth="-Infinity" text="Tiền cọc dự kiến" wrapText="true" GridPane.columnIndex="2" GridPane.rowIndex="5">
+                                    <Label maxHeight="-Infinity" maxWidth="-Infinity" text="? khách" wrapText="true" GridPane.columnIndex="5" GridPane.rowIndex="4">
                                        <GridPane.margin>
                                           <Insets right="10.0" />
                                        </GridPane.margin>
@@ -1231,58 +1102,123 @@
                                     </Label>
                                     <Label text="🏨" GridPane.rowIndex="1">
                                        <font>
-                                          <Font size="16.0" />
+                                          <Font size="20.0" />
                                        </font></Label>
                                     <Label text="🏷" GridPane.rowIndex="2">
                                        <font>
-                                          <Font size="16.0" />
+                                          <Font size="20.0" />
                                        </font></Label>
                                     <Label text="🏛" GridPane.rowIndex="3">
                                        <font>
-                                          <Font size="16.0" />
+                                          <Font size="20.0" />
                                        </font></Label>
                                     <Label text="💵" GridPane.rowIndex="4">
                                        <font>
-                                          <Font size="16.0" />
-                                       </font></Label>
-                                    <Label text="💲" GridPane.rowIndex="5">
-                                       <font>
-                                          <Font size="16.0" />
-                                       </font></Label>
-                                    <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="32.0" prefWidth="430.0" text="🔖 THÊM VÀO PHIẾU THUÊ" textAlignment="CENTER" textFill="#427921" GridPane.columnSpan="3" GridPane.rowIndex="7">
-                                       <GridPane.margin>
-                                          <Insets top="5.0" />
-                                       </GridPane.margin>
-                                       <effect>
-                                          <Blend />
-                                       </effect>
-                                       <font>
-                                          <Font name="System Bold" size="20.0" />
+                                          <Font size="20.0" />
                                        </font>
-                                    </Button>
-                                    <Label text=" 📝  THÔNG TIN PHÒNG" GridPane.columnSpan="3" GridPane.halignment="LEFT">
+                                       <GridPane.margin>
+                                          <Insets />
+                                       </GridPane.margin></Label>
+                                    <Label text="👥" GridPane.columnIndex="3" GridPane.rowIndex="4">
+                                       <font>
+                                          <Font size="20.0" />
+                                       </font>
+                                       <GridPane.margin>
+                                          <Insets left="10.0" />
+                                       </GridPane.margin></Label>
+                                    <AnchorPane prefHeight="81.0" prefWidth="585.0" GridPane.columnSpan="6" GridPane.rowIndex="6">
+                                       <GridPane.margin>
+                                          <Insets />
+                                       </GridPane.margin>
+                                       <children>
+                                          <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefWidth="385.0" text="🔖 THÊM VÀO PHIẾU THUÊ" textAlignment="CENTER" textFill="#427921" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="105.0" AnchorPane.rightAnchor="105.0" AnchorPane.topAnchor="0.0">
+                                             <effect>
+                                                <Blend />
+                                             </effect>
+                                             <font>
+                                                <Font name="System Bold" size="20.0" />
+                                             </font>
+                                          </Button>
+                                       </children>
+                                    </AnchorPane>
+                                    <Label alignment="CENTER" prefHeight="45.0" prefWidth="701.0" text=" 📝  THÔNG TIN PHÒNG" GridPane.columnSpan="6" GridPane.halignment="LEFT">
                                        <font>
                                           <Font name="System Bold" size="30.0" />
                                        </font>
                                     </Label>
-                                    <Label text="✍" GridPane.rowIndex="6">
-                                       <font>
-                                          <Font size="16.0" />
-                                       </font></Label>
-                                    <Label text="Ghi chú:" GridPane.columnIndex="1" GridPane.rowIndex="6">
-                                       <font>
-                                          <Font name="System Bold" size="20.0" />
-                                       </font></Label>
-                                    <Label prefHeight="90.0" prefWidth="270.0" text="Phòng có thể dành cho nhân viên khách sạn" wrapText="true" GridPane.columnIndex="2" GridPane.rowIndex="6">
+                                    <Label alignment="TOP_LEFT" prefHeight="80.0" text="✍" GridPane.rowIndex="5">
                                        <font>
                                           <Font size="20.0" />
-                                       </font></Label>
+                                       </font>
+                                       <GridPane.margin>
+                                          <Insets top="5.0" />
+                                       </GridPane.margin></Label>
+                                    <Label alignment="TOP_LEFT" prefHeight="80.0" text="Ghi chú:" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                                       <font>
+                                          <Font name="System Bold" size="20.0" />
+                                       </font>
+                                       <GridPane.margin>
+                                          <Insets top="5.0" />
+                                       </GridPane.margin></Label>
+                                    <Label alignment="TOP_LEFT" prefHeight="80.0" prefWidth="422.0" text="Phòng có thể dành cho nhân viên khách sạn" textAlignment="JUSTIFY" wrapText="true" GridPane.columnIndex="2" GridPane.columnSpan="4" GridPane.rowIndex="5">
+                                       <font>
+                                          <Font size="20.0" />
+                                       </font>
+                                       <GridPane.margin>
+                                          <Insets top="5.0" />
+                                       </GridPane.margin></Label>
+                                    <Label text="Giờ nhận:" GridPane.columnIndex="4" GridPane.rowIndex="1">
+                                       <font>
+                                          <Font name="System Bold" size="20.0" />
+                                       </font>
+                                    </Label>
+                                    <Label text="Giờ trả:" GridPane.columnIndex="4" GridPane.rowIndex="2">
+                                       <font>
+                                          <Font name="System Bold" size="20.0" />
+                                       </font>
+                                    </Label>
+                                    <Label text="🕗" GridPane.columnIndex="3" GridPane.rowIndex="1">
+                                       <font>
+                                          <Font name="System Bold" size="20.0" />
+                                       </font>
+                                       <GridPane.margin>
+                                          <Insets left="10.0" />
+                                       </GridPane.margin>
+                                    </Label>
+                                    <Label text="🕑" GridPane.columnIndex="3" GridPane.rowIndex="2">
+                                       <font>
+                                          <Font name="System Bold" size="20.0" />
+                                       </font>
+                                       <GridPane.margin>
+                                          <Insets left="10.0" />
+                                       </GridPane.margin>
+                                    </Label>
+                                    <Label text="Tiền cọc:" GridPane.columnIndex="4" GridPane.rowIndex="3">
+                                       <font>
+                                          <Font name="System Bold" size="20.0" />
+                                       </font>
+                                    </Label>
+                                    <Label text="💲" GridPane.columnIndex="3" GridPane.rowIndex="3">
+                                       <font>
+                                          <Font name="System Bold" size="20.0" />
+                                       </font>
+                                       <GridPane.margin>
+                                          <Insets left="10.0" />
+                                       </GridPane.margin>
+                                    </Label>
+                                    <Label text="1,300,000 VND" GridPane.columnIndex="5" GridPane.rowIndex="3">
+                                       <font>
+                                          <Font size="20.0" />
+                                       </font>
+                                    </Label>
+                                    <Spinner editable="true" prefWidth="135.0" GridPane.columnIndex="5" GridPane.rowIndex="1" />
+                                    <Spinner editable="true" prefWidth="135.0" GridPane.columnIndex="5" GridPane.rowIndex="2" />
                                  </children>
                                  <effect>
                                     <Blend />
                                  </effect>
                               </GridPane>
-                           </center>
+                           </top>
                         </BorderPane>
                      </center>
                   </BorderPane>
@@ -1344,7 +1280,7 @@
                                                    <font>
                                                       <Font name="System Bold" size="20.0" />
                                                    </font></Label>
-                                                <DatePicker prefWidth="444.0" GridPane.columnIndex="5" GridPane.rowIndex="2">
+                                                <DatePicker fx:id="dpPT_NgayLap" prefWidth="444.0" GridPane.columnIndex="5" GridPane.rowIndex="2">
                                                    <GridPane.margin>
                                                       <Insets right="10.0" />
                                                    </GridPane.margin>
@@ -1500,12 +1436,14 @@
                                     <TableColumn prefWidth="75.0" text="Số phòng" />
                                     <TableColumn prefWidth="75.0" text="Loại phòng" />
                                     <TableColumn prefWidth="122.39994812011719" text="Đơn giá thuê" />
+                                    <TableColumn prefWidth="122.39994812011719" text="Giờ nhận" />
                                     <TableColumn prefWidth="122.39994812011719" text="Ngày nhận" />
+                                    <TableColumn prefWidth="122.39994812011719" text="Giờ trả" />
                                     <TableColumn prefWidth="122.39994812011719" text="Ngày trả" />
                                     <TableColumn prefWidth="122.39994812011719" text="Tiền cọc" />
                                  </columns>
                                  <BorderPane.margin>
-                                    <Insets bottom="10.0" left="15.0" right="15.0" />
+                                    <Insets bottom="20.0" left="15.0" right="15.0" />
                                  </BorderPane.margin>
                                  <columnResizePolicy>
                                     <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -1654,7 +1592,7 @@
                                                    <font>
                                                       <Font name="System Bold" size="20.0" />
                                                    </font></Label>
-                                                <DatePicker prefHeight="26.0" prefWidth="444.0" GridPane.columnIndex="5" GridPane.rowIndex="1">
+                                                <DatePicker fx:id="dpHD_NgayLap" editable="false" prefHeight="26.0" prefWidth="444.0" GridPane.columnIndex="5" GridPane.rowIndex="1">
                                                    <GridPane.margin>
                                                       <Insets right="10.0" />
                                                    </GridPane.margin>
@@ -2132,13 +2070,80 @@
             </TabPane>
          </content>
       </Tab>
+      <Tab id="main-tab" fx:id="tabDichVu" text="🎲  BẢNG DỊCH VỤ">
+         <content>
+            <BorderPane prefHeight="200.0" prefWidth="200.0">
+               <center>
+                  <TableView fx:id="tvDichVu" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                     <columns>
+                        <TableColumn fx:id="tcDV_STT" prefWidth="75.0" style="-fx-alignment: CENTER;" text="STT" />
+                        <TableColumn fx:id="tcDV_MaDichVu" prefWidth="75.0" text="Mã dịch vụ" visible="false" />
+                        <TableColumn fx:id="tcDV_MaLoaiDichVu" prefWidth="75.0" text="Mã loại dịch vụ" visible="false" />
+                        <TableColumn fx:id="tcDV_MaNhaCungCap" prefWidth="75.0" text="Mã nhà cung cấp" visible="false" />
+                        <TableColumn fx:id="tcDV_TenDichVu" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Tên dịch vụ" />
+                        <TableColumn fx:id="tcDV_LoaiDichVu" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Loại dịch vụ" />
+                        <TableColumn fx:id="tcDV_DonViTinh" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Đơn vị tính" />
+                        <TableColumn fx:id="tcDV_SoLuongTon" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Số lượng tồn" />
+                        <TableColumn fx:id="tcDV_DonGia" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Đơn giá (VND)" />
+                     </columns>
+                     <columnResizePolicy>
+                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                     </columnResizePolicy>
+                     <BorderPane.margin>
+                        <Insets bottom="10.0" />
+                     </BorderPane.margin>
+                  </TableView>
+               </center>
+               <bottom>
+                  <HBox alignment="CENTER" prefHeight="40.0" prefWidth="200.0" spacing="10.0" BorderPane.alignment="CENTER">
+                     <children>
+                        <Button fx:id="btnDV_ThemDichVu" alignment="CENTER" mnemonicParsing="false" onAction="#handleThemDichVu" prefWidth="275.0" text="🎲  THÊM DỊCH VỤ" textFill="#00868b">
+                           <font>
+                              <Font name="System Bold" size="20.0" />
+                           </font></Button>
+                        <Button fx:id="btnDV_XoaDichVu" alignment="CENTER" mnemonicParsing="false" onAction="#handleXoaDichVu" prefWidth="275.0" text="🗑  XOÁ DỊCH VỤ" textFill="BROWN">
+                           <font>
+                              <Font name="System Bold" size="20.0" />
+                           </font></Button>
+                        <Button fx:id="btnDV_SuaDichVu" alignment="CENTER" mnemonicParsing="false" onAction="#handleSuaDichVu" prefWidth="275.0" text="⚙  SỬA DỊCH VỤ" textFill="#427921">
+                           <font>
+                              <Font name="System Bold" size="20.0" />
+                           </font></Button>
+                        <Button alignment="CENTER" mnemonicParsing="false" onAction="#handleXemChiTietDichVu" prefWidth="275.0" text="📦  XEM NHÀ CUNG CẤP" textFill="PURPLE">
+                           <font>
+                              <Font name="System Bold" size="20.0" />
+                           </font></Button>
+                     </children>
+                     <effect>
+                        <Blend />
+                     </effect>
+                  </HBox>
+               </bottom>
+               <padding>
+                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+               </padding>
+               <top>
+                  <Label text="🎲 DANH MỤC DỊCH VỤ" BorderPane.alignment="CENTER">
+                     <BorderPane.margin>
+                        <Insets bottom="15.0" />
+                     </BorderPane.margin>
+                     <font>
+                        <Font name="System Bold" size="30.0" />
+                     </font>
+                  </Label>
+               </top>
+               <effect>
+                  <Blend />
+               </effect>
+            </BorderPane>
+         </content></Tab>
       <Tab id="main-tab" text="👤  THÔNG TIN TÀI KHOẢN">
          <content>
             <BorderPane prefHeight="200.0" prefWidth="200.0">
                <center>
-                  <TabPane fx:id="tpNV_ThongTinTaiKhoan" BorderPane.alignment="CENTER">
+                  <TabPane fx:id="tpNhanVien" BorderPane.alignment="CENTER">
                      <tabs>
-                        <Tab closable="false" text="👤  THÔNG TIN TÀI KHOẢN">
+                        <Tab fx:id="tpNV_ThongTin" closable="false" text="👤  THÔNG TIN NHÂN VIÊN">
                            <content>
                               <AnchorPane>
                                  <children>
@@ -2180,7 +2185,7 @@
                                                 <Font name="System Bold" size="20.0" />
                                              </font>
                                           </Label>
-                                          <Label fx:id="lbNV_MaNhanVien" text="1829028141" GridPane.columnIndex="3" GridPane.rowIndex="2">
+                                          <Label fx:id="lbNV_MaNhanVien" text="12001" GridPane.columnIndex="3" GridPane.rowIndex="2">
                                              <font>
                                                 <Font size="20.0" />
                                              </font>
@@ -2220,7 +2225,7 @@
                                                 <Font name="System Bold" size="20.0" />
                                              </font>
                                           </Label>
-                                          <Label fx:id="lbNV_DiaChi" text="Cần Thạnh, Cần Giờ" GridPane.columnIndex="3" GridPane.rowIndex="5">
+                                          <Label fx:id="lbNV_DiaChi" text="Cần Giờ" GridPane.columnIndex="3" GridPane.rowIndex="5">
                                              <font>
                                                 <Font size="20.0" />
                                              </font>
@@ -2250,7 +2255,7 @@
                                                 <Font name="System Bold" size="20.0" />
                                              </font>
                                           </Label>
-                                          <Label fx:id="lbNV_SoDienThoai" text="0336887109" GridPane.columnIndex="3" GridPane.rowIndex="7">
+                                          <Label fx:id="lbNV_DienThoai" text="0336887109" GridPane.columnIndex="3" GridPane.rowIndex="7">
                                              <font>
                                                 <Font size="20.0" />
                                              </font>
@@ -2265,7 +2270,7 @@
                                                 <Font name="System Bold" size="20.0" />
                                              </font>
                                           </Label>
-                                          <Label fx:id="lbNV_ChucVu" text="Chủ khách sạn" GridPane.columnIndex="3" GridPane.rowIndex="8">
+                                          <Label fx:id="lbNV_ChucVu" text="Quản lí" GridPane.columnIndex="3" GridPane.rowIndex="8">
                                              <font>
                                                 <Font size="20.0" />
                                              </font>
@@ -2277,12 +2282,12 @@
                                           </Label>
                                           <VBox prefHeight="32.0" prefWidth="135.0" spacing="10.0" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="9">
                                              <children>
-                                                <Button alignment="CENTER" mnemonicParsing="false" prefHeight="32.0" prefWidth="490.0" text="🔖 TUỲ CHỈNH" textFill="#00868b">
+                                                <Button alignment="CENTER" mnemonicParsing="false" onAction="#handleTuyChinhNhanVien" prefHeight="32.0" prefWidth="490.0" text="🔖 TUỲ CHỈNH" textFill="#00868b">
                                                    <font>
                                                       <Font name="System Bold" size="20.0" />
                                                    </font>
                                                 </Button>
-                                                <Button fx:id="btnNV_DangXuat" alignment="CENTER" mnemonicParsing="false" onAction="#btnNV_XuLy_DangXuat" prefHeight="32.0" prefWidth="490.0" text="  🔒 ĐĂNG XUẤT" textFill="BROWN">
+                                                <Button alignment="CENTER" mnemonicParsing="false" prefHeight="32.0" prefWidth="490.0" text="  🔒 ĐĂNG XUẤT" textFill="BROWN">
                                                    <font>
                                                       <Font name="System Bold" size="20.0" />
                                                    </font>
@@ -2318,21 +2323,21 @@
                               </AnchorPane>
                            </content>
                         </Tab>
-                        <Tab fx:id="tabNV_DanhMucTaiKhoan" closable="false" text="✍  DANH MỤC TÀI KHOẢN">
+                        <Tab fx:id="tabNV_DanhMuc" closable="false" text="✍  DANH MỤC NHÂN VIÊN">
                            <content>
                               <BorderPane prefHeight="298.0" prefWidth="1080.0">
                                  <bottom>
                                     <HBox alignment="CENTER" prefWidth="1080.0" spacing="10.0" BorderPane.alignment="CENTER">
                                        <children>
-                                          <Button alignment="CENTER" mnemonicParsing="false" prefWidth="270.0" text="📝  THÊM TÀI KHOẢN" textFill="#00868b">
+                                          <Button alignment="CENTER" mnemonicParsing="false" onAction="#handleThemNhanVien" prefWidth="270.0" text="📝  THÊM NHÂN VIÊN" textFill="#00868b">
                                              <font>
                                                 <Font name="System Bold" size="20.0" />
                                              </font></Button>
-                                          <Button alignment="CENTER" mnemonicParsing="false" onAction="#handleXoaNhanVien" prefWidth="270.0" text="🗑  XOÁ TÀI KHOẢN" textFill="BROWN">
+                                          <Button alignment="CENTER" mnemonicParsing="false" onAction="#handleXoaNhanVien" prefWidth="270.0" text="🗑  XOÁ NHÂN VIÊN" textFill="BROWN">
                                              <font>
                                                 <Font name="System Bold" size="20.0" />
                                              </font></Button>
-                                          <Button alignment="CENTER" mnemonicParsing="false" prefWidth="270.0" text="⚙  SỬA TÀI KHOẢN" textFill="#427921">
+                                          <Button alignment="CENTER" mnemonicParsing="false" onAction="#handleSuaNhanVien" prefWidth="270.0" text="⚙  SỬA NHÂN VIÊN" textFill="#427921">
                                              <font>
                                                 <Font name="System Bold" size="20.0" />
                                              </font></Button>
@@ -2342,13 +2347,14 @@
                                  <center>
                                     <TableView fx:id="tvNhanVien" prefHeight="456.0" prefWidth="1188.0" BorderPane.alignment="CENTER">
                                        <columns>
-                                          <TableColumn fx:id="tcNV_STT" minWidth="-Infinity" prefWidth="-1.0" style="-fx-alignment: CENTER;" text="STT" />
-                                          <TableColumn fx:id="tcNV_MaNhanVien" minWidth="-Infinity" prefWidth="-1.0" style="-fx-alignment: CENTER;" text="Mã nhân viên" />
+                                          <TableColumn fx:id="tcNV_STT" minWidth="30.0" prefWidth="30.0" sortable="false" style="-fx-alignment: CENTER;" text="STT" />
+                                          <TableColumn fx:id="tcNV_MaNhanVien" minWidth="-Infinity" prefWidth="236.0" style="-fx-alignment: CENTER;" text="Mã NV" />
                                           <TableColumn fx:id="tcNV_TenNhanVien" minWidth="-1.0" prefWidth="-1.0" text="Họ tên" />
                                           <TableColumn fx:id="tcNV_CMND" minWidth="-1.0" prefWidth="-1.0" style="-fx-alignment: CENTER;" text="CMND" />
                                           <TableColumn fx:id="tcNV_SoDienThoai" minWidth="-1.0" prefWidth="-1.0" style="-fx-alignment: CENTER;" text="Số điện thoại" />
-                                          <TableColumn fx:id="tcNV_DiaChi" minWidth="-1.0" prefWidth="-1.0" text="Địa chỉ" />
+                                          <TableColumn fx:id="tcNV_DiaChi" minWidth="-1.0" prefWidth="-1.0" style="-fx-alignment: CENTER;" text="Địa chỉ" />
                                           <TableColumn fx:id="tcNV_Email" minWidth="-1.0" prefWidth="-1.0" text="Email" />
+                                          <TableColumn fx:id="tcNV_TaiKhoan" minWidth="-1.0" prefWidth="-1.0" text="Tài khoản" />
                                           <TableColumn fx:id="tcNV_ChucVu" minWidth="-1.0" prefWidth="-1.0" style="-fx-alignment: CENTER;" text="Chức vụ" />
                                        </columns>
                                        <columnResizePolicy>
@@ -2393,7 +2399,7 @@
                                     <TableColumn fx:id="tcLP_MaLoaiPhong" prefWidth="75.0" text="Mã loại phòng" visible="false" />
                                     <TableColumn fx:id="tcLP_TenLoaiPhong" prefWidth="75.0" text="Loại phòng" />
                                     <TableColumn fx:id="tcLP_SoKhachToiDa" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Khách tối đa" />
-                                    <TableColumn fx:id="tcLP_DonGia" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Đơn giá" />
+                                    <TableColumn fx:id="tcLP_DonGia" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Đơn giá (VND)" />
                                  </columns>
                                  <columnResizePolicy>
                                     <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -2413,7 +2419,7 @@
                                        <font>
                                           <Font name="System Bold" size="20.0" />
                                        </font></Button>
-                                    <Button alignment="CENTER" mnemonicParsing="false" prefHeight="45.0" prefWidth="300.0" text="🗑  XOÁ" textFill="BROWN">
+                                    <Button alignment="CENTER" mnemonicParsing="false" onAction="#handleXoaLoaiPhong" prefHeight="45.0" prefWidth="300.0" text="🗑  XOÁ" textFill="BROWN">
                                        <font>
                                           <Font name="System Bold" size="20.0" />
                                        </font></Button>
@@ -2473,7 +2479,7 @@
                                        <font>
                                           <Font name="System Bold" size="20.0" />
                                        </font></Button>
-                                    <Button alignment="CENTER" mnemonicParsing="false" prefHeight="45.0" prefWidth="300.0" text="🗑 XOÁ" textFill="BROWN">
+                                    <Button alignment="CENTER" mnemonicParsing="false" onAction="#handleXoaLoaiDichVu" prefHeight="45.0" prefWidth="300.0" text="🗑 XOÁ" textFill="BROWN">
                                        <font>
                                           <Font name="System Bold" size="20.0" />
                                        </font></Button>
@@ -2696,71 +2702,6 @@
             </AnchorPane>
          </content>
       </Tab>
-      <Tab id="main-tab" fx:id="tabDichVu" text="🎲  BẢNG DỊCH VỤ">
-         <content>
-            <BorderPane prefHeight="200.0" prefWidth="200.0">
-               <center>
-                  <TableView fx:id="tvDichVu" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-                     <columns>
-                        <TableColumn fx:id="tcDV_STT" prefWidth="75.0" text="STT" />
-                        <TableColumn prefWidth="75.0" text="Mã dịch vụ" visible="false" />
-                        <TableColumn fx:id="tcDV_TenDichVu" prefWidth="75.0" text="Tên dịch vụ" />
-                        <TableColumn fx:id="tcDV_LoaiDichVu" prefWidth="75.0" text="Loại dịch vụ" />
-                        <TableColumn fx:id="tcDV_DonViTinh" prefWidth="75.0" text="Đơn vị tính" />
-                        <TableColumn fx:id="tcDV_SoLuongTon" prefWidth="75.0" text="Số lượng tồn" />
-                        <TableColumn fx:id="tcDV_DonGia" prefWidth="75.0" text="Đơn giá" />
-                     </columns>
-                     <columnResizePolicy>
-                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-                     </columnResizePolicy>
-                     <BorderPane.margin>
-                        <Insets bottom="10.0" />
-                     </BorderPane.margin>
-                  </TableView>
-               </center>
-               <bottom>
-                  <HBox alignment="CENTER" prefHeight="40.0" prefWidth="200.0" spacing="10.0" BorderPane.alignment="CENTER">
-                     <children>
-                        <Button fx:id="btnDichVu_Them" alignment="CENTER" mnemonicParsing="false" onAction="#handleThemDichVu" prefWidth="275.0" text="🎲  THÊM DỊCH VỤ" textFill="#00868b">
-                           <font>
-                              <Font name="System Bold" size="20.0" />
-                           </font></Button>
-                        <Button fx:id="btnDichVu_Xoa" alignment="CENTER" mnemonicParsing="false" prefWidth="275.0" text="🗑  XOÁ DỊCH VỤ" textFill="BROWN">
-                           <font>
-                              <Font name="System Bold" size="20.0" />
-                           </font></Button>
-                        <Button fx:id="btnDichVu_Sua" alignment="CENTER" mnemonicParsing="false" prefWidth="275.0" text="⚙  SỬA DỊCH VỤ" textFill="#427921">
-                           <font>
-                              <Font name="System Bold" size="20.0" />
-                           </font></Button>
-                        <Button alignment="CENTER" mnemonicParsing="false" prefWidth="275.0" text="📦  XEM NHÀ CUNG CẤP" textFill="PURPLE">
-                           <font>
-                              <Font name="System Bold" size="20.0" />
-                           </font></Button>
-                     </children>
-                     <effect>
-                        <Blend />
-                     </effect>
-                  </HBox>
-               </bottom>
-               <padding>
-                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-               </padding>
-               <top>
-                  <Label text="🎲 DANH MỤC DỊCH VỤ" BorderPane.alignment="CENTER">
-                     <BorderPane.margin>
-                        <Insets bottom="15.0" />
-                     </BorderPane.margin>
-                     <font>
-                        <Font name="System Bold" size="30.0" />
-                     </font>
-                  </Label>
-               </top>
-               <effect>
-                  <Blend />
-               </effect>
-            </BorderPane>
-         </content></Tab>
       <Tab id="main-tab" fx:id="tabThongKe" text="📚  BÁO CÁO THỐNG KÊ">
          <content>
             <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE">

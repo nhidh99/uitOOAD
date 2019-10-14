@@ -1,33 +1,37 @@
 package DTO;
 
-import javafx.beans.property.*;
+import helper.MoneyFormatHelper;
 
 public class LoaiPhongDTO {
-	private SimpleIntegerProperty maLoaiPhong;
-	private SimpleStringProperty tenLoaiPhong;
-	private SimpleIntegerProperty soKhachToiDa;
-	private SimpleIntegerProperty donGia;
+	private Integer maLoaiPhong;
+	private String tenLoaiPhong;
+	private Integer soKhachToiDa;
+	private Integer donGia;
 	
 	public Integer getMaLoaiPhong() {
-		return maLoaiPhong.get();
+		return maLoaiPhong;
 	}
 	
 	public String getTenLoaiPhong() {
-		return tenLoaiPhong.get();
+		return tenLoaiPhong;
 	}
 	
 	public Integer getSoKhachToiDa() {
-		return soKhachToiDa.get();
+		return soKhachToiDa;
 	}
 	
-	public Integer getDonGia() {
-		return donGia.get();
+	public String getDonGia() {
+		return MoneyFormatHelper.format(donGia);
+	}
+	
+	public Integer getDonGiaValue() {
+		return donGia;
 	}
 	
 	public LoaiPhongDTO(Integer maLoaiPhong, String tenLoaiPhong, Integer soKhachToiDa, Integer donGia) {
-		this.maLoaiPhong = new SimpleIntegerProperty(maLoaiPhong);
-		this.tenLoaiPhong = new SimpleStringProperty(tenLoaiPhong);
-		this.soKhachToiDa = new SimpleIntegerProperty(soKhachToiDa);
-		this.donGia = new SimpleIntegerProperty(donGia);		
+		this.maLoaiPhong = maLoaiPhong;
+		this.tenLoaiPhong = tenLoaiPhong;
+		this.soKhachToiDa = soKhachToiDa;
+		this.donGia = donGia;		
 	}
 }

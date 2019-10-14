@@ -25,4 +25,26 @@ public class LoaiPhongDAO {
 		conn.close();
 		return output;
 	}
+
+	public static boolean checkLoaiPhong(Integer maLoaiPhong) throws SQLException {
+		Connection conn = DBHelper.getConnection();
+		String query = "SELECT EXISTS (SELECT 1 FROM Phong WHERE MaLoaiPhong = ? LIMIT 1)";
+		PreparedStatement statement = conn.prepareStatement(query);
+		statement.setInt(1, maLoaiPhong);
+		ResultSet rs = statement.executeQuery();
+		rs.next();
+		boolean isExist = rs.getBoolean(1);
+		conn.close();
+		return isExist;
+	}
+
+	public static boolean deleteLoaiPhong(Integer maLoaiPhong) throws SQLException {
+		Connection conn = DBHelper.getConnection();
+		String query = "DELETE FROM LoaiPhong WHERE MaLoaiPhong = ?";
+		PreparedStatement statement = conn.prepareStatement(query);
+		statement.setInt(1, maLoaiPhong);
+		statement.execute();
+		conn.close();
+		return true;
+	}
 }

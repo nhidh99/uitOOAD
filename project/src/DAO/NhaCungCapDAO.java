@@ -24,16 +24,15 @@ public class NhaCungCapDAO {
 		conn.close();
 		return output;
 	}
-	public static Integer getMaNhaCungCap(String tenNhaCungCap) throws SQLException {
+
+	public static NhaCungCapDTO getNhaCungCapById(Integer maNhaCungCap) throws SQLException {
 		Connection conn = DBHelper.getConnection();
 		Statement statement = conn.createStatement();
-		String query = "SELECT * from NhaCungCap WHERE TenNhaCungCap = '" + tenNhaCungCap + "'";
+		String query = "SELECT * FROM NhaCungCap WHERE MaNhaCungCap = " + maNhaCungCap;
 		ResultSet rs = statement.executeQuery(query);
-		Integer result = -1;
-		if(rs.next()) {
-			result = rs.getInt("MaNhaCungCap");
-		}
+		rs.next();
+		NhaCungCapDTO output = new NhaCungCapDTO(maNhaCungCap, rs.getString("TenNhaCungCap"), rs.getString("SoDienThoai"));
 		conn.close();
-		return result;
+		return output;
 	}
 }

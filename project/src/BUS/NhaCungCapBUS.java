@@ -10,7 +10,8 @@ public class NhaCungCapBUS {
 	public static List<NhaCungCapDTO> getDSNhaCungCap() throws SQLException {
 		return NhaCungCapDAO.getDSNhaCungCap();
 	}
-	public static Integer getMaNhaCungCap(String tenNhaCungCap) throws SQLException {
-		return NhaCungCapDAO.getMaNhaCungCap(tenNhaCungCap);
+
+	public static NhaCungCapDTO getNhaCungCapById(Integer maNhaCungCap) throws SQLException {
+		return NhaCungCapDAO.getNhaCungCapById(maNhaCungCap);
 	}
 }

@@ -1,73 +1,77 @@
 package DTO;
 
-import javafx.beans.property.*;
+import helper.MoneyFormatHelper;
 
 public class DichVuDTO {
-	private SimpleIntegerProperty maDichVu;
-	private SimpleStringProperty tenDichVu;
-	private SimpleStringProperty donViTinh;
-	private SimpleIntegerProperty soLuongTon;
-	private SimpleIntegerProperty donGia;
-	private SimpleStringProperty tenLoaiDichVu;
-	private SimpleIntegerProperty maNhaCungCap;
-	private SimpleIntegerProperty khaDung;
-	private SimpleIntegerProperty maLoaiDichVu;
-
+	private Integer maDichVu;
+	private String tenDichVu;
+	private String donViTinh;
+	private Integer soLuongTon;
+	private Integer donGia;
+	private LoaiDichVuDTO loaiDichVu;
+	private NhaCungCapDTO nhaCungCap;
+		
 	public String getTenDichVu() {
-		return tenDichVu.get();
+		return tenDichVu;
 	}
 	
 	public String getDonViTinh() {
-		return donViTinh.get();
+		return donViTinh;
 	}
 	
 	public Integer getSoLuongTon() {
-		return soLuongTon.get();
+		return soLuongTon == -1 ? null : soLuongTon;
 	}
 	
-	public Integer getDonGia() {
-		return donGia.get();
+	public String getDonGia() {
+		return MoneyFormatHelper.format(donGia);
 	}
-	
+		
+	public Integer getDonGiaValue() {
+		return donGia;
+	}
+
 	public String getTenLoaiDichVu() {
-		return tenLoaiDichVu.get();
-	}
-	
-	public Integer getMaNhaCungCap() {
-		return maNhaCungCap.get();
-	}
-	
-	public Integer getKhaDung() {
-		return khaDung.get();
+		return loaiDichVu.getTenLoaiDichVu();
 	}
 	
 	public Integer getMaDichVu() {
-		return maDichVu.get();
+		return maDichVu;
 	}
 	
 	public Integer getMaLoaiDichVu() {
-		return maLoaiDichVu.get();
+		return loaiDichVu.getMaLoaiDichVu();
+	}
+
+	public Integer getMaNhaCungCap() {
+		return nhaCungCap.getMaNhaCungCap();
 	}
 	
-	public DichVuDTO(Integer maDichVu, String tenDichVu, String donViTinh,
-			Integer soLuongTon, Integer donGia, String tenLoaiDichVu, Integer maLoaiDichVu, Integer maNhaCungCap, Integer khaDung) {
-		this.maDichVu = new SimpleIntegerProperty(maDichVu);
-		this.tenDichVu = new SimpleStringProperty(tenDichVu);
-		this.tenLoaiDichVu = new SimpleStringProperty(tenLoaiDichVu);
-		this.donViTinh = new SimpleStringProperty(donViTinh);
-		this.soLuongTon = new SimpleIntegerProperty(soLuongTon);
-		this.donGia = new SimpleIntegerProperty(donGia);
-		this.maLoaiDichVu = new SimpleIntegerProperty(maLoaiDichVu);
-		this.maNhaCungCap =  new SimpleIntegerProperty(maNhaCungCap);
-		this.khaDung =  new SimpleIntegerProperty(khaDung);	
+	public DichVuDTO(Integer maDichVu, String tenDichVu, String donViTinh, Integer soLuongTon, 
+			Integer donGia, LoaiDichVuDTO loaiDichVu, NhaCungCapDTO nhaCungCap) {
+		this.maDichVu = maDichVu;
+		this.tenDichVu = tenDichVu;
+		this.donViTinh = donViTinh;
+		this.soLuongTon = soLuongTon;
+		this.donGia = donGia;
+		this.loaiDichVu = loaiDichVu;
+		this.nhaCungCap = nhaCungCap;
 	}
-	public DichVuDTO(String tenDichVu, String donViTinh,
-			Integer soLuongTon, Integer donGia, Integer maLoaiDichVu, Integer maNhaCungCap) {
-		this.tenDichVu = new SimpleStringProperty(tenDichVu);
-		this.donViTinh = new SimpleStringProperty(donViTinh);
-		this.soLuongTon = new SimpleIntegerProperty(soLuongTon);
-		this.donGia = new SimpleIntegerProperty(donGia);
-		this.maLoaiDichVu = new SimpleIntegerProperty(maLoaiDichVu);
-		this.maNhaCungCap =  new SimpleIntegerProperty(maNhaCungCap);
+	
+	public DichVuDTO(String tenDichVu, String donViTinh, Integer soLuongTon, 
+			Integer donGia, LoaiDichVuDTO loaiDichVu, NhaCungCapDTO nhaCungCap) {
+		this.tenDichVu = tenDichVu;
+		this.donViTinh = donViTinh;
+		this.soLuongTon = soLuongTon;
+		this.donGia = donGia;
+		this.loaiDichVu = loaiDichVu;
+		this.nhaCungCap = nhaCungCap;
+	}
+
+	public DichVuDTO(String tenDichVu, String donViTinh, Integer soLuongTon, Integer donGia) {
+		this.tenDichVu = tenDichVu;
+		this.donViTinh = donViTinh;
+		this.soLuongTon = soLuongTon;
+		this.donGia = donGia;
 	}
 }

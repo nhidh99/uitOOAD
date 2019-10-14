@@ -1,82 +1,22 @@
 package application;
 	
-import DTO.NhanVienDTO;
 import javafx.application.Application;
 import javafx.stage.Stage;
-import controller.LoginController;
-import controller.MainController;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
-import javafx.fxml.JavaFXBuilderFactory;
-
 
 public class Main extends Application {
-	private NhanVienDTO nhanVien;
-	private Stage window = new Stage();
-	
-	public NhanVienDTO getNhanVien() {
-		return nhanVien;
-	}
-	
-	public void setNhanVien(NhanVienDTO nhanVien) {
-		this.nhanVien = nhanVien;
-		
-		try {
-			gotoMainApp();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-	
-	private void gotoLogin() throws Exception {
-            LoginController login =
-                (LoginController)replaceSceneContent("loginForm.fxml");
-            login.setApp(this);
-    }
-	
-	private void gotoMainApp() throws Exception {
-		MainController mainapp = (MainController)replaceSceneContent("main.fxml");
-		mainapp.setApp(this);
-	}
-	
-	public void logOut() throws Exception {
-		gotoLogin();
-	}
-	
-	private Initializable replaceSceneContent(String fxml) throws Exception {
-	        FXMLLoader loader = new FXMLLoader(getClass().getResource(fxml));
-	        loader.setLocation(Main.class.getResource(fxml));
-	        loader.setBuilderFactory(new JavaFXBuilderFactory());
-	        Parent root = (Parent) loader.load();
-	        switch(fxml) {
-	        case "main.fxml":
-	        	root.getStylesheets().add(Main.class.getResource("main.css").toExternalForm());
-	        	window.setResizable(true);
-	        	window.setScene(new Scene(root, 1280, 800));
-	        	break;
-	        case "loginForm.fxml":
-	        	window.setResizable(false);
-	        	window.setScene(new Scene(root));
-	        	break;
-	        default:
-	        	break;
-	        }
-	        
-	        window.centerOnScreen();
-	        return (Initializable)loader.getController();
-	}
-	
 	@Override
 	public void start(Stage primaryStage) {
 		try {
-			window = primaryStage;
-			gotoLogin();
-			window.show();
+			Parent root = FXMLLoader.load(getClass().getResource("dangNhap.fxml"));
+			Scene scene = new Scene(root, 500, 300);
+			primaryStage.setResizable(false);
+			primaryStage.setScene(scene);
+			primaryStage.show();
 		} catch(Exception e) {
 			e.printStackTrace();
 		}

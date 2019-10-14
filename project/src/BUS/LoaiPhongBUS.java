@@ -9,4 +9,11 @@ public class LoaiPhongBUS {
 	public static List<LoaiPhongDTO> getDSLoaiPhong() throws SQLException {
 		return LoaiPhongDAO.getDSLoaiPhong();
 	}
+
+	public static boolean deleteLoaiPhong(Integer maLoaiPhong) throws SQLException {
+		if (LoaiPhongDAO.checkLoaiPhong(maLoaiPhong)) {
+			return false;
+		}
+		return LoaiPhongDAO.deleteLoaiPhong(maLoaiPhong);
+	}
 }
