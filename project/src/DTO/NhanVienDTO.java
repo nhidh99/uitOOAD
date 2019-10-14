@@ -1,64 +1,62 @@
 package DTO;
 
-import javafx.beans.property.*;
-
 public class NhanVienDTO {
-	private SimpleIntegerProperty maNhanVien;
-	private SimpleStringProperty tenNhanVien;
-	private SimpleStringProperty cmnd;
-	private SimpleStringProperty diaChi;
-	private SimpleStringProperty email;
-	private SimpleStringProperty soDienThoai;
-	private SimpleStringProperty chucVu;
-	private SimpleStringProperty taiKhoan;
-	private SimpleStringProperty matKhau;
+	private Integer maNhanVien;
+	private String tenNhanVien;
+	private String cmnd;
+	private String diaChi;
+	private String email;
+	private String soDienThoai;
+	private String chucVu;
+	private String taiKhoan;
+	private String matKhau;
 	
 	public Integer getMaNhanVien() {
-		return maNhanVien.get();
+		return maNhanVien;
 	}
 	
 	public String getTenNhanVien() {
-		return tenNhanVien.get();
+		return tenNhanVien;
 	}
 	
 	public String getCMND() {
-		return cmnd.get();
+		return cmnd;
 	}
 	
 	public String getEmail() {
-		return email.get();
+		return email;
 	}
 	
 	public String getDiaChi() {
-		return diaChi.get();
+		return diaChi;
 	}
 	
 	public String getSoDienThoai() {
-		return soDienThoai.get();
+		return soDienThoai;
 	}
 	
 	public String getChucVu() {
-		return chucVu.get();
+		return chucVu;
 	}
 
 	public String getTaiKhoan() {
-		return taiKhoan.get();
+		return taiKhoan;
 	}
 	
 	public String getMatKhau() {
-		return matKhau.get();
+		return matKhau;
 	}
 	
 	public NhanVienDTO(Integer maNhanVien, String tenNhanVien, String cmnd, String diaChi,
 			String email, String soDienThoai, String chucVu, String taiKhoan, String matKhau) {
-		this.maNhanVien = new SimpleIntegerProperty(maNhanVien);
-		this.tenNhanVien = new SimpleStringProperty(tenNhanVien);
-		this.cmnd = new SimpleStringProperty(cmnd);
-		this.diaChi = new SimpleStringProperty(diaChi);
-		this.email = new SimpleStringProperty(email);
-		this.soDienThoai = new SimpleStringProperty(soDienThoai);
-		this.chucVu = new SimpleStringProperty(chucVu);
-		this.taiKhoan = new SimpleStringProperty(taiKhoan);
-		this.matKhau = new SimpleStringProperty(matKhau);
+		this.maNhanVien = maNhanVien;
+		this.tenNhanVien = tenNhanVien;
+		this.cmnd = cmnd;
+		this.diaChi = diaChi;
+		this.email = email;
+		this.soDienThoai = soDienThoai;
+		this.chucVu = chucVu;
+		this.taiKhoan = taiKhoan;
+		this.matKhau = matKhau;
 	}
 }

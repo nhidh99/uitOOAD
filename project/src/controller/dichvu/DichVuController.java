@@ -1,6 +1,9 @@
 package controller.dichvu;
 
+import java.net.URL;
 import java.sql.SQLException;
+import java.util.ResourceBundle;
+
 import BUS.*;
 import DTO.*;
 import controller.*;
@@ -10,6 +13,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -22,7 +26,7 @@ import javafx.stage.Stage;
 import javafx.scene.control.Alert.AlertType;
 import javafx.util.Callback;
 
-public class DichVuController {
+public class DichVuController implements Initializable {
 	@FXML
 	private Label lbTieuDe;
 	@FXML
@@ -42,7 +46,9 @@ public class DichVuController {
 
 	private Integer maDichVu;
 	
-	public void initialize() {
+
+	@Override
+	public void initialize(URL location, ResourceBundle resources) {
 		try {
 			initCbbLoaiDichVu();
 			initCbbNhaCungCap();
@@ -59,12 +65,11 @@ public class DichVuController {
 	}
 	
 	public void initialize(DichVuDTO dichVu) {
-		this.initialize();
 		lbTieuDe.setText("🎲 SỬA DỊCH VỤ");
 		maDichVu = dichVu.getMaDichVu();
 		tfTenDichVu.setText(dichVu.getTenDichVu());
 		tfDonViTinh.setText(dichVu.getDonViTinh());
-		tfDonGia.setText(String.join("", dichVu.getDonGia().split(",")));
+		tfDonGia.setText(dichVu.getDonGiaValue().toString());
 		
 		ObservableList<LoaiDichVuDTO> dsLoaiDichVu = cbbLoaiDichVu.getItems();
 		for (int i = 0; i < dsLoaiDichVu.size(); i++) {

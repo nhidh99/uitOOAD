@@ -49,7 +49,7 @@ public class LoaiDichVuDAO {
 		conn.close();
 		return true;
 	}
-
+	
 	public static LoaiDichVuDTO getLoaiDichVuById(Integer maLoaiDichVu) throws SQLException {
 		Connection conn = DBHelper.getConnection();
 		Statement statement = conn.createStatement();

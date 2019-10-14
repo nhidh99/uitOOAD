@@ -18,4 +18,8 @@ public class DichVuBUS {
 	public static boolean updateDichVu(DichVuDTO dichVu) throws SQLException {
 		return DichVuDAO.updateDichVu(dichVu);
 	}
+
+	public static boolean deleteDichVu(Integer maDichVu) throws SQLException {
+		return DichVuDAO.deleteDichVu(maDichVu);
+	}
 }

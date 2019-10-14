@@ -78,4 +78,14 @@ public class DichVuDAO {
 		conn.close();
 		return output > 0;
 	}
+
+	public static boolean deleteDichVu(Integer maDichVu) throws SQLException {
+		Connection conn = DBHelper.getConnection();
+		String query = "CALL del_DichVu(?)";
+		PreparedStatement statement = conn.prepareStatement(query);
+		statement.setInt(1, maDichVu);
+		int output = statement.executeUpdate();
+		conn.close();
+		return output > 0;
+	}
 }
