@@ -40,7 +40,11 @@ public class ThemDichVuController implements Initializable {
 		cbbDichVu.getSelectionModel().selectFirst();
 		DichVuDTO dichVu = cbbDichVu.getSelectionModel().getSelectedItem();
 		if(dichVu.getSoLuongTon() == null) {
-			lbSoLuongTon.setText("Không tồn kho");
+			lbSoLuongTon.setText(dichVu.getDonViTinh());
+			snSoLuong.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 100, 1));
+		}
+		else if(dichVu.getSoLuongTon() == 0) {
+			lbSoLuongTon.setText("Hết hàng");
 			snSoLuong.setDisable(true);
 		}
 		else {
@@ -52,9 +56,14 @@ public class ThemDichVuController implements Initializable {
 		//Khi chọn dịch vụ khác trong ComboBox
 		cbbDichVu.valueProperty().addListener(new ChangeListener<DichVuDTO>() {
 	        public void changed(ObservableValue<? extends DichVuDTO> DichVu, DichVuDTO dichVuCu, DichVuDTO dichVuMoi) {
+	        	snSoLuong.setDisable(false);
 	        	if(dichVuMoi.getSoLuongTon() == null) {
-	        		lbSoLuongTon.setText("Không tồn kho");
-	        		snSoLuong.setDisable(true);
+	        		lbSoLuongTon.setText(dichVuMoi.getDonViTinh());
+	    			snSoLuong.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 100, 1));
+	        	}
+	        	else if(dichVuMoi.getSoLuongTon() == 0) {
+	        		lbSoLuongTon.setText("Hết hàng");
+	    			snSoLuong.setDisable(true);
 	        	}
 	        	else
 	        	{
@@ -73,10 +82,22 @@ public class ThemDichVuController implements Initializable {
 	}
 	
 	public void handleThemDichVu() throws NumberFormatException, SQLException {
+		/*
+		 Đoạn này không chạy =)) 
+		if(snSoLuong.getValue() == 0) {
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Thất bại");
+			alert.setHeaderText("Thêm dịch vụ thất bại!");
+			alert.setContentText("Số lượng dịch vụ đã sử dụng không thể là 0!");
+			alert.showAndWait();
+			return;
+		}
+		*/
 		PTP_DichVuDTO ptp_dichVu =  new PTP_DichVuDTO(
+				PTP_DichVuBUS.getMaxMaPTP_DichVu(),
 				Integer.parseInt(lbPhieuThue.getText()),
 				cbbDichVu.getSelectionModel().getSelectedItem(),
-				snSoLuong.isDisable() ? -1 : snSoLuong.getValue(),
+				snSoLuong.isDisable() ? 0 : snSoLuong.getValue(),
 				Integer.parseInt(tfDonGia.getText()),
 				snSoLuong.getValue() * Integer.parseInt(tfDonGia.getText())
 				);
@@ -85,7 +106,7 @@ public class ThemDichVuController implements Initializable {
 			Alert alert = new Alert(AlertType.INFORMATION);
 			alert.setTitle("Thành công");
 			alert.setHeaderText("Thêm dịch vụ thành công!");
-			alert.setContentText(String.format("Thêm thành công dịch vụ %s, số lượng sử dụng: %d.", ptp_dichVu.getDichVu().getTenDichVu(), ptp_dichVu.getSoLuong()));
+			alert.setContentText(String.format("Thêm thành công dịch vụ %s, số lượng sử dụng: %d %s.", ptp_dichVu.getDichVu().getTenDichVu(), ptp_dichVu.getSoLuong(), ptp_dichVu.getDonViTinh()));
 			alert.showAndWait();
 			
 			MainController mainController = (MainController) lbSoLuongTon.getScene().getUserData();
@@ -98,7 +119,7 @@ public class ThemDichVuController implements Initializable {
 			Alert alert = new Alert(AlertType.INFORMATION);
 			alert.setTitle("Thất bại");
 			alert.setHeaderText("Thêm dịch vụ thất bại!");
-			alert.setContentText("Dịch vụ đã tồn tại hoặc hết hàng!");
+			alert.setContentText("Dịch vụ đã hết hàng!");
 			alert.showAndWait();
 		}
 		

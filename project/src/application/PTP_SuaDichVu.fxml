@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="446.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.phieuthue.SuaDichVuController">
    <center>
       <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
@@ -24,33 +24,34 @@
                   <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" />
               </columnConstraints>
               <rowConstraints>
-                <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" vgrow="SOMETIMES" />
+                <RowConstraints />
                 <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" vgrow="SOMETIMES" />
                 <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" vgrow="SOMETIMES" />
                   <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Label text="Dịch vụ: " GridPane.columnIndex="1">
+                  <Label text="Phiếu thuê:" GridPane.columnIndex="1">
                      <font>
                         <Font name="System Bold" size="20.0" />
                      </font>
                   </Label>
-                  <Label text="Số lượng: " GridPane.columnIndex="1" GridPane.rowIndex="1">
+                  <Label text="Dịch vụ: " GridPane.columnIndex="1" GridPane.rowIndex="1">
                      <font>
                         <Font name="System Bold" size="20.0" />
                      </font>
                   </Label>
-                  <Label text="Đơn vị tính: " GridPane.columnIndex="1" GridPane.rowIndex="2">
+                  <Label text="Số lượng: " GridPane.columnIndex="1" GridPane.rowIndex="2">
                      <font>
                         <Font name="System Bold" size="20.0" />
                      </font>
                   </Label>
-                  <Spinner prefHeight="25.0" prefWidth="213.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                  <Label text="Label">
+                  <Label text="Số lượng tồn:" GridPane.columnIndex="1" GridPane.rowIndex="3">
                      <font>
                         <Font name="System Bold" size="20.0" />
                      </font>
                   </Label>
+                  <Spinner fx:id="snSoLuong" prefHeight="25.0" prefWidth="213.0" GridPane.columnIndex="2" GridPane.rowIndex="2" />
                   <Label text="Label" GridPane.rowIndex="1">
                      <font>
                         <Font name="System Bold" size="20.0" />
@@ -61,23 +62,38 @@
                         <Font name="System Bold" size="20.0" />
                      </font>
                   </Label>
-                  <Label text="Đơn giá: " GridPane.columnIndex="1" GridPane.rowIndex="3">
-                     <font>
-                        <Font name="System Bold" size="20.0" />
-                     </font>
-                  </Label>
                   <Label text="Label" GridPane.rowIndex="3">
                      <font>
                         <Font name="System Bold" size="20.0" />
                      </font>
                   </Label>
-                  <TextField GridPane.columnIndex="2" GridPane.rowIndex="3" />
-                  <Label text="Label" GridPane.columnIndex="2">
+                  <Label text="Đơn giá: " GridPane.columnIndex="1" GridPane.rowIndex="4">
+                     <font>
+                        <Font name="System Bold" size="20.0" />
+                     </font>
+                  </Label>
+                  <Label text="Label" GridPane.rowIndex="4">
+                     <font>
+                        <Font name="System Bold" size="20.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="tfDonGia" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+                  <Label fx:id="lbSoLuongTon" text="?" GridPane.columnIndex="2" GridPane.rowIndex="3">
                      <font>
                         <Font size="20.0" />
                      </font>
                   </Label>
-                  <Label text="Label" GridPane.columnIndex="2" GridPane.rowIndex="3">
+                  <Label text="Label">
+                     <font>
+                        <Font name="System Bold" size="20.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="lbPhieuThue" text="?" GridPane.columnIndex="2">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="lbDichVu" text="Label" GridPane.columnIndex="2" GridPane.rowIndex="1">
                      <font>
                         <Font size="20.0" />
                      </font>
@@ -100,12 +116,12 @@
    <bottom>
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="30.0" BorderPane.alignment="CENTER">
          <children>
-            <Button mnemonicParsing="false" prefWidth="190.0" text="✅ XÁC NHẬN" textFill="#427921">
+            <Button mnemonicParsing="false" onAction="#handleXacNhanSuaDichVu" prefWidth="190.0" text="✅ XÁC NHẬN" textFill="#427921">
                <font>
                   <Font name="System Bold" size="20.0" />
                </font>
             </Button>
-            <Button mnemonicParsing="false" prefWidth="190.0" text="❌ HỦY BỎ" textFill="BROWN">
+            <Button mnemonicParsing="false" onAction="#handleHuySuaDichVu" prefWidth="190.0" text="❌ HỦY BỎ" textFill="BROWN">
                <font>
                   <Font name="System Bold" size="20.0" />
                </font>

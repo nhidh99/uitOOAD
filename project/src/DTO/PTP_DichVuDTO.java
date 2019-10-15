@@ -3,18 +3,24 @@ package DTO;
 import helper.MoneyFormatHelper;
 
 public class PTP_DichVuDTO {
+	private Integer maPTPDV;
 	private Integer maPTPhong;
 	private DichVuDTO dichVu;
 	private Integer soLuong;
 	private Integer donGia;
 	private Integer thanhTien;
 	
-	public PTP_DichVuDTO(Integer maPTPhong, DichVuDTO dichVu, Integer soLuong, Integer donGia, Integer thanhTien) {
+	public PTP_DichVuDTO(Integer maPTPDV, Integer maPTPhong, DichVuDTO dichVu, Integer soLuong, Integer donGia, Integer thanhTien) {
+		this.maPTPDV = maPTPDV;
 		this.maPTPhong = maPTPhong;
 		this.dichVu = dichVu;
 		this.soLuong = soLuong;
 		this.donGia = donGia;
 		this.thanhTien = thanhTien;
+	}
+
+	public Integer getMaPTPDichVu() {
+		return maPTPDV;
 	}
 	
 	public Integer getMaPTPhong() {
@@ -39,6 +45,10 @@ public class PTP_DichVuDTO {
 	
 	public String getDonViTinh() {
 		return dichVu.getDonViTinh();
+	}
+	
+	public Integer getSoLuongTon() {
+		return dichVu.getSoLuongTon();
 	}
 	
 	public Integer getDonGiaValue() {

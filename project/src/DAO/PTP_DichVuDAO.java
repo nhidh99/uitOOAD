@@ -27,6 +27,7 @@ public class PTP_DichVuDAO {
 					rs.getInt("SoLuongTon"),
 					rs.getInt("DonGia"));
 			PTP_DichVuDTO ptp_dichVu = new PTP_DichVuDTO(
+					rs.getInt("MaPTPDV"),
 					rs.getInt("MaPTPhong"),
 					dichVu,
 					rs.getInt("SoLuong"),
@@ -53,20 +54,42 @@ public class PTP_DichVuDAO {
 		return output > 0;
 	}
 	
-	public static boolean checkPTP_DichVu(PTP_DichVuDTO ptp_dichVu) throws SQLException {
+	public static boolean deletePTP_DichVu(Integer maPTP_DichVu) throws SQLException {
 		Connection conn = DBHelper.getConnection();
-		String query = "SELECT (EXISTS (SELECT 1 FROM ptp_dv WHERE MaPTPhong = ? AND MaDichVu = ?)"
-				+ "AND (EXISTS (SELECT 1 FROM DichVu WHERE MaDichVu = ? AND KhaDung = 1 AND SoLuongTon != 0)))";
-		PreparedStatement statement = conn.prepareStatement(query);
-		statement.setInt(1, ptp_dichVu.getMaPTPhong());
-		statement.setInt(2, ptp_dichVu.getMaDichVu());
-		statement.setInt(3, ptp_dichVu.getMaDichVu());
-		ResultSet rs = statement.executeQuery();
-		rs.next();
-		boolean isExist = rs.getBoolean(1);
+		Statement statement = conn.createStatement();
+		String query = String.format("DELETE FROM ptp_dv WHERE MaPTPDV = '%d'", maPTP_DichVu);
+		int output = statement.executeUpdate(query);
 		conn.close();
-		return isExist;
+		return output > 0 ;
+	}
+	
+	public static Integer getMaxMaPTP_DichVu() throws SQLException {
+		Connection conn = DBHelper.getConnection();
+		Statement statement = conn.createStatement();
+		String query = "SELECT MAX(MaPTPDV) FROM ptp_dv";
+		ResultSet rs = statement.executeQuery(query);
+		rs.next();
+		Integer output = rs.getInt(1);
+		conn.close();
+		return output;
 	}
 
-	
+	public static boolean updatePTP_DichVu(PTP_DichVuDTO ptp_dichVu) {
+		/*
+		Connection conn = DBHelper.getConnection();
+		String query = "UPDATE ptp_dv "
+				+ "SET TenNhanVien = ?, CMND = ?, DiaChi = ?, Email = ?, SoDienThoai = ?, ChucVu = ? "
+				+ "WHERE MaPTPDV = ?";
+		PreparedStatement statement = conn.prepareStatement(query);
+		statement.setString(1, nhanVien.getTenNhanVien());
+		statement.setString(2, nhanVien.getCMND());
+		statement.setString(3, nhanVien.getDiaChi());
+		statement.setString(4, nhanVien.getEmail());
+		statement.setString(5, nhanVien.getSoDienThoai());
+		statement.setString(6, nhanVien.getChucVu());
+		statement.setInt(7, ptp_dichVu.getMaPTPDichVu());
+		statement.execute();
+		conn.close();*/
+		return true;
+	}
 }

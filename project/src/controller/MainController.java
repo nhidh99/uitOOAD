@@ -12,6 +12,7 @@ import DTO.*;
 import controller.dichvu.DichVuController;
 import controller.nhanvien.SuaNhanVienController;
 import controller.nhanvien.TuyChinhNhanVienController;
+import controller.phieuthue.SuaDichVuController;
 import controller.phieuthue.ThemDichVuController;
 import custom.control.ListRoomDetailPane;
 import custom.control.RoomDetailPane;
@@ -911,11 +912,55 @@ public class MainController implements Initializable {
 	}
 	
 	public void handleXoaDichVu_PTP() {
-		
+		try {
+			PTP_DichVuDTO ptp_dichVu = tvPTP_DichVu.getSelectionModel().getSelectedItem();
+			if (confirmDialog("Xác nhận xoá dịch vụ " + ptp_dichVu.getTenDichVu() + "?")) {
+				if (PTP_DichVuBUS.deletePTP_DichVu(ptp_dichVu.getMaPTPDichVu())) {
+					Alert alert = new Alert(AlertType.INFORMATION);
+					alert.setTitle("Thành công");
+					alert.setHeaderText("Xóa loại dịch vụ thành công!");
+					alert.setContentText("Đã xóa dịch vụ " + ptp_dichVu.getTenDichVu() + "!");
+					alert.showAndWait();
+					loadTablePTPDichVuByMaPT(PhieuThuePhongBUS.getPTPhongByMaPhong(Integer.parseInt(phongDangChon.getMaPhong())).getMaPTPhong());
+				} else {
+					Alert alert = new Alert(AlertType.INFORMATION);
+					alert.setTitle("Lỗi");
+					alert.setHeaderText("Không thể xóa dịch vụ!");
+					alert.showAndWait();
+				}
+			}
+		} catch (SQLException SQLException) {
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Lỗi");
+			alert.setHeaderText("Không thể xóa dịch vụ!");
+			alert.setContentText("Lỗi database!");
+			alert.showAndWait();
+		} catch (NullPointerException NullPointerException) {
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Lỗi");
+			alert.setHeaderText("Không thể xoá dịch vụ!");
+			alert.setContentText("Vui lòng chọn dịch vụ cần xoá!");
+			alert.showAndWait();
+		}
 	}
 	
 	public void handleSuaDichVu_PTP() {
-		
+		try {
+			PTP_DichVuDTO ptp_dichVu = tvPTP_DichVu.getSelectionModel().getSelectedItem();
+			String link = "/application/PTP_SuaDichVu.fxml";
+			Stage popUpStage = PopUpStageHelper.createPopUpStage(link, 980, 460);
+			popUpStage.getScene().setUserData(this);
+			FXMLLoader loader = (FXMLLoader) popUpStage.getUserData();
+			SuaDichVuController controller = loader.getController();
+			controller.initialize(ptp_dichVu);
+			popUpStage.showAndWait();
+		} catch (NullPointerException NullPointerException) {
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Lỗi");
+			alert.setHeaderText("Không thể sửa dịch vụ!");
+			alert.setContentText("Vui lòng chọn dịch vụ cần sửa!");
+			alert.showAndWait();
+		}
 	}
 	
 	public void loadTablePTPDichVuByMaPT(Integer maPhieuThue) {
