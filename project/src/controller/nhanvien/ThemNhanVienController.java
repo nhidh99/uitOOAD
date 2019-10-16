@@ -15,7 +15,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
@@ -23,8 +22,6 @@ import javafx.stage.Stage;
 
 public class ThemNhanVienController implements Initializable {
 
-	@FXML
-	Label lbMaNhanVien;
 	@FXML
 	TextField tfHoTen;
 	@FXML
@@ -49,24 +46,11 @@ public class ThemNhanVienController implements Initializable {
 		ObservableList<String> dsChucVu = FXCollections.observableArrayList("Kế toán", "Lễ tân", "Quản lí");
 		cbbChucVu.setItems(dsChucVu);
 		cbbChucVu.getSelectionModel().selectFirst();
-		
-		try {
-			Integer maxMaNhanVien = NhanVienBUS.getMaxMaNhanVien();
-			lbMaNhanVien.setText(Integer.toString(maxMaNhanVien + 1));
-		} catch (SQLException SQLException) {
-			Alert alert = new Alert(AlertType.INFORMATION);
-			alert.setTitle("Lỗi");
-			alert.setHeaderText("Không thể tạo mã nhân viên!");
-			alert.setContentText("Lỗi database!");
-			alert.showAndWait();	
-		}
-		
 	}
 
 	public void handleThemNhanVien(ActionEvent event) {
 		if (pfMatKhau.getText().equals(pfMatKhau2.getText())) {
 			NhanVienDTO nhanVien = new NhanVienDTO(
-					Integer.parseInt(lbMaNhanVien.getText()),
 					tfHoTen.getText(),
 					tfCMND.getText(),
 					tfDiaChi.getText(),
@@ -84,9 +68,9 @@ public class ThemNhanVienController implements Initializable {
 					alert.setContentText(String.format("Thêm thành công %s %s.", nhanVien.getChucVu(), nhanVien.getTenNhanVien()));
 					alert.showAndWait();
 					
-					MainController mainController = (MainController) lbMaNhanVien.getScene().getUserData();
+					MainController mainController = (MainController) tfHoTen.getScene().getUserData();
 					mainController.loadTableNhanVien();
-					Stage stage = (Stage) lbMaNhanVien.getScene().getWindow();
+					Stage stage = (Stage) tfHoTen.getScene().getWindow();
 					stage.close();
 				}
 				else {
@@ -115,7 +99,7 @@ public class ThemNhanVienController implements Initializable {
 	}
 
 	public void handleHuyThemNhanVien(ActionEvent event) {
-		Stage stage = (Stage) lbMaNhanVien.getScene().getWindow();
+		Stage stage = (Stage) tfHoTen.getScene().getWindow();
 		stage.close();
 	}
 }

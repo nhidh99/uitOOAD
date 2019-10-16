@@ -23,7 +23,21 @@ public class NhanVienDAO {
 		return output;
 	}
 
-	public static boolean checkNhanVien(NhanVienDTO nhanVien) throws SQLException {
+	public static boolean checkInsNhanVien(NhanVienDTO nhanVien) throws SQLException {
+		Connection conn = DBHelper.getConnection();
+		String query = "SELECT (EXISTS (SELECT 1 FROM NhanVien WHERE CMND = ? AND ChucVu IS NOT NULL LIMIT 1))"
+				+ "OR (EXISTS (SELECT 1 FROM NhanVien WHERE TenTaiKhoan = ? AND ChucVu IS NOT NULL LIMIT 1))";
+		PreparedStatement statement = conn.prepareStatement(query);
+		statement.setString(1, nhanVien.getCMND());
+		statement.setString(2, nhanVien.getTaiKhoan());
+		ResultSet rs = statement.executeQuery();
+		rs.next();
+		boolean output = rs.getBoolean(1);
+		conn.close();
+		return output;
+	}
+	
+	public static boolean checkUpdNhanVien(NhanVienDTO nhanVien) throws SQLException {
 		Connection conn = DBHelper.getConnection();
 		String query = "SELECT (EXISTS (SELECT 1 FROM NhanVien WHERE CMND = ? AND MaNhanVien != ? AND ChucVu IS NOT NULL LIMIT 1))"
 				+ "OR (EXISTS (SELECT 1 FROM NhanVien WHERE TenTaiKhoan = ? AND MaNhanVien != ? AND ChucVu IS NOT NULL LIMIT 1))";
@@ -34,9 +48,9 @@ public class NhanVienDAO {
 		statement.setInt(4, nhanVien.getMaNhanVien());
 		ResultSet rs = statement.executeQuery();
 		rs.next();
-		boolean isExist = rs.getBoolean(1);
+		boolean output = rs.getBoolean(1);
 		conn.close();
-		return isExist;
+		return output;
 	}
 
 	public static boolean insertNhanVien(NhanVienDTO nhanVien) throws SQLException {
@@ -52,20 +66,9 @@ public class NhanVienDAO {
 		statement.setString(6, nhanVien.getEmail());
 		statement.setString(7, nhanVien.getSoDienThoai());
 		statement.setString(8, nhanVien.getChucVu());
-		statement.execute();
+		int records = statement.executeUpdate();
 		conn.close();
-		return true;
-	}
-
-	public static Integer getMaxMaNhanVien() throws SQLException {
-		Connection conn = DBHelper.getConnection();
-		Statement statement = conn.createStatement();
-		String query = "SELECT MAX(MaNhanVien) FROM NhanVien";
-		ResultSet rs = statement.executeQuery(query);
-		rs.next();
-		Integer output = rs.getInt(1);
-		conn.close();
-		return output;
+		return records > 0;
 	}
 
 	public static boolean updateNhanVien(NhanVienDTO nhanVien) throws SQLException {
