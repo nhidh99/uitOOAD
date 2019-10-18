@@ -21,4 +21,8 @@ public class PTP_DichVuBUS {
 	public static Integer getMaxMaPTP_DichVu() throws SQLException {
 		return PTP_DichVuDAO.getMaxMaPTP_DichVu();
 	}
+	
+	public static boolean updatePTP_DichVu(PTP_DichVuDTO ptp_dichVu) throws SQLException {
+		return PTP_DichVuDAO.updatePTP_DichVu(ptp_dichVu);
+	}
 }

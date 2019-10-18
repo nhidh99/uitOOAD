@@ -66,4 +66,9 @@ public class PTP_DichVuDTO {
 	public String getThanhTien() {
 		return MoneyFormatHelper.format(thanhTien);
 	}
+	
+	public void setDonGia(Integer donGia) {
+		this.donGia = donGia;
+		this.thanhTien = this.donGia * this.soLuong;
+	}
 }

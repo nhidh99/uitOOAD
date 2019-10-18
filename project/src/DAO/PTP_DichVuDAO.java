@@ -74,22 +74,16 @@ public class PTP_DichVuDAO {
 		return output;
 	}
 
-	public static boolean updatePTP_DichVu(PTP_DichVuDTO ptp_dichVu) {
-		/*
+	public static boolean updatePTP_DichVu(PTP_DichVuDTO ptp_dichVu) throws SQLException {
 		Connection conn = DBHelper.getConnection();
-		String query = "UPDATE ptp_dv "
-				+ "SET TenNhanVien = ?, CMND = ?, DiaChi = ?, Email = ?, SoDienThoai = ?, ChucVu = ? "
-				+ "WHERE MaPTPDV = ?";
+		String query = "UPDATE ptp_dv SET GiaDichVu = ?, ThanhTien = ? WHERE MaPTPDV = ?";
 		PreparedStatement statement = conn.prepareStatement(query);
-		statement.setString(1, nhanVien.getTenNhanVien());
-		statement.setString(2, nhanVien.getCMND());
-		statement.setString(3, nhanVien.getDiaChi());
-		statement.setString(4, nhanVien.getEmail());
-		statement.setString(5, nhanVien.getSoDienThoai());
-		statement.setString(6, nhanVien.getChucVu());
-		statement.setInt(7, ptp_dichVu.getMaPTPDichVu());
-		statement.execute();
-		conn.close();*/
-		return true;
+		statement.setInt(1, ptp_dichVu.getDonGiaValue());
+		statement.setInt(2, ptp_dichVu.getThanhTienValue());
+		statement.setInt(3, ptp_dichVu.getMaPTPDichVu());
+		
+		int output = statement.executeUpdate();
+		conn.close();
+		return output > 0;
 	}
 }

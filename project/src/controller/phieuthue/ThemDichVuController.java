@@ -6,7 +6,6 @@ import java.util.ResourceBundle;
 
 import BUS.DichVuBUS;
 import BUS.PTP_DichVuBUS;
-import BUS.PhieuThuePhongBUS;
 import DTO.DichVuDTO;
 import DTO.PTP_DichVuDTO;
 import controller.MainController;
@@ -82,22 +81,20 @@ public class ThemDichVuController implements Initializable {
 	}
 	
 	public void handleThemDichVu() throws NumberFormatException, SQLException {
-		/*
-		 Đoạn này không chạy =)) 
-		if(snSoLuong.getValue() == 0) {
+		if(snSoLuong.isDisable()) {
 			Alert alert = new Alert(AlertType.INFORMATION);
 			alert.setTitle("Thất bại");
 			alert.setHeaderText("Thêm dịch vụ thất bại!");
-			alert.setContentText("Số lượng dịch vụ đã sử dụng không thể là 0!");
+			alert.setContentText("Đã hết hàng!");
 			alert.showAndWait();
 			return;
 		}
-		*/
+		
 		PTP_DichVuDTO ptp_dichVu =  new PTP_DichVuDTO(
 				PTP_DichVuBUS.getMaxMaPTP_DichVu(),
 				Integer.parseInt(lbPhieuThue.getText()),
 				cbbDichVu.getSelectionModel().getSelectedItem(),
-				snSoLuong.isDisable() ? 0 : snSoLuong.getValue(),
+				snSoLuong.getValue(),
 				Integer.parseInt(tfDonGia.getText()),
 				snSoLuong.getValue() * Integer.parseInt(tfDonGia.getText())
 				);
@@ -106,11 +103,12 @@ public class ThemDichVuController implements Initializable {
 			Alert alert = new Alert(AlertType.INFORMATION);
 			alert.setTitle("Thành công");
 			alert.setHeaderText("Thêm dịch vụ thành công!");
-			alert.setContentText(String.format("Thêm thành công dịch vụ %s, số lượng sử dụng: %d %s.", ptp_dichVu.getDichVu().getTenDichVu(), ptp_dichVu.getSoLuong(), ptp_dichVu.getDonViTinh()));
+			alert.setContentText(String.format("Thêm thành công %d %s %s.", ptp_dichVu.getSoLuong(), ptp_dichVu.getDonViTinh().toLowerCase(), ptp_dichVu.getDichVu().getTenDichVu()));
 			alert.showAndWait();
 			
 			MainController mainController = (MainController) lbSoLuongTon.getScene().getUserData();
-			mainController.loadTablePTPDichVuByMaPT(PhieuThuePhongBUS.getPTPhongByMaPhong(Integer.parseInt(mainController.getPhongDangChon().getMaPhong())).getMaPTPhong());
+			mainController.loadTablePTPDichVuByMaPT(Integer.parseInt(lbPhieuThue.getText()));
+			mainController.loadTableDichVu();
 			Stage stage = (Stage) lbSoLuongTon.getScene().getWindow();
 			stage.close();
 		}

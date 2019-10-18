@@ -13,7 +13,9 @@ import controller.dichvu.DichVuController;
 import controller.nhanvien.SuaNhanVienController;
 import controller.nhanvien.TuyChinhNhanVienController;
 import controller.phieuthue.SuaDichVuController;
+import controller.phieuthue.SuaPTCKController;
 import controller.phieuthue.ThemDichVuController;
+import controller.phieuthue.ThemPTCKController;
 import custom.control.ListRoomDetailPane;
 import custom.control.RoomDetailPane;
 import helper.DateFormatHelper;
@@ -230,12 +232,21 @@ public class MainController implements Initializable {
 	TableColumn<PTP_DichVuDTO, Integer> tcPTP_DichVu_DonGia;
 	@FXML
 	TableColumn<PTP_DichVuDTO, Integer> tcPTP_DichVu_ThanhTien;
-
-	private PhongDTO phongDangChon = null;
 	
-	public PhongDTO getPhongDangChon() {
-		return phongDangChon;
-	}
+	//Tab phụ thu chiết khấu:
+	@FXML 
+	TableView<PTP_PTCKDTO> tvPTP_PTCK;
+	@FXML 
+	TableColumn<PTP_PTCKDTO, Integer> tcPTP_PTCK_STT;
+	@FXML
+	TableColumn<PTP_PTCKDTO, String> tcPTP_PTCK_NoiDung;
+	@FXML 
+	TableColumn<PTP_PTCKDTO, Integer> tcPTP_PTCK_DonGia;
+	@FXML
+	TableColumn<PTP_PTCKDTO, Integer> tcPTP_PTCK_SoLuong;
+	@FXML 
+	TableColumn<PTP_PTCKDTO,Integer> tcPTP_PTCK_ThanhTien;
+
 	//Thêm table PTP Dịch Vụ:
 	private void initTablePTPDichVu() {
 		tcPTP_DichVu_STT.setCellValueFactory(
@@ -247,9 +258,18 @@ public class MainController implements Initializable {
 		tcPTP_DichVu_ThanhTien.setCellValueFactory(new PropertyValueFactory<>("thanhTien"));
 	}
 	
+	//Thêm table PTP ptck:
+	private void initTablePTPPTCK() {
+		tcPTP_PTCK_STT.setCellValueFactory(
+				column -> new ReadOnlyObjectWrapper<Integer>(tvPTP_PTCK.getItems().indexOf(column.getValue()) + 1));
+		tcPTP_PTCK_NoiDung.setCellValueFactory(new PropertyValueFactory<>("NoiDung"));
+		tcPTP_PTCK_SoLuong.setCellValueFactory(new PropertyValueFactory<>("SoLuong"));
+		tcPTP_PTCK_DonGia.setCellValueFactory(new PropertyValueFactory<>("DonGia"));
+		tcPTP_PTCK_ThanhTien.setCellValueFactory(new PropertyValueFactory<>("TriGia"));
+	}
+	
 	private class RoomClickedHandler {
 		public void handleChiTietPhong(PhongDTO phong) {
-			phongDangChon = phong;
 			showChiTietPhong(phong);
 			updateControlsByTinhTrang(phong.getTinhTrang().getTenTinhTrang());
 			//Thêm từ đây
@@ -257,6 +277,7 @@ public class MainController implements Initializable {
 			if(phong.getTinhTrang().getTenTinhTrang().equals("Thuê"))
 				try {
 					loadTablePTPDichVuByMaPT(PhieuThuePhongBUS.getPTPhongByMaPhong(Integer.parseInt(phong.getMaPhong())).getMaPTPhong());
+					loadTablePTPPTCKByMaPT(PhieuThuePhongBUS.getPTPhongByMaPhong(Integer.parseInt(phong.getMaPhong())).getMaPTPhong());
 				} catch (NumberFormatException e) {
 					// TODO Auto-generated catch block
 					Alert alert = new Alert(AlertType.INFORMATION);
@@ -338,6 +359,7 @@ public class MainController implements Initializable {
 		initTableNhaCungCap();
 		initTableLoaiDichVu();
 		initTablePTPDichVu();
+		initTablePTPPTCK();
 	}
 
 	private void loadTables() {
@@ -906,7 +928,7 @@ public class MainController implements Initializable {
 		Stage popUpStage = PopUpStageHelper.createPopUpStage(link, 980, 460);
 		FXMLLoader loader = (FXMLLoader) popUpStage.getUserData();
 		ThemDichVuController controller = loader.getController();
-		controller.setMaPTPhong(PhieuThuePhongBUS.getPTPhongByMaPhong(Integer.parseInt(phongDangChon.getMaPhong())).getMaPTPhong());
+		controller.setMaPTPhong(PhieuThuePhongBUS.getPTPhongByMaPhong(Integer.parseInt(lbPhong_MaPhong.getText())).getMaPTPhong());
 		popUpStage.getScene().setUserData(this);
 		popUpStage.showAndWait();
 	}
@@ -921,7 +943,8 @@ public class MainController implements Initializable {
 					alert.setHeaderText("Xóa loại dịch vụ thành công!");
 					alert.setContentText("Đã xóa dịch vụ " + ptp_dichVu.getTenDichVu() + "!");
 					alert.showAndWait();
-					loadTablePTPDichVuByMaPT(PhieuThuePhongBUS.getPTPhongByMaPhong(Integer.parseInt(phongDangChon.getMaPhong())).getMaPTPhong());
+					loadTablePTPDichVuByMaPT(PhieuThuePhongBUS.getPTPhongByMaPhong(Integer.parseInt(lbPhong_MaPhong.getText())).getMaPTPhong());
+					loadTableDichVu();
 				} else {
 					Alert alert = new Alert(AlertType.INFORMATION);
 					alert.setTitle("Lỗi");
@@ -948,7 +971,7 @@ public class MainController implements Initializable {
 		try {
 			PTP_DichVuDTO ptp_dichVu = tvPTP_DichVu.getSelectionModel().getSelectedItem();
 			String link = "/application/PTP_SuaDichVu.fxml";
-			Stage popUpStage = PopUpStageHelper.createPopUpStage(link, 980, 460);
+			Stage popUpStage = PopUpStageHelper.createPopUpStage(link, 500, 400);
 			popUpStage.getScene().setUserData(this);
 			FXMLLoader loader = (FXMLLoader) popUpStage.getUserData();
 			SuaDichVuController controller = loader.getController();
@@ -978,7 +1001,86 @@ public class MainController implements Initializable {
 			alert.showAndWait();
 		}
 	}
-
+	
+	//Phiếu thuê - phụ thu/chiết khấu:
+	public void loadTablePTPPTCKByMaPT(Integer maPhieuThue) {
+		try {
+			ObservableList<PTP_PTCKDTO> dsPTCK = FXCollections.observableArrayList();
+			for(PTP_PTCKDTO ptck : PTP_PTCKBUS.getDSPTCKByMaPT(maPhieuThue)) {
+				dsPTCK.add(ptck);
+			}
+			tvPTP_PTCK.setItems(dsPTCK);
+		}
+		catch (SQLException e) {
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Lỗi");
+			alert.setHeaderText("Không thể tải danh sách phụ thu/chiết khấu!");
+			alert.setContentText("Lỗi database!");
+			alert.showAndWait();
+		}
+	}
+	public void handleThemPTCK_PTP() throws NumberFormatException, SQLException {
+		String link = "/application/PTP_ThemPTCK.fxml";
+		Stage popUpStage = PopUpStageHelper.createPopUpStage(link, 980, 460);
+		FXMLLoader loader = (FXMLLoader) popUpStage.getUserData();
+		ThemPTCKController controller = loader.getController();
+		controller.setMaPTPhong(PhieuThuePhongBUS.getPTPhongByMaPhong(Integer.parseInt(lbPhong_MaPhong.getText())).getMaPTPhong());
+		popUpStage.getScene().setUserData(this);
+		popUpStage.showAndWait();
+	}
+	
+	public void handleXoaPTCK_PTP() {
+		try {
+			PTP_PTCKDTO ptp_ptck = tvPTP_PTCK.getSelectionModel().getSelectedItem();
+			if (confirmDialog("Xác nhận xoá phụ thu/chiết khấu " + ptp_ptck.getNoiDung() + "?")) {
+				if (PTP_PTCKBUS.deletePTP_PTCK(ptp_ptck.getMaPTCKPhong())) {
+					Alert alert = new Alert(AlertType.INFORMATION);
+					alert.setTitle("Thành công");
+					alert.setHeaderText("Xóa phụ thu/chiết khấu thành công!");
+					alert.setContentText("Đã xóa phụ thu/chiết khấu " + ptp_ptck.getNoiDung() + "!");
+					alert.showAndWait();
+					loadTablePTPPTCKByMaPT(PhieuThuePhongBUS.getPTPhongByMaPhong(Integer.parseInt(lbPhong_MaPhong.getText())).getMaPTPhong());
+					loadTableDichVu();
+				} else {
+					Alert alert = new Alert(AlertType.INFORMATION);
+					alert.setTitle("Lỗi");
+					alert.setHeaderText("Không thể xóa phụ thu/chiết khấu!");
+					alert.showAndWait();
+				}
+			}
+		} catch (SQLException SQLException) {
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Lỗi");
+			alert.setHeaderText("Không thể xóa phụ thu/chiết khấu!");
+			alert.setContentText("Lỗi database!");
+			alert.showAndWait();
+		} catch (NullPointerException NullPointerException) {
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Lỗi");
+			alert.setHeaderText("Không thể xoá phụ thu/chiết khấu!");
+			alert.setContentText("Vui lòng chọn phụ thu/chiết khấu cần xoá!");
+			alert.showAndWait();
+		}
+	}
+	
+	public void handleSuaPTCK_PTP() {
+		try {
+			PTP_PTCKDTO ptp_ptck = tvPTP_PTCK.getSelectionModel().getSelectedItem();
+			String link = "/application/PTP_SuaPTCK.fxml";
+			Stage popUpStage = PopUpStageHelper.createPopUpStage(link, 600, 460);
+			popUpStage.getScene().setUserData(this);
+			FXMLLoader loader = (FXMLLoader) popUpStage.getUserData();
+			SuaPTCKController controller = loader.getController();
+			controller.initialize(ptp_ptck);
+			popUpStage.showAndWait();
+		} catch (NullPointerException NullPointerException) {
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Lỗi");
+			alert.setHeaderText("Không thể sửa phụ thu/chiết khấu!");
+			alert.setContentText("Vui lòng chọn phụ thu/chiết khấu cần sửa!");
+			alert.showAndWait();
+		}
+	}
 	
 	
 }
