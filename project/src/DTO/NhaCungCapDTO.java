@@ -1,27 +1,25 @@
 package DTO;
 
-import javafx.beans.property.*;
-
 public class NhaCungCapDTO {
-	private SimpleIntegerProperty maNhaCungCap;
-	private SimpleStringProperty tenNhaCungCap;
-	private SimpleStringProperty soDienThoai;
+	private Integer maNhaCungCap;
+	private String tenNhaCungCap;
+	private String soDienThoai;
 	
 	public Integer getMaNhaCungCap() {
-		return maNhaCungCap.get();
+		return maNhaCungCap;
 	}
 	
 	public String getTenNhaCungCap() {
-		return tenNhaCungCap.get();
+		return tenNhaCungCap;
 	}
 	
 	public String getSoDienThoai() {
-		return soDienThoai.get();
+		return soDienThoai;
 	}
 		
 	public NhaCungCapDTO(Integer maNhaCungCap, String tenNhaCungCap, String soDienThoai) {
-		this.maNhaCungCap = new SimpleIntegerProperty(maNhaCungCap);
-		this.tenNhaCungCap = new SimpleStringProperty(tenNhaCungCap);
-		this.soDienThoai = new SimpleStringProperty(soDienThoai);
+		this.maNhaCungCap = maNhaCungCap;
+		this.tenNhaCungCap = tenNhaCungCap;
+		this.soDienThoai = soDienThoai;
 	}
 }

@@ -2,87 +2,427 @@ package controller;
 
 import java.net.URL;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 import BUS.*;
 import DTO.*;
+
+import controller.dichvu.DichVuController;
+import controller.nhanvien.SuaNhanVienController;
+import controller.nhanvien.TuyChinhNhanVienController;
+import controller.timkiem.TimKiemKhachController;
+import custom.control.ListRoomDetailPane;
+import custom.control.RoomDetailPane;
+import helper.DateFormatHelper;
+import helper.MoneyFormatHelper;
+import helper.PopUpStageHelper;
 import javafx.beans.property.ReadOnlyObjectWrapper;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.TilePane;
+import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.util.Callback;
+
 
 public class MainController implements Initializable {
-	@FXML TableView <NhanVienDTO> tvNhanVien;
-	@FXML TableColumn<NhanVienDTO, Integer> tcNV_STT;
-	@FXML TableColumn<NhanVienDTO, Integer> tcNV_MaNhanVien;
-	@FXML TableColumn<NhanVienDTO, String> tcNV_TenNhanVien;
-	@FXML TableColumn<NhanVienDTO, String> tcNV_CMND;
-	@FXML TableColumn<NhanVienDTO, String> tcNV_SoDienThoai;
-	@FXML TableColumn<NhanVienDTO, String> tcNV_DiaChi;
-	@FXML TableColumn<NhanVienDTO, String> tcNV_Email;
-	@FXML TableColumn<NhanVienDTO, String> tcNV_ChucVu;
+
+	@FXML
+	Tab tabPhong;
+	@FXML
+	Tab tabTraCuu;
+	@FXML
+	Tab tabPhieuThue;
+	@FXML
+	Tab tabThietLap;
+	@FXML
+	Tab tabDichVu;
+	@FXML
+	Tab tabThongKe;
+	@FXML
+	Tab tabNhanVien;
+	@FXML
+	Tab tabNV_NhanVien;
+	@FXML
+	Tab tabNV_DanhMuc;
+
+	@FXML
+	TabPane tpNhanVien;
+	@FXML
+	TabPane tpMain;
+	@FXML
+	TabPane tpPhong_ChiTiet;
+
+	@FXML
+	TilePane tpPhong;
+
+	@FXML
+	ComboBox<LoaiPhongDTO> cbbTC_LoaiPhong;
+
+	@FXML
+	DatePicker dpTC_NgayNhan;
+	@FXML
+	DatePicker dpHD_NgayLap;
+	@FXML
+	DatePicker dpPT_NgayLap;
+
+	@FXML
+	Spinner<Integer> snTC_SoDem;
+
+	@FXML
+	Button btnPhong_ThemPhong;
+	@FXML
+	Button btnPhong_XoaPhong;
+	@FXML
+	Button btnPhong_SuaPhong;
+	@FXML
+	Button btnPhong_DoiPhong;
+	@FXML
+	Button btnDV_ThemDichVu;
+	@FXML
+	Button btnDV_XoaDichVu;
+	@FXML
+	Button btnDV_SuaDichVu;
+
+	@FXML
+	Label lbTC_DonGia;
+
+	@FXML
+	Label lbPhong_MaPhong;
+	@FXML
+	Label lbPhong_TinhTrang;
+	@FXML
+	Label lbPhong_KhachToiDa;
+	@FXML
+	Label lbPhong_LoaiPhong;
+	@FXML
+	Label lbPhong_DonGia;
+	@FXML
+	Label lbPhong_GhiChu;
+
+	@FXML
+	Label lbTS_SoNgayTraCoc;
+	@FXML
+	Label lbTS_TiLeThueVAT;
+	@FXML
+	Label lbTS_TiLeTienCoc;
+	@FXML
+	Label lbTS_QuaKhach;
+	@FXML
+	Label lbTS_TraPhongTre;
+
+	@FXML
+	Label lbNV_MaNhanVien;
+	@FXML
+	Label lbNV_TenNhanVien;
+	@FXML
+	Label lbNV_CMND;
+	@FXML
+	Label lbNV_DiaChi;
+	@FXML
+	Label lbNV_Email;
+	@FXML
+	Label lbNV_DienThoai;
+	@FXML
+	Label lbNV_ChucVu;
+
+	@FXML
+	TableView<NhanVienDTO> tvNhanVien;
+	@FXML
+	TableColumn<NhanVienDTO, Integer> tcNV_STT;
+	@FXML
+	TableColumn<NhanVienDTO, Integer> tcNV_MaNhanVien;
+	@FXML
+	TableColumn<NhanVienDTO, String> tcNV_TenNhanVien;
+	@FXML
+	TableColumn<NhanVienDTO, String> tcNV_CMND;
+	@FXML
+	TableColumn<NhanVienDTO, String> tcNV_SoDienThoai;
+	@FXML
+	TableColumn<NhanVienDTO, String> tcNV_DiaChi;
+	@FXML
+	TableColumn<NhanVienDTO, String> tcNV_Email;
+	@FXML
+	TableColumn<NhanVienDTO, String> tcNV_TaiKhoan;
+	@FXML
+	TableColumn<NhanVienDTO, String> tcNV_ChucVu;
+
+	@FXML
+	TableView<DichVuDTO> tvDichVu;
+	@FXML
+	TableColumn<DichVuDTO, Integer> tcDV_STT;
+	@FXML
+	TableColumn<DichVuDTO, Integer> tcDV_MaDichVu;
+	@FXML
+	TableColumn<DichVuDTO, Integer> tcDV_MaLoaiDichVu;
+	@FXML
+	TableColumn<DichVuDTO, Integer> tcDV_MaNhaCungCap;
+	@FXML
+	TableColumn<DichVuDTO, String> tcDV_TenDichVu;
+	@FXML
+	TableColumn<DichVuDTO, String> tcDV_LoaiDichVu;
+	@FXML
+	TableColumn<DichVuDTO, String> tcDV_DonViTinh;
+	@FXML
+	TableColumn<DichVuDTO, Integer> tcDV_SoLuongTon;
+	@FXML
+	TableColumn<DichVuDTO, String> tcDV_DonGia;
+
+	@FXML
+	TableView<LoaiDichVuDTO> tvLoaiDichVu;
+	@FXML
+	TableColumn<LoaiDichVuDTO, Integer> tcLDV_STT;
+	@FXML
+	TableColumn<LoaiDichVuDTO, Integer> tcLDV_MaLoaiDV;
+	@FXML
+	TableColumn<LoaiDichVuDTO, String> tcLDV_TenLoaiDV;
+
+	@FXML
+	TableView<NhaCungCapDTO> tvNhaCungCap;
+	@FXML
+	TableColumn<NhaCungCapDTO, Integer> tcNCC_STT;
+	@FXML
+	TableColumn<NhaCungCapDTO, Integer> tcNCC_MaNhaCC;
+	@FXML
+	TableColumn<NhaCungCapDTO, String> tcNCC_TenNhaCC;
+	@FXML
+	TableColumn<NhaCungCapDTO, Integer> tcNCC_SoDienThoai;
+
+	@FXML
+	TableView<LoaiPhongDTO> tvLoaiPhong;
+	@FXML
+	TableColumn<LoaiPhongDTO, Integer> tcLP_STT;
+	@FXML
+	TableColumn<LoaiPhongDTO, Integer> tcLP_MaLoaiPhong;
+	@FXML
+	TableColumn<LoaiPhongDTO, String> tcLP_TenLoaiPhong;
+	@FXML
+	TableColumn<LoaiPhongDTO, Integer> tcLP_SoKhachToiDa;
+	@FXML
+	TableColumn<LoaiPhongDTO, String> tcLP_DonGia;
 	
-	@FXML Label lbTS_SoNgayTraCoc;
-	@FXML Label lbTS_TiLeThueVAT;
-	@FXML Label lbTS_TiLeTienCoc;
-	@FXML Label lbTS_QuaKhach;
-	@FXML Label lbTS_TraPhongTre;
+	@FXML
+	TableView<KhachDTO> tvPTP_KhachHang;
+	@FXML
+	TableColumn<KhachDTO, Integer> tcPTP_KhachHang_STT;
+	@FXML
+	TableColumn<KhachDTO, String> tcPTP_KhachHang_Hoten;
+	@FXML
+	TableColumn<KhachDTO, String> tcPTP_KhachHang_SDT;
+	@FXML
+	TableColumn<KhachDTO, String> tcPTP_KhachHang_CMND;
+	@FXML
+	TableColumn<KhachDTO, String> tcPTP_KhachHang_GioiTinh;
+	@FXML
+	TableColumn<KhachDTO, String> tcPTP_KhachHang_QuocTich;
 	
-	@FXML TableView <LoaiDichVuDTO> tvLoaiDichVu;
-	@FXML TableColumn<LoaiDichVuDTO, Integer> tcLDV_STT;
-	@FXML TableColumn<LoaiDichVuDTO, Integer> tcLDV_MaLoaiDV;
-	@FXML TableColumn<LoaiDichVuDTO, String> tcLDV_TenLoaiDV;
+	private PhongDTO phongDangChon = null;
 	
-	@FXML TableView <NhaCungCapDTO> tvNhaCungCap;
-	@FXML TableColumn<NhaCungCapDTO, Integer> tcNCC_STT;
-	@FXML TableColumn<NhaCungCapDTO, Integer> tcNCC_MaNhaCC;
-	@FXML TableColumn<NhaCungCapDTO, String> tcNCC_TenNhaCC;
-	@FXML TableColumn<NhaCungCapDTO, Integer> tcNCC_SoDienThoai;
-	
-	@FXML TableView <LoaiPhongDTO> tvLoaiPhong;
-	@FXML TableColumn<LoaiPhongDTO, Integer> tcLP_STT;
-	@FXML TableColumn<LoaiPhongDTO, Integer> tcLP_MaLoaiPhong;
-	@FXML TableColumn<LoaiPhongDTO, String> tcLP_TenLoaiPhong;
-	@FXML TableColumn<LoaiPhongDTO, Integer> tcLP_SoKhachToiDa;
-	@FXML TableColumn<LoaiPhongDTO, Integer> tcLP_DonGia;
-	
-	@Override
-	public void initialize(URL location, ResourceBundle resources) {
-		initTables();
-		loadTables();
+	public PhongDTO getPhongDangChon() {
+		return phongDangChon;
+	}
+
+	private void initTablePTPKhachHang() {
+		tcPTP_KhachHang_STT.setCellValueFactory(
+				column -> new ReadOnlyObjectWrapper<Integer>(tvPTP_KhachHang.getItems().indexOf(column.getValue()) + 1));
+		tcPTP_KhachHang_Hoten.setCellValueFactory(new PropertyValueFactory<>("Hoten"));
+		tcPTP_KhachHang_SDT.setCellValueFactory(new PropertyValueFactory<>("SDT"));
+		tcPTP_KhachHang_CMND.setCellValueFactory(new PropertyValueFactory<>("CMND"));
+		tcPTP_KhachHang_GioiTinh.setCellValueFactory(new PropertyValueFactory<>("GioiTinh"));
+		tcPTP_KhachHang_QuocTich.setCellValueFactory(new PropertyValueFactory<>("QuocTich"));
 	}
 	
+		
+	private class RoomClickedHandler {
+		public void handleChiTietPhong(PhongDTO phong) {
+			phongDangChon = phong;
+			showChiTietPhong(phong);
+			updateControlsByTinhTrang(phong.getTinhTrang().getTenTinhTrang());
+			
+			if(phong.getTinhTrang().getTenTinhTrang().equals("Thuê"))
+			{
+				System.out.println("dang loadTable");
+				try {
+					System.out.println(PhieuThuePhongBUS.getPTPhongByMaPhong(Integer.parseInt(phong.getMaPhong())).getMaPTPhong());
+				} catch (NumberFormatException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				try {
+					loadTablePTPKhachByMaPT(PhieuThuePhongBUS.getPTPhongByMaPhong(Integer.parseInt(phong.getMaPhong())).getMaPTPhong());
+			
+				} catch (NumberFormatException e) {
+					// TODO Auto-generated catch block
+					Alert alert = new Alert(AlertType.INFORMATION);
+					alert.setTitle("Lá»—i");
+					alert.setHeaderText("MÃ£ phiáº¿u thuÃª khÃ´ng tá»“n táº¡i");
+					alert.setContentText("KhÃ´ng tÃ¬m Ä‘Æ°á»£c mÃ£ phiáº¿u thuÃª phÃ²ng!");
+					alert.showAndWait();
+					e.printStackTrace();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					Alert alert = new Alert(AlertType.INFORMATION);
+					alert.setTitle("loi");
+					alert.setHeaderText("KhÃ´ng thá»ƒ táº£i danh sÃ¡ch dá»‹ch vá»¥ cá»§a phiáº¿u thuÃª phÃ²ng!");
+					alert.setContentText("Lá»—i database!");
+					alert.showAndWait();
+					e.printStackTrace();
+				}
+			}
+			
+		}
+
+		private void showChiTietPhong(PhongDTO phong) {
+			lbPhong_MaPhong.setText(phong.getMaPhong());
+			lbPhong_TinhTrang.setText(phong.getTinhTrang().getTenTinhTrang());
+			lbPhong_KhachToiDa.setText(phong.getLoaiPhong().getSoKhachToiDa().toString());
+			lbPhong_LoaiPhong.setText(phong.getLoaiPhong().getTenLoaiPhong());
+			lbPhong_GhiChu.setText(phong.getGhiChu());
+			lbPhong_DonGia.setText(MoneyFormatHelper.format(phong.getLoaiPhong().getDonGiaValue(), "VND"));
+		}
+
+		private void updateControlsByTinhTrang(String tinhTrangPhong) {
+			try {
+				if (tinhTrangPhong.equals("Thuê")) {
+					tpPhong_ChiTiet.setVisible(true);
+					btnPhong_DoiPhong.setDisable(false);
+					btnPhong_SuaPhong.setDisable(true);
+					btnPhong_XoaPhong.setDisable(true);
+				} else {
+					tpPhong_ChiTiet.setVisible(false);
+					btnPhong_DoiPhong.setDisable(true);
+					btnPhong_SuaPhong.setDisable(false);
+					btnPhong_XoaPhong.setDisable(false);
+				}
+			} catch (Exception ex) {
+				// do nothing :)
+			}
+		}
+	}
+
+	private RoomClickedHandler roomClickedHandler;
+
+	@Override
+	public void initialize(URL location, ResourceBundle resources) {
+		roomClickedHandler = new RoomClickedHandler();
+		initTables();
+		initComboboxes();
+		initSpinners();
+		initDatePickers();
+		loadTables();
+		loadComboboxes();
+	}
+
+	private boolean confirmDialog(String content) {
+		Alert dialog = new Alert(AlertType.CONFIRMATION);
+		dialog.setTitle("XÃ¡c nháº­n");
+		dialog.setHeaderText(content);
+		ButtonType yesButton = new ButtonType("XÃ¡c nháº­n");
+		ButtonType noButton = new ButtonType("Há»§y bá»�");
+		dialog.getButtonTypes().setAll(yesButton, noButton);
+		Optional<ButtonType> result = dialog.showAndWait();
+		return result.get() == yesButton;
+	}
+
 	private void initTables() {
+		initTablePhong();
+		initTableDichVu();
 		initTableNhanVien();
 		initTableLoaiPhong();
 		initTableNhaCungCap();
 		initTableLoaiDichVu();
+		initTablePTPKhachHang();
 	}
-	
+
 	private void loadTables() {
+		loadTablePhong();
+		loadTableDichVu();
 		loadTableNhanVien();
 		loadTableLoaiPhong();
 		loadTableNhaCungCap();
 		loadTableLoaiDichVu();
 		loadTableThamSo();
 	}
-	
+
+	private void initSpinners() {
+		snTC_SoDem.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 30, 1));
+	}
+
+	private void initComboboxes() {
+		cbbTC_LoaiPhong.valueProperty().addListener(new ChangeListener<LoaiPhongDTO>() {
+			@Override
+			public void changed(ObservableValue<? extends LoaiPhongDTO> loaiPhong, LoaiPhongDTO loaiPhongCu,
+					LoaiPhongDTO loaiPhongMoi) {
+				if (loaiPhongMoi == null) {
+					lbTC_DonGia.setText("Theo loáº¡i phÃ²ng");
+				} else {
+					lbTC_DonGia.setText(MoneyFormatHelper.format(loaiPhongMoi.getDonGiaValue(), "VND"));
+				}
+			}
+		});
+	}
+
+	private void initDatePickers() {
+		dpTC_NgayNhan.setConverter(DateFormatHelper.getDatePickerFormatter("dd/MM/yyyy"));
+		dpHD_NgayLap.setConverter(DateFormatHelper.getDatePickerFormatter("dd/MM/yyyy"));
+		dpPT_NgayLap.setConverter(DateFormatHelper.getDatePickerFormatter("dd/MM/yyyy"));
+		dpTC_NgayNhan.setValue(LocalDate.now());
+		dpHD_NgayLap.setValue(LocalDate.now());
+		dpPT_NgayLap.setValue(LocalDate.now());
+	}
+
+	private void initTablePhong() {
+		tpPhong.setHgap(2);
+		tpPhong.setVgap(20);
+	}
+
+	private void initTableDichVu() {
+		tcDV_STT.setCellValueFactory(
+				column -> new ReadOnlyObjectWrapper<Integer>(tvDichVu.getItems().indexOf(column.getValue()) + 1));
+		tcDV_MaDichVu.setCellValueFactory(new PropertyValueFactory<>("MaDichVu"));
+		tcDV_MaLoaiDichVu.setCellValueFactory(new PropertyValueFactory<>("maLoaiDichVu"));
+		tcDV_MaNhaCungCap.setCellValueFactory(new PropertyValueFactory<>("maNhaCungCap"));
+		tcDV_TenDichVu.setCellValueFactory(new PropertyValueFactory<>("tenDichVu"));
+		tcDV_LoaiDichVu.setCellValueFactory(new PropertyValueFactory<>("tenLoaiDichVu"));
+		tcDV_DonViTinh.setCellValueFactory(new PropertyValueFactory<>("donViTinh"));
+		tcDV_SoLuongTon.setCellValueFactory(new PropertyValueFactory<>("soLuongTon"));
+		tcDV_DonGia.setCellValueFactory(new PropertyValueFactory<>("donGia"));
+	}
+
 	private void initTableNhanVien() {
 		tcNV_STT.setCellValueFactory(
 				column -> new ReadOnlyObjectWrapper<Integer>(tvNhanVien.getItems().indexOf(column.getValue()) + 1));
 		tcNV_MaNhanVien.setCellValueFactory(new PropertyValueFactory<>("maNhanVien"));
 		tcNV_TenNhanVien.setCellValueFactory(new PropertyValueFactory<>("tenNhanVien"));
-		tcNV_CMND.setCellValueFactory(new PropertyValueFactory<>("CMND"));		
+		tcNV_CMND.setCellValueFactory(new PropertyValueFactory<>("CMND"));
 		tcNV_DiaChi.setCellValueFactory(new PropertyValueFactory<>("diaChi"));
 		tcNV_Email.setCellValueFactory(new PropertyValueFactory<>("email"));
-		tcNV_SoDienThoai.setCellValueFactory(new PropertyValueFactory<>("soDienThoai"));		
-		tcNV_ChucVu.setCellValueFactory(new PropertyValueFactory<>("chucVu"));		
+		tcNV_TaiKhoan.setCellValueFactory(new PropertyValueFactory<>("taiKhoan"));
+		tcNV_SoDienThoai.setCellValueFactory(new PropertyValueFactory<>("soDienThoai"));
+		tcNV_ChucVu.setCellValueFactory(new PropertyValueFactory<>("chucVu"));
 	}
-	
+
 	private void initTableLoaiPhong() {
 		tcLP_STT.setCellValueFactory(
 				column -> new ReadOnlyObjectWrapper<Integer>(tvLoaiPhong.getItems().indexOf(column.getValue()) + 1));
@@ -91,20 +431,96 @@ public class MainController implements Initializable {
 		tcLP_SoKhachToiDa.setCellValueFactory(new PropertyValueFactory<>("soKhachToiDa"));
 		tcLP_DonGia.setCellValueFactory(new PropertyValueFactory<>("donGia"));
 	}
-	
+
 	private void initTableLoaiDichVu() {
 		tcLDV_STT.setCellValueFactory(
 				column -> new ReadOnlyObjectWrapper<Integer>(tvLoaiDichVu.getItems().indexOf(column.getValue()) + 1));
 		tcLDV_MaLoaiDV.setCellValueFactory(new PropertyValueFactory<>("maLoaiDichVu"));
-		tcLDV_TenLoaiDV.setCellValueFactory(new PropertyValueFactory<>("tenLoaiDichVu"));		
+		tcLDV_TenLoaiDV.setCellValueFactory(new PropertyValueFactory<>("tenLoaiDichVu"));
 	}
-	
+
 	private void initTableNhaCungCap() {
 		tcNCC_STT.setCellValueFactory(
 				column -> new ReadOnlyObjectWrapper<Integer>(tvNhaCungCap.getItems().indexOf(column.getValue()) + 1));
 		tcNCC_MaNhaCC.setCellValueFactory(new PropertyValueFactory<>("maNhaCungCap"));
 		tcNCC_TenNhaCC.setCellValueFactory(new PropertyValueFactory<>("tenNhaCungCap"));
 		tcNCC_SoDienThoai.setCellValueFactory(new PropertyValueFactory<>("soDienThoai"));
+	}
+
+	private void loadComboboxes() {
+		try {
+			ObservableList<LoaiPhongDTO> dsLoaiPhong = FXCollections.observableArrayList();
+			dsLoaiPhong.add(null);
+			for (LoaiPhongDTO loaiPhong : LoaiPhongBUS.getDSLoaiPhong()) {
+				dsLoaiPhong.add(loaiPhong);
+			}
+
+			Callback<ListView<LoaiPhongDTO>, ListCell<LoaiPhongDTO>> cellFactory = new Callback<ListView<LoaiPhongDTO>, ListCell<LoaiPhongDTO>>() {
+				@Override
+				public ListCell<LoaiPhongDTO> call(ListView<LoaiPhongDTO> lvLoaiPhong) {
+					final ListCell<LoaiPhongDTO> lcLoaiPhong = new ListCell<LoaiPhongDTO>() {
+						@Override
+						protected void updateItem(LoaiPhongDTO loaiPhong, boolean empty) {
+							super.updateItem(loaiPhong, empty);
+							if (loaiPhong != null) {
+								this.setText(loaiPhong.getTenLoaiPhong());
+							} else
+								this.setText("Báº¥t kÃ¬");
+						}
+					};
+					return lcLoaiPhong;
+				}
+			};
+
+			cbbTC_LoaiPhong.setButtonCell(cellFactory.call(null));
+			cbbTC_LoaiPhong.setCellFactory(cellFactory);
+			cbbTC_LoaiPhong.setItems(dsLoaiPhong);
+			cbbTC_LoaiPhong.getSelectionModel().selectFirst();
+		} catch (SQLException e) {
+			// do nothing :)
+		}
+	}
+
+	public void loadTablePhong() {
+		try {
+			List<PhongDTO> dsPhong = PhongBUS.getDSPhong();
+			ListRoomDetailPane listPanes = new ListRoomDetailPane(dsPhong);
+			for (RoomDetailPane pane : listPanes.getPanes()) {
+				pane.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+					@Override
+					public void handle(MouseEvent event) {
+						PhongDTO phong = pane.getPhong();
+						roomClickedHandler.handleChiTietPhong(phong);
+					}
+				});
+				tpPhong.getChildren().add(pane);
+			}
+			PhongDTO phong = listPanes.getPanes().get(0).getPhong();
+			roomClickedHandler.handleChiTietPhong(phong);
+		} catch (SQLException SQLException) {
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Lá»—i");
+			alert.setHeaderText("KhÃ´ng thá»ƒ táº£i danh sÃ¡ch phÃ²ng khÃ¡ch sáº¡n!");
+			alert.setContentText("Lá»—i database!");
+			alert.showAndWait();
+		}
+	}
+
+	public void loadTableDichVu() {
+		try {
+			ObservableList<DichVuDTO> dsDichVu = FXCollections.observableArrayList();
+			for (DichVuDTO dv : DichVuBUS.getDSDichVu()) {
+				dsDichVu.add(dv);
+			}
+			tvDichVu.setItems(dsDichVu);
+		} catch (SQLException SQLException) {
+			SQLException.printStackTrace();
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Lá»—i");
+			alert.setHeaderText("KhÃ´ng thá»ƒ táº£i danh sÃ¡ch dá»‹ch vá»¥!");
+			alert.setContentText("Lá»—i database!");
+			alert.showAndWait();
+		}
 	}
 
 	public void loadTableNhanVien() {
@@ -114,16 +530,15 @@ public class MainController implements Initializable {
 				dsNhanVien.add(nv);
 			}
 			tvNhanVien.setItems(dsNhanVien);
-		}
-		catch (SQLException SQLException) {
+		} catch (SQLException SQLException) {
 			Alert alert = new Alert(AlertType.INFORMATION);
-			alert.setTitle("Lỗi");
-			alert.setHeaderText("Không thể tải danh sách loại dịch vụ!");
-			alert.setContentText("Lỗi database!");
+			alert.setTitle("Lá»—i");
+			alert.setHeaderText("KhÃ´ng thá»ƒ táº£i danh sÃ¡ch nhÃ¢n viÃªn!");
+			alert.setContentText("Lá»—i database!");
 			alert.showAndWait();
 		}
 	}
-	
+
 	public void loadTableLoaiPhong() {
 		try {
 			ObservableList<LoaiPhongDTO> dsLoaiPhong = FXCollections.observableArrayList();
@@ -131,16 +546,15 @@ public class MainController implements Initializable {
 				dsLoaiPhong.add(lp);
 			}
 			tvLoaiPhong.setItems(dsLoaiPhong);
-		}
-		catch (SQLException SQLException) {
+		} catch (SQLException SQLException) {
 			Alert alert = new Alert(AlertType.INFORMATION);
-			alert.setTitle("Lỗi");
-			alert.setHeaderText("Không thể tải danh sách loại phòng!");
-			alert.setContentText("Lỗi database!");
+			alert.setTitle("Lá»—i");
+			alert.setHeaderText("KhÃ´ng thá»ƒ táº£i danh sÃ¡ch loáº¡i phÃ²ng!");
+			alert.setContentText("Lá»—i database!");
 			alert.showAndWait();
 		}
 	}
-	
+
 	public void loadTableNhaCungCap() {
 		try {
 			ObservableList<NhaCungCapDTO> dsNhaCungCap = FXCollections.observableArrayList();
@@ -148,16 +562,15 @@ public class MainController implements Initializable {
 				dsNhaCungCap.add(ncc);
 			}
 			tvNhaCungCap.setItems(dsNhaCungCap);
-		}
-		catch (SQLException SQLException) {
+		} catch (SQLException SQLException) {
 			Alert alert = new Alert(AlertType.INFORMATION);
-			alert.setTitle("Lỗi");
-			alert.setHeaderText("Không thể tải danh sách nhà cung cấp!");
-			alert.setContentText("Lỗi database!");
+			alert.setTitle("Lá»—i");
+			alert.setHeaderText("KhÃ´ng thá»ƒ táº£i danh sÃ¡ch nhÃ  cung cáº¥p!");
+			alert.setContentText("Lá»—i database!");
 			alert.showAndWait();
-		}		
+		}
 	}
-	
+
 	public void loadTableLoaiDichVu() {
 		try {
 			ObservableList<LoaiDichVuDTO> dsLoaiDichVu = FXCollections.observableArrayList();
@@ -165,16 +578,15 @@ public class MainController implements Initializable {
 				dsLoaiDichVu.add(ldv);
 			}
 			tvLoaiDichVu.setItems(dsLoaiDichVu);
-		}
-		catch (SQLException SQLException) {
+		} catch (SQLException SQLException) {
 			Alert alert = new Alert(AlertType.INFORMATION);
-			alert.setTitle("Lỗi");
-			alert.setHeaderText("Không thể tải danh sách loại dịch vụ!");
-			alert.setContentText("Lỗi database!");
+			alert.setTitle("Lá»—i");
+			alert.setHeaderText("KhÃ´ng thá»ƒ táº£i danh sÃ¡ch loáº¡i dá»‹ch vá»¥!");
+			alert.setContentText("Lá»—i database!");
 			alert.showAndWait();
 		}
 	}
-	
+
 	public void loadTableThamSo() {
 		try {
 			ThamSoDTO thamSo = ThamSoBUS.getThamSo();
@@ -183,13 +595,369 @@ public class MainController implements Initializable {
 			lbTS_TiLeThueVAT.setText(String.format("%.0f", thamSo.getTiLeThueVAT() * 100) + "%");
 			lbTS_QuaKhach.setText(String.format("%.0f", thamSo.getPhuThuQuaKhach() * 100) + "%");
 			lbTS_TraPhongTre.setText(String.format("%.0f", thamSo.getPhuthuTraPhongTre() * 100) + "%");
-		}
-		catch (SQLException SQLException) {
+		} catch (SQLException SQLException) {
 			Alert alert = new Alert(AlertType.INFORMATION);
-			alert.setTitle("Lỗi");
-			alert.setHeaderText("Không thể tải danh sách tham số!");
-			alert.setContentText("Lỗi database!");
-			alert.showAndWait();			
+			alert.setTitle("Lá»—i");
+			alert.setHeaderText("KhÃ´ng thá»ƒ táº£i danh sÃ¡ch tham sá»‘!");
+			alert.setContentText("Lá»—i database!");
+			alert.showAndWait();
+		}
+	}
+
+	public void loadNhanVienByUsername(String username) {
+		try {
+			NhanVienDTO nhanVien = NhanVienBUS.getNhanVienByUsername(username);
+			lbNV_MaNhanVien.setText(nhanVien.getMaNhanVien().toString());
+			lbNV_TenNhanVien.setText(nhanVien.getTenNhanVien());
+			lbNV_CMND.setText(nhanVien.getCMND());
+			lbNV_DiaChi.setText(nhanVien.getDiaChi());
+			lbNV_DienThoai.setText(nhanVien.getSoDienThoai());
+			lbNV_Email.setText(nhanVien.getEmail());
+			lbNV_ChucVu.setText(nhanVien.getChucVu());
+			loadPhanQuyen(nhanVien.getChucVu());
+		} catch (SQLException SQLException) {
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Lá»—i");
+			alert.setHeaderText("KhÃ´ng thá»ƒ táº£i thÃ´ng tin nhÃ¢n viÃªn!");
+			alert.setContentText("Lá»—i database!");
+			alert.showAndWait();
+		}
+	}
+
+	public void loadPhanQuyen(String chucVu) {
+		switch (chucVu) {
+		case "Lá»… tÃ¢n": {
+			tpNhanVien.getTabs().remove(tabNV_DanhMuc);
+			tpMain.getTabs().removeAll(tabThietLap, tabThongKe);
+			VBox vb = (VBox) btnPhong_ThemPhong.getParent();
+			vb.getChildren().remove(btnPhong_ThemPhong);
+			HBox hb = (HBox) btnPhong_XoaPhong.getParent();
+			hb.getChildren().remove(btnPhong_XoaPhong);
+			hb = (HBox) btnDV_ThemDichVu.getParent();
+			hb.getChildren().removeAll(btnDV_ThemDichVu, btnDV_XoaDichVu);
+			btnDV_SuaDichVu.setText("âš™ NHáº¬P HÃ€NG");
+			break;
+		}
+		case "Káº¿ toÃ¡n": {
+			tpNhanVien.getTabs().remove(tabNV_DanhMuc);
+			tpMain.getTabs().removeAll(tabThietLap, tabPhong, tabPhieuThue, tabTraCuu);
+			HBox hb = (HBox) btnDV_ThemDichVu.getParent();
+			hb.getChildren().removeAll(btnDV_ThemDichVu, btnDV_XoaDichVu);
+			btnDV_SuaDichVu.setText("âš™ NHáº¬P HÃ€NG");
+			break;
+		}
+		default:
+			break;
+		}
+	}
+
+	// XÃ³a loáº¡i phÃ²ng
+	public void handleXoaLoaiPhong(ActionEvent e) {
+		try {
+			LoaiPhongDTO loaiPhong = tvLoaiPhong.getSelectionModel().getSelectedItem();
+			if (confirmDialog("XÃ¡c nháº­n xÃ³a loáº¡i phÃ²ng " + loaiPhong.getTenLoaiPhong() + "?")) {
+				try {
+					if (LoaiPhongBUS.deleteLoaiPhong(loaiPhong.getMaLoaiPhong())) {
+						Alert alert = new Alert(AlertType.INFORMATION);
+						alert.setTitle("ThÃ nh cÃ´ng");
+						alert.setHeaderText("XÃ³a loáº¡i phÃ²ng thÃ nh cÃ´ng!");
+						alert.setContentText("Ä�Ã£ xÃ³a loáº¡i phÃ²ng " + loaiPhong.getTenLoaiPhong() + "!");
+						alert.showAndWait();
+						loadTableLoaiPhong();
+					} else {
+						Alert alert = new Alert(AlertType.INFORMATION);
+						alert.setTitle("Lá»—i");
+						alert.setHeaderText("KhÃ´ng thá»ƒ xÃ³a loáº¡i phÃ²ng!");
+						alert.setContentText("Váº«n cÃ²n phÃ²ng loáº¡i " + loaiPhong.getTenLoaiPhong() + "!");
+						alert.showAndWait();
+					}
+				} catch (SQLException SQLException) {
+					Alert alert = new Alert(AlertType.INFORMATION);
+					alert.setTitle("Lá»—i");
+					alert.setHeaderText("KhÃ´ng thá»ƒ xÃ³a loáº¡i phÃ²ng!");
+					alert.setContentText("Lá»—i database!");
+					alert.showAndWait();
+				}
+			}
+		} catch (NullPointerException NullPointerException) {
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Lá»—i");
+			alert.setHeaderText("KhÃ´ng thá»ƒ xÃ³a loáº¡i phÃ²ng!");
+			alert.setContentText("Vui lÃ²ng chá»�n loáº¡i phÃ²ng cáº§n xÃ³a!");
+			alert.showAndWait();
+		}
+	}
+
+	// XÃ³a loáº¡i dá»‹ch vá»¥
+	public void handleXoaLoaiDichVu(ActionEvent e) {
+		try {
+			LoaiDichVuDTO loaiDichVu = tvLoaiDichVu.getSelectionModel().getSelectedItem();
+			if (confirmDialog("XÃ¡c nháº­n xÃ³a loáº¡i dá»‹ch vá»¥ " + loaiDichVu.getTenLoaiDichVu() + "?")) {
+				try {
+					if (LoaiDichVuBUS.deleteLoaiDichVu(loaiDichVu.getMaLoaiDichVu())) {
+						Alert alert = new Alert(AlertType.INFORMATION);
+						alert.setTitle("ThÃ nh cÃ´ng");
+						alert.setHeaderText("XÃ³a loáº¡i dá»‹ch vá»¥ thÃ nh cÃ´ng!");
+						alert.setContentText("Ä�Ã£ xÃ³a loáº¡i dá»‹ch vá»¥ " + loaiDichVu.getTenLoaiDichVu() + "!");
+						alert.showAndWait();
+						loadTableLoaiDichVu();
+					} else {
+						Alert alert = new Alert(AlertType.INFORMATION);
+						alert.setTitle("Lá»—i");
+						alert.setHeaderText("KhÃ´ng thá»ƒ xÃ³a loáº¡i dá»‹ch vá»¥!");
+						alert.setContentText("Váº«n cÃ²n dá»‹ch vá»¥ loáº¡i " + loaiDichVu.getTenLoaiDichVu() + "!");
+						alert.showAndWait();
+					}
+				} catch (SQLException SQLException) {
+					Alert alert = new Alert(AlertType.INFORMATION);
+					alert.setTitle("Lá»—i");
+					alert.setHeaderText("KhÃ´ng thá»ƒ xÃ³a loáº¡i dá»‹ch vá»¥!");
+					alert.setContentText("Lá»—i database!");
+					alert.showAndWait();
+				}
+			}
+		} catch (NullPointerException NullPointerException) {
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Lá»—i");
+			alert.setHeaderText("KhÃ´ng thá»ƒ xÃ³a loáº¡i dá»‹ch vá»¥!");
+			alert.setContentText("Vui lÃ²ng chá»�n loáº¡i dá»‹ch vá»¥ cáº§n xÃ³a!");
+			alert.showAndWait();
+		}
+	}
+
+	// ThÃªm tÃ i khoáº£n
+	public void handleThemNhanVien(ActionEvent e) {
+		String link = "/application/themNhanVien.fxml";
+		Stage popUpStage = PopUpStageHelper.createPopUpStage(link, 980, 460);
+		popUpStage.getScene().setUserData(this);
+		popUpStage.showAndWait();
+	}
+
+	public void handleSuaNhanVien(ActionEvent e) {
+		try {
+			NhanVienDTO nhanVien = tvNhanVien.getSelectionModel().getSelectedItem();
+			if (nhanVien == null)
+				throw new NullPointerException();
+
+			if (nhanVien.getMaNhanVien().toString().equals(lbNV_MaNhanVien.getText())) {
+				Alert alert = new Alert(AlertType.INFORMATION);
+				alert.setTitle("Lá»—i");
+				alert.setHeaderText("KhÃ´ng thá»ƒ sá»­a thÃ´ng tin cá»§a mÃ¬nh táº¡i Ä‘Ã¢y!");
+				alert.setContentText("Chá»‰ cÃ³ thá»ƒ sá»­a thÃ´ng tin cá»§a mÃ¬nh táº¡i thÃ´ng tin nhÃ¢n viÃªn");
+				alert.showAndWait();
+			} else {
+				String link = "/application/suaNhanVien.fxml";
+				Stage popUpStage = PopUpStageHelper.createPopUpStage(link, 630, 630);
+				FXMLLoader loader = (FXMLLoader) popUpStage.getUserData();
+				SuaNhanVienController controller = loader.getController();
+				controller.initialize(nhanVien);
+				popUpStage.getScene().setUserData(this);
+				popUpStage.showAndWait();
+			}
+		} catch (NullPointerException NullPointerException) {
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Lá»—i");
+			alert.setHeaderText("KhÃ´ng thá»ƒ sá»­a nhÃ¢n viÃªn!");
+			alert.setContentText("Vui lÃ²ng chá»�n nhÃ¢n viÃªn cáº§n sá»­a!");
+			alert.showAndWait();
+		}
+	}
+
+	public void handleTuyChinhNhanVien(ActionEvent e) {
+		try {
+			NhanVienDTO nhanVien = NhanVienBUS.getNhanVienById(Integer.parseInt(lbNV_MaNhanVien.getText()));
+			String link = "/application/tuyChinhNhanVien.fxml";
+			Stage popUpStage = PopUpStageHelper.createPopUpStage(link, 980, 460);
+			FXMLLoader loader = (FXMLLoader) popUpStage.getUserData();
+			TuyChinhNhanVienController controller = loader.getController();
+			controller.initialize(nhanVien);
+			popUpStage.getScene().setUserData(this);
+			popUpStage.showAndWait();
+		} catch (SQLException SQLException) {
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Lá»—i");
+			alert.setHeaderText("KhÃ´ng thá»ƒ táº£i thÃ´ng tin nhÃ¢n viÃªn!");
+			alert.setContentText("Lá»—i database!");
+			alert.showAndWait();
+		}
+	}
+
+	public void handleXoaNhanVien(ActionEvent e) {
+		try {
+			NhanVienDTO nhanVien = tvNhanVien.getSelectionModel().getSelectedItem();
+			if (nhanVien == null)
+				throw new NullPointerException();
+
+			if (nhanVien.getMaNhanVien().toString().equals(lbNV_MaNhanVien.getText())) {
+				Alert alert = new Alert(AlertType.INFORMATION);
+				alert.setTitle("Lá»—i");
+				alert.setHeaderText("KhÃ´ng thá»ƒ xoÃ¡ tÃ i khoáº£n cá»§a mÃ¬nh!");
+				alert.showAndWait();
+				return;
+			}
+
+			if (confirmDialog(String.format("XÃ¡c nháº­n xoÃ¡ %s %s?", nhanVien.getChucVu(), nhanVien.getTenNhanVien()))) {
+				if (NhanVienBUS.deleteNhanVien(nhanVien.getMaNhanVien())) {
+					Alert alert = new Alert(AlertType.INFORMATION);
+					alert.setTitle("ThÃ nh cÃ´ng");
+					alert.setHeaderText("XÃ³a nhÃ¢n viÃªn thÃ nh cÃ´ng!");
+					alert.setContentText(
+							String.format("Ä�Ã£ xoÃ¡ thÃ nh cÃ´ng %s %s.", nhanVien.getChucVu(), nhanVien.getTenNhanVien()));
+					alert.showAndWait();
+					loadTableNhanVien();
+				} else {
+					Alert alert = new Alert(AlertType.INFORMATION);
+					alert.setTitle("Lá»—i");
+					alert.setHeaderText("KhÃ´ng thá»ƒ xÃ³a nhÃ¢n viÃªn!");
+					alert.showAndWait();
+				}
+			}
+		} catch (SQLException SQLException) {
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Lá»—i");
+			alert.setHeaderText("KhÃ´ng thá»ƒ xÃ³a nhÃ¢n viÃªn!");
+			alert.setContentText("Lá»—i database!");
+			alert.showAndWait();
+		} catch (NullPointerException NullPointerException) {
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Lá»—i");
+			alert.setHeaderText("KhÃ´ng thá»ƒ xoÃ¡ nhÃ¢n viÃªn!");
+			alert.setContentText("Vui lÃ²ng chá»�n nhÃ¢n viÃªn cáº§n xoÃ¡!");
+			alert.showAndWait();
+		}
+	}
+
+	public void handleThemDichVu(ActionEvent e) {
+		String link = "/application/popupDichVu.fxml";
+		Stage popUpStage = PopUpStageHelper.createPopUpStage(link, 500, 550);
+		popUpStage.getScene().setUserData(this);
+		popUpStage.showAndWait();
+	}
+
+	public void handleXoaDichVu(ActionEvent e) {
+		try {
+			DichVuDTO dichVu = tvDichVu.getSelectionModel().getSelectedItem();
+			if (confirmDialog("XÃ¡c nháº­n xoÃ¡ dá»‹ch vá»¥ " + dichVu.getTenDichVu() + "?")) {
+				if (DichVuBUS.deleteDichVu(dichVu.getMaDichVu())) {
+					Alert alert = new Alert(AlertType.INFORMATION);
+					alert.setTitle("ThÃ nh cÃ´ng");
+					alert.setHeaderText("XÃ³a loáº¡i dá»‹ch vá»¥ thÃ nh cÃ´ng!");
+					alert.setContentText("Ä�Ã£ xÃ³a dá»‹ch vá»¥ " + dichVu.getTenDichVu() + "!");
+					alert.showAndWait();
+					loadTableDichVu();
+				} else {
+					Alert alert = new Alert(AlertType.INFORMATION);
+					alert.setTitle("Lá»—i");
+					alert.setHeaderText("KhÃ´ng thá»ƒ xÃ³a dá»‹ch vá»¥!");
+					alert.showAndWait();
+				}
+			}
+		} catch (SQLException SQLException) {
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Lá»—i");
+			alert.setHeaderText("KhÃ´ng thá»ƒ xÃ³a dá»‹ch vá»¥!");
+			alert.setContentText("Lá»—i database!");
+			alert.showAndWait();
+		} catch (NullPointerException NullPointerException) {
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Lá»—i");
+			alert.setHeaderText("KhÃ´ng thá»ƒ xoÃ¡ dá»‹ch vá»¥!");
+			alert.setContentText("Vui lÃ²ng chá»�n dá»‹ch vá»¥ cáº§n xoÃ¡!");
+			alert.showAndWait();
+		}
+	}
+
+	public void handleSuaDichVu(ActionEvent e) {
+		try {
+			DichVuDTO dichVu = tvDichVu.getSelectionModel().getSelectedItem();
+			String link = "/application/popupDichVu.fxml";
+			Stage popUpStage = PopUpStageHelper.createPopUpStage(link, 500, 550);
+			popUpStage.getScene().setUserData(this);
+			FXMLLoader loader = (FXMLLoader) popUpStage.getUserData();
+			DichVuController controller = loader.getController();
+			controller.initialize(dichVu);
+			popUpStage.showAndWait();
+		} catch (NullPointerException NullPointerException) {
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Lá»—i");
+			alert.setHeaderText("KhÃ´ng thá»ƒ sá»­a dá»‹ch vá»¥!");
+			alert.setContentText("Vui lÃ²ng chá»�n dá»‹ch vá»¥ cáº§n sá»­a!");
+			alert.showAndWait();
+		}
+	}
+
+	public void handleXemChiTietDichVu(ActionEvent e) {
+		try {
+			DichVuDTO dichVu = tvDichVu.getSelectionModel().getSelectedItem();
+			NhaCungCapDTO nhaCungCap = NhaCungCapBUS.getNhaCungCapById(dichVu.getMaNhaCungCap());
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Chi tiáº¿t dá»‹ch vá»¥");
+			alert.setHeaderText(String.format(
+					"Chi tiáº¿t nhÃ  cung cáº¥p [%s]:\n"
+					+ "- NhÃ  cung cáº¥p: %s.\n"
+					+ "- Sá»‘ Ä‘iá»‡n thoáº¡i: %s.", 
+					dichVu.getTenDichVu(), 
+					nhaCungCap.getTenNhaCungCap(), 
+					nhaCungCap.getSoDienThoai())); 
+			alert.showAndWait();							
+		} catch (SQLException SQLException) {
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Lá»—i");
+			alert.setHeaderText("KhÃ´ng thá»ƒ xem chi tiáº¿t dá»‹ch vá»¥!");
+			alert.setContentText("Lá»—i database!");
+			alert.showAndWait();				
+		} catch (NullPointerException NullPointerException) {
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Lá»—i");
+			alert.setHeaderText("KhÃ´ng thá»ƒ xem chi tiáº¿t dá»‹ch vá»¥!");
+			alert.setContentText("Vui lÃ²ng chá»�n dá»‹ch vá»¥ cáº§n xem!");
+			alert.showAndWait();
+		}
+	}
+	
+	public void handleTimKhach(ActionEvent e) {
+		System.out.println("xx");
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/timKhach.fxml"));
+			Parent root = (Parent)loader.load();
+			final Stage popup = new Stage(); 
+			popup.initModality(Modality.NONE);
+			popup.setTitle("TÌM KIẾM KHÁCH HÀNG");
+			popup.setScene(new Scene(root));
+			popup.show();
+
+			} catch(Exception e1) {
+				e1.printStackTrace();
+			}
+	}
+	
+	public void handleThemKhach(ActionEvent e) {
+		System.out.println("Them khach");
+	}
+	
+	public void handleXoaKhach(ActionEvent e) {
+		System.out.println("Xoa khach");
+	}
+	
+	public void handleSuaKhach(ActionEvent e) {
+		System.out.println("Sua khach");
+	}
+	
+	public void loadTablePTPKhachByMaPT(Integer maPhieuThue) {
+		System.out.println("loadTablePTPKhach");
+		try {
+			ObservableList<KhachDTO> dsKhach = FXCollections.observableArrayList();
+			for (KhachDTO khach : KhachBUS.getDSKhach(maPhieuThue)) {
+				dsKhach.add(khach);
+			}
+			tvPTP_KhachHang.setItems(dsKhach);
+		} catch (SQLException SQLException) {
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Lá»—i");
+			alert.setHeaderText("KhÃ´ng thá»ƒ táº£i danh sÃ¡ch loáº¡i dá»‹ch vá»¥!");
+			alert.setContentText("Lá»—i database!");
+			alert.showAndWait();
+			SQLException.printStackTrace();
 		}
 	}
 }
