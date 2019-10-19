@@ -27,4 +27,8 @@ public class PTPhongBUS {
 	public static boolean deletePhieuDangKy(Integer maPTPhong) throws SQLException {
 		return PTPhongDAO.deletePhieuDangKy(maPTPhong);
 	}
+
+	public static PTPhongDTO getPTPhongById(Integer maPTP) throws SQLException {
+		return PTPhongDAO.getPTPhongById(maPTP);
+	}
 }

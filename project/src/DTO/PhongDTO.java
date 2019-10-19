@@ -4,6 +4,7 @@ public class PhongDTO {
 	private String maPhong;
 	private LoaiPhongDTO loaiPhong;
 	private TinhTrangDTO tinhTrang;
+	private Integer maPTP;
 	private String ghiChu;
 	
 	public PhongDTO(String maPhong, LoaiPhongDTO loaiPhong, TinhTrangDTO tinhTrang, String ghiChu) {
@@ -12,7 +13,7 @@ public class PhongDTO {
 		this.tinhTrang = tinhTrang;
 		this.ghiChu = ghiChu;
 	}
-
+	
 	public String getMaPhong() {
 		return maPhong;
 	}
@@ -27,5 +28,13 @@ public class PhongDTO {
 	
 	public String getGhiChu() {
 		return ghiChu;
+	}
+
+	public Integer getMaPTP() {
+		return maPTP;
+	}
+
+	public void setMaPTP(Integer maPTP) {
+		this.maPTP = maPTP;
 	}
 }

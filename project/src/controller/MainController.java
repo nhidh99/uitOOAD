@@ -12,6 +12,8 @@ import BUS.*;
 import DTO.*;
 import controller.nhanvien.SuaNhanVienController;
 import controller.nhanvien.TuyChinhNhanVienController;
+import controller.ptpdv.SuaPtpDichVuController;
+import controller.ptpdv.ThemPtpDichVuController;
 import custom.control.ListRoomDetailPane;
 import custom.control.RoomDetailPane;
 import helper.ConfirmDialogHelper;
@@ -142,6 +144,10 @@ public class MainController implements Initializable {
 	Label lbPhong_DonGia;
 	@FXML
 	Label lbPhong_GhiChu;
+	@FXML
+	Label lbPhong_MaPTP;
+	@FXML
+	Label lbPhong_TienDichVu;
 
 	@FXML
 	Label lbTS_SoNgayTraCoc;
@@ -179,6 +185,36 @@ public class MainController implements Initializable {
 	TextField tfPT_Email;
 	@FXML
 	TextField tfPT_GhiChu;
+
+	@FXML
+	TableView<PtpDichVuDTO> tvPtpDichVu;
+	@FXML
+	TableColumn<PtpDichVuDTO, Integer> tcPtpDV_MaPTPDV;
+	@FXML
+	TableColumn<PtpDichVuDTO, Integer> tcPtpDV_STT;
+	@FXML
+	TableColumn<PtpDichVuDTO, String> tcPtpDV_TenDichVu;
+	@FXML
+	TableColumn<PtpDichVuDTO, Integer> tcPtpDV_SoLuong;
+	@FXML
+	TableColumn<PtpDichVuDTO, String> tcPtpDV_DonViTinh;
+	@FXML
+	TableColumn<PtpDichVuDTO, Integer> tcPtpDV_DonGia;
+	@FXML
+	TableColumn<PtpDichVuDTO, Integer> tcPtpDV_ThanhTien;
+
+	@FXML
+	TableView<PtpPtckDTO> tvPtpPTCK;
+	@FXML
+	TableColumn<PtpPtckDTO, Integer> tcPtpPTCK_STT;
+	@FXML
+	TableColumn<PtpPtckDTO, String> tcPtpPTCK_NoiDung;
+	@FXML
+	TableColumn<PtpPtckDTO, String> tcPtpPTCK_DonGia;
+	@FXML
+	TableColumn<PtpPtckDTO, Integer> tcPtpPTCK_SoLuong;
+	@FXML
+	TableColumn<PtpPtckDTO, String> tcPtpPTCK_ThanhTien;
 
 	@FXML
 	TableView<PhieuThueDTO> tvPhieuThue;
@@ -321,7 +357,9 @@ public class MainController implements Initializable {
 	private void initTables() {
 		initTablePhong();
 		initTablePhieuThue();
-		initTablePhieuThuePhong();
+		initTablePtpDichVu();
+		initTablePtpPtck();
+		initTablePTPhong();
 		initTableDichVu();
 		initTableNhanVien();
 		initTableLoaiPhong();
@@ -430,7 +468,27 @@ public class MainController implements Initializable {
 		tcPT_GhiChu.setCellValueFactory(new PropertyValueFactory<>("GhiChu"));
 	}
 
-	private void initTablePhieuThuePhong() {
+	private void initTablePtpDichVu() {
+		tcPtpDV_STT.setCellValueFactory(
+				column -> new ReadOnlyObjectWrapper<Integer>(tvPtpDichVu.getItems().indexOf(column.getValue()) + 1));
+		tcPtpDV_MaPTPDV.setCellValueFactory(new PropertyValueFactory<>("maPTPDichVu"));
+		tcPtpDV_TenDichVu.setCellValueFactory(new PropertyValueFactory<>("tenDichVu"));
+		tcPtpDV_SoLuong.setCellValueFactory(new PropertyValueFactory<>("soLuong"));
+		tcPtpDV_DonViTinh.setCellValueFactory(new PropertyValueFactory<>("donViTinh"));
+		tcPtpDV_DonGia.setCellValueFactory(new PropertyValueFactory<>("donGia"));
+		tcPtpDV_ThanhTien.setCellValueFactory(new PropertyValueFactory<>("thanhTien"));
+	}
+
+	private void initTablePtpPtck() {
+		tcPtpPTCK_STT.setCellValueFactory(
+				column -> new ReadOnlyObjectWrapper<Integer>(tvPtpPTCK.getItems().indexOf(column.getValue()) + 1));
+		tcPtpPTCK_NoiDung.setCellValueFactory(new PropertyValueFactory<>("NoiDung"));
+		tcPtpPTCK_SoLuong.setCellValueFactory(new PropertyValueFactory<>("SoLuong"));
+		tcPtpPTCK_DonGia.setCellValueFactory(new PropertyValueFactory<>("DonGia"));
+		tcPtpPTCK_ThanhTien.setCellValueFactory(new PropertyValueFactory<>("TriGia"));
+	}
+
+	private void initTablePTPhong() {
 		tcPTP_STT.setCellValueFactory(
 				column -> new ReadOnlyObjectWrapper<Integer>(tvPTPhong.getItems().indexOf(column.getValue()) + 1));
 		tcPTP_MaPTP.setCellValueFactory(new PropertyValueFactory<>("MaPTPhong"));
@@ -529,7 +587,7 @@ public class MainController implements Initializable {
 		class RoomClickedHandler {
 			public void handleChiTietPhong(PhongDTO phong) {
 				showChiTietPhong(phong);
-				updateControlsByTinhTrang(phong.getTinhTrang().getTenTinhTrang());
+				updateControlsByTinhTrang(phong);
 			}
 
 			private void showChiTietPhong(PhongDTO phong) {
@@ -541,13 +599,27 @@ public class MainController implements Initializable {
 				lbPhong_DonGia.setText(MoneyFormatHelper.format(phong.getLoaiPhong().getDonGiaValue(), "VND"));
 			}
 
-			private void updateControlsByTinhTrang(String tinhTrangPhong) {
+			private void updateControlsByTinhTrang(PhongDTO phong) {
 				try {
-					if (tinhTrangPhong.equals("Thuê")) {
+					if (phong.getTinhTrang().getTenTinhTrang().equals("Thuê")) {
 						tpPhong_ChiTiet.setVisible(true);
 						btnPhong_DoiPhong.setDisable(false);
 						btnPhong_SuaPhong.setDisable(true);
 						btnPhong_XoaPhong.setDisable(true);
+
+						try {
+							Integer maPTP = PhongBUS.getMaPTP(phong.getMaPhong());
+							lbPhong_MaPTP.setText(maPTP.toString());
+							loadTablePTP_DV(maPTP);
+							loadTablePtpPTCK(maPTP);
+						} catch (SQLException e) {
+							Alert alert = new Alert(AlertType.INFORMATION);
+							alert.setTitle("Lỗi");
+							alert.setHeaderText("Không thể tải danh sách dịch vụ của phiếu thuê phòng!");
+							alert.setContentText("Lỗi database!");
+							alert.showAndWait();
+							e.printStackTrace();
+						}
 					} else {
 						tpPhong_ChiTiet.setVisible(false);
 						btnPhong_DoiPhong.setDisable(true);
@@ -585,6 +657,38 @@ public class MainController implements Initializable {
 			alert.showAndWait();
 		} catch (NullPointerException NullPointerException) {
 			// do nothing :P
+		}
+	}
+
+	public void loadTablePTP_DV(Integer maPTP) {
+		try {
+			ObservableList<PtpDichVuDTO> dsDichVu = FXCollections.observableArrayList();
+			for (PtpDichVuDTO dv : PtpDichVuBUS.getDSDichVuByMaPTP(maPTP)) {
+				dsDichVu.add(dv);
+			}
+			tvPtpDichVu.setItems(dsDichVu);
+		} catch (SQLException SQLException) {
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Lỗi");
+			alert.setHeaderText("Không thể tải danh sách loại dịch vụ đã dùng!");
+			alert.setContentText("Lỗi database!");
+			alert.showAndWait();
+		}
+	}
+
+	public void loadTablePtpPTCK(Integer maPTP) {
+		try {
+			ObservableList<PtpPtckDTO> dsPTCK = FXCollections.observableArrayList();
+			for (PtpPtckDTO ptck : PtpPtckBUS.getDSPtckByMaPTP(maPTP)) {
+				dsPTCK.add(ptck);
+			}
+			tvPtpPTCK.setItems(dsPTCK);
+		} catch (SQLException e) {
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Lỗi");
+			alert.setHeaderText("Không thể tải danh sách phụ thu/chiết khấu!");
+			alert.setContentText("Lỗi database!");
+			alert.showAndWait();
 		}
 	}
 
@@ -1294,6 +1398,78 @@ public class MainController implements Initializable {
 			alert.setTitle("Lỗi");
 			alert.setHeaderText("Không thể cập nhật phiêu thuê!");
 			alert.setContentText("Vui lòng chọn phiếu thuê cần cập nhật!");
+			alert.showAndWait();
+		}
+	}
+
+	public void handleThemPtpDichVu(ActionEvent e) {
+		try {
+			String link = "/application/themPtpDichVu.fxml";
+			Stage popUpStage = PopUpStageHelper.createPopUpStage(link, 980, 460);
+			FXMLLoader loader = (FXMLLoader) popUpStage.getUserData();
+			ThemPtpDichVuController controller = loader.getController();
+			PTPhongDTO ptPhong = PTPhongBUS.getPTPhongById(Integer.parseInt(lbPhong_MaPTP.getText()));
+			controller.initialize(ptPhong);
+			popUpStage.getScene().setUserData(this);
+			popUpStage.showAndWait();
+		} catch (SQLException ex) {
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Lỗi");
+			alert.setHeaderText("Không thể thêm dịch vụ!");
+			alert.setContentText("Lỗi database!");
+			alert.showAndWait();
+		}
+	}
+	
+	public void handleSuaPtpDichVu(ActionEvent e) {
+		try {
+			String link = "/application/suaPtpDichVu.fxml";
+			Stage popUpStage = PopUpStageHelper.createPopUpStage(link, 500, 350);
+			FXMLLoader loader = (FXMLLoader) popUpStage.getUserData();
+			SuaPtpDichVuController controller = loader.getController();
+			PtpDichVuDTO ptp_dv = tvPtpDichVu.getSelectionModel().getSelectedItem();
+			controller.initialize(ptp_dv);
+			popUpStage.getScene().setUserData(this);
+			popUpStage.showAndWait();
+		} catch (NullPointerException ex) {
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Lỗi");
+			alert.setHeaderText("Không thể sửa dịch vụ!");
+			alert.setContentText("Vui lòng chọn dịch vụ cần sửa!");
+			alert.showAndWait();
+		}
+	}
+	
+	public void handleXoaPtpDichVu(ActionEvent e) {
+		try {
+			PtpDichVuDTO ptpDichVu = tvPtpDichVu.getSelectionModel().getSelectedItem();
+			if (ConfirmDialogHelper.confirm("Xác nhận xoá dịch vụ " + ptpDichVu.getTenDichVu() + "?")) {
+				if (PtpDichVuBUS.deletePtpDichVu(ptpDichVu.getMaPTPDichVu())) {
+					Alert alert = new Alert(AlertType.INFORMATION);
+					alert.setTitle("Thành công");
+					alert.setHeaderText("Xóa loại dịch vụ thành công!");
+					alert.setContentText("Đã xóa dịch vụ " + ptpDichVu.getTenDichVu() + "!");
+					alert.showAndWait();
+					loadTablePTP_DV(Integer.parseInt(lbPhong_MaPTP.getText()));
+					loadTableDichVu();
+				} else {
+					Alert alert = new Alert(AlertType.INFORMATION);
+					alert.setTitle("Lỗi");
+					alert.setHeaderText("Không thể xóa dịch vụ!");
+					alert.showAndWait();
+				}
+			}
+		} catch (SQLException SQLException) {
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Lỗi");
+			alert.setHeaderText("Không thể xóa dịch vụ!");
+			alert.setContentText("Lỗi database!");
+			alert.showAndWait();
+		} catch (NullPointerException NullPointerException) {
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Lỗi");
+			alert.setHeaderText("Không thể xoá dịch vụ!");
+			alert.setContentText("Vui lòng chọn dịch vụ cần xoá!");
 			alert.showAndWait();
 		}
 	}

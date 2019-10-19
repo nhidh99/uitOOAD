@@ -19,4 +19,8 @@ public class PhongBUS {
 	public static PhongDTO getPhongById(String maPhong) throws SQLException {
 		return PhongDAO.getPhongById(maPhong);
 	}
+
+	public static Integer getMaPTP(String maPhong) throws SQLException {
+		return PhongDAO.getMaPTP(maPhong);
+	}
 }

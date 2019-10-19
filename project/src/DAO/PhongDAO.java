@@ -67,4 +67,16 @@ public class PhongDAO {
 		conn.close();
 		return output;
 	}
+
+	public static Integer getMaPTP(String maPhong) throws SQLException {
+		Connection conn = DBHelper.getConnection();
+		String query = "SELECT MaPTPHienTai FROM Phong WHERE MaPhong = ?";
+		PreparedStatement statement = conn.prepareStatement(query);
+		statement.setString(1, maPhong);
+		ResultSet rs = statement.executeQuery();
+		rs.next();		
+		Integer output = rs.getInt(1);
+		conn.close();
+		return output;
+	}
 }

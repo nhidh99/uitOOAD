@@ -47,7 +47,7 @@ public class PTPhongDAO {
 		conn.close();
 		return output;
 	}
-	
+
 	public static List<PTPhongDTO> getDSPTPhongByMaPhieu(Integer maPhieuThue) throws SQLException {
 		Connection conn = DBHelper.getConnection();
 		Statement statement = conn.createStatement();
@@ -73,7 +73,7 @@ public class PTPhongDAO {
 		conn.close();
 		return true;
 	}
-	
+
 	public static boolean deletePhieuDangKy(Integer maPTPhong) throws SQLException {
 		Connection conn = DBHelper.getConnection();
 		Statement statement = conn.createStatement();
@@ -81,5 +81,18 @@ public class PTPhongDAO {
 		int records = statement.executeUpdate(query);
 		conn.close();
 		return records > 0;
+	}
+
+	public static PTPhongDTO getPTPhongById(Integer maPTP) throws SQLException {
+		Connection conn = DBHelper.getConnection();
+		Statement statement = conn.createStatement();
+		String query = "SELECT * FROM PT_Phong WHERE MaPTPhong = " + maPTP;
+		ResultSet rs = statement.executeQuery(query);
+		rs.next();
+		PhongDTO phong = PhongDAO.getPhongById(rs.getString("MaPhong"));
+		PTPhongDTO output = new PTPhongDTO(rs.getInt("MaPTPhong"), phong, rs.getTimestamp("NgayNhan"),
+				rs.getTimestamp("NgayTra"), rs.getInt("TienCoc"));
+		conn.close();
+		return output;
 	}
 }
