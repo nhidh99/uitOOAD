@@ -15,4 +15,16 @@ public class PTPhongBUS {
 	public static List<PTPhongDTO> getDSPhongDangKy() throws SQLException {
 		return PTPhongDAO.getDSPhongDangKy();
 	}
+
+	public static List<PTPhongDTO> getDSPTPhongByMaPhieu(Integer maPhieuThue) throws SQLException {
+		return PTPhongDAO.getDSPTPhongByMaPhieu(maPhieuThue);
+	}
+
+	public static boolean deleteAllPhieuDangKy() throws SQLException {
+		return PTPhongDAO.deleteAllPhieuDangKy();
+	}
+	
+	public static boolean deletePhieuDangKy(Integer maPTPhong) throws SQLException {
+		return PTPhongDAO.deletePhieuDangKy(maPTPhong);
+	}
 }

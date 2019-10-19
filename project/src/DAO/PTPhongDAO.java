@@ -47,4 +47,39 @@ public class PTPhongDAO {
 		conn.close();
 		return output;
 	}
+	
+	public static List<PTPhongDTO> getDSPTPhongByMaPhieu(Integer maPhieuThue) throws SQLException {
+		Connection conn = DBHelper.getConnection();
+		Statement statement = conn.createStatement();
+		String query = "SELECT * FROM PT_Phong WHERE MaPhieuThue = " + maPhieuThue;
+		ResultSet rs = statement.executeQuery(query);
+
+		List<PTPhongDTO> output = new ArrayList<PTPhongDTO>();
+		while (rs.next()) {
+			PhongDTO phong = PhongDAO.getPhongById(rs.getString("MaPhong"));
+			PTPhongDTO ptp = new PTPhongDTO(rs.getInt("MaPTPhong"), phong, rs.getTimestamp("NgayNhan"),
+					rs.getTimestamp("NgayTra"), rs.getInt("TienCoc"));
+			output.add(ptp);
+		}
+		conn.close();
+		return output;
+	}
+
+	public static boolean deleteAllPhieuDangKy() throws SQLException {
+		Connection conn = DBHelper.getConnection();
+		Statement statement = conn.createStatement();
+		String query = "DELETE FROM PT_Phong WHERE MaPhieuThue IS NULL";
+		statement.execute(query);
+		conn.close();
+		return true;
+	}
+	
+	public static boolean deletePhieuDangKy(Integer maPTPhong) throws SQLException {
+		Connection conn = DBHelper.getConnection();
+		Statement statement = conn.createStatement();
+		String query = "DELETE FROM PT_Phong WHERE MaPTPhong = " + maPTPhong;
+		int records = statement.executeUpdate(query);
+		conn.close();
+		return records > 0;
+	}
 }

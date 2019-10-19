@@ -2,6 +2,9 @@ package DTO;
 
 import java.util.Date;
 
+import helper.DateFormatHelper;
+import helper.MoneyFormatHelper;
+
 public class PhieuThueDTO {
 	private Integer maPhieuThue;
 	private Integer maNhanVien;
@@ -11,6 +14,7 @@ public class PhieuThueDTO {
 	private String soDienThoai;
 	private String email;
 	private String ghiChu;
+	private Integer tongTienCoc;
 	private Boolean thanhToanCoc;
 
 	public Integer getMaPhieuThue() {
@@ -21,8 +25,12 @@ public class PhieuThueDTO {
 		return maNhanVien;
 	}
 
-	public Date getNgayLapPhieu() {
+	public Date getNgayLapValue() {
 		return ngayLapPhieu;
+	}
+	
+	public String getNgayLap() {
+		return DateFormatHelper.toString(ngayLapPhieu);
 	}
 
 	public String getTenKhachThue() {
@@ -40,9 +48,21 @@ public class PhieuThueDTO {
 	public String getEmail() {
 		return email;
 	}
+	
+	public Integer getTongTienCocValue() {
+		return tongTienCoc;
+	}
+	
+	public String getTongTienCoc() {
+		return MoneyFormatHelper.format(tongTienCoc);
+	}
 
-	public Boolean getThanhToanCoc() {
+	public Boolean getThanhToanCocValue() {
 		return thanhToanCoc;
+	}
+
+	public String getThanhToanCoc() {
+		return thanhToanCoc ? "Đã thanh toán" : "Chưa thanh toán";
 	}
 
 	public String getGhiChu() {
@@ -56,6 +76,20 @@ public class PhieuThueDTO {
 		this.tenKhachThue = tenKhachThue;
 		this.cmnd = cmnd;
 		this.soDienThoai = soDienThoai;
+		this.email = email;
+		this.ghiChu = ghiChu;
+	}
+
+	public PhieuThueDTO(Integer maPhieuThue, Integer maNhanVien, Date ngayLapPhieu, String tenKhachThue, String cmnd, String soDienThoai,
+			String email, Integer tongTienCoc, Boolean thanhToanCoc, String ghiChu) {
+		this.maPhieuThue = maPhieuThue;
+		this.maNhanVien = maNhanVien;
+		this.ngayLapPhieu = ngayLapPhieu;
+		this.tenKhachThue = tenKhachThue;
+		this.cmnd = cmnd;
+		this.soDienThoai = soDienThoai;
+		this.tongTienCoc = tongTienCoc;
+		this.thanhToanCoc = thanhToanCoc;
 		this.email = email;
 		this.ghiChu = ghiChu;
 	}
