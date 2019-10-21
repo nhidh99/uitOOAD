@@ -19,12 +19,24 @@ public class PtpPtckDTO {
 		this.triGia = triGia;
 	}
 	
+	public PtpPtckDTO(PTPhongDTO ptPhong, String noiDung, Integer soLuong, Integer donGia, Integer triGia) {
+		this.ptPhong = ptPhong;
+		this.noiDung = noiDung;
+		this.soLuong = soLuong;
+		this.donGia = donGia;
+		this.triGia = triGia;
+	}
+	
 	public Integer getMaPTCKPhong() {
 		return maPTCKPhong;
 	}
 	
-	public PTPhongDTO getMaPTPhong() {
+	public PTPhongDTO getPTPhong() {
 		return ptPhong;
+	}
+	
+	public Integer getMaPTPhong() {
+		return ptPhong.getMaPTPhong();
 	}
 	
 	public String getNoiDung() {

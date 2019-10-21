@@ -208,6 +208,8 @@ public class MainController implements Initializable {
 	@FXML
 	TableColumn<PtpPtckDTO, Integer> tcPtpPTCK_STT;
 	@FXML
+	TableColumn<PtpPtckDTO, Integer> tcPtpPTCK_MaPTCK;
+	@FXML
 	TableColumn<PtpPtckDTO, String> tcPtpPTCK_NoiDung;
 	@FXML
 	TableColumn<PtpPtckDTO, String> tcPtpPTCK_DonGia;
@@ -482,6 +484,7 @@ public class MainController implements Initializable {
 	private void initTablePtpPtck() {
 		tcPtpPTCK_STT.setCellValueFactory(
 				column -> new ReadOnlyObjectWrapper<Integer>(tvPtpPTCK.getItems().indexOf(column.getValue()) + 1));
+		tcPtpPTCK_MaPTCK.setCellValueFactory(new PropertyValueFactory<>("MaPTCKPhong"));
 		tcPtpPTCK_NoiDung.setCellValueFactory(new PropertyValueFactory<>("NoiDung"));
 		tcPtpPTCK_SoLuong.setCellValueFactory(new PropertyValueFactory<>("SoLuong"));
 		tcPtpPTCK_DonGia.setCellValueFactory(new PropertyValueFactory<>("DonGia"));
@@ -1420,7 +1423,7 @@ public class MainController implements Initializable {
 			alert.showAndWait();
 		}
 	}
-	
+
 	public void handleSuaPtpDichVu(ActionEvent e) {
 		try {
 			String link = "/application/suaPtpDichVu.fxml";
@@ -1439,7 +1442,7 @@ public class MainController implements Initializable {
 			alert.showAndWait();
 		}
 	}
-	
+
 	public void handleXoaPtpDichVu(ActionEvent e) {
 		try {
 			PtpDichVuDTO ptpDichVu = tvPtpDichVu.getSelectionModel().getSelectedItem();
@@ -1470,6 +1473,77 @@ public class MainController implements Initializable {
 			alert.setTitle("Lỗi");
 			alert.setHeaderText("Không thể xoá dịch vụ!");
 			alert.setContentText("Vui lòng chọn dịch vụ cần xoá!");
+			alert.showAndWait();
+		}
+	}
+
+	public void handleThemPtpPtck(ActionEvent e) {
+		try {
+			String link = "/application/popupPtpPtck.fxml";
+			Stage popUpStage = PopUpStageHelper.createPopUpStage(link, 600, 560);
+			FXMLLoader loader = (FXMLLoader) popUpStage.getUserData();
+			PtpPtckController controller = loader.getController();
+			PTPhongDTO ptPhong = PTPhongBUS.getPTPhongById(Integer.parseInt(lbPhong_MaPTP.getText()));
+			controller.initialize(ptPhong);
+			popUpStage.getScene().setUserData(this);
+			popUpStage.showAndWait();
+		} catch (SQLException ex) {
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Lỗi");
+			alert.setHeaderText("Không thể thêm ptck!");
+			alert.setContentText("Lỗi database!");
+			alert.showAndWait();
+		}
+	}
+
+	public void handleSuaPtpPtck(ActionEvent e) {
+		try {
+			String link = "/application/popupPtpPtck.fxml";
+			Stage popUpStage = PopUpStageHelper.createPopUpStage(link, 600, 560);
+			FXMLLoader loader = (FXMLLoader) popUpStage.getUserData();
+			PtpPtckController controller = loader.getController();
+			PtpPtckDTO ptck = tvPtpPTCK.getSelectionModel().getSelectedItem();
+			controller.initialize(ptck);
+			popUpStage.getScene().setUserData(this);
+			popUpStage.showAndWait();
+		} catch (NullPointerException ex) {
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Lỗi");
+			alert.setHeaderText("Không thể sửa ptck!");
+			alert.setContentText("Vui lòng chọn ptck cần sửa!");
+			alert.showAndWait();
+		}
+	}
+
+	public void handleXoaPtpPtck(ActionEvent e) {
+		try {
+			PtpPtckDTO ptpPtck = tvPtpPTCK.getSelectionModel().getSelectedItem();
+			if (ConfirmDialogHelper.confirm("Xác nhận xoá ptck: " + ptpPtck.getNoiDung() + "?")) {
+				if (PtpPtckBUS.deletePtpPtck(ptpPtck.getMaPTCKPhong())) {
+					Alert alert = new Alert(AlertType.INFORMATION);
+					alert.setTitle("Thành công");
+					alert.setHeaderText("Xóa ptck thành công!");
+					alert.setContentText("Đã xóa ptck: " + ptpPtck.getNoiDung() + "!");
+					alert.showAndWait();
+					loadTablePtpPTCK(Integer.valueOf(lbPhong_MaPTP.getText()));
+				} else {
+					Alert alert = new Alert(AlertType.INFORMATION);
+					alert.setTitle("Lỗi");
+					alert.setHeaderText("Không thể xóa ptck!");
+					alert.showAndWait();
+				}
+			}
+		} catch (SQLException SQLException) {
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Lỗi");
+			alert.setHeaderText("Không thể xóa ptck!");
+			alert.setContentText("Lỗi database!");
+			alert.showAndWait();
+		} catch (NullPointerException NullPointerException) {
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Lỗi");
+			alert.setHeaderText("Không thể xoá ptck!");
+			alert.setContentText("Vui lòng chọn ptck cần xoá!");
 			alert.showAndWait();
 		}
 	}

@@ -299,7 +299,7 @@
                                        <center>
                                           <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="TOP_CENTER">
                                              <children>
-                                                <GridPane alignment="TOP_CENTER" hgap="10.0" prefHeight="190.0" prefWidth="464.0" scaleShape="false" vgap="12.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="5.0">
+                                                <GridPane alignment="TOP_CENTER" hgap="10.0" prefHeight="190.0" prefWidth="464.0" scaleShape="false" vgap="12.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0">
                                                    <columnConstraints>
                                                       <ColumnConstraints halignment="RIGHT" hgrow="NEVER" maxWidth="28.00001220703126" minWidth="-Infinity" prefWidth="28.00001220703126" />
                                                       <ColumnConstraints halignment="LEFT" hgrow="NEVER" maxWidth="-Infinity" minWidth="-Infinity" />
@@ -312,7 +312,6 @@
                                                    <rowConstraints>
                                                       <RowConstraints />
                                                       <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" />
-                                                      <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" valignment="CENTER" vgrow="SOMETIMES" />
                                                       <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" valignment="CENTER" vgrow="SOMETIMES" />
                                                       <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" valignment="CENTER" vgrow="SOMETIMES" />
                                                       <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" valignment="CENTER" vgrow="SOMETIMES" />
@@ -401,10 +400,6 @@
                                                          <font>
                                                             <Font name="System Bold" size="20.0" />
                                                          </font></Label>
-                                                      <Label text="300,000 VND" GridPane.columnIndex="6" GridPane.rowIndex="7">
-                                                         <font>
-                                                            <Font size="20.0" />
-                                                         </font></Label>
                                                       <Label text="Đơn giá thuê:" GridPane.columnIndex="5" GridPane.rowIndex="4">
                                                          <font>
                                                             <Font name="System Bold" size="20.0" />
@@ -470,41 +465,21 @@
                                                          <font>
                                                             <Font size="20.0" />
                                                          </font></Label>
-                                                      <Label text="Tiền thuê phòng:" GridPane.columnIndex="5" GridPane.rowIndex="7">
+                                                      <Label text="Tiền PTCK:" GridPane.columnIndex="5" GridPane.rowIndex="7">
                                                          <font>
                                                             <Font name="System Bold" size="20.0" />
                                                          </font></Label>
-                                                      <Label text="Tiền PTCK:" GridPane.columnIndex="1" GridPane.rowIndex="8">
-                                                         <font>
-                                                            <Font name="System Bold" size="20.0" />
-                                                         </font></Label>
-                                                      <Label text="-100,000 VND" GridPane.columnIndex="2" GridPane.rowIndex="8">
+                                                      <Label text="-100,000 VND" GridPane.columnIndex="6" GridPane.rowIndex="7">
                                                          <font>
                                                             <Font size="20.0" />
-                                                         </font></Label>
-                                                      <Label text="Tổng tiền tạm tính:" GridPane.columnIndex="5" GridPane.rowIndex="8">
-                                                         <font>
-                                                            <Font name="System Bold" size="20.0" />
                                                          </font></Label>
                                                       <Label text="🎁" GridPane.rowIndex="7">
                                                          <font>
                                                             <Font name="System Bold Italic" size="20.0" />
                                                          </font></Label>
-                                                      <Label text="🔖" GridPane.rowIndex="8">
+                                                      <Label text="🔖" GridPane.columnIndex="4" GridPane.rowIndex="7">
                                                          <font>
                                                             <Font name="System Bold Italic" size="20.0" />
-                                                         </font></Label>
-                                                      <Label text="🛏" GridPane.columnIndex="4" GridPane.rowIndex="7">
-                                                         <font>
-                                                            <Font name="System Bold Italic" size="20.0" />
-                                                         </font></Label>
-                                                      <Label text="💰" GridPane.columnIndex="4" GridPane.rowIndex="8">
-                                                         <font>
-                                                            <Font name="System Bold Italic" size="20.0" />
-                                                         </font></Label>
-                                                      <Label text="800,000 VND" GridPane.columnIndex="6" GridPane.rowIndex="8">
-                                                         <font>
-                                                            <Font size="20.0" />
                                                          </font></Label>
                                                       <Label text="300,000 VND" GridPane.columnIndex="6" GridPane.rowIndex="5">
                                                          <font>
@@ -633,6 +608,7 @@
                                           <TableView fx:id="tvPtpPTCK" prefHeight="340.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                                              <columns>
                                                 <TableColumn fx:id="tcPtpPTCK_STT" minWidth="-1.0" prefWidth="-1.0" style="-fx-alignment: CENTER;" text="STT" />
+                                                <TableColumn fx:id="tcPtpPTCK_MaPTCK" minWidth="-1.0" prefWidth="-1.0" style="-fx-alignment: CENTER;" text="Mã PTCK" visible="false" />
                                                 <TableColumn fx:id="tcPtpPTCK_NoiDung" minWidth="-1.0" prefWidth="-1.0" style="-fx-alignment: CENTER;" text="Nội dung" />
                                                 <TableColumn fx:id="tcPtpPTCK_SoLuong" minWidth="-1.0" prefWidth="-1.0" style="-fx-alignment: CENTER;" text="Số lượng" />
                                                 <TableColumn fx:id="tcPtpPTCK_DonGia" minWidth="-1.0" prefWidth="-1.0" style="-fx-alignment: CENTER;" text="Đơn giá" />
@@ -657,7 +633,7 @@
                                              <children>
                                                 <HBox alignment="TOP_CENTER" layoutY="-3.0" prefWidth="741.0" spacing="20.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                    <children>
-                                                      <Button alignment="CENTER" mnemonicParsing="false" prefWidth="220.0" text="🔖 THÊM PT/CK" textFill="#1d6666">
+                                                      <Button alignment="CENTER" mnemonicParsing="false" onAction="#handleThemPtpPtck" prefWidth="220.0" text="🔖 THÊM PT/CK" textFill="#1d6666">
                                                          <HBox.margin>
                                                             <Insets />
                                                          </HBox.margin>
@@ -665,7 +641,7 @@
                                                             <Font name="System Bold" size="20.0" />
                                                          </font>
                                                       </Button>
-                                                      <Button alignment="CENTER" mnemonicParsing="false" prefWidth="220.0" text="🗑 XOÁ PT/CK" textFill="BROWN">
+                                                      <Button alignment="CENTER" mnemonicParsing="false" onAction="#handleXoaPtpPtck" prefWidth="220.0" text="🗑 XOÁ PT/CK" textFill="BROWN">
                                                          <HBox.margin>
                                                             <Insets />
                                                          </HBox.margin>
@@ -673,7 +649,7 @@
                                                             <Font name="System Bold" size="20.0" />
                                                          </font>
                                                       </Button>
-                                                      <Button alignment="CENTER" mnemonicParsing="false" prefWidth="220.0" text="⚙ SỬA PT/CK" textFill="#427921">
+                                                      <Button alignment="CENTER" mnemonicParsing="false" onAction="#handleSuaPtpPtck" prefWidth="220.0" text="⚙ SỬA PT/CK" textFill="#427921">
                                                          <HBox.margin>
                                                             <Insets />
                                                          </HBox.margin>

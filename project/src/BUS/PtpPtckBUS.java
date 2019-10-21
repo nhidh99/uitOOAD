@@ -12,4 +12,15 @@ public class PtpPtckBUS {
 		return PtpPtckDAO.getDSPtckByMaPTP(maPTP);
 	}
 
+	public static boolean insertPtpPtck(PtpPtckDTO ptck) throws SQLException {
+		return PtpPtckDAO.insertPtpPtcK(ptck);
+	}
+
+	public static boolean deletePtpPtck(Integer maPTCKPhong) throws SQLException {
+		return PtpPtckDAO.deletePtpPtck(maPTCKPhong);
+	}
+
+	public static boolean updatePtpPtck(PtpPtckDTO ptck) throws SQLException {
+		return PtpPtckDAO.updatePtpPtck(ptck);
+	}
 }

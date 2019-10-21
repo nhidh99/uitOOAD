@@ -34,4 +34,42 @@ public class PtpPtckDAO {
 		return output;
 	}
 
+	public static boolean insertPtpPtcK(PtpPtckDTO ptck) throws SQLException {
+		Connection conn = DBHelper.getConnection();
+		String query = "INSERT INTO PTCK_Phong (MaPTPhong, NoiDung, SoLuong, DonGia, TriGia) VALUES (?,?,?,?,?)";
+		PreparedStatement statement = conn.prepareStatement(query);
+		statement.setInt(1, ptck.getMaPTPhong());
+		statement.setString(2, ptck.getNoiDung());
+		statement.setInt(3, ptck.getSoLuong());
+		statement.setInt(4, ptck.getDonGiaValue());
+		statement.setInt(5, ptck.getTriGiaValue());
+		int output = statement.executeUpdate();
+		conn.close();
+		return output > 0;
+	}
+
+	public static boolean deletePtpPtck(Integer maPTCKPhong) throws SQLException {
+		Connection conn = DBHelper.getConnection();
+		String query = "DELETE FROM PTCK_Phong WHERE MaPTCKPhong = ?";
+		PreparedStatement statement = conn.prepareStatement(query);
+		statement.setInt(1, maPTCKPhong);
+		int records = statement.executeUpdate();
+		conn.close();
+		return records > 0;
+	}
+
+	public static boolean updatePtpPtck(PtpPtckDTO ptck) throws SQLException {
+		Connection conn = DBHelper.getConnection();
+		String query = "UPDATE PTCK_Phong SET NoiDung = ?, SoLuong = ?, DonGia = ?, TriGia = ? WHERE MaPTCKPhong = ?";
+		PreparedStatement statement = conn.prepareStatement(query);
+		statement.setString(1, ptck.getNoiDung());
+		statement.setInt(2, ptck.getSoLuong());
+		statement.setInt(3, ptck.getDonGiaValue());
+		statement.setInt(4, ptck.getTriGiaValue());
+		statement.setInt(5, ptck.getMaPTCKPhong());
+		int output = statement.executeUpdate();
+		conn.close();
+		return output > 0;
+	}
+
 }
