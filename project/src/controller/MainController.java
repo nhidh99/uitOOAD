@@ -150,8 +150,6 @@ public class MainController implements Initializable {
 	Label lbPhong_TienDichVu;
 
 	@FXML
-	Label lbTS_SoNgayTraCoc;
-	@FXML
 	Label lbTS_TiLeThueVAT;
 	@FXML
 	Label lbTS_TiLeTienCoc;
@@ -818,7 +816,6 @@ public class MainController implements Initializable {
 	public void loadTableThamSo() {
 		try {
 			ThamSoDTO thamSo = ThamSoBUS.getThamSo();
-			lbTS_SoNgayTraCoc.setText(Integer.toString(thamSo.getSoNgayTraCoc()));
 			lbTS_TiLeTienCoc.setText(String.format("%.0f", thamSo.getTiLeTienCoc() * 100) + "%");
 			lbTS_TiLeThueVAT.setText(String.format("%.0f", thamSo.getTiLeThueVAT() * 100) + "%");
 			lbTS_QuaKhach.setText(String.format("%.0f", thamSo.getPhuThuQuaKhach() * 100) + "%");
@@ -1654,6 +1651,25 @@ public class MainController implements Initializable {
 				alert.setContentText("Lỗi database!");
 				alert.showAndWait();
 			}
+		}
+	}
+
+	public void handleSuaThamSo(ActionEvent e) {
+		try {
+			String link = "/application/popupThamSo.fxml";
+			Stage popUpStage = PopUpStageHelper.createPopUpStage(link, 580, 400);
+			popUpStage.getScene().setUserData(this);
+			FXMLLoader loader = (FXMLLoader) popUpStage.getUserData();
+			ThamSoController controller = loader.getController();
+			ThamSoDTO thamSo = ThamSoBUS.getThamSo();
+			controller.initialize(thamSo);
+			popUpStage.showAndWait();
+		} catch (SQLException ex) {
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Lỗi");
+			alert.setHeaderText("Không thể sửa tham số!");
+			alert.setContentText("Lỗi database!");
+			alert.showAndWait();
 		}
 	}
 }
