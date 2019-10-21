@@ -68,6 +68,7 @@ public class LoaiPhongController {
 					alert.showAndWait();
 					MainController controller = (MainController) lbTieuDe.getScene().getUserData();
 					controller.loadTableLoaiPhong();
+					controller.loadComboboxes();
 					Stage stage = (Stage) lbTieuDe.getScene().getWindow();
 					stage.close();
 				} else {

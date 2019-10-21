@@ -12,28 +12,31 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="328.0" prefWidth="541.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ThemNhaCungCapController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="317.0" prefWidth="515.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.NhaCungCapController">
    <center>
       <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <GridPane hgap="15.0" layoutX="40.0" layoutY="24.0" prefWidth="501.0" vgap="15.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="0.0">
+            <GridPane alignment="CENTER" hgap="15.0" layoutX="40.0" layoutY="24.0" prefWidth="501.0" vgap="15.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
               <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="203.0" minWidth="138.0" prefWidth="183.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="276.0" minWidth="211.0" prefWidth="245.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" />
               </columnConstraints>
               <rowConstraints>
-                <RowConstraints vgrow="SOMETIMES" />
-                <RowConstraints vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <TextField fx:id="tfNhaCungCap" prefWidth="50.0" GridPane.columnIndex="2" />
-                  <Label prefHeight="30.0" prefWidth="163.0" text="Số điện thoại:" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                  <TextField fx:id="tfNhaCungCap" prefWidth="50.0" GridPane.columnIndex="2">
+                     <font>
+                        <Font size="16.0" />
+                     </font></TextField>
+                  <Label text="Điện thoại:" GridPane.columnIndex="1" GridPane.rowIndex="1">
                      <font>
                         <Font name="System Bold" size="20.0" />
                      </font>
                   </Label>
-                  <Label text="Tên nhà cung cấp:" GridPane.columnIndex="1">
+                  <Label text="Tên NCC:" GridPane.columnIndex="1">
                      <font>
                         <Font name="System Bold" size="20.0" />
                      </font>
@@ -43,7 +46,7 @@
                         <Font size="20.0" />
                      </font>
                      <GridPane.margin>
-                        <Insets left="20.0" />
+                        <Insets />
                      </GridPane.margin>
                   </Label>
                   <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" text="👥" GridPane.rowIndex="1">
@@ -51,17 +54,20 @@
                         <Font size="20.0" />
                      </font>
                      <GridPane.margin>
-                        <Insets left="20.0" />
+                        <Insets />
                      </GridPane.margin>
                   </Label>
-                  <TextField fx:id="tfSoDienThoai" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                  <TextField fx:id="tfSoDienThoai" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                     <font>
+                        <Font size="16.0" />
+                     </font></TextField>
                </children>
             </GridPane>
          </children>
       </AnchorPane>
    </center>
    <top>
-      <Label text="THÊM NHÀ CUNG CẤP" textAlignment="CENTER" BorderPane.alignment="CENTER">
+      <Label fx:id="lbTieuDe" text="🗳 THÊM NHÀ CUNG CẤP" textAlignment="CENTER" BorderPane.alignment="CENTER">
          <font>
             <Font name="System Bold" size="36.0" />
          </font>
@@ -71,19 +77,25 @@
       </Label>
    </top>
    <bottom>
-      <HBox alignment="CENTER" prefHeight="73.0" prefWidth="600.0" spacing="20.0" BorderPane.alignment="CENTER">
+      <HBox alignment="CENTER" prefHeight="0.0" prefWidth="379.0" spacing="20.0" BorderPane.alignment="CENTER">
          <children>
-            <Button fx:id="btnXacNhan" mnemonicParsing="false" onAction="#handleBtnXacNhan" prefHeight="35.0" prefWidth="170.0" text="✔ XÁC NHẬN" textFill="#29b20a">
+            <Button mnemonicParsing="false" onAction="#handleXacNhan" prefWidth="180.0" text="✔ XÁC NHẬN" textFill="#208607">
                <font>
                   <Font name="System Bold" size="20.0" />
                </font>
             </Button>
-            <Button fx:id="btnHuyBo" mnemonicParsing="false" onAction="#handleBtnHuyBo" prefHeight="35.0" prefWidth="170.0" text="❌ HỦY BỎ" textFill="#dd0b0b">
+            <Button mnemonicParsing="false" onAction="#handleHuyBo" prefWidth="180.0" text="❌ HỦY BỎ" textFill="#dd0b0b">
                <font>
                   <Font name="System Bold" size="20.0" />
                </font>
+               <HBox.margin>
+                  <Insets bottom="3.0" />
+               </HBox.margin>
             </Button>
          </children>
+         <BorderPane.margin>
+            <Insets bottom="30.0" />
+         </BorderPane.margin>
       </HBox>
    </bottom>
 </BorderPane>

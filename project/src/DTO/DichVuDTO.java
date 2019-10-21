@@ -47,6 +47,10 @@ public class DichVuDTO {
 		return nhaCungCap.getMaNhaCungCap();
 	}
 	
+	public String getTenNhaCungCap() {
+		return nhaCungCap.getTenNhaCungCap();
+	}
+	
 	public DichVuDTO(Integer maDichVu, String tenDichVu, String donViTinh, Integer soLuongTon, 
 			Integer donGia, LoaiDichVuDTO loaiDichVu, NhaCungCapDTO nhaCungCap) {
 		this.maDichVu = maDichVu;

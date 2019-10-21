@@ -50,14 +50,14 @@ public class LoaiDichVuController {
 				if (LoaiDichVuBUS.insertLoaiDichVu(loaiDichVu)) {
 					Alert alert = new Alert(AlertType.INFORMATION);
 					alert.setTitle("Thành công");
-					alert.setHeaderText("Bạn đã thêm thành công loại dịch vụ " + loaiDichVu.getTenLoaiDichVu());
+					alert.setHeaderText("Thêm thành công loại dịch vụ " + loaiDichVu.getTenLoaiDichVu());
 					alert.showAndWait();
 					MainController controller = (MainController) lbTieuDe.getScene().getUserData();
 					controller.loadTableLoaiDichVu();
 				} else {
 					Alert alert = new Alert(AlertType.INFORMATION);
 					alert.setTitle("Thất bại");
-					alert.setHeaderText("Bạn đã thêm loại dịch vụ đã tồn tại!");
+					alert.setHeaderText("Loại dịch vụ cần thêm đã tồn tại!");
 					alert.setContentText("Vui lòng nhập lại loại dịch vụ khác!");
 					alert.showAndWait();
 				}
@@ -80,7 +80,7 @@ public class LoaiDichVuController {
 				if (LoaiDichVuBUS.updateLoaiDichVu(newLoaiDichVu)) {
 					Alert alert = new Alert(AlertType.INFORMATION);
 					alert.setTitle("Thành công");
-					alert.setHeaderText("Bạn đã sửa thành công loại dịch vụ " + newLoaiDichVu.getTenLoaiDichVu());
+					alert.setHeaderText("Sửa thành công loại dịch vụ " + newLoaiDichVu.getTenLoaiDichVu());
 					alert.setContentText(String.format("Các dịch vụ %s sẽ trở thành dịch vụ %s", loaiDichVu.getTenLoaiDichVu(), newLoaiDichVu.getTenLoaiDichVu()));
 					alert.showAndWait();
 					MainController controller = (MainController) lbTieuDe.getScene().getUserData();
@@ -89,7 +89,7 @@ public class LoaiDichVuController {
 				} else {
 					Alert alert = new Alert(AlertType.INFORMATION);
 					alert.setTitle("Thất bại");
-					alert.setHeaderText("Bạn đã sửa loại dịch vụ đã tồn tại!");
+					alert.setHeaderText("Sửa loại dịch vụ đã tồn tại!");
 					alert.setContentText("Vui lòng nhập lại loại dịch vụ khác!");
 					alert.showAndWait();
 				}

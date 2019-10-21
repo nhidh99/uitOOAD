@@ -290,6 +290,8 @@ public class MainController implements Initializable {
 	@FXML
 	TableColumn<DichVuDTO, Integer> tcDV_MaNhaCungCap;
 	@FXML
+	TableColumn<DichVuDTO, String> tcDV_NhaCungCap;
+	@FXML
 	TableColumn<DichVuDTO, String> tcDV_TenDichVu;
 	@FXML
 	TableColumn<DichVuDTO, String> tcDV_LoaiDichVu;
@@ -510,6 +512,7 @@ public class MainController implements Initializable {
 		tcDV_MaDichVu.setCellValueFactory(new PropertyValueFactory<>("MaDichVu"));
 		tcDV_MaLoaiDichVu.setCellValueFactory(new PropertyValueFactory<>("maLoaiDichVu"));
 		tcDV_MaNhaCungCap.setCellValueFactory(new PropertyValueFactory<>("maNhaCungCap"));
+		tcDV_NhaCungCap.setCellValueFactory(new PropertyValueFactory<>("tenNhaCungCap"));
 		tcDV_TenDichVu.setCellValueFactory(new PropertyValueFactory<>("tenDichVu"));
 		tcDV_LoaiDichVu.setCellValueFactory(new PropertyValueFactory<>("tenLoaiDichVu"));
 		tcDV_DonViTinh.setCellValueFactory(new PropertyValueFactory<>("donViTinh"));
@@ -582,7 +585,7 @@ public class MainController implements Initializable {
 			cbbTC_LoaiPhong.setItems(dsLoaiPhong);
 			cbbTC_LoaiPhong.getSelectionModel().selectFirst();
 			handleTraCuuPhong();
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			// do nothing :)
 		}
 	}
@@ -915,43 +918,6 @@ public class MainController implements Initializable {
 			alert.setTitle("Lỗi");
 			alert.setHeaderText("Không thể tải danh sách phòng khách sạn!");
 			alert.setContentText("Lỗi database!");
-			alert.showAndWait();
-		}
-	}
-
-	// Xóa loại phòng
-	public void handleXoaLoaiPhong(ActionEvent e) {
-		try {
-			LoaiPhongDTO loaiPhong = tvLoaiPhong.getSelectionModel().getSelectedItem();
-			if (ConfirmDialogHelper.confirm("Xác nhận xóa loại phòng " + loaiPhong.getTenLoaiPhong() + "?")) {
-				try {
-					if (LoaiPhongBUS.deleteLoaiPhong(loaiPhong.getMaLoaiPhong())) {
-						Alert alert = new Alert(AlertType.INFORMATION);
-						alert.setTitle("Thành công");
-						alert.setHeaderText("Xóa loại phòng thành công!");
-						alert.setContentText("Đã xóa loại phòng " + loaiPhong.getTenLoaiPhong() + "!");
-						alert.showAndWait();
-						loadTableLoaiPhong();
-					} else {
-						Alert alert = new Alert(AlertType.INFORMATION);
-						alert.setTitle("Lỗi");
-						alert.setHeaderText("Không thể xóa loại phòng!");
-						alert.setContentText("Vẫn còn phòng loại " + loaiPhong.getTenLoaiPhong() + "!");
-						alert.showAndWait();
-					}
-				} catch (SQLException SQLException) {
-					Alert alert = new Alert(AlertType.INFORMATION);
-					alert.setTitle("Lỗi");
-					alert.setHeaderText("Không thể xóa loại phòng!");
-					alert.setContentText("Lỗi database!");
-					alert.showAndWait();
-				}
-			}
-		} catch (NullPointerException NullPointerException) {
-			Alert alert = new Alert(AlertType.INFORMATION);
-			alert.setTitle("Lỗi");
-			alert.setHeaderText("Không thể xóa loại phòng!");
-			alert.setContentText("Vui lòng chọn loại phòng cần xóa!");
 			alert.showAndWait();
 		}
 	}
@@ -1573,14 +1539,14 @@ public class MainController implements Initializable {
 			alert.showAndWait();
 		}
 	}
-	
+
 	public void handleThemLoaiPhong(ActionEvent e) {
 		String link = "/application/popupLoaiPhong.fxml";
 		Stage popUpStage = PopUpStageHelper.createPopUpStage(link, 540, 360);
 		popUpStage.getScene().setUserData(this);
 		popUpStage.showAndWait();
 	}
-	
+
 	public void handleSuaLoaiPhong(ActionEvent e) {
 		try {
 			String link = "/application/popupLoaiPhong.fxml";
@@ -1597,6 +1563,97 @@ public class MainController implements Initializable {
 			alert.setHeaderText("Không thể sửa loại phòng!");
 			alert.setContentText("Vui lòng chọn loại phòng cần sửa!");
 			alert.showAndWait();
+		}
+	}
+
+	public void handleXoaLoaiPhong(ActionEvent e) {
+		try {
+			LoaiPhongDTO loaiPhong = tvLoaiPhong.getSelectionModel().getSelectedItem();
+			if (ConfirmDialogHelper.confirm("Xác nhận xóa loại phòng " + loaiPhong.getTenLoaiPhong() + "?")) {
+				try {
+					if (LoaiPhongBUS.deleteLoaiPhong(loaiPhong.getMaLoaiPhong())) {
+						Alert alert = new Alert(AlertType.INFORMATION);
+						alert.setTitle("Thành công");
+						alert.setHeaderText("Xóa loại phòng thành công!");
+						alert.setContentText("Đã xóa loại phòng " + loaiPhong.getTenLoaiPhong() + "!");
+						alert.showAndWait();
+						loadTableLoaiPhong();
+						loadComboboxes();
+					} else {
+						Alert alert = new Alert(AlertType.INFORMATION);
+						alert.setTitle("Lỗi");
+						alert.setHeaderText("Không thể xóa loại phòng!");
+						alert.setContentText("Vẫn còn phòng loại " + loaiPhong.getTenLoaiPhong() + "!");
+						alert.showAndWait();
+					}
+				} catch (SQLException SQLException) {
+					Alert alert = new Alert(AlertType.INFORMATION);
+					alert.setTitle("Lỗi");
+					alert.setHeaderText("Không thể xóa loại phòng!");
+					alert.setContentText("Lỗi database!");
+					alert.showAndWait();
+				}
+			}
+		} catch (NullPointerException NullPointerException) {
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Lỗi");
+			alert.setHeaderText("Không thể xóa loại phòng!");
+			alert.setContentText("Vui lòng chọn loại phòng cần xóa!");
+			alert.showAndWait();
+		}
+	}
+
+	public void handleThemNhaCungCap(ActionEvent e) {
+		String link = "/application/popupNhaCungCap.fxml";
+		Stage popUpStage = PopUpStageHelper.createPopUpStage(link, 520, 320);
+		popUpStage.getScene().setUserData(this);
+		popUpStage.showAndWait();
+	}
+
+	public void handleSuaNhaCungCap(ActionEvent e) {
+		try {
+			String link = "/application/popupNhaCungCap.fxml";
+			Stage popUpStage = PopUpStageHelper.createPopUpStage(link, 520, 320);
+			NhaCungCapDTO nhaCungCap = tvNhaCungCap.getSelectionModel().getSelectedItem();
+			FXMLLoader loader = (FXMLLoader) popUpStage.getUserData();
+			NhaCungCapController controller = loader.getController();
+			controller.initialize(nhaCungCap);
+			popUpStage.getScene().setUserData(this);
+			popUpStage.showAndWait();
+		} catch (NullPointerException ex) {
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Lỗi");
+			alert.setHeaderText("Không thể sửa nhà cung cấp!");
+			alert.setContentText("Vui lòng chọn nhà cung cấp cần sửa!");
+			alert.showAndWait();
+		}
+	}
+
+	public void handleXoaNhaCungCap(ActionEvent e) {
+		NhaCungCapDTO nhaCungCap = tvNhaCungCap.getSelectionModel().getSelectedItem();
+		if (ConfirmDialogHelper.confirm("Xác nhận xoá nhà cung cấp " + nhaCungCap.getTenNhaCungCap() + "?")) {
+			try {
+				if (NhaCungCapBUS.deleteNhaCungCap(nhaCungCap.getMaNhaCungCap())) {
+					Alert alert = new Alert(AlertType.INFORMATION);
+					alert.setTitle("Thành công");
+					alert.setHeaderText("Xóa nhà cung cấp thành công!");
+					alert.setContentText("Đã xóa nhà cung cấp " + nhaCungCap.getTenNhaCungCap() + "!");
+					alert.showAndWait();
+					loadTableNhaCungCap();
+				} else {
+					Alert alert = new Alert(AlertType.INFORMATION);
+					alert.setTitle("Thất bại");
+					alert.setHeaderText("Xóa nhà cung cấp thất bại!");
+					alert.setContentText("Vẫn còn dịch vụ của nhà cung cấp " + nhaCungCap.getTenNhaCungCap());
+					alert.showAndWait();
+				}
+			} catch (SQLException ex) {
+				Alert alert = new Alert(AlertType.INFORMATION);
+				alert.setTitle("Thất bại");
+				alert.setHeaderText("Xóa nhà cung cấp thất bại!");
+				alert.setContentText("Lỗi database!");
+				alert.showAndWait();
+			}
 		}
 	}
 }

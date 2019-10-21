@@ -14,4 +14,22 @@ public class NhaCungCapBUS {
 	public static NhaCungCapDTO getNhaCungCapById(Integer maNhaCungCap) throws SQLException {
 		return NhaCungCapDAO.getNhaCungCapById(maNhaCungCap);
 	}
+
+	public static boolean insertNhaCungCap(NhaCungCapDTO nhaCungCap) throws SQLException {
+		if (NhaCungCapDAO.checkNhaCungCap(nhaCungCap.getTenNhaCungCap())) {
+			return false;
+		}
+		return NhaCungCapDAO.insertNhaCungCap(nhaCungCap);
+	}
+
+	public static boolean updateNhaCungCap(NhaCungCapDTO nhaCungCap) throws SQLException {
+		return NhaCungCapDAO.updateNhaCungCap(nhaCungCap);
+	}
+
+	public static boolean deleteNhaCungCap(Integer maNhaCungCap) throws SQLException {
+		if (NhaCungCapDAO.checkNhaCungCap(maNhaCungCap)) {
+			return false;
+		}
+		return NhaCungCapDAO.deleteNhaCungCap(maNhaCungCap);
+	}
 }
