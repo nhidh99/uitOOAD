@@ -21,23 +21,10 @@ public class ThemLoaiDichVuController {
 	TextField tfLoaiDichVu;
 	
 	@FXML
-	ChoiceBox<String> cbNhaCungCap;
-	
-	@FXML
 	Button btnXacNhan;
 	
 	@FXML
 	Button btnHuyBo;
-	
-	public void initValue() throws SQLException {
-		ObservableList<String> listNhaCungCap = FXCollections.observableArrayList();
-		
-		for(NhaCungCapDTO nhacungcap : NhaCungCapBUS.getDSNhaCungCap()) {
-			listNhaCungCap.add(nhacungcap.getTenNhaCungCap());
-		}
-		
-		cbNhaCungCap.setItems(listNhaCungCap);
-	}
 	
 	@FXML
 	public void handleBtnXacNhan(ActionEvent e) throws SQLException {

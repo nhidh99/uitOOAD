@@ -15,7 +15,7 @@ public class LoaiDichVuDAO {
 	public static List<LoaiDichVuDTO> getDSLoaiDichVu() throws SQLException {
 		Connection conn = DBHelper.getConnection();
 		Statement statement = conn.createStatement();
-		String query = "SELECT * from LoaiDichVu";
+		String query = "SELECT * from LoaiDichVu WHERE KhaDung = true";
 		ResultSet rs = statement.executeQuery(query);
 
 		List<LoaiDichVuDTO> output = new ArrayList<LoaiDichVuDTO>();
@@ -27,43 +27,26 @@ public class LoaiDichVuDAO {
 		conn.close();
 		return output;
 	}
-	
-	public static boolean checkLoaiDichVuTonTai(String tenLoaiDichVu) throws SQLException {
+
+	public static boolean checkLoaiDichVu(Integer maLoaiDichVu) throws SQLException {
 		Connection conn = DBHelper.getConnection();
-		String query = "SELECT * FROM loaidichvu WHERE TenLoaiDichVu = ?";
+		String query = "SELECT EXISTS (SELECT 1 FROM DichVu WHERE MaLoaiDichVu = ? LIMIT 1)";
 		PreparedStatement statement = conn.prepareStatement(query);
-		statement.setString(1, tenLoaiDichVu);
+		statement.setInt(1, maLoaiDichVu);
 		ResultSet rs = statement.executeQuery();
-		boolean isExist = false;
-		
-		if(rs.next()) {
-			isExist = true;
-		}
-		
+		rs.next();
+		boolean isExist = rs.getBoolean(1);
 		conn.close();
 		return isExist;
 	}
-	
-	public static boolean addLoaiDichVu(String tenLoaiDichVu) throws SQLException {
-		Connection conn = DBHelper.getConnection();
-		String query = "INSERT INTO loaidichvu(TenLoaiDichVu) VALUES(?)";
-		PreparedStatement statement = conn.prepareStatement(query);
-		statement.setString(1, tenLoaiDichVu);
-		statement.execute();
-		conn.close();
-		return true;
-	}
-	
-	public static boolean updateLoaiDichVu(String tenLoaiDichVuCu, String tenLoaiDichVuMoi) throws SQLException {
 
+	public static boolean deleteLoaiDichVu(Integer maLoaiDichVu) throws SQLException {
 		Connection conn = DBHelper.getConnection();
-		String query = "UPDATE loaidichvu SET TenLoaiDichVu = ? WHERE TenLoaiDichVu = ?";
+		String query = "CALL del_LoaiDichVu(?)";
 		PreparedStatement statement = conn.prepareStatement(query);
-		statement.setString(1, tenLoaiDichVuMoi);
-		statement.setString(2, tenLoaiDichVuCu);
+		statement.setInt(1, maLoaiDichVu);
 		statement.execute();
 		conn.close();
-		
 		return true;
 	}
 }

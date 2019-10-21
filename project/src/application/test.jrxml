@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.9.0.final using JasperReports Library version 6.9.0-cb8f9004be492ccc537180b49c026951f4220bf3  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="test" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="6ee171d6-b4a7-489b-8914-ccbff67098b9">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="QLKSAdapter"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT
+	MaHoaDon,
+	MaNhanVIen,
+	NgayHoaDon,
+	TenKhachTra,
+	CMND,
+	SoDienThoai,
+	Email,
+	TongTienPhong,
+	TongTienPTCK,
+	TongTienDichVu,
+	GiaTri,
+	GhiChu
+FROM hoadon]]>
+	</queryString>
+	<field name="MaHoaDon" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="MaHoaDon"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="hoadon"/>
+	</field>
+	<field name="MaNhanVIen" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="MaNhanVIen"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="hoadon"/>
+	</field>
+	<field name="NgayHoaDon" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.label" value="NgayHoaDon"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="hoadon"/>
+	</field>
+	<field name="TenKhachTra" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="TenKhachTra"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="hoadon"/>
+	</field>
+	<field name="CMND" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="CMND"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="hoadon"/>
+	</field>
+	<field name="SoDienThoai" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="SoDienThoai"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="hoadon"/>
+	</field>
+	<field name="Email" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="Email"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="hoadon"/>
+	</field>
+	<field name="TongTienPhong" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="TongTienPhong"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="hoadon"/>
+	</field>
+	<field name="TongTienPTCK" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="TongTienPTCK"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="hoadon"/>
+	</field>
+	<field name="TongTienDichVu" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="TongTienDichVu"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="hoadon"/>
+	</field>
+	<field name="GiaTri" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="GiaTri"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="hoadon"/>
+	</field>
+	<field name="GhiChu" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="GhiChu"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="hoadon"/>
+	</field>
+	<variable name="GiaTri1" class="java.math.BigDecimal" resetType="Group" resetGroup="TienBranch" calculation="Sum">
+		<variableExpression><![CDATA[$F{GiaTri}]]></variableExpression>
+	</variable>
+	<variable name="TongTienPhong1" class="java.math.BigDecimal" resetType="Group" resetGroup="Group1" calculation="Sum">
+		<variableExpression><![CDATA[$F{TongTienPhong}]]></variableExpression>
+	</variable>
+	<group name="MaHoaDonBranch">
+		<groupExpression><![CDATA[$F{MaHoaDon}]]></groupExpression>
+		<groupHeader>
+			<band height="53">
+				<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				<rectangle>
+					<reportElement x="0" y="1" width="560" height="50" backcolor="#90B884" uuid="2cf11f7d-0c26-41f4-acf8-6ebf5dbfdd6c"/>
+				</rectangle>
+				<textField>
+					<reportElement x="0" y="1" width="100" height="50" uuid="7ec4157b-f040-4498-8cc4-3d734bb2e746"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$F{MaHoaDon}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="100" y="0" width="120" height="51" uuid="86274fd0-8f1d-4d12-a378-ad8ea6bd1316"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$F{TenKhachTra}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="220" y="-1" width="90" height="54" uuid="47c75aec-691a-42eb-af43-2b0de8c3d5c6"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$F{CMND}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="310" y="1" width="100" height="52" uuid="f241f57d-221f-481e-b1bd-32f43ba50e93"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$F{SoDienThoai}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="410" y="1" width="150" height="50" uuid="a3ca2888-a7e4-4337-bf54-ffc4f94535ce"/>
+					<textElement verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$F{Email}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+	</group>
+	<group name="CustomerBranch">
+		<groupExpression><![CDATA[$F{TenKhachTra}]]></groupExpression>
+	</group>
+	<group name="TienBranch">
+		<groupHeader>
+			<band height="148">
+				<staticText>
+					<reportElement x="0" y="3" width="100" height="30" uuid="60f82882-cff5-47b8-8391-7222693017e4"/>
+					<text><![CDATA[Tổng tiền phòng :]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="0" y="33" width="100" height="30" uuid="7f6be2d0-b1ae-427f-9a8f-ec5d2438526e"/>
+					<text><![CDATA[Tổng tiền PTCK :]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="0" y="63" width="100" height="30" uuid="e54977a0-1552-4f00-962a-8e00ef0fc187"/>
+					<text><![CDATA[Tổng tiền dịch vụ :]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="0" y="115" width="100" height="30" uuid="d8202960-2976-45b7-804b-f330f78c4b8d"/>
+					<text><![CDATA[Tổng :]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="110" y="3" width="100" height="30" uuid="23942141-4bdf-4688-abe7-cfbb080ccc75"/>
+					<textFieldExpression><![CDATA[$F{TongTienPhong}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="110" y="33" width="100" height="30" uuid="29ccde97-eae3-42f9-99e7-944975e6516d"/>
+					<textFieldExpression><![CDATA[$F{TongTienPTCK}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="110" y="60" width="100" height="30" uuid="bc2ae501-6f5d-42b6-aba6-02ce034b42cc"/>
+					<textFieldExpression><![CDATA[$F{TongTienDichVu}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="110" y="115" width="100" height="30" uuid="dbd75ea9-174f-41a9-87e0-662355503322"/>
+					<textFieldExpression><![CDATA[$F{GiaTri}]]></textFieldExpression>
+				</textField>
+				<image>
+					<reportElement x="280" y="3" width="280" height="137" uuid="5a71d95f-7247-4319-bcf6-580c0c2610a6"/>
+					<imageExpression><![CDATA["room.png"]]></imageExpression>
+				</image>
+			</band>
+		</groupHeader>
+	</group>
+	<group name="Group1"/>
+	<columnHeader>
+		<band height="51" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="560" height="50" backcolor="#DE6A68" uuid="68eacd5c-f6ff-4c9e-9e09-d279ef9b2cb0">
+					<property name="com.jaspersoft.studio.element.name" value="Hóa Đơn Report"/>
+				</reportElement>
+			</rectangle>
+			<staticText>
+				<reportElement x="0" y="0" width="100" height="30" uuid="1d643ebe-6f04-496d-b2de-05052bceb087"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Mã Hóa Đơn]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="110" y="0" width="90" height="30" uuid="3f1a5386-92cf-4c83-adac-aff9bb639387"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Tên khách trả]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="210" y="0" width="90" height="30" uuid="58a74bcf-c01e-42b7-83ba-317a1ca6167b"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[CMND]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="310" y="0" width="90" height="30" uuid="f42c433b-adec-4420-a783-904ab95c3ce5"/>
+				<text><![CDATA[Số điện thoại]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="410" y="0" width="90" height="30" uuid="fb4b8dde-dff2-417e-b0a6-bd0b52b75baf"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Email]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+</jasperReport>

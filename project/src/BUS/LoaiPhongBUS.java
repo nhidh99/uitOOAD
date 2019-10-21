@@ -16,15 +16,4 @@ public class LoaiPhongBUS {
 		}
 		return LoaiPhongDAO.deleteLoaiPhong(maLoaiPhong);
 	}
-	
-	public static boolean themLoaiPhong(String tenLoaiPhong, Integer soKhachToiDa, Integer donGia) throws SQLException {
-		if(LoaiPhongDAO.checkLoaiPhongTonTai(tenLoaiPhong)) {
-			return false;
-		}
-		return LoaiPhongDAO.addLoaiPhong(tenLoaiPhong, soKhachToiDa, donGia);
-	}
-	
-	public static boolean suaLoaiPhong(String tenLoaiPhongCu, String tenLoaiPhongMoi, Integer soKhachToiDa, Integer donGia) throws SQLException {
-		return LoaiPhongDAO.updateLoaiPhong(tenLoaiPhongCu, tenLoaiPhongMoi, soKhachToiDa, donGia);
-	}
 }
