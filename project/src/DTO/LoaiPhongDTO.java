@@ -34,4 +34,10 @@ public class LoaiPhongDTO {
 		this.soKhachToiDa = soKhachToiDa;
 		this.donGia = donGia;		
 	}
+	
+	public LoaiPhongDTO(String tenLoaiPhong, Integer soKhachToiDa, Integer donGia) {
+		this.tenLoaiPhong = tenLoaiPhong;
+		this.soKhachToiDa = soKhachToiDa;
+		this.donGia = donGia;		
+	}
 }

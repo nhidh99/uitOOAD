@@ -12,13 +12,24 @@ public class LoaiDichVuBUS {
 	}
 
 	public static boolean deleteLoaiDichVu(Integer maLoaiDichVu) throws SQLException {
-		if (LoaiDichVuDAO.checkLoaiDichVu(maLoaiDichVu)) {
-			return false;
-		}
 		return LoaiDichVuDAO.deleteLoaiDichVu(maLoaiDichVu);
 	}
 
 	public static LoaiDichVuDTO getLoaiDichVuById(Integer maLoaiDichVu) throws SQLException {
 		return LoaiDichVuDAO.getLoaiDichVuById(maLoaiDichVu);
+	}
+
+	public static boolean insertLoaiDichVu(LoaiDichVuDTO loaiDichVu) throws SQLException {
+		if (LoaiDichVuDAO.checkLoaiDichVu(loaiDichVu.getTenLoaiDichVu())) {
+			return false;
+		}
+		return LoaiDichVuDAO.insertLoaiDichVu(loaiDichVu);
+	}
+
+	public static boolean updateLoaiDichVu(LoaiDichVuDTO loaiDichVu) throws SQLException {
+		if (LoaiDichVuDAO.checkLoaiDichVu(loaiDichVu.getTenLoaiDichVu())) {
+			return false;
+		}
+		return LoaiDichVuDAO.updateLoaiDichVu(loaiDichVu);
 	}
 }

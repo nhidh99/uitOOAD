@@ -554,7 +554,7 @@ public class MainController implements Initializable {
 		tcNCC_SoDienThoai.setCellValueFactory(new PropertyValueFactory<>("soDienThoai"));
 	}
 
-	private void loadComboboxes() {
+	public void loadComboboxes() {
 		try {
 			ObservableList<LoaiPhongDTO> dsLoaiPhong = FXCollections.observableArrayList();
 			for (LoaiPhongDTO loaiPhong : LoaiPhongBUS.getDSLoaiPhong()) {
@@ -581,6 +581,7 @@ public class MainController implements Initializable {
 			cbbTC_LoaiPhong.setCellFactory(cellFactory);
 			cbbTC_LoaiPhong.setItems(dsLoaiPhong);
 			cbbTC_LoaiPhong.getSelectionModel().selectFirst();
+			handleTraCuuPhong();
 		} catch (SQLException e) {
 			// do nothing :)
 		}
@@ -951,43 +952,6 @@ public class MainController implements Initializable {
 			alert.setTitle("Lỗi");
 			alert.setHeaderText("Không thể xóa loại phòng!");
 			alert.setContentText("Vui lòng chọn loại phòng cần xóa!");
-			alert.showAndWait();
-		}
-	}
-
-	// Xóa loại dịch vụ
-	public void handleXoaLoaiDichVu(ActionEvent e) {
-		try {
-			LoaiDichVuDTO loaiDichVu = tvLoaiDichVu.getSelectionModel().getSelectedItem();
-			if (ConfirmDialogHelper.confirm("Xác nhận xóa loại dịch vụ " + loaiDichVu.getTenLoaiDichVu() + "?")) {
-				try {
-					if (LoaiDichVuBUS.deleteLoaiDichVu(loaiDichVu.getMaLoaiDichVu())) {
-						Alert alert = new Alert(AlertType.INFORMATION);
-						alert.setTitle("Thành công");
-						alert.setHeaderText("Xóa loại dịch vụ thành công!");
-						alert.setContentText("Đã xóa loại dịch vụ " + loaiDichVu.getTenLoaiDichVu() + "!");
-						alert.showAndWait();
-						loadTableLoaiDichVu();
-					} else {
-						Alert alert = new Alert(AlertType.INFORMATION);
-						alert.setTitle("Lỗi");
-						alert.setHeaderText("Không thể xóa loại dịch vụ!");
-						alert.setContentText("Vẫn còn dịch vụ loại " + loaiDichVu.getTenLoaiDichVu() + "!");
-						alert.showAndWait();
-					}
-				} catch (SQLException SQLException) {
-					Alert alert = new Alert(AlertType.INFORMATION);
-					alert.setTitle("Lỗi");
-					alert.setHeaderText("Không thể xóa loại dịch vụ!");
-					alert.setContentText("Lỗi database!");
-					alert.showAndWait();
-				}
-			}
-		} catch (NullPointerException NullPointerException) {
-			Alert alert = new Alert(AlertType.INFORMATION);
-			alert.setTitle("Lỗi");
-			alert.setHeaderText("Không thể xóa loại dịch vụ!");
-			alert.setContentText("Vui lòng chọn loại dịch vụ cần xóa!");
 			alert.showAndWait();
 		}
 	}
@@ -1544,6 +1508,94 @@ public class MainController implements Initializable {
 			alert.setTitle("Lỗi");
 			alert.setHeaderText("Không thể xoá ptck!");
 			alert.setContentText("Vui lòng chọn ptck cần xoá!");
+			alert.showAndWait();
+		}
+	}
+
+	public void handleThemLoaiDichVu(ActionEvent e) {
+		String link = "/application/popupLoaiDichVu.fxml";
+		Stage popUpStage = PopUpStageHelper.createPopUpStage(link, 500, 250);
+		popUpStage.getScene().setUserData(this);
+		popUpStage.showAndWait();
+	}
+
+	public void handleSuaLoaiDichVu(ActionEvent e) {
+		try {
+			String link = "/application/popupLoaiDichVu.fxml";
+			Stage popUpStage = PopUpStageHelper.createPopUpStage(link, 500, 250);
+			LoaiDichVuDTO loaiDichVu = tvLoaiDichVu.getSelectionModel().getSelectedItem();
+			FXMLLoader loader = (FXMLLoader) popUpStage.getUserData();
+			LoaiDichVuController controller = loader.getController();
+			controller.initialize(loaiDichVu);
+			popUpStage.getScene().setUserData(this);
+			popUpStage.showAndWait();
+		} catch (NullPointerException ex) {
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Lỗi");
+			alert.setHeaderText("Không thể sửa loại dịch vụ!");
+			alert.setContentText("Vui lòng chọn loại dịch vụ!");
+			alert.showAndWait();
+		}
+	}
+
+	public void handleXoaLoaiDichVu(ActionEvent e) {
+		try {
+			LoaiDichVuDTO loaiDichVu = tvLoaiDichVu.getSelectionModel().getSelectedItem();
+			if (ConfirmDialogHelper.confirm("Xác nhận xóa loại dịch vụ " + loaiDichVu.getTenLoaiDichVu() + "?")) {
+				try {
+					if (LoaiDichVuBUS.deleteLoaiDichVu(loaiDichVu.getMaLoaiDichVu())) {
+						Alert alert = new Alert(AlertType.INFORMATION);
+						alert.setTitle("Thành công");
+						alert.setHeaderText("Xóa loại dịch vụ thành công!");
+						alert.setContentText("Đã xóa loại dịch vụ " + loaiDichVu.getTenLoaiDichVu() + "!");
+						alert.showAndWait();
+						loadTableLoaiDichVu();
+					} else {
+						Alert alert = new Alert(AlertType.INFORMATION);
+						alert.setTitle("Lỗi");
+						alert.setHeaderText("Không thể xóa loại dịch vụ!");
+						alert.setContentText("Vẫn còn dịch vụ loại " + loaiDichVu.getTenLoaiDichVu() + "!");
+						alert.showAndWait();
+					}
+				} catch (SQLException SQLException) {
+					Alert alert = new Alert(AlertType.INFORMATION);
+					alert.setTitle("Lỗi");
+					alert.setHeaderText("Không thể xóa loại dịch vụ!");
+					alert.setContentText("Lỗi database!");
+					alert.showAndWait();
+				}
+			}
+		} catch (NullPointerException NullPointerException) {
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Lỗi");
+			alert.setHeaderText("Không thể xóa loại dịch vụ!");
+			alert.setContentText("Vui lòng chọn loại dịch vụ cần xóa!");
+			alert.showAndWait();
+		}
+	}
+	
+	public void handleThemLoaiPhong(ActionEvent e) {
+		String link = "/application/popupLoaiPhong.fxml";
+		Stage popUpStage = PopUpStageHelper.createPopUpStage(link, 540, 360);
+		popUpStage.getScene().setUserData(this);
+		popUpStage.showAndWait();
+	}
+	
+	public void handleSuaLoaiPhong(ActionEvent e) {
+		try {
+			String link = "/application/popupLoaiPhong.fxml";
+			Stage popUpStage = PopUpStageHelper.createPopUpStage(link, 540, 360);
+			LoaiPhongDTO loaiPhong = tvLoaiPhong.getSelectionModel().getSelectedItem();
+			FXMLLoader loader = (FXMLLoader) popUpStage.getUserData();
+			LoaiPhongController controller = loader.getController();
+			controller.initialize(loaiPhong);
+			popUpStage.getScene().setUserData(this);
+			popUpStage.showAndWait();
+		} catch (NullPointerException ex) {
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Lỗi");
+			alert.setHeaderText("Không thể sửa loại phòng!");
+			alert.setContentText("Vui lòng chọn loại phòng cần sửa!");
 			alert.showAndWait();
 		}
 	}

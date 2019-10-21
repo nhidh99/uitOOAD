@@ -138,8 +138,8 @@ public class DichVuController implements Initializable {
 
 	private void initCbbLoaiDichVu() throws SQLException {
 		ObservableList<LoaiDichVuDTO> listLoaiDichVu = FXCollections.observableArrayList();
-		for (LoaiDichVuDTO ncc : LoaiDichVuBUS.getDSLoaiDichVu()) {
-			listLoaiDichVu.add(ncc);
+		for (LoaiDichVuDTO ldv : LoaiDichVuBUS.getDSLoaiDichVu()) {
+			listLoaiDichVu.add(ldv);
 		}
 
 		Callback<ListView<LoaiDichVuDTO>, ListCell<LoaiDichVuDTO>> cellFactory = new Callback<ListView<LoaiDichVuDTO>, ListCell<LoaiDichVuDTO>>() {

@@ -16,4 +16,8 @@ public class LoaiDichVuDTO {
 		this.maLoaiDichVu = maLoaiDichVu;
 		this.tenLoaiDichVu = tenLoaiDichVu;
 	}
+	
+	public LoaiDichVuDTO(String tenLoaiDichVu) {
+		this.tenLoaiDichVu = tenLoaiDichVu;
+	}
 }
