@@ -58,7 +58,7 @@
                               <Insets bottom="20.0" />
                            </BorderPane.margin>
                            <children>
-                              <Button fx:id="btnPhong_ThemPhong" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="32.0" prefWidth="662.0" text="🏡 THÊM PHÒNG" textFill="#00868b">
+                              <Button fx:id="btnPhong_ThemPhong" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleThemPhong" prefHeight="32.0" prefWidth="662.0" text="🏡 THÊM PHÒNG" textFill="#00868b">
                                  <effect>
                                     <Blend />
                                  </effect>
@@ -194,11 +194,11 @@
                                           </Label>
                                           <HBox alignment="CENTER" prefHeight="40.0" prefWidth="608.0" spacing="10.0" GridPane.columnSpan="6" GridPane.rowIndex="3">
                                              <children>
-                                                <Button fx:id="btnPhong_XoaPhong" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefWidth="220.0" text="🗑 XOÁ PHÒNG" textAlignment="CENTER" textFill="BROWN">
+                                                <Button fx:id="btnPhong_XoaPhong" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleXoaPhong" prefWidth="220.0" text="🗑 XOÁ PHÒNG" textAlignment="CENTER" textFill="BROWN">
                                                    <font>
                                                       <Font name="System Bold" size="20.0" />
                                                    </font></Button>
-                                                <Button fx:id="btnPhong_SuaPhong" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefWidth="220.0" text="⚙ SỬA PHÒNG" textAlignment="CENTER" textFill="#00868b">
+                                                <Button fx:id="btnPhong_SuaPhong" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleSuaPhong" prefWidth="220.0" text="⚙ SỬA PHÒNG" textAlignment="CENTER" textFill="#00868b">
                                                    <font>
                                                       <Font name="System Bold" size="20.0" />
                                                    </font></Button>

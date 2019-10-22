@@ -632,7 +632,7 @@ public class MainController implements Initializable {
 						btnPhong_XoaPhong.setDisable(false);
 					}
 				} catch (Exception ex) {
-					// do nothing :)
+					ex.printStackTrace();
 				}
 			}
 		}
@@ -652,16 +652,17 @@ public class MainController implements Initializable {
 				});
 				tpPhong.getChildren().add(pane);
 			}
-			PhongDTO phong = listPanes.getPanes().get(0).getPhong();
-			handler.handleChiTietPhong(phong);
+			
+			if (!tpPhong.getChildren().isEmpty()) {
+				PhongDTO phong = listPanes.getPanes().get(0).getPhong();
+				handler.handleChiTietPhong(phong);
+			}
 		} catch (SQLException SQLException) {
 			Alert alert = new Alert(AlertType.INFORMATION);
 			alert.setTitle("Lỗi");
 			alert.setHeaderText("Không thể tải danh sách phòng khách sạn!");
 			alert.setContentText("Lỗi database!");
 			alert.showAndWait();
-		} catch (NullPointerException NullPointerException) {
-			// do nothing :P
 		}
 	}
 
@@ -1668,6 +1669,56 @@ public class MainController implements Initializable {
 			Alert alert = new Alert(AlertType.INFORMATION);
 			alert.setTitle("Lỗi");
 			alert.setHeaderText("Không thể sửa tham số!");
+			alert.setContentText("Lỗi database!");
+			alert.showAndWait();
+		}
+	}
+
+	public void handleThemPhong(ActionEvent e) {
+		String link = "/application/popupPhong.fxml";
+		Stage popUpStage = PopUpStageHelper.createPopUpStage(link, 480, 530);
+		popUpStage.getScene().setUserData(this);
+		popUpStage.showAndWait();
+	}
+
+	public void handleSuaPhong(ActionEvent e) {
+		try {
+			PhongDTO phong = PhongBUS.getPhongById(lbPhong_MaPhong.getText());
+			String link = "/application/popupPhong.fxml";
+			Stage popUpStage = PopUpStageHelper.createPopUpStage(link, 480, 530);
+			FXMLLoader loader = (FXMLLoader) popUpStage.getUserData();
+			PhongController controller = loader.getController();
+			controller.initialize(phong);
+			popUpStage.getScene().setUserData(this);
+			popUpStage.showAndWait();
+		} catch (SQLException ex) {
+
+		}
+	}
+
+	public void handleXoaPhong(ActionEvent e) {
+		try {
+			String maPhong = lbPhong_MaPhong.getText();
+			if (ConfirmDialogHelper.confirm("Xác nhận xoá phòng " + maPhong + "?")) {
+				if (PhongBUS.deletePhong(maPhong)) {
+					Alert alert = new Alert(AlertType.INFORMATION);
+					alert.setTitle("Thành công");
+					alert.setHeaderText("Xóa loại phòng thành công!");
+					alert.setContentText("Đã xóa phòng " + maPhong + "!");
+					alert.showAndWait();
+					loadTablePhong();
+					handleTraCuuPhong();
+				} else {
+					Alert alert = new Alert(AlertType.INFORMATION);
+					alert.setTitle("Thất bại");
+					alert.setHeaderText("Xóa phòng thất bại!");
+					alert.showAndWait();
+				}
+			}
+		} catch (SQLException ex) {
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Thất bại");
+			alert.setHeaderText("Xóa phòng thất bại!");
 			alert.setContentText("Lỗi database!");
 			alert.showAndWait();
 		}

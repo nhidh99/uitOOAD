@@ -23,4 +23,19 @@ public class PhongBUS {
 	public static Integer getMaPTP(String maPhong) throws SQLException {
 		return PhongDAO.getMaPTP(maPhong);
 	}
+
+	public static boolean insertPhong(PhongDTO phong) throws SQLException {
+		if (PhongDAO.checkPhong(phong.getMaPhong())) {
+			return false;			
+		}
+		return PhongDAO.insertPhong(phong);
+	}
+
+	public static boolean deletePhong(String maPhong) throws SQLException {
+		return PhongDAO.deletePhong(maPhong);
+	}
+
+	public static boolean updatePhong(PhongDTO phong) throws SQLException {
+		return PhongDAO.updatePhong(phong);
+	}
 }

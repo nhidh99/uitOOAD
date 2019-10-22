@@ -79,4 +79,52 @@ public class PhongDAO {
 		conn.close();
 		return output;
 	}
+
+	public static boolean checkPhong(String maPhong) throws SQLException {
+		Connection conn = DBHelper.getConnection();
+		String query = "SELECT EXISTS (SELECT 1 FROM Phong WHERE MaPhong = ?)";
+		PreparedStatement statement = conn.prepareStatement(query);
+		statement.setString(1, maPhong);
+		ResultSet rs = statement.executeQuery();
+		rs.next();
+		boolean isExist = rs.getBoolean(1);
+		conn.close();
+		return isExist;
+	}
+
+	public static boolean insertPhong(PhongDTO phong) throws SQLException {
+		Connection conn = DBHelper.getConnection();
+		String query = "INSERT INTO Phong (MaPhong, MaLoaiPhong, MaTinhTrang, GhiChu) VALUES(?,?,?,?)";
+		PreparedStatement statement = conn.prepareStatement(query);
+		statement.setString(1, phong.getMaPhong());
+		statement.setInt(2, phong.getLoaiPhong().getMaLoaiPhong());
+		statement.setInt(3, phong.getTinhTrang().getMaTinhTrang());
+		statement.setString(4, phong.getGhiChu());
+		int records = statement.executeUpdate();
+		conn.close();
+		return records > 0;
+	}
+
+	public static boolean deletePhong(String maPhong) throws SQLException {
+		Connection conn = DBHelper.getConnection();
+		String query = "DELETE FROM phong WHERE MaPhong = ? ";
+		PreparedStatement statement = conn.prepareStatement(query);
+		statement.setString(1, maPhong);
+		int records = statement.executeUpdate();
+		conn.close();
+		return records > 0;
+	}
+
+	public static boolean updatePhong(PhongDTO phong) throws SQLException {
+		Connection conn = DBHelper.getConnection();
+		String query = "UPDATE Phong SET MaLoaiPhong = ?, MaTinhTrang = ?, GhiChu = ? WHERE MaPhong = ?";
+		PreparedStatement statement = conn.prepareStatement(query);
+		statement.setInt(1, phong.getLoaiPhong().getMaLoaiPhong());
+		statement.setInt(2, phong.getTinhTrang().getMaTinhTrang());
+		statement.setString(3, phong.getGhiChu());
+		statement.setString(4, phong.getMaPhong());
+		statement.execute();
+		conn.close();
+		return true;
+	}
 }
