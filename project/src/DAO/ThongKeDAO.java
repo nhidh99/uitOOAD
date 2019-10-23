@@ -38,7 +38,7 @@ public class ThongKeDAO {
 		
 		List<ThongKeSoKhachDTO> output = new ArrayList<ThongKeSoKhachDTO>();
 		while (rs.next()) {
-			output.add(new ThongKeSoKhachDTO(rs.getInt("SoKhach"), rs.getInt("Thang")));
+			output.add(new ThongKeSoKhachDTO(rs.getInt("LuongKhach"), rs.getInt("Thang")));
 		}
 		conn.close();
 		return output;

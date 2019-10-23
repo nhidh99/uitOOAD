@@ -526,15 +526,15 @@
                                              <children>
                                                 <HBox alignment="CENTER" layoutY="63.0" spacing="20.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                    <children>
-                                                      <Button alignment="CENTER" mnemonicParsing="false" prefWidth="220.0" text="👤 THÊM KHÁCH" textFill="#1d6666">
+                                                      <Button alignment="CENTER" mnemonicParsing="false" onAction="#handleThemKhach" prefWidth="220.0" text="👤 THÊM KHÁCH" textFill="#1d6666">
                                                          <font>
                                                             <Font name="System Bold" size="20.0" />
                                                          </font></Button>
-                                                      <Button alignment="CENTER" mnemonicParsing="false" prefWidth="220.0" text="🗑 XOÁ KHÁCH" textFill="BROWN">
+                                                      <Button alignment="CENTER" mnemonicParsing="false" onAction="#handleXoaKhach" prefWidth="220.0" text="🗑 XOÁ KHÁCH" textFill="BROWN">
                                                          <font>
                                                             <Font name="System Bold" size="20.0" />
                                                          </font></Button>
-                                                      <Button alignment="CENTER" mnemonicParsing="false" prefWidth="220.0" text="⚙ SỬA KHÁCH" textFill="#427921">
+                                                      <Button alignment="CENTER" mnemonicParsing="false" onAction="#handleSuaKhach" prefWidth="220.0" text="⚙ SỬA KHÁCH" textFill="#427921">
                                                          <font>
                                                             <Font name="System Bold" size="20.0" />
                                                          </font></Button>
@@ -2586,7 +2586,7 @@
                                           <Font name="System Bold" size="20.0" />
                                        </font>
                                     </Button>
-                                    <Button alignment="CENTER" mnemonicParsing="false" pref	 prefWidth="211.0" text="🖨 IN THỐNG KÊ" textFill="PURPLE">
+                                    <Button alignment="CENTER" mnemonicParsing="false" prefWidth="211.0" text="🖨 IN THỐNG KÊ" textFill="PURPLE">
                                        <font>
                                           <Font name="System Bold" size="20.0" />
                                        </font>

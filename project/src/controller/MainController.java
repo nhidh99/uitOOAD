@@ -106,7 +106,7 @@ public class MainController implements Initializable {
 	Spinner<Integer> snTC_GioNhan;
 	@FXML
 	Spinner<Integer> snTC_GioTra;
-	
+
 	@FXML
 	Spinner<Integer> snTK_DoanhThu;
 	@FXML
@@ -227,7 +227,6 @@ public class MainController implements Initializable {
 	@FXML
 	TableColumn<KhachDTO, String> tcKhach_QuocTich;
 
-	
 	@FXML
 	TableView<PtpDichVuDTO> tvPtpDichVu;
 	@FXML
@@ -462,7 +461,7 @@ public class MainController implements Initializable {
 		snTC_SoDem.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 30, 1));
 		snTC_GioNhan.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 23, 8));
 		snTC_GioTra.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 23, 12));
-		
+
 		int curMonth = Calendar.getInstance().get(Calendar.MONTH);
 		int curYear = Calendar.getInstance().get(Calendar.YEAR);
 		snTK_DoanhThu.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(2000, 3000, curYear));
@@ -557,7 +556,7 @@ public class MainController implements Initializable {
 		tcPTP_NgayTra.setCellValueFactory(new PropertyValueFactory<>("NgayTra"));
 		tcPTP_TienCoc.setCellValueFactory(new PropertyValueFactory<>("TienCoc"));
 	}
-	
+
 	private void initTableKhach() {
 		tcKhach_STT.setCellValueFactory(
 				column -> new ReadOnlyObjectWrapper<Integer>(tvKhach.getItems().indexOf(column.getValue()) + 1));
@@ -763,7 +762,7 @@ public class MainController implements Initializable {
 			alert.showAndWait();
 		}
 	}
-	
+
 	public void loadTableKhach(Integer maPTP) {
 		try {
 			ObservableList<KhachDTO> dsKhach = FXCollections.observableArrayList();
@@ -1343,8 +1342,8 @@ public class MainController implements Initializable {
 		} catch (NullPointerException NullPointerException) {
 			Alert alert = new Alert(AlertType.INFORMATION);
 			alert.setTitle("Lỗi");
-			alert.setHeaderText("Không thể xoá phiêu thuê!");
-			alert.setContentText("Vui lòng chọn phiếu thuê cần xoá!");
+			alert.setHeaderText("Không thể xem phiêu thuê!");
+			alert.setContentText("Vui lòng chọn phiếu thuê cần xem!");
 			alert.showAndWait();
 		}
 	}
@@ -1774,7 +1773,11 @@ public class MainController implements Initializable {
 			popUpStage.getScene().setUserData(this);
 			popUpStage.showAndWait();
 		} catch (SQLException ex) {
-
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Lỗi");
+			alert.setHeaderText("Không thể sửa phòng số!");
+			alert.setContentText("Lỗi database!");
+			alert.showAndWait();
 		}
 	}
 
@@ -1835,23 +1838,27 @@ public class MainController implements Initializable {
 
 	public void handleThongKeLuongKhach(ActionEvent e) {
 		try {
+			int nam = snTK_LuongKhach.getValue();
+
 			CategoryAxis xAxis = new CategoryAxis();
 			xAxis.setLabel("Tháng");
 
 			NumberAxis yAxis = new NumberAxis();
 			yAxis.setLabel("Số khách");
 
+			XYChart.Series<String, Number> series = new XYChart.Series<>();
+			series.setName("Lượng khách theo tháng trong năm " + nam);
+			
 			BarChart<String, Number> barChart = new BarChart<>(xAxis, yAxis);
 			barChart.setStyle("-fx-font-size: 16px");
 
-			int nam = snTK_LuongKhach.getValue();
 			for (ThongKeSoKhachDTO thongke : ThongKeBUS.getSoKhachTheoNam(nam)) {
-				XYChart.Series<String, Number> series = new XYChart.Series<>();
 				series.getData().add(new XYChart.Data<>(thongke.getThang().toString(), thongke.getSoKhach()));
-				barChart.getData().add(series);
 			}
+			barChart.getData().add(series);
 			bpTK_LuongKhach.setCenter(barChart);
 		} catch (SQLException ex) {
+			ex.printStackTrace();
 			Alert alert = new Alert(AlertType.INFORMATION);
 			alert.setTitle("Thất bại");
 			alert.setHeaderText("Không thể xem báo cáo lượng khách!");
@@ -1859,7 +1866,7 @@ public class MainController implements Initializable {
 			alert.showAndWait();
 		}
 	}
-	
+
 	public void handleThongKeLoaiPhong(ActionEvent e) {
 		try {
 			CategoryAxis xAxis = new CategoryAxis();
@@ -1887,7 +1894,7 @@ public class MainController implements Initializable {
 			alert.showAndWait();
 		}
 	}
-	
+
 	public void handleThongKeLoaiDichVu(ActionEvent e) {
 		try {
 			CategoryAxis xAxis = new CategoryAxis();
@@ -1912,6 +1919,77 @@ public class MainController implements Initializable {
 			alert.setTitle("Thất bại");
 			alert.setHeaderText("Không thể xem báo cáo loại dịch vụ!");
 			alert.setContentText("Lỗi database!");
+			alert.showAndWait();
+		}
+	}
+
+	public void handleThemKhach(ActionEvent e) {
+		try {
+			String link = "/application/popupKhach.fxml";
+			Stage popUpStage = PopUpStageHelper.createPopUpStage(link, 480, 530);
+			FXMLLoader loader = (FXMLLoader) popUpStage.getUserData();
+			KhachController controller = loader.getController();
+			PTPhongDTO ptPhong = PTPhongBUS.getPTPhongById(Integer.valueOf(lbPhong_MaPTP.getText()));
+			controller.initialize(ptPhong);
+			popUpStage.getScene().setUserData(this);
+			popUpStage.showAndWait();
+		} catch (SQLException ex) {
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Thất bại");
+			alert.setHeaderText("Không tải thông tin phòng!");
+			alert.setContentText("Lỗi database!");
+			alert.showAndWait();
+		}
+	}
+	
+	public void handleSuaKhach(ActionEvent e) {
+		try {
+			String link = "/application/popupKhach.fxml";
+			Stage popUpStage = PopUpStageHelper.createPopUpStage(link, 480, 530);
+			FXMLLoader loader = (FXMLLoader) popUpStage.getUserData();
+			KhachController controller = loader.getController();
+			KhachDTO khach = tvKhach.getSelectionModel().getSelectedItem();
+			controller.initialize(khach);
+			popUpStage.getScene().setUserData(this);
+			popUpStage.showAndWait();
+		} catch (NullPointerException ex) {
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Lỗi");
+			alert.setHeaderText("Không thể sửa thông tin khách!");
+			alert.setContentText("Vui lòng chọn khách hàng cần sửa!");
+			alert.showAndWait();
+		}
+	}
+	
+	public void handleXoaKhach(ActionEvent e) {
+		try {
+			KhachDTO khach = tvKhach.getSelectionModel().getSelectedItem();
+			if (ConfirmDialogHelper.confirm("Xác nhận xoá khách " + khach.getHoTen() + "?")) {
+				if (KhachBUS.deleteKhach(khach.getMaKhachHang())) {
+					Alert alert = new Alert(AlertType.INFORMATION);
+					alert.setTitle("Thành công");
+					alert.setHeaderText("Xóa loại khách thành công!");
+					alert.setContentText("Đã xóa khách " + khach.getHoTen() + "!");
+					alert.showAndWait();
+					loadTableKhach(Integer.parseInt(lbPhong_MaPTP.getText()));
+				} else {
+					Alert alert = new Alert(AlertType.INFORMATION);
+					alert.setTitle("Lỗi");
+					alert.setHeaderText("Không thể xóa khách!");
+					alert.showAndWait();
+				}
+			}
+		} catch (SQLException SQLException) {
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Lỗi");
+			alert.setHeaderText("Không thể xóa khách!");
+			alert.setContentText("Lỗi database!");
+			alert.showAndWait();
+		} catch (NullPointerException NullPointerException) {
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Lỗi");
+			alert.setHeaderText("Không thể xoá khách!");
+			alert.setContentText("Vui lòng chọn khách cần xoá!");
 			alert.showAndWait();
 		}
 	}
