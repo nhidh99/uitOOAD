@@ -28,6 +28,10 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.chart.BarChart;
+import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -70,6 +74,15 @@ public class MainController implements Initializable {
 	BorderPane bpTC_ThongTinPhong;
 
 	@FXML
+	BorderPane bpTK_DoanhThu;
+	@FXML
+	BorderPane bpTK_LoaiPhong;
+	@FXML
+	BorderPane bpTK_LuongKhach;
+	@FXML
+	BorderPane bpTK_LoaiDichVu;
+
+	@FXML
 	TilePane tpPhong;
 	@FXML
 	TilePane tpTC_Phong;
@@ -93,6 +106,19 @@ public class MainController implements Initializable {
 	Spinner<Integer> snTC_GioNhan;
 	@FXML
 	Spinner<Integer> snTC_GioTra;
+	
+	@FXML
+	Spinner<Integer> snTK_DoanhThu;
+	@FXML
+	Spinner<Integer> snTK_LuongKhach;
+	@FXML
+	Spinner<Integer> snTK_LoaiDichVuThang;
+	@FXML
+	Spinner<Integer> snTK_LoaiPhongThang;
+	@FXML
+	Spinner<Integer> snTK_LoaiDichVuNam;
+	@FXML
+	Spinner<Integer> snTK_LoaiPhongNam;
 
 	@FXML
 	Button btnPhong_ThemPhong;
@@ -184,6 +210,24 @@ public class MainController implements Initializable {
 	@FXML
 	TextField tfPT_GhiChu;
 
+	@FXML
+	TableView<KhachDTO> tvKhach;
+	@FXML
+	TableColumn<KhachDTO, Integer> tcKhach_STT;
+	@FXML
+	TableColumn<KhachDTO, Integer> tcKhach_MaKhach;
+	@FXML
+	TableColumn<KhachDTO, String> tcKhach_HoTen;
+	@FXML
+	TableColumn<KhachDTO, String> tcKhach_SoDienThoai;
+	@FXML
+	TableColumn<KhachDTO, String> tcKhach_CMND;
+	@FXML
+	TableColumn<KhachDTO, String> tcKhach_GioiTinh;
+	@FXML
+	TableColumn<KhachDTO, String> tcKhach_QuocTich;
+
+	
 	@FXML
 	TableView<PtpDichVuDTO> tvPtpDichVu;
 	@FXML
@@ -361,6 +405,7 @@ public class MainController implements Initializable {
 		initTablePhieuThue();
 		initTablePtpDichVu();
 		initTablePtpPtck();
+		initTableKhach();
 		initTablePTPhong();
 		initTableDichVu();
 		initTableNhanVien();
@@ -417,6 +462,15 @@ public class MainController implements Initializable {
 		snTC_SoDem.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 30, 1));
 		snTC_GioNhan.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 23, 8));
 		snTC_GioTra.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 23, 12));
+		
+		int curMonth = Calendar.getInstance().get(Calendar.MONTH);
+		int curYear = Calendar.getInstance().get(Calendar.YEAR);
+		snTK_DoanhThu.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(2000, 3000, curYear));
+		snTK_LuongKhach.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(2000, 3000, curYear));
+		snTK_LoaiPhongThang.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 12, curMonth));
+		snTK_LoaiDichVuThang.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 12, curMonth));
+		snTK_LoaiPhongNam.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(2000, 3000, curYear));
+		snTK_LoaiDichVuNam.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(2000, 3000, curYear));
 	}
 
 	private void initComboboxes() {
@@ -502,6 +556,17 @@ public class MainController implements Initializable {
 		tcPTP_NgayNhan.setCellValueFactory(new PropertyValueFactory<>("NgayNhan"));
 		tcPTP_NgayTra.setCellValueFactory(new PropertyValueFactory<>("NgayTra"));
 		tcPTP_TienCoc.setCellValueFactory(new PropertyValueFactory<>("TienCoc"));
+	}
+	
+	private void initTableKhach() {
+		tcKhach_STT.setCellValueFactory(
+				column -> new ReadOnlyObjectWrapper<Integer>(tvKhach.getItems().indexOf(column.getValue()) + 1));
+		tcKhach_MaKhach.setCellValueFactory(new PropertyValueFactory<>("MaKhachHang"));
+		tcKhach_HoTen.setCellValueFactory(new PropertyValueFactory<>("HoTen"));
+		tcKhach_SoDienThoai.setCellValueFactory(new PropertyValueFactory<>("SoDienThoai"));
+		tcKhach_CMND.setCellValueFactory(new PropertyValueFactory<>("CMND"));
+		tcKhach_GioiTinh.setCellValueFactory(new PropertyValueFactory<>("GioiTinh"));
+		tcKhach_QuocTich.setCellValueFactory(new PropertyValueFactory<>("QuocTich"));
 	}
 
 	private void initTableDichVu() {
@@ -617,6 +682,7 @@ public class MainController implements Initializable {
 							lbPhong_MaPTP.setText(maPTP.toString());
 							loadTablePTP_DV(maPTP);
 							loadTablePtpPTCK(maPTP);
+							loadTableKhach(maPTP);
 						} catch (SQLException e) {
 							Alert alert = new Alert(AlertType.INFORMATION);
 							alert.setTitle("Lỗi");
@@ -652,7 +718,7 @@ public class MainController implements Initializable {
 				});
 				tpPhong.getChildren().add(pane);
 			}
-			
+
 			if (!tpPhong.getChildren().isEmpty()) {
 				PhongDTO phong = listPanes.getPanes().get(0).getPhong();
 				handler.handleChiTietPhong(phong);
@@ -693,6 +759,22 @@ public class MainController implements Initializable {
 			Alert alert = new Alert(AlertType.INFORMATION);
 			alert.setTitle("Lỗi");
 			alert.setHeaderText("Không thể tải danh sách phụ thu/chiết khấu!");
+			alert.setContentText("Lỗi database!");
+			alert.showAndWait();
+		}
+	}
+	
+	public void loadTableKhach(Integer maPTP) {
+		try {
+			ObservableList<KhachDTO> dsKhach = FXCollections.observableArrayList();
+			for (KhachDTO khach : KhachBUS.getDSKhachByMaPTP(maPTP)) {
+				dsKhach.add(khach);
+			}
+			tvKhach.setItems(dsKhach);
+		} catch (SQLException e) {
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Lỗi");
+			alert.setHeaderText("Không thể tải danh sách khách trong phòng!");
 			alert.setContentText("Lỗi database!");
 			alert.showAndWait();
 		}
@@ -1719,6 +1801,116 @@ public class MainController implements Initializable {
 			Alert alert = new Alert(AlertType.INFORMATION);
 			alert.setTitle("Thất bại");
 			alert.setHeaderText("Xóa phòng thất bại!");
+			alert.setContentText("Lỗi database!");
+			alert.showAndWait();
+		}
+	}
+
+	public void handleThongKeDoanhThu(ActionEvent e) {
+		try {
+			CategoryAxis xAxis = new CategoryAxis();
+			xAxis.setLabel("Tháng");
+
+			NumberAxis yAxis = new NumberAxis();
+			yAxis.setLabel("Doanh thu");
+
+			BarChart<String, Number> barChart = new BarChart<>(xAxis, yAxis);
+			barChart.setStyle("-fx-font-size: 16px");
+
+			int nam = snTK_DoanhThu.getValue();
+			for (ThongKeDoanhThuDTO thongke : ThongKeBUS.getDoanhThuTheoNam(nam)) {
+				XYChart.Series<String, Number> series = new XYChart.Series<>();
+				series.getData().add(new XYChart.Data<>(thongke.getThang().toString(), thongke.getDoanhThu()));
+				barChart.getData().add(series);
+			}
+			bpTK_DoanhThu.setCenter(barChart);
+		} catch (SQLException ex) {
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Thất bại");
+			alert.setHeaderText("Không thể xem báo cáo doanh thu tháng!");
+			alert.setContentText("Lỗi database!");
+			alert.showAndWait();
+		}
+	}
+
+	public void handleThongKeLuongKhach(ActionEvent e) {
+		try {
+			CategoryAxis xAxis = new CategoryAxis();
+			xAxis.setLabel("Tháng");
+
+			NumberAxis yAxis = new NumberAxis();
+			yAxis.setLabel("Số khách");
+
+			BarChart<String, Number> barChart = new BarChart<>(xAxis, yAxis);
+			barChart.setStyle("-fx-font-size: 16px");
+
+			int nam = snTK_LuongKhach.getValue();
+			for (ThongKeSoKhachDTO thongke : ThongKeBUS.getSoKhachTheoNam(nam)) {
+				XYChart.Series<String, Number> series = new XYChart.Series<>();
+				series.getData().add(new XYChart.Data<>(thongke.getThang().toString(), thongke.getSoKhach()));
+				barChart.getData().add(series);
+			}
+			bpTK_LuongKhach.setCenter(barChart);
+		} catch (SQLException ex) {
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Thất bại");
+			alert.setHeaderText("Không thể xem báo cáo lượng khách!");
+			alert.setContentText("Lỗi database!");
+			alert.showAndWait();
+		}
+	}
+	
+	public void handleThongKeLoaiPhong(ActionEvent e) {
+		try {
+			CategoryAxis xAxis = new CategoryAxis();
+			xAxis.setLabel("Loại phòng");
+
+			NumberAxis yAxis = new NumberAxis();
+			yAxis.setLabel("Doanh thu");
+
+			BarChart<String, Number> barChart = new BarChart<>(xAxis, yAxis);
+			barChart.setStyle("-fx-font-size: 16px");
+
+			int thang = snTK_LoaiPhongThang.getValue();
+			int nam = snTK_LoaiPhongNam.getValue();
+			for (ThongKeLoaiPhongDTO thongke : ThongKeBUS.getLoaiPhongTheoThang(thang, nam)) {
+				XYChart.Series<String, Number> series = new XYChart.Series<>();
+				series.getData().add(new XYChart.Data<>(thongke.getLoaiPhong(), thongke.getDoanhThu()));
+				barChart.getData().add(series);
+			}
+			bpTK_LoaiPhong.setCenter(barChart);
+		} catch (SQLException ex) {
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Thất bại");
+			alert.setHeaderText("Không thể xem báo cáo loại phòng theo tháng!");
+			alert.setContentText("Lỗi database!");
+			alert.showAndWait();
+		}
+	}
+	
+	public void handleThongKeLoaiDichVu(ActionEvent e) {
+		try {
+			CategoryAxis xAxis = new CategoryAxis();
+			xAxis.setLabel("Loại Dịch vụ");
+
+			NumberAxis yAxis = new NumberAxis();
+			yAxis.setLabel("Doanh thu");
+
+			BarChart<String, Number> barChart = new BarChart<>(xAxis, yAxis);
+			barChart.setStyle("-fx-font-size: 16px");
+
+			int thang = snTK_LoaiDichVuThang.getValue();
+			int nam = snTK_LoaiDichVuNam.getValue();
+			for (ThongKeLoaiDichVuDTO thongke : ThongKeBUS.getLoaiDichVuTheoThang(thang, nam)) {
+				XYChart.Series<String, Number> series = new XYChart.Series<>();
+				series.getData().add(new XYChart.Data<>(thongke.getTenLoaiDichVu(), thongke.getDoanhThu()));
+				barChart.getData().add(series);
+			}
+			bpTK_LoaiDichVu.setCenter(barChart);
+		} catch (SQLException ex) {
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Thất bại");
+			alert.setHeaderText("Không thể xem báo cáo loại dịch vụ!");
 			alert.setContentText("Lỗi database!");
 			alert.showAndWait();
 		}
