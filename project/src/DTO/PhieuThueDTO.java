@@ -7,7 +7,7 @@ import helper.MoneyFormatHelper;
 
 public class PhieuThueDTO {
 	private Integer maPhieuThue;
-	private Integer maNhanVien;
+	private NhanVienDTO nhanVien;
 	private Date ngayLapPhieu;
 	private String tenKhachThue;
 	private String cmnd;
@@ -22,7 +22,7 @@ public class PhieuThueDTO {
 	}
 
 	public Integer getMaNhanVien() {
-		return maNhanVien;
+		return nhanVien.getMaNhanVien();
 	}
 
 	public Date getNgayLapValue() {
@@ -68,10 +68,14 @@ public class PhieuThueDTO {
 	public String getGhiChu() {
 		return ghiChu;
 	}
+	
+	public NhanVienDTO getNhanVien() {
+		return nhanVien;
+	}
 
-	public PhieuThueDTO(Integer maNhanVien, Date ngayLapPhieu, String tenKhachThue, String cmnd, String soDienThoai,
+	public PhieuThueDTO(NhanVienDTO nhanVien, Date ngayLapPhieu, String tenKhachThue, String cmnd, String soDienThoai,
 			String email, String ghiChu) {
-		this.maNhanVien = maNhanVien;
+		this.nhanVien = nhanVien;
 		this.ngayLapPhieu = ngayLapPhieu;
 		this.tenKhachThue = tenKhachThue;
 		this.cmnd = cmnd;
@@ -80,10 +84,10 @@ public class PhieuThueDTO {
 		this.ghiChu = ghiChu;
 	}
 
-	public PhieuThueDTO(Integer maPhieuThue, Integer maNhanVien, Date ngayLapPhieu, String tenKhachThue, String cmnd, String soDienThoai,
+	public PhieuThueDTO(Integer maPhieuThue, NhanVienDTO nhanVien, Date ngayLapPhieu, String tenKhachThue, String cmnd, String soDienThoai,
 			String email, Integer tongTienCoc, Boolean thanhToanCoc, String ghiChu) {
 		this.maPhieuThue = maPhieuThue;
-		this.maNhanVien = maNhanVien;
+		this.nhanVien = nhanVien;
 		this.ngayLapPhieu = ngayLapPhieu;
 		this.tenKhachThue = tenKhachThue;
 		this.cmnd = cmnd;
@@ -94,10 +98,10 @@ public class PhieuThueDTO {
 		this.ghiChu = ghiChu;
 	}
 	
-	public PhieuThueDTO(Integer maPhieuThue, Integer maNhanVien, Date ngayLapPhieu, String tenKhachThue, String cmnd, String soDienThoai,
+	public PhieuThueDTO(Integer maPhieuThue, NhanVienDTO nhanVien, Date ngayLapPhieu, String tenKhachThue, String cmnd, String soDienThoai,
 			String email, String ghiChu) {
 		this.maPhieuThue = maPhieuThue;
-		this.maNhanVien = maNhanVien;
+		this.nhanVien = nhanVien;
 		this.ngayLapPhieu = ngayLapPhieu;
 		this.tenKhachThue = tenKhachThue;
 		this.cmnd = cmnd;

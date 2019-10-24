@@ -16,6 +16,7 @@ CREATE TABLE `phong` (
   `MaPhong` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `MaLoaiPhong` int(11) NOT NULL,
   `MaTinhTrang` int(11) NOT NULL,
+  `MaPTPHienTai` int(11) DEFAULT NULL,
   `GhiChu` varchar(45) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
   PRIMARY KEY (`MaPhong`),
   KEY `fk_phong_loaiphong_idx` (`MaLoaiPhong`),
@@ -33,7 +34,7 @@ CREATE TABLE `nhanvien` (
   `SoDienThoai` varchar(45) NOT NULL,
   `Email` varchar(45) NOT NULL,
   `DiaChi` varchar(45) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `ChucVu` varchar(45) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `ChucVu` varchar(45) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
   PRIMARY KEY (`MaNhanVien`),
   UNIQUE KEY `TenTaiKhoan_UNIQUE` (`TenTaiKhoan`)
 ) ENGINE=InnoDB AUTO_INCREMENT=12001 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -58,7 +59,7 @@ CREATE TABLE `hoadon` (
 
 CREATE TABLE `pt_phong` (
   `MaPTPhong` int(11) NOT NULL AUTO_INCREMENT,
-  `MaPhieuThue` int(11) NOT NULL,
+  `MaPhieuThue` int(11) DEFAULT NULL,
   `MaPhong` varchar(10) NOT NULL,
   `LoaiPhongThue` varchar(45) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `SoKhachToiDa` int(11) NOT NULL,
@@ -69,8 +70,10 @@ CREATE TABLE `pt_phong` (
   `MaHoaDon` int(11) DEFAULT NULL,
   `ThanhTien` decimal(15,0) unsigned DEFAULT NULL,
   PRIMARY KEY (`MaPTPhong`),
-  KEY `fk_ptp_hd_idx` (`MaHoaDon`),
-  CONSTRAINT `fk_ptp_hd` FOREIGN KEY (`MaHoaDon`) REFERENCES `hoadon` (`MaHoaDon`)
+  KEY `fk_ptp_hd_idx` (`MaHoaDon`,`MaPhieuThue`),
+  KEY `fk_ptp_pt_idx` (`MaPhieuThue`),
+  CONSTRAINT `fk_ptp_hd` FOREIGN KEY (`MaHoaDon`) REFERENCES `hoadon` (`MaHoaDon`),
+  CONSTRAINT `fk_ptp_pt` FOREIGN KEY (`MaPhieuThue`) REFERENCES `phieuthue` (`MaPhieuThue`) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=14001 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 CREATE TABLE `khachhang` (
@@ -81,7 +84,6 @@ CREATE TABLE `khachhang` (
   `SoDienThoai` varchar(45) NOT NULL,
   `GioiTinh` varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `QuocTich` varchar(45) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `GhiChu` varchar(45) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
   PRIMARY KEY (`MaKhachHang`),
   KEY `fk_kh_ptp_idx` (`MaPTPhong`),
   CONSTRAINT `fk_kh_ptp` FOREIGN KEY (`MaPTPhong`) REFERENCES `pt_phong` (`MaPTPhong`)
@@ -96,6 +98,7 @@ CREATE TABLE `phieuthue` (
   `SoDienThoai` varchar(45) NOT NULL,
   `Email` varchar(45) NOT NULL,
   `ThanhToanCoc` tinyint(1) NOT NULL DEFAULT '0',
+  `TongTienCoc` decimal(15,0) unsigned NOT NULL DEFAULT '0',
   `GhiChu` varchar(45) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
   PRIMARY KEY (`MaPhieuThue`),
   KEY `fk_pt_nv_idx` (`MaNhanVien`),
@@ -120,7 +123,7 @@ CREATE TABLE `dichvu` (
   `MaDichVu` int(11) NOT NULL AUTO_INCREMENT,
   `TenDichVu` varchar(45) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `DonViTinh` varchar(45) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `SoLuongTon` int(10) unsigned NOT NULL,
+  `SoLuongTon` int(10) DEFAULT NULL,
   `DonGia` decimal(15,0) NOT NULL,
   `MaLoaiDichVu` int(11) NOT NULL,
   `MaNhaCungCap` int(11) DEFAULT NULL,
@@ -128,9 +131,9 @@ CREATE TABLE `dichvu` (
   PRIMARY KEY (`MaDichVu`),
   KEY `fk_dv_ldv_idx` (`MaLoaiDichVu`),
   KEY `fk_dv_ncc_idx` (`MaNhaCungCap`),
-  CONSTRAINT `fk_dv_ldv` FOREIGN KEY (`MaLoaiDichVu`) REFERENCES `loaidichvu` (`MaLoaiDichVu`),
+  CONSTRAINT `fk_dv_ldv` FOREIGN KEY (`MaLoaiDichVu`) REFERENCES `loaidichvu` (`MaLoaiDichVu`) ON DELETE RESTRICT,
   CONSTRAINT `fk_dv_ncc` FOREIGN KEY (`MaNhaCungCap`) REFERENCES `nhacungcap` (`MaNhaCungCap`) ON DELETE SET NULL
-) ENGINE=InnoDB AUTO_INCREMENT=19002 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=19001 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 CREATE TABLE `ptck_phong` (
   `MaPTCKPhong` int(11) NOT NULL AUTO_INCREMENT,
@@ -144,24 +147,25 @@ CREATE TABLE `ptck_phong` (
   CONSTRAINT `fk_ptck_ptp` FOREIGN KEY (`MaPTPhong`) REFERENCES `pt_phong` (`MaPTPhong`)
 ) ENGINE=InnoDB AUTO_INCREMENT=20001 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+CREATE TABLE `ptp_dv` (
+  `MaPTPDV` int(11) NOT NULL AUTO_INCREMENT,
+  `MaPTPhong` int(11) NOT NULL,
+  `MaDichVu` int(11) NOT NULL,
+  `SoLuong` int(10) unsigned NOT NULL,
+  `GiaDichVu` decimal(15,0) unsigned NOT NULL,
+  `ThanhTien` decimal(15,0) unsigned NOT NULL,
+  PRIMARY KEY (`MaPTPDV`)
+) ENGINE=InnoDB AUTO_INCREMENT=21001 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
 CREATE TABLE `ptck_hoadon` (
-  `MaPTCKHD` int(11) NOT NULL,
+  `MaPTCKHD` int(11) NOT NULL AUTO_INCREMENT,
   `MaHoaDon` int(11) NOT NULL,
   `NoiDung` varchar(45) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `TriGia` decimal(15,0) NOT NULL,
   PRIMARY KEY (`MaPTCKHD`),
   KEY `fk_ptck_hd_idx` (`MaHoaDon`),
   CONSTRAINT `fk_ptck_hd` FOREIGN KEY (`MaHoaDon`) REFERENCES `hoadon` (`MaHoaDon`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
-CREATE TABLE `ptp_dv` (
-  `MaPTPhong` int(11) NOT NULL,
-  `MaDichVu` int(11) NOT NULL,
-  `SoLuong` int(10) unsigned NOT NULL,
-  `GiaDichVu` decimal(15,0) unsigned NOT NULL,
-  `ThanhTien` decimal(15,0) unsigned NOT NULL,
-  PRIMARY KEY (`MaPTPhong`,`MaDichVu`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=22001 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 CREATE TABLE `thamso` (
   `TiLeTienCoc` float unsigned NOT NULL,
@@ -170,3 +174,4 @@ CREATE TABLE `thamso` (
   `PhuThuTraPhongTre` float unsigned NOT NULL,
   `SoNgayTraCoc` int(10) unsigned NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+

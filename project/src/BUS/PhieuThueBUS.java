@@ -26,6 +26,10 @@ public class PhieuThueBUS {
 		return PhieuThueDAO.getPhieuThueById(maPhieuThue);
 	}
 	
+	public static PhieuThueDTO getPhieuThueByMaPTP(Integer maPTPhong) throws SQLException {
+		return PhieuThueDAO.getPhieuThueByMaPTP(maPTPhong);
+	}
+	
 	public static boolean updatePhieuThue(PhieuThueDTO newPhieuThue) throws SQLException {
 		return PhieuThueDAO.updatePhieuThue(newPhieuThue);
 	}

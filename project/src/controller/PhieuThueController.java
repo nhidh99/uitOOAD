@@ -187,6 +187,7 @@ public class PhieuThueController {
 				Scene scene = lbPT_NgayLap.getScene();
 				MainController controller = (MainController) scene.getUserData();
 				controller.loadTablePhieuThue();
+				controller.loadTablePhong();
 			} else {
 				Alert alert = new Alert(AlertType.INFORMATION);
 				alert.setTitle("Thất bại");

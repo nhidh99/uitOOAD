@@ -10,6 +10,8 @@ import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 
+import BUS.NhanVienBUS;
+import DTO.NhanVienDTO;
 import DTO.PhieuThueDTO;
 import helper.DBHelper;
 
@@ -44,7 +46,8 @@ public class PhieuThueDAO {
 
 		List<PhieuThueDTO> output = new ArrayList<PhieuThueDTO>();
 		while (rs.next()) {
-			PhieuThueDTO pt = new PhieuThueDTO(rs.getInt("MaPhieuThue"), rs.getInt("MaNhanVien"),
+			NhanVienDTO nhanVien = NhanVienBUS.getNhanVienById(rs.getInt("MaNhanVien"));
+			PhieuThueDTO pt = new PhieuThueDTO(rs.getInt("MaPhieuThue"), nhanVien,
 					rs.getDate("NgayLapPhieu"), rs.getString("TenKhachThue"), rs.getString("CMND"),
 					rs.getString("SoDienThoai"), rs.getString("Email"), rs.getInt("TongTienCoc"),
 					rs.getBoolean("ThanhToanCoc"), rs.getString("GhiChu"));
@@ -81,7 +84,8 @@ public class PhieuThueDAO {
 		String query = "SELECT * FROM view_DSPhieuThue WHERE MaPhieuThue = " + maPhieuThue;
 		ResultSet rs = statement.executeQuery(query);
 		rs.next();
-		PhieuThueDTO output = new PhieuThueDTO(rs.getInt("MaPhieuThue"), rs.getInt("MaNhanVien"),
+		NhanVienDTO nhanVien = NhanVienBUS.getNhanVienById(rs.getInt("MaNhanVien"));
+		PhieuThueDTO output = new PhieuThueDTO(rs.getInt("MaPhieuThue"), nhanVien,
 				rs.getDate("NgayLapPhieu"), rs.getString("TenKhachThue"), rs.getString("CMND"),
 				rs.getString("SoDienThoai"), rs.getString("Email"), rs.getInt("TongTienCoc"),
 				rs.getBoolean("ThanhToanCoc"), rs.getString("GhiChu"));
@@ -115,5 +119,20 @@ public class PhieuThueDAO {
 		int records = statement.executeUpdate();
 		conn.close();
 		return records > 0;
+	}
+
+	public static PhieuThueDTO getPhieuThueByMaPTP(Integer maPTPhong) throws SQLException {
+		Connection conn = DBHelper.getConnection();
+		Statement statement = conn.createStatement();
+		String query = "SELECT * FROM PT_Phong PTP JOIN PhieuThue PT "
+				+ "ON PTP.MaPhieuThue = PT.MaPhieuThue "
+				+ "WHERE MaPTPhong = " + maPTPhong;
+		ResultSet rs = statement.executeQuery(query);
+		rs.next();
+		NhanVienDTO nhanVien = NhanVienBUS.getNhanVienById(rs.getInt("MaNhanVien"));
+		PhieuThueDTO output = new PhieuThueDTO(nhanVien, rs.getDate("NgayLapPhieu"), rs.getString("TenKhachThue"), rs.getString("CMND"), 
+				rs.getString("SoDienThoai"), rs.getString("Email"), rs.getString("GhiChu"));
+		conn.close();
+		return output;
 	}
 }

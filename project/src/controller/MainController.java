@@ -161,6 +161,24 @@ public class MainController implements Initializable {
 	@FXML
 	Label lbPhong_MaPhong;
 	@FXML
+	Label lbPhong_KhachThue;
+	@FXML
+	Label lbPhong_CMND;
+	@FXML
+	Label lbPhong_DienThoai;
+	@FXML
+	Label lbPhong_NhanVien;
+	@FXML
+	Label lbPhong_NgayLap;
+	@FXML
+	Label lbPhong_NgayNhan;
+	@FXML
+	Label lbPhong_NgayTra;
+	@FXML
+	Label lbPhong_DonGiaThue;
+	@FXML
+	Label lbPhong_TienCoc;	
+	@FXML
 	Label lbPhong_TinhTrang;
 	@FXML
 	Label lbPhong_KhachToiDa;
@@ -174,6 +192,8 @@ public class MainController implements Initializable {
 	Label lbPhong_MaPTP;
 	@FXML
 	Label lbPhong_TienDichVu;
+	@FXML
+	Label lbPhong_TienPTCK;
 
 	@FXML
 	Label lbTS_TiLeThueVAT;
@@ -682,6 +702,7 @@ public class MainController implements Initializable {
 							loadTablePTP_DV(maPTP);
 							loadTablePtpPTCK(maPTP);
 							loadTableKhach(maPTP);
+							loadTableChiTiet(maPTP);
 						} catch (SQLException e) {
 							Alert alert = new Alert(AlertType.INFORMATION);
 							alert.setTitle("Lỗi");
@@ -738,6 +759,10 @@ public class MainController implements Initializable {
 				dsDichVu.add(dv);
 			}
 			tvPtpDichVu.setItems(dsDichVu);
+
+			Integer tongTienDichVu = dsDichVu.stream().mapToInt(PtpDichVuDTO::getThanhTienValue).sum();
+			lbPhong_TienDichVu.setText(MoneyFormatHelper.format(tongTienDichVu, "VND"));
+
 		} catch (SQLException SQLException) {
 			Alert alert = new Alert(AlertType.INFORMATION);
 			alert.setTitle("Lỗi");
@@ -754,6 +779,9 @@ public class MainController implements Initializable {
 				dsPTCK.add(ptck);
 			}
 			tvPtpPTCK.setItems(dsPTCK);
+
+			Integer tongTienPTCK = dsPTCK.stream().mapToInt(PtpPtckDTO::getTriGiaValue).sum();
+			lbPhong_TienPTCK.setText(MoneyFormatHelper.format(tongTienPTCK, "VND"));
 		} catch (SQLException e) {
 			Alert alert = new Alert(AlertType.INFORMATION);
 			alert.setTitle("Lỗi");
@@ -774,6 +802,30 @@ public class MainController implements Initializable {
 			Alert alert = new Alert(AlertType.INFORMATION);
 			alert.setTitle("Lỗi");
 			alert.setHeaderText("Không thể tải danh sách khách trong phòng!");
+			alert.setContentText("Lỗi database!");
+			alert.showAndWait();
+		}
+	}
+	
+	public void loadTableChiTiet(Integer maPTP) {
+		try {
+			PTPhongDTO ptPhong = PTPhongBUS.getPTPhongById(maPTP);
+			PhieuThueDTO phieuThue = PhieuThueBUS.getPhieuThueByMaPTP(maPTP);
+			lbPhong_KhachThue.setText(phieuThue.getTenKhachThue());
+			lbPhong_CMND.setText(phieuThue.getCMND());
+			lbPhong_DienThoai.setText(phieuThue.getSoDienThoai());
+			lbPhong_NhanVien.setText(phieuThue.getNhanVien().getTenNhanVien());
+			lbPhong_NgayLap.setText(phieuThue.getNgayLap());
+			lbPhong_NgayNhan.setText(ptPhong.getNgayNhan());
+			lbPhong_NgayTra.setText(ptPhong.getNgayTra());
+			lbPhong_DonGiaThue.setText(ptPhong.getDonGiaThue() + " VND");
+			lbPhong_TienCoc.setText(ptPhong.getTienCoc() + " VND");
+		}
+		catch (SQLException ex) {
+			ex.printStackTrace();
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Lỗi");
+			alert.setHeaderText("Không thể tải danh sách chi tiết phòng!");
 			alert.setContentText("Lỗi database!");
 			alert.showAndWait();
 		}
@@ -1190,11 +1242,12 @@ public class MainController implements Initializable {
 
 	public void handleLapPhieuThue(ActionEvent e) {
 		if (ConfirmDialogHelper.confirm("Bạn đã chắc chắn các thông tin để lập phiếu?")) {
-			PhieuThueDTO phieuThue = new PhieuThueDTO(Integer.parseInt(lbNV_MaNhanVien.getText()),
-					DateFormatHelper.getDate(dpPT_NgayLap.getValue()), tfPT_KhachThue.getText(), tfPT_CMND.getText(),
-					tfPT_DienThoai.getText(), tfPT_Email.getText(), tfPT_GhiChu.getText());
-
 			try {
+				NhanVienDTO nhanVien = NhanVienBUS.getNhanVienById(Integer.parseInt(lbNV_MaNhanVien.getText()));
+				PhieuThueDTO phieuThue = new PhieuThueDTO(nhanVien, DateFormatHelper.getDate(dpPT_NgayLap.getValue()),
+						tfPT_KhachThue.getText(), tfPT_CMND.getText(), tfPT_DienThoai.getText(), tfPT_Email.getText(),
+						tfPT_GhiChu.getText());
+
 				if (PhieuThueBUS.insertPhieuThue(phieuThue)) {
 					Alert alert = new Alert(AlertType.INFORMATION);
 					alert.setTitle("Thành công");
@@ -1848,7 +1901,7 @@ public class MainController implements Initializable {
 
 			XYChart.Series<String, Number> series = new XYChart.Series<>();
 			series.setName("Lượng khách theo tháng trong năm " + nam);
-			
+
 			BarChart<String, Number> barChart = new BarChart<>(xAxis, yAxis);
 			barChart.setStyle("-fx-font-size: 16px");
 
@@ -1941,7 +1994,7 @@ public class MainController implements Initializable {
 			alert.showAndWait();
 		}
 	}
-	
+
 	public void handleSuaKhach(ActionEvent e) {
 		try {
 			String link = "/application/popupKhach.fxml";
@@ -1960,7 +2013,7 @@ public class MainController implements Initializable {
 			alert.showAndWait();
 		}
 	}
-	
+
 	public void handleXoaKhach(ActionEvent e) {
 		try {
 			KhachDTO khach = tvKhach.getSelectionModel().getSelectedItem();
