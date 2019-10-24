@@ -58,10 +58,22 @@ public class MainController implements Initializable {
 	Tab tabThongKe;
 	@FXML
 	Tab tabNhanVien;
+
 	@FXML
 	Tab tabNV_NhanVien;
 	@FXML
 	Tab tabNV_DanhMuc;
+
+	@FXML
+	Tab tabPhong_PhieuDangKy;
+	@FXML
+	Tab tabPhong_ThongTinThue;
+	@FXML
+	Tab tabPhong_KhachThue;
+	@FXML
+	Tab tabPhong_DichVu;
+	@FXML
+	Tab tabPhong_PTCK;
 
 	@FXML
 	TabPane tpNhanVien;
@@ -177,7 +189,7 @@ public class MainController implements Initializable {
 	@FXML
 	Label lbPhong_DonGiaThue;
 	@FXML
-	Label lbPhong_TienCoc;	
+	Label lbPhong_TienCoc;
 	@FXML
 	Label lbPhong_TinhTrang;
 	@FXML
@@ -320,6 +332,21 @@ public class MainController implements Initializable {
 	TableColumn<PTPhongDTO, String> tcPTP_TienCoc;
 
 	@FXML
+	TableView<PTPhongDTO> tvPhongPTP;
+	@FXML
+	TableColumn<PTPhongDTO, Integer> tcPhongPTP_STT;
+	@FXML
+	TableColumn<PTPhongDTO, Integer> tcPhongPTP_MaPTP;
+	@FXML
+	TableColumn<PTPhongDTO, String> tcPhongPTP_KhachThue;
+	@FXML
+	TableColumn<PTPhongDTO, String> tcPhongPTP_DienThoai;
+	@FXML
+	TableColumn<PTPhongDTO, String> tcPhongPTP_NgayNhan;
+	@FXML
+	TableColumn<PTPhongDTO, String> tcPhongPTP_NgayTra;
+
+	@FXML
 	TableView<NhanVienDTO> tvNhanVien;
 	@FXML
 	TableColumn<NhanVienDTO, Integer> tcNV_STT;
@@ -431,6 +458,7 @@ public class MainController implements Initializable {
 		initTableLoaiPhong();
 		initTableNhaCungCap();
 		initTableLoaiDichVu();
+		initTablePhongPTP();
 	}
 
 	private void loadTables() {
@@ -639,6 +667,16 @@ public class MainController implements Initializable {
 		tcNCC_SoDienThoai.setCellValueFactory(new PropertyValueFactory<>("soDienThoai"));
 	}
 
+	private void initTablePhongPTP() {
+		tcPhongPTP_STT.setCellValueFactory(
+				column -> new ReadOnlyObjectWrapper<Integer>(tvPhongPTP.getItems().indexOf(column.getValue()) + 1));
+		tcPhongPTP_MaPTP.setCellValueFactory(new PropertyValueFactory<>("maPTPhong"));
+		tcPhongPTP_KhachThue.setCellValueFactory(new PropertyValueFactory<>("khachThue"));
+		tcPhongPTP_DienThoai.setCellValueFactory(new PropertyValueFactory<>("dienThoai"));
+		tcPhongPTP_NgayNhan.setCellValueFactory(new PropertyValueFactory<>("ngayNhan"));
+		tcPhongPTP_NgayTra.setCellValueFactory(new PropertyValueFactory<>("ngayTra"));
+	}
+
 	public void loadComboboxes() {
 		try {
 			ObservableList<LoaiPhongDTO> dsLoaiPhong = FXCollections.observableArrayList();
@@ -688,10 +726,20 @@ public class MainController implements Initializable {
 				lbPhong_DonGia.setText(MoneyFormatHelper.format(phong.getLoaiPhong().getDonGiaValue(), "VND"));
 			}
 
+
 			private void updateControlsByTinhTrang(PhongDTO phong) {
+				ObservableList<Tab> tabs = tpPhong_ChiTiet.getTabs();
 				try {
 					if (phong.getTinhTrang().getTenTinhTrang().equals("Thuê")) {
-						tpPhong_ChiTiet.setVisible(true);
+						if (tabs.contains(tabPhong_PhieuDangKy)) {
+							tabs.remove(tabPhong_PhieuDangKy);
+						}
+						if (!tabs.contains(tabPhong_ThongTinThue)) {
+							tabs.add(tabPhong_ThongTinThue);
+							tabs.add(tabPhong_KhachThue);
+							tabs.add(tabPhong_DichVu);							
+							tabs.add(tabPhong_PTCK);							
+						}
 						btnPhong_DoiPhong.setDisable(false);
 						btnPhong_SuaPhong.setDisable(true);
 						btnPhong_XoaPhong.setDisable(true);
@@ -712,7 +760,16 @@ public class MainController implements Initializable {
 							e.printStackTrace();
 						}
 					} else {
-						tpPhong_ChiTiet.setVisible(false);
+						if (!tabs.contains(tabPhong_PhieuDangKy)) {
+							tabs.add(0, tabPhong_PhieuDangKy);
+						}
+						if (tabs.contains(tabPhong_ThongTinThue)) {
+							tabs.remove(tabPhong_ThongTinThue);
+							tabs.remove(tabPhong_KhachThue);
+							tabs.remove(tabPhong_DichVu);
+							tabs.remove(tabPhong_PTCK);
+						}
+						loadTablePhongPTP(phong.getMaPhong());
 						btnPhong_DoiPhong.setDisable(true);
 						btnPhong_SuaPhong.setDisable(false);
 						btnPhong_XoaPhong.setDisable(false);
@@ -755,9 +812,7 @@ public class MainController implements Initializable {
 	public void loadTablePTP_DV(Integer maPTP) {
 		try {
 			ObservableList<PtpDichVuDTO> dsDichVu = FXCollections.observableArrayList();
-			for (PtpDichVuDTO dv : PtpDichVuBUS.getDSDichVuByMaPTP(maPTP)) {
-				dsDichVu.add(dv);
-			}
+			PtpDichVuBUS.getDSDichVuByMaPTP(maPTP).stream().forEach(dv -> dsDichVu.add(dv));
 			tvPtpDichVu.setItems(dsDichVu);
 
 			Integer tongTienDichVu = dsDichVu.stream().mapToInt(PtpDichVuDTO::getThanhTienValue).sum();
@@ -775,9 +830,7 @@ public class MainController implements Initializable {
 	public void loadTablePtpPTCK(Integer maPTP) {
 		try {
 			ObservableList<PtpPtckDTO> dsPTCK = FXCollections.observableArrayList();
-			for (PtpPtckDTO ptck : PtpPtckBUS.getDSPtckByMaPTP(maPTP)) {
-				dsPTCK.add(ptck);
-			}
+			PtpPtckBUS.getDSPtckByMaPTP(maPTP).stream().forEach(ptck -> dsPTCK.add(ptck));
 			tvPtpPTCK.setItems(dsPTCK);
 
 			Integer tongTienPTCK = dsPTCK.stream().mapToInt(PtpPtckDTO::getTriGiaValue).sum();
@@ -794,9 +847,7 @@ public class MainController implements Initializable {
 	public void loadTableKhach(Integer maPTP) {
 		try {
 			ObservableList<KhachDTO> dsKhach = FXCollections.observableArrayList();
-			for (KhachDTO khach : KhachBUS.getDSKhachByMaPTP(maPTP)) {
-				dsKhach.add(khach);
-			}
+			KhachBUS.getDSKhachByMaPTP(maPTP).stream().forEach(khach -> dsKhach.add(khach));
 			tvKhach.setItems(dsKhach);
 		} catch (SQLException e) {
 			Alert alert = new Alert(AlertType.INFORMATION);
@@ -806,7 +857,7 @@ public class MainController implements Initializable {
 			alert.showAndWait();
 		}
 	}
-	
+
 	public void loadTableChiTiet(Integer maPTP) {
 		try {
 			PTPhongDTO ptPhong = PTPhongBUS.getPTPhongById(maPTP);
@@ -820,8 +871,22 @@ public class MainController implements Initializable {
 			lbPhong_NgayTra.setText(ptPhong.getNgayTra());
 			lbPhong_DonGiaThue.setText(ptPhong.getDonGiaThue() + " VND");
 			lbPhong_TienCoc.setText(ptPhong.getTienCoc() + " VND");
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Lỗi");
+			alert.setHeaderText("Không thể tải danh sách chi tiết phòng!");
+			alert.setContentText("Lỗi database!");
+			alert.showAndWait();
 		}
-		catch (SQLException ex) {
+	}
+
+	public void loadTablePhongPTP(String maPhong) {
+		try {
+			ObservableList<PTPhongDTO> dsPTPhong = FXCollections.observableArrayList();
+			PTPhongBUS.getDSPTPhongByMaPhong(maPhong).stream().forEach(ptp -> dsPTPhong.add(ptp));
+			tvPhongPTP.setItems(dsPTPhong);
+		} catch (SQLException ex) {
 			ex.printStackTrace();
 			Alert alert = new Alert(AlertType.INFORMATION);
 			alert.setTitle("Lỗi");
@@ -834,10 +899,9 @@ public class MainController implements Initializable {
 	public void loadTablePTPhong() {
 		try {
 			ObservableList<PTPhongDTO> dsPTPhong = FXCollections.observableArrayList();
-			for (PTPhongDTO ptp : PTPhongBUS.getDSPhongDangKy()) {
-				dsPTPhong.add(ptp);
-			}
+			PTPhongBUS.getDSPhongDangKy().stream().forEach(ptp -> dsPTPhong.add(ptp));
 			tvPTPhong.setItems(dsPTPhong);
+
 			lbPT_SoLuongPhong.setText(String.format("%d phòng (%d khách)", tvPTPhong.getItems().size(),
 					tvPTPhong.getItems().stream().mapToInt(PTPhongDTO::getSoKhachToiDa).sum()));
 			lbPT_TongCoc.setText(MoneyFormatHelper
@@ -854,9 +918,7 @@ public class MainController implements Initializable {
 	public void loadTablePhieuThue() {
 		try {
 			ObservableList<PhieuThueDTO> dsPhieuThue = FXCollections.observableArrayList();
-			for (PhieuThueDTO pt : PhieuThueBUS.getDSPhieuThue()) {
-				dsPhieuThue.add(pt);
-			}
+			PhieuThueBUS.getDSPhieuThue().stream().forEach(pt -> dsPhieuThue.add(pt));
 			tvPhieuThue.setItems(dsPhieuThue);
 		} catch (SQLException SQLException) {
 			Alert alert = new Alert(AlertType.INFORMATION);
@@ -870,9 +932,7 @@ public class MainController implements Initializable {
 	public void loadTableDichVu() {
 		try {
 			ObservableList<DichVuDTO> dsDichVu = FXCollections.observableArrayList();
-			for (DichVuDTO dv : DichVuBUS.getDSDichVu()) {
-				dsDichVu.add(dv);
-			}
+			DichVuBUS.getDSDichVu().stream().forEach(dv -> dsDichVu.add(dv));
 			tvDichVu.setItems(dsDichVu);
 		} catch (SQLException SQLException) {
 			Alert alert = new Alert(AlertType.INFORMATION);
@@ -886,9 +946,7 @@ public class MainController implements Initializable {
 	public void loadTableNhanVien() {
 		try {
 			ObservableList<NhanVienDTO> dsNhanVien = FXCollections.observableArrayList();
-			for (NhanVienDTO nv : NhanVienBUS.getDSNhanVien()) {
-				dsNhanVien.add(nv);
-			}
+			NhanVienBUS.getDSNhanVien().stream().forEach(nv -> dsNhanVien.add(nv));
 			tvNhanVien.setItems(dsNhanVien);
 		} catch (SQLException SQLException) {
 			Alert alert = new Alert(AlertType.INFORMATION);
@@ -902,9 +960,7 @@ public class MainController implements Initializable {
 	public void loadTableLoaiPhong() {
 		try {
 			ObservableList<LoaiPhongDTO> dsLoaiPhong = FXCollections.observableArrayList();
-			for (LoaiPhongDTO lp : LoaiPhongBUS.getDSLoaiPhong()) {
-				dsLoaiPhong.add(lp);
-			}
+			LoaiPhongBUS.getDSLoaiPhong().stream().forEach(lp -> dsLoaiPhong.add(lp));
 			tvLoaiPhong.setItems(dsLoaiPhong);
 		} catch (SQLException SQLException) {
 			Alert alert = new Alert(AlertType.INFORMATION);
@@ -918,9 +974,7 @@ public class MainController implements Initializable {
 	public void loadTableNhaCungCap() {
 		try {
 			ObservableList<NhaCungCapDTO> dsNhaCungCap = FXCollections.observableArrayList();
-			for (NhaCungCapDTO ncc : NhaCungCapBUS.getDSNhaCungCap()) {
-				dsNhaCungCap.add(ncc);
-			}
+			NhaCungCapBUS.getDSNhaCungCap().stream().forEach(ncc -> dsNhaCungCap.add(ncc));
 			tvNhaCungCap.setItems(dsNhaCungCap);
 		} catch (SQLException SQLException) {
 			Alert alert = new Alert(AlertType.INFORMATION);
@@ -934,9 +988,7 @@ public class MainController implements Initializable {
 	public void loadTableLoaiDichVu() {
 		try {
 			ObservableList<LoaiDichVuDTO> dsLoaiDichVu = FXCollections.observableArrayList();
-			for (LoaiDichVuDTO ldv : LoaiDichVuBUS.getDSLoaiDichVu()) {
-				dsLoaiDichVu.add(ldv);
-			}
+			LoaiDichVuBUS.getDSLoaiDichVu().stream().forEach(ldv -> dsLoaiDichVu.add(ldv));
 			tvLoaiDichVu.setItems(dsLoaiDichVu);
 		} catch (SQLException SQLException) {
 			Alert alert = new Alert(AlertType.INFORMATION);
@@ -1289,7 +1341,7 @@ public class MainController implements Initializable {
 
 			try {
 				if (tvPhieuThue.getItems().size() > 0) {
-					if (PTPhongBUS.deleteAllPhieuDangKy()) {
+					if (PTPhongBUS.deleteAllPTPhong()) {
 						tvPTPhong.getItems().clear();
 					} else {
 						Alert alert = new Alert(AlertType.INFORMATION);
@@ -1352,7 +1404,7 @@ public class MainController implements Initializable {
 		try {
 			PTPhongDTO ptp = tvPTPhong.getSelectionModel().getSelectedItem();
 			if (ConfirmDialogHelper.confirm("Xác nhận xoá phòng " + ptp.getMaPhong() + " khỏi phiếu thuê?")) {
-				if (PTPhongBUS.deletePhieuDangKy(ptp.getMaPTPhong())) {
+				if (PTPhongBUS.deletePTPhong(ptp.getMaPTPhong())) {
 					loadTablePTPhong();
 					Alert alert = new Alert(AlertType.INFORMATION);
 					alert.setTitle("Thành công");
@@ -1363,6 +1415,7 @@ public class MainController implements Initializable {
 					Alert alert = new Alert(AlertType.INFORMATION);
 					alert.setTitle("Lỗi");
 					alert.setHeaderText("Xoá phòng trong phiếu thuê thất bại!");
+					alert.setContentText("Không thể xoá phiếu thuê của phòng đang được thuê hoặc đã thanh toán");
 					alert.showAndWait();
 				}
 			}
@@ -2045,5 +2098,11 @@ public class MainController implements Initializable {
 			alert.setContentText("Vui lòng chọn khách cần xoá!");
 			alert.showAndWait();
 		}
+	}
+
+	public void handleTimKhach(ActionEvent e) {
+		String link = "/application/popupTimKhach.fxml";
+		Stage popUpStage = PopUpStageHelper.createPopUpStage(link, 590, 310);
+		popUpStage.showAndWait();
 	}
 }

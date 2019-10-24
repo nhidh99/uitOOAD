@@ -33,8 +33,8 @@ public class PTPhongDAO {
 
 	public static List<PTPhongDTO> getDSPhongDangKy() throws SQLException {
 		Connection conn = DBHelper.getConnection();
-		Statement statement = conn.createStatement();
 		String query = "SELECT * FROM PT_Phong WHERE MaPhieuThue IS NULL";
+		Statement statement = conn.createStatement();
 		ResultSet rs = statement.executeQuery(query);
 
 		List<PTPhongDTO> output = new ArrayList<PTPhongDTO>();
@@ -65,7 +65,7 @@ public class PTPhongDAO {
 		return output;
 	}
 
-	public static boolean deleteAllPhieuDangKy() throws SQLException {
+	public static boolean deleteAllPTPhong() throws SQLException {
 		Connection conn = DBHelper.getConnection();
 		Statement statement = conn.createStatement();
 		String query = "DELETE FROM PT_Phong WHERE MaPhieuThue IS NULL";
@@ -74,7 +74,7 @@ public class PTPhongDAO {
 		return true;
 	}
 
-	public static boolean deletePhieuDangKy(Integer maPTPhong) throws SQLException {
+	public static boolean deletePTPhong(Integer maPTPhong) throws SQLException {
 		Connection conn = DBHelper.getConnection();
 		Statement statement = conn.createStatement();
 		String query = "DELETE FROM PT_Phong WHERE MaPTPhong = " + maPTPhong;
@@ -92,6 +92,35 @@ public class PTPhongDAO {
 		PhongDTO phong = PhongDAO.getPhongById(rs.getString("MaPhong"));
 		PTPhongDTO output = new PTPhongDTO(rs.getInt("MaPTPhong"), phong, rs.getTimestamp("NgayNhan"),
 				rs.getTimestamp("NgayTra"), rs.getInt("TienCoc"));
+		conn.close();
+		return output;
+	}
+
+	public static List<PTPhongDTO> getDSPTPhongByMaPhong(String maPhong) throws SQLException {
+		Connection conn = DBHelper.getConnection();
+		String query = "SELECT * FROM view_dsptphong WHERE MaPhong = ?";
+		PreparedStatement statement = conn.prepareStatement(query);
+		statement.setString(1, maPhong);
+		ResultSet rs = statement.executeQuery();
+		List<PTPhongDTO> output = new ArrayList<PTPhongDTO>();
+		while (rs.next()) {
+			PhongDTO phong = PhongDAO.getPhongById(maPhong);
+			PTPhongDTO ptp = new PTPhongDTO(rs.getInt("MaPTPhong"), phong, rs.getTimestamp("NgayNhan"),
+					rs.getTimestamp("NgayTra"), rs.getInt("TienCoc"));
+			output.add(ptp);
+		}
+		conn.close();
+		return output;
+	}
+
+	public static boolean checkPTPhong(Integer maPTPhong) throws SQLException {
+		Connection conn = DBHelper.getConnection();
+		String query = "CALL check_PhieuThue(?)";
+		PreparedStatement statement = conn.prepareStatement(query);
+		statement.setInt(1, maPTPhong);
+		ResultSet rs = statement.executeQuery();
+		rs.next();
+		boolean output = rs.getBoolean(1);
 		conn.close();
 		return output;
 	}

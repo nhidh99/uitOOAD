@@ -20,15 +20,22 @@ public class PTPhongBUS {
 		return PTPhongDAO.getDSPTPhongByMaPhieu(maPhieuThue);
 	}
 
-	public static boolean deleteAllPhieuDangKy() throws SQLException {
-		return PTPhongDAO.deleteAllPhieuDangKy();
+	public static boolean deleteAllPTPhong() throws SQLException {
+		return PTPhongDAO.deleteAllPTPhong();
 	}
 	
-	public static boolean deletePhieuDangKy(Integer maPTPhong) throws SQLException {
-		return PTPhongDAO.deletePhieuDangKy(maPTPhong);
+	public static boolean deletePTPhong(Integer maPTPhong) throws SQLException {
+		if (PTPhongDAO.checkPTPhong(maPTPhong)) {
+			return PTPhongDAO.deletePTPhong(maPTPhong);
+		}
+		return false;
 	}
 
 	public static PTPhongDTO getPTPhongById(Integer maPTP) throws SQLException {
 		return PTPhongDAO.getPTPhongById(maPTP);
+	}
+	
+	public static List<PTPhongDTO> getDSPTPhongByMaPhong(String maPhong) throws SQLException {
+		return PTPhongDAO.getDSPTPhongByMaPhong(maPhong);
 	}
 }

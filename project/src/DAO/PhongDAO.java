@@ -123,8 +123,42 @@ public class PhongDAO {
 		statement.setInt(2, phong.getTinhTrang().getMaTinhTrang());
 		statement.setString(3, phong.getGhiChu());
 		statement.setString(4, phong.getMaPhong());
-		statement.execute();
+		int records = statement.executeUpdate();
 		conn.close();
-		return true;
+		return records > 0;
+	}
+
+	public static List<String> findPhongByTenKhach(String ten) throws SQLException {
+		Connection conn = DBHelper.getConnection();
+		String query = "SELECT DISTINCT MaPhong "
+				+ "FROM PT_Phong PTP JOIN KhachHang KH "
+				+ "ON PTP.MaPTPhong = KH.MaPTPhong "
+				+ "WHERE HoTen = ? ORDER BY MaPhong";
+		PreparedStatement statement = conn.prepareStatement(query);
+		statement.setString(1, ten);
+		ResultSet rs = statement.executeQuery();		
+		List<String> output = new ArrayList<String>();
+		while (rs.next()) {
+			output.add(rs.getString("MaPhong"));
+		}
+		conn.close();
+		return output;		
+	}
+	
+	public static List<String> findPhongByCMNDKhach(String CMND) throws SQLException {
+		Connection conn = DBHelper.getConnection();
+		String query = "SELECT DISTINCT MaPhong "
+				+ "FROM PT_Phong PTP JOIN KhachHang KH "
+				+ "ON PTP.MaPTPhong = KH.MaPTPhong "
+				+ "WHERE CMND = ? ORDER BY MaPhong";
+		PreparedStatement statement = conn.prepareStatement(query);
+		statement.setString(1, CMND);
+		ResultSet rs = statement.executeQuery();		
+		List<String> output = new ArrayList<String>();
+		while (rs.next()) {
+			output.add(rs.getString("MaPhong"));
+		}
+		conn.close();
+		return output;		
 	}
 }

@@ -38,4 +38,13 @@ public class PhongBUS {
 	public static boolean updatePhong(PhongDTO phong) throws SQLException {
 		return PhongDAO.updatePhong(phong);
 	}
+
+	public static List<String> findPhongByTenKhach(String ten) throws SQLException {
+		return PhongDAO.findPhongByTenKhach(ten);
+	}
+	
+	public static List<String> findPhongByCMNDKhach(String cmnd) throws SQLException {
+		return PhongDAO.findPhongByCMNDKhach(cmnd);
+	}
+
 }

@@ -1,9 +1,11 @@
 package DTO;
 
+import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.Date;
 
+import DAO.PhieuThueDAO;
 import helper.DateFormatHelper;
 import helper.MoneyFormatHelper;
 
@@ -29,6 +31,12 @@ public class PTPhongDTO {
 		this.ngayNhan = ngayNhan;
 		this.ngayTra = ngayTra;
 		this.tienCoc = tienCoc;
+
+		try {
+			this.phieuThue = PhieuThueDAO.getPhieuThueByMaPTP(maPTP);
+		} catch (SQLException ex) {
+			this.phieuThue = null;
+		}
 	}
 	
 	public PTPhongDTO(PhongDTO phong, Timestamp ngayNhan, Timestamp ngayTra, Integer tienCoc) {
@@ -107,5 +115,12 @@ public class PTPhongDTO {
 	public Integer getThanhTien() {
 		return thanhTien;
 	}
-
+	
+	public String getKhachThue() {
+		return phieuThue.getTenKhachThue();
+	}
+	
+	public String getDienThoai() {
+		return phieuThue.getSoDienThoai();
+	}
 }

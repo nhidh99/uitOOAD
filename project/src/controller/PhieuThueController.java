@@ -133,7 +133,7 @@ public class PhieuThueController {
 			}
 
 			if (confirm) {
-				if (PTPhongBUS.deletePhieuDangKy(ptp.getMaPTPhong())) {
+				if (PTPhongBUS.deletePTPhong(ptp.getMaPTPhong())) {
 					loadTablePTPhong();
 					Alert alert = new Alert(AlertType.INFORMATION);
 					alert.setTitle("Thành công");
@@ -153,6 +153,7 @@ public class PhieuThueController {
 					Alert alert = new Alert(AlertType.INFORMATION);
 					alert.setTitle("Lỗi");
 					alert.setHeaderText("Xoá phòng trong phiếu thuê thất bại!");
+					alert.setContentText("Không thể xoá phiếu thuê của phòng đang được thuê hoặc đã thanh toán");
 					alert.showAndWait();
 				}
 			}
