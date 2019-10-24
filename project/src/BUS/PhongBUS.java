@@ -47,4 +47,8 @@ public class PhongBUS {
 		return PhongDAO.findPhongByCMNDKhach(cmnd);
 	}
 
+	public static boolean updateNhanPhong(String maPhong, Integer maPTPhong) throws SQLException {
+		return PhongDAO.updateNhanPhong(maPhong, maPTPhong);
+	}
+
 }

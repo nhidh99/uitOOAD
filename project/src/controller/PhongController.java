@@ -214,7 +214,7 @@ public class PhongController implements Initializable {
 					alert.showAndWait();
 
 					MainController mainController = (MainController) tfMaPhong.getScene().getUserData();
-					mainController.loadTablePhong();
+					mainController.showChiTietPhong(phongMoi);
 					mainController.handleTraCuuPhong();
 					Stage stage = (Stage) tfMaPhong.getScene().getWindow();
 					stage.close();

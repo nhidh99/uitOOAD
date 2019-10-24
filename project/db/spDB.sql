@@ -18,6 +18,27 @@ END$$
 DELIMITER ;
 
 DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `check_PTPhong`(
+	IN check_MaPTPhong INT
+)
+BEGIN
+SELECT EXISTS (
+	SELECT * FROM PT_Phong PTP 
+	JOIN PhieuThue PT 
+	ON PTP.MaPhieuThue = PT.MaPhieuThue
+	WHERE MaPTPhong = check_MaPTPhong
+	AND MaHoaDon IS NULL
+    AND NOT EXISTS (
+		SELECT *
+        FROM Phong
+        WHERE MaPTPHienTai = PTP.MaPTPhong LIMIT 1) 
+        LIMIT 1
+);
+END$$
+DELIMITER ;
+
+
+DELIMITER $$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `del_DichVu`(
 	IN del_MaDichVu INT
 )

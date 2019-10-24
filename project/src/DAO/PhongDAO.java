@@ -8,7 +8,6 @@ import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
-
 import DTO.*;
 import helper.DBHelper;
 
@@ -16,7 +15,7 @@ public class PhongDAO {
 	public static List<PhongDTO> getDSPhong() throws SQLException {
 		Connection conn = DBHelper.getConnection();
 		Statement statement = conn.createStatement();
-		String query = "SELECT * FROM view_DSPhong";
+		String query = "SELECT * FROM view_DSPhong ORDER BY MaPhong";
 		ResultSet rs = statement.executeQuery(query);
 
 		List<PhongDTO> output = new ArrayList<PhongDTO>();
@@ -160,5 +159,16 @@ public class PhongDAO {
 		}
 		conn.close();
 		return output;		
+	}
+
+	public static boolean updateNhanPhong(String maPhong, Integer maPTPhong) throws SQLException {
+		Connection conn = DBHelper.getConnection();
+		String query = "UPDATE Phong SET MaPTPHienTai = ?, MaTinhTrang = 11001 WHERE MaPhong = ?";
+		PreparedStatement statement = conn.prepareStatement(query);
+		statement.setInt(1, maPTPhong);
+		statement.setString(2, maPhong);
+		int records = statement.executeUpdate();
+		conn.close();
+		return records > 0;
 	}
 }

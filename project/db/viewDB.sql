@@ -47,6 +47,28 @@ CREATE
     ALGORITHM = UNDEFINED 
     DEFINER = `root`@`localhost` 
     SQL SECURITY DEFINER
+VIEW `view_dsptphong` AS
+    SELECT 
+        `ptp`.`MaPTPhong` AS `MaPTPhong`,
+        `ptp`.`MaPhong` AS `MaPhong`,
+        `pt`.`TenKhachThue` AS `TenKhachThue`,
+        `pt`.`SoDienThoai` AS `SoDienThoai`,
+        `ptp`.`NgayNhan` AS `NgayNhan`,
+        `ptp`.`NgayTra` AS `NgayTra`,
+        `ptp`.`TienCoc` AS `TienCoc`
+    FROM
+        (`pt_phong` `ptp`
+        JOIN `phieuthue` `pt` ON ((`pt`.`MaPhieuThue` = `ptp`.`MaPhieuThue`)))
+    WHERE
+        ((`ptp`.`MaHoaDon` IS NULL)
+            AND (`pt`.`ThanhToanCoc` = TRUE))
+    ORDER BY `ptp`.`NgayNhan` DESC;
+
+
+CREATE 
+    ALGORITHM = UNDEFINED 
+    DEFINER = `root`@`localhost` 
+    SQL SECURITY DEFINER
 VIEW `view_tkdoanhthunam` AS
     SELECT 
         SUM(`hoadon`.`GiaTri`) AS `DoanhThu`,

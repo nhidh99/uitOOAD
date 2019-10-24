@@ -4,6 +4,7 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -24,7 +25,6 @@ import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -710,22 +710,21 @@ public class MainController implements Initializable {
 		}
 	}
 
+	public void showChiTietPhong(PhongDTO phong) {
+		lbPhong_MaPhong.setText(phong.getMaPhong());
+		lbPhong_TinhTrang.setText(phong.getTinhTrang().getTenTinhTrang());
+		lbPhong_KhachToiDa.setText(phong.getLoaiPhong().getSoKhachToiDa().toString());
+		lbPhong_LoaiPhong.setText(phong.getLoaiPhong().getTenLoaiPhong());
+		lbPhong_GhiChu.setText(phong.getGhiChu());
+		lbPhong_DonGia.setText(MoneyFormatHelper.format(phong.getLoaiPhong().getDonGiaValue(), "VND"));
+	}
+	
 	public void loadTablePhong() {
 		class RoomClickedHandler {
 			public void handleChiTietPhong(PhongDTO phong) {
 				showChiTietPhong(phong);
 				updateControlsByTinhTrang(phong);
 			}
-
-			private void showChiTietPhong(PhongDTO phong) {
-				lbPhong_MaPhong.setText(phong.getMaPhong());
-				lbPhong_TinhTrang.setText(phong.getTinhTrang().getTenTinhTrang());
-				lbPhong_KhachToiDa.setText(phong.getLoaiPhong().getSoKhachToiDa().toString());
-				lbPhong_LoaiPhong.setText(phong.getLoaiPhong().getTenLoaiPhong());
-				lbPhong_GhiChu.setText(phong.getGhiChu());
-				lbPhong_DonGia.setText(MoneyFormatHelper.format(phong.getLoaiPhong().getDonGiaValue(), "VND"));
-			}
-
 
 			private void updateControlsByTinhTrang(PhongDTO phong) {
 				ObservableList<Tab> tabs = tpPhong_ChiTiet.getTabs();
@@ -737,8 +736,8 @@ public class MainController implements Initializable {
 						if (!tabs.contains(tabPhong_ThongTinThue)) {
 							tabs.add(tabPhong_ThongTinThue);
 							tabs.add(tabPhong_KhachThue);
-							tabs.add(tabPhong_DichVu);							
-							tabs.add(tabPhong_PTCK);							
+							tabs.add(tabPhong_DichVu);
+							tabs.add(tabPhong_PTCK);
 						}
 						btnPhong_DoiPhong.setDisable(false);
 						btnPhong_SuaPhong.setDisable(true);
@@ -757,7 +756,6 @@ public class MainController implements Initializable {
 							alert.setHeaderText("Không thể tải danh sách dịch vụ của phiếu thuê phòng!");
 							alert.setContentText("Lỗi database!");
 							alert.showAndWait();
-							e.printStackTrace();
 						}
 					} else {
 						if (!tabs.contains(tabPhong_PhieuDangKy)) {
@@ -783,21 +781,29 @@ public class MainController implements Initializable {
 		RoomClickedHandler handler = new RoomClickedHandler();
 		try {
 			tpPhong.getChildren().clear();
-			List<PhongDTO> dsPhong = PhongBUS.getDSPhong();
-			ListRoomDetailPane listPanes = new ListRoomDetailPane(dsPhong);
-			for (RoomDetailPane pane : listPanes.getPanes()) {
-				pane.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-					@Override
-					public void handle(MouseEvent event) {
-						PhongDTO phong = pane.getPhong();
+			List<String> dsMaPhong = new ArrayList<String>();
+			PhongBUS.getDSPhong().stream().forEach(phong -> dsMaPhong.add(phong.getMaPhong()));
+
+			ListRoomDetailPane listPanes = new ListRoomDetailPane(dsMaPhong);
+			listPanes.getPanes().stream().forEach(pane -> {
+				pane.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {
+					try {
+						PhongDTO phong = PhongBUS.getPhongById(pane.getMaPhong());
 						handler.handleChiTietPhong(phong);
+					} catch (SQLException SQLException) {
+						Alert alert = new Alert(AlertType.INFORMATION);
+						alert.setTitle("Lỗi");
+						alert.setHeaderText("Không thể tải danh sách phòng khách sạn!");
+						alert.setContentText("Lỗi database!");
+						alert.showAndWait();
 					}
 				});
 				tpPhong.getChildren().add(pane);
-			}
+			});
 
 			if (!tpPhong.getChildren().isEmpty()) {
-				PhongDTO phong = listPanes.getPanes().get(0).getPhong();
+				String maPhong = listPanes.getPanes().get(0).getMaPhong();
+				PhongDTO phong = PhongBUS.getPhongById(maPhong);
 				handler.handleChiTietPhong(phong);
 			}
 		} catch (SQLException SQLException) {
@@ -863,6 +869,7 @@ public class MainController implements Initializable {
 			PTPhongDTO ptPhong = PTPhongBUS.getPTPhongById(maPTP);
 			PhieuThueDTO phieuThue = PhieuThueBUS.getPhieuThueByMaPTP(maPTP);
 			lbPhong_KhachThue.setText(phieuThue.getTenKhachThue());
+			lbPhong_TinhTrang.setText(ptPhong.getPhong().getTinhTrang().getTenTinhTrang());
 			lbPhong_CMND.setText(phieuThue.getCMND());
 			lbPhong_DienThoai.setText(phieuThue.getSoDienThoai());
 			lbPhong_NhanVien.setText(phieuThue.getNhanVien().getTenNhanVien());
@@ -885,6 +892,7 @@ public class MainController implements Initializable {
 		try {
 			ObservableList<PTPhongDTO> dsPTPhong = FXCollections.observableArrayList();
 			PTPhongBUS.getDSPTPhongByMaPhong(maPhong).stream().forEach(ptp -> dsPTPhong.add(ptp));
+			System.out.println(dsPTPhong.size());
 			tvPhongPTP.setItems(dsPTPhong);
 		} catch (SQLException ex) {
 			ex.printStackTrace();
@@ -1074,22 +1082,34 @@ public class MainController implements Initializable {
 		try {
 			tpTC_Phong.getChildren().clear();
 			Integer maLoaiPhong = cbbTC_LoaiPhong.getSelectionModel().getSelectedItem().getMaLoaiPhong();
-			List<PhongDTO> dsPhong = PhongBUS.getDSPhongCoTheThue(ngayNhan, ngayTra, maLoaiPhong);
-			ListRoomDetailPane listPanes = new ListRoomDetailPane(dsPhong);
+			List<String> dsMaPhong = new ArrayList<String>();
+			PhongBUS.getDSPhongCoTheThue(ngayNhan, ngayTra, maLoaiPhong).stream()
+					.forEach(phong -> dsMaPhong.add(phong.getMaPhong()));
 
+			ListRoomDetailPane listPanes = new ListRoomDetailPane(dsMaPhong);
 			for (RoomDetailPane pane : listPanes.getPanes()) {
 				pane.addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> {
-					PhongDTO phong = pane.getPhong();
-					lbTC_MaPhong.setText(phong.getMaPhong());
-					lbTC_KhachToiDa.setText(phong.getLoaiPhong().getSoKhachToiDa().toString() + " khách");
-					lbTC_GhiChu.setText(phong.getGhiChu());
+					try {
+						String maPhong = pane.getMaPhong();
+						PhongDTO phong = PhongBUS.getPhongById(maPhong);
+						lbTC_MaPhong.setText(phong.getMaPhong());
+						lbTC_KhachToiDa.setText(phong.getLoaiPhong().getSoKhachToiDa().toString() + " khách");
+						lbTC_GhiChu.setText(phong.getGhiChu());
+					} catch (SQLException SQLException) {
+						Alert alert = new Alert(AlertType.INFORMATION);
+						alert.setTitle("Lỗi");
+						alert.setHeaderText("Không thể tải danh sách phòng khách sạn!");
+						alert.setContentText("Lỗi database!");
+						alert.showAndWait();
+					}
 				});
 				tpTC_Phong.getChildren().add(pane);
 			}
 
-			if (dsPhong.size() > 0) {
+			if (dsMaPhong.size() > 0) {
 				bpTC_ThongTinPhong.setVisible(true);
-				PhongDTO phong = listPanes.getPanes().get(0).getPhong();
+				String maPhong = listPanes.getPanes().get(0).getMaPhong();
+				PhongDTO phong = PhongBUS.getPhongById(maPhong);
 				lbTC_MaPhong.setText(phong.getMaPhong());
 				lbTC_KhachToiDa.setText(phong.getLoaiPhong().getSoKhachToiDa().toString() + " khách");
 				lbTC_GhiChu.setText(phong.getGhiChu());
@@ -2104,5 +2124,38 @@ public class MainController implements Initializable {
 		String link = "/application/popupTimKhach.fxml";
 		Stage popUpStage = PopUpStageHelper.createPopUpStage(link, 590, 310);
 		popUpStage.showAndWait();
+	}
+
+	public void handleNhanPhong(ActionEvent e) {
+		try {
+			Integer maPTPhong = tvPhongPTP.getSelectionModel().getSelectedItem().getMaPTPhong();
+			String maPhong = lbPhong_MaPhong.getText();
+
+			if (PhongBUS.updateNhanPhong(maPhong, maPTPhong)) {
+				ObservableList<Tab> tabs = tpPhong_ChiTiet.getTabs();
+				tabs.remove(tabPhong_PhieuDangKy);
+				tabs.add(tabPhong_ThongTinThue);
+				tabs.add(tabPhong_KhachThue);
+				tabs.add(tabPhong_DichVu);
+				tabs.add(tabPhong_PTCK);
+
+				btnPhong_DoiPhong.setDisable(false);
+				btnPhong_SuaPhong.setDisable(true);
+				btnPhong_XoaPhong.setDisable(true);
+
+				Integer maPTP = PhongBUS.getMaPTP(lbPhong_MaPhong.getText());
+				lbPhong_MaPTP.setText(maPTP.toString());
+				loadTablePTP_DV(maPTP);
+				loadTablePtpPTCK(maPTP);
+				loadTableKhach(maPTP);
+				loadTableChiTiet(maPTP);
+			}
+		} catch (SQLException ex) {
+
+		}
+	}
+
+	public void handleHuyDatPhong(ActionEvent e) {
+
 	}
 }
