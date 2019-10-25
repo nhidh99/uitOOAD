@@ -24,9 +24,9 @@ public class PTPhongBUS {
 		return PTPhongDAO.deleteAllPTPhong();
 	}
 	
-	public static boolean deletePTPhong(Integer maPTPhong) throws SQLException {
-		if (PTPhongDAO.checkPTPhong(maPTPhong)) {
-			return PTPhongDAO.deletePTPhong(maPTPhong);
+	public static boolean deletePTPhong(PTPhongDTO ptPhong) throws SQLException {
+		if (PTPhongDAO.checkPTPhong(ptPhong)) {
+			return PTPhongDAO.deletePTPhong(ptPhong.getMaPTPhong());
 		}
 		return false;
 	}

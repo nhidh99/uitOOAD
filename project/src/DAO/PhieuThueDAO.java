@@ -102,9 +102,12 @@ public class PhieuThueDAO {
 		statement.setString(1, newPhieuThue.getTenKhachThue());
 		statement.setString(2, newPhieuThue.getCMND());
 		statement.setString(3, newPhieuThue.getEmail());
-		statement.setString(4, newPhieuThue.getSoDienThoai());
-		statement.setString(5, newPhieuThue.getGhiChu());
+		statement.setString(4, newPhieuThue.getSoDienThoai());		
 		statement.setInt(6, newPhieuThue.getMaPhieuThue());
+		if (newPhieuThue.getGhiChu().trim().isEmpty()) {
+			statement.setNull(5, Types.NVARCHAR);
+		}
+		else statement.setString(5, newPhieuThue.getGhiChu());
 		int records = statement.executeUpdate();
 		conn.close();
 		return records > 0;

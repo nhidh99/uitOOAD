@@ -133,7 +133,7 @@ public class PhieuThueController {
 			}
 
 			if (confirm) {
-				if (PTPhongBUS.deletePTPhong(ptp.getMaPTPhong())) {
+				if (PTPhongBUS.deletePTPhong(ptp)) {
 					loadTablePTPhong();
 					Alert alert = new Alert(AlertType.INFORMATION);
 					alert.setTitle("Thành công");

@@ -20,8 +20,9 @@ public class PTPhongDTO {
 	private Timestamp ngayTra;
 	private Integer tienCoc;
 	private Integer thanhTien;
-	
-	public PTPhongDTO(Integer maPTP, PhongDTO phong, Timestamp ngayNhan, Timestamp ngayTra, Integer tienCoc) {
+
+	public PTPhongDTO(Integer maPTP, PhongDTO phong, Timestamp ngayNhan, Timestamp ngayTra, Integer tienCoc,
+			Integer thanhTien) {
 		LoaiPhongDTO loaiPhong = phong.getLoaiPhong();
 		this.maPhieuThuePhong = maPTP;
 		this.phong = phong;
@@ -31,14 +32,14 @@ public class PTPhongDTO {
 		this.ngayNhan = ngayNhan;
 		this.ngayTra = ngayTra;
 		this.tienCoc = tienCoc;
-
+		this.thanhTien = thanhTien;
 		try {
 			this.phieuThue = PhieuThueDAO.getPhieuThueByMaPTP(maPTP);
 		} catch (SQLException ex) {
 			this.phieuThue = null;
 		}
 	}
-	
+
 	public PTPhongDTO(PhongDTO phong, Timestamp ngayNhan, Timestamp ngayTra, Integer tienCoc) {
 		LoaiPhongDTO loaiPhong = phong.getLoaiPhong();
 		this.phong = phong;
@@ -77,7 +78,7 @@ public class PTPhongDTO {
 	public String getDonGiaThue() {
 		return MoneyFormatHelper.format(donGiaThue);
 	}
-	
+
 	public Integer getDonGiaThueValue() {
 		return donGiaThue;
 	}
@@ -107,19 +108,23 @@ public class PTPhongDTO {
 	public String getTienCoc() {
 		return MoneyFormatHelper.format(tienCoc);
 	}
-	
+
 	public Integer getTienCocValue() {
 		return tienCoc;
 	}
+	
+	public String getThanhTien() {
+		return MoneyFormatHelper.format(thanhTien);
+	}
 
-	public Integer getThanhTien() {
+	public Integer getThanhTienValue() {
 		return thanhTien;
 	}
-	
+
 	public String getKhachThue() {
 		return phieuThue.getTenKhachThue();
 	}
-	
+
 	public String getDienThoai() {
 		return phieuThue.getSoDienThoai();
 	}

@@ -323,11 +323,11 @@
                                              <children>
                                                 <HBox alignment="CENTER" layoutY="63.0" spacing="20.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                    <children>
-                                                      <Button alignment="CENTER" mnemonicParsing="false" prefHeight="32.0" prefWidth="300.0" text="💸  THÊM VÀO HOÁ ĐƠN" textFill="#427921">
+                                                      <Button alignment="CENTER" mnemonicParsing="false" prefHeight="32.0" prefWidth="340.0" text="💸  THÊM VÀO HOÁ ĐƠN" textFill="#427921">
                                                          <font>
                                                             <Font name="System Bold" size="20.0" />
                                                          </font></Button>
-                                                      <Button alignment="CENTER" mnemonicParsing="false" prefHeight="32.0" prefWidth="300.0" text="⏰  GIA HẠN PHÒNG" textFill="PURPLE">
+                                                      <Button alignment="CENTER" mnemonicParsing="false" prefHeight="32.0" prefWidth="340.0" text="⏰  GIA HẠN PHÒNG" textFill="PURPLE">
                                                          <font>
                                                             <Font name="System Bold" size="20.0" />
                                                          </font></Button>
@@ -342,7 +342,7 @@
                                        <center>
                                           <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="TOP_CENTER">
                                              <children>
-                                                <GridPane alignment="TOP_CENTER" hgap="10.0" prefHeight="190.0" prefWidth="464.0" scaleShape="false" vgap="12.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0">
+                                                <GridPane alignment="TOP_CENTER" hgap="10.0" prefHeight="190.0" prefWidth="464.0" scaleShape="false" vgap="12.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="35.0">
                                                    <columnConstraints>
                                                       <ColumnConstraints halignment="RIGHT" hgrow="NEVER" maxWidth="28.00001220703126" minWidth="-Infinity" prefWidth="28.00001220703126" />
                                                       <ColumnConstraints halignment="LEFT" hgrow="NEVER" maxWidth="-Infinity" minWidth="-Infinity" />
@@ -1570,11 +1570,8 @@
                                              <center>
                                                 <TableView prefHeight="358.0" prefWidth="720.0">
                                                    <columns>
-                                                      <TableColumn prefWidth="75.0" text="STT" />
                                                       <TableColumn prefWidth="75.0" text="Số phòng" />
-                                                      <TableColumn prefWidth="122.39994812011719" text="Tiền phòng" visible="false" />
-                                                      <TableColumn prefWidth="122.39994812011719" text="Tiền dịch vụ" visible="false" />
-                                                      <TableColumn prefWidth="122.39994812011719" text="Tiền PTCK" visible="false" />
+                                                      <TableColumn prefWidth="122.39994812011719" text="Tiền cọc" visible="false" />
                                                       <TableColumn prefWidth="122.39994812011719" text="Thành tiền" />
                                                    </columns>
                                                    <columnResizePolicy>
@@ -1631,7 +1628,6 @@
                                              <center>
                                                 <TableView prefHeight="319.0" prefWidth="422.0">
                                                   <columns>
-                                                    <TableColumn prefWidth="75.0" text="STT" />
                                                     <TableColumn prefWidth="75.0" text="Nội dung" />
                                                       <TableColumn prefWidth="75.0" text="Trị giá" />
                                                   </columns>
@@ -1726,11 +1722,11 @@
                                                          <font>
                                                             <Font size="20.0" />
                                                          </font></Label>
-                                                      <Label text="Tiền dịch vụ:" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                                      <Label text="Tiền PTCK:" GridPane.columnIndex="1" GridPane.rowIndex="2">
                                                          <font>
                                                             <Font name="System Bold" size="20.0" />
                                                          </font></Label>
-                                                      <Label text="Tiền PT/CK:" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                                      <Label text="Tiền cọc:" GridPane.columnIndex="1" GridPane.rowIndex="3">
                                                          <font>
                                                             <Font name="System Bold" size="20.0" />
                                                          </font></Label>
@@ -1738,7 +1734,7 @@
                                                          <font>
                                                             <Font size="20.0" />
                                                          </font></Label>
-                                                      <Label text="Tổng tiền:" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                                                      <Label text="Tạm tính:" GridPane.columnIndex="1" GridPane.rowIndex="4">
                                                          <font>
                                                             <Font name="System Bold" size="20.0" />
                                                          </font></Label>
