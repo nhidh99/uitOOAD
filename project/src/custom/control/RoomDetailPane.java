@@ -18,15 +18,15 @@ public class RoomDetailPane extends BorderPane {
 		File file = new File("src/application/room.png");	
 		ImageView imgView = new ImageView();
 		imgView.setImage(new Image(file.toURI().toString()));
-		imgView.setFitWidth(80);
-		imgView.setFitHeight(80);
+		imgView.setFitWidth(75);
+		imgView.setFitHeight(75);
 		
-		Label label = new Label("PHÒNG " + phong.getMaPhong());
+		Label label = new Label("P." + phong.getMaPhong());
 		label.setMaxWidth(Double.MAX_VALUE);
 		label.setAlignment(Pos.CENTER);
 		label.setStyle(
 				"-fx-padding: 10 0 0 0;"
-				+ "-fx-font-size: 14px;"
+				+ "-fx-font-size: 18px;"
 				+ "-fx-font-weight: bold;");
 		
 		this.phong = phong;

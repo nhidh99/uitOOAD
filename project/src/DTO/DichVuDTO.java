@@ -10,7 +10,7 @@ public class DichVuDTO {
 	private Integer donGia;
 	private LoaiDichVuDTO loaiDichVu;
 	private NhaCungCapDTO nhaCungCap;
-		
+	
 	public String getTenDichVu() {
 		return tenDichVu;
 	}
@@ -26,11 +26,11 @@ public class DichVuDTO {
 	public String getDonGia() {
 		return MoneyFormatHelper.format(donGia);
 	}
-		
+	
 	public Integer getDonGiaValue() {
 		return donGia;
 	}
-
+	
 	public String getTenLoaiDichVu() {
 		return loaiDichVu.getTenLoaiDichVu();
 	}
@@ -42,9 +42,13 @@ public class DichVuDTO {
 	public Integer getMaLoaiDichVu() {
 		return loaiDichVu.getMaLoaiDichVu();
 	}
-
+	
 	public Integer getMaNhaCungCap() {
 		return nhaCungCap.getMaNhaCungCap();
+	}
+	
+	public String getTenNhaCungCap() {
+		return nhaCungCap.getTenNhaCungCap();
 	}
 	
 	public DichVuDTO(Integer maDichVu, String tenDichVu, String donViTinh, Integer soLuongTon, 
@@ -66,12 +70,5 @@ public class DichVuDTO {
 		this.donGia = donGia;
 		this.loaiDichVu = loaiDichVu;
 		this.nhaCungCap = nhaCungCap;
-	}
-
-	public DichVuDTO(String tenDichVu, String donViTinh, Integer soLuongTon, Integer donGia) {
-		this.tenDichVu = tenDichVu;
-		this.donViTinh = donViTinh;
-		this.soLuongTon = soLuongTon;
-		this.donGia = donGia;
 	}
 }

@@ -28,18 +28,6 @@ public class LoaiDichVuDAO {
 		return output;
 	}
 
-	public static boolean checkLoaiDichVu(Integer maLoaiDichVu) throws SQLException {
-		Connection conn = DBHelper.getConnection();
-		String query = "SELECT EXISTS (SELECT 1 FROM DichVu WHERE MaLoaiDichVu = ? LIMIT 1)";
-		PreparedStatement statement = conn.prepareStatement(query);
-		statement.setInt(1, maLoaiDichVu);
-		ResultSet rs = statement.executeQuery();
-		rs.next();
-		boolean isExist = rs.getBoolean(1);
-		conn.close();
-		return isExist;
-	}
-
 	public static boolean deleteLoaiDichVu(Integer maLoaiDichVu) throws SQLException {
 		Connection conn = DBHelper.getConnection();
 		String query = "CALL del_LoaiDichVu(?)";
@@ -59,5 +47,38 @@ public class LoaiDichVuDAO {
 		LoaiDichVuDTO output = new LoaiDichVuDTO(maLoaiDichVu, rs.getString("TenLoaiDichVu"));
 		conn.close();
 		return output;
+	}
+
+	public static boolean checkLoaiDichVu(String tenLoaiDichVu) throws SQLException {
+		Connection conn = DBHelper.getConnection();
+		String query = "SELECT EXISTS (SELECT 1 FROM LoaiDichVu WHERE TenLoaiDichVu = ? LIMIT 1)";
+		PreparedStatement statement = conn.prepareStatement(query);
+		statement.setString(1, tenLoaiDichVu);
+		ResultSet rs = statement.executeQuery();
+		rs.next();
+		boolean isExist = rs.getBoolean(1);
+		conn.close();
+		return isExist;
+	}
+	
+	public static boolean insertLoaiDichVu(LoaiDichVuDTO loaiDichVu) throws SQLException {
+		Connection conn = DBHelper.getConnection();
+		String query = "INSERT INTO LoaiDichVu (TenLoaiDichVu) VALUES (?)";
+		PreparedStatement statement = conn.prepareStatement(query);
+		statement.setString(1, loaiDichVu.getTenLoaiDichVu());
+		int records = statement.executeUpdate();
+		conn.close();
+		return records > 0;
+	}
+
+	public static boolean updateLoaiDichVu(LoaiDichVuDTO loaiDichVu) throws SQLException {
+		Connection conn = DBHelper.getConnection();
+		String query = "UPDATE LoaiDichVu SET TenLoaiDichVu = ? WHERE MaLoaiDichVu = ?";
+		PreparedStatement statement = conn.prepareStatement(query);
+		statement.setString(1, loaiDichVu.getTenLoaiDichVu());
+		statement.setInt(2, loaiDichVu.getMaLoaiDichVu());
+		int records = statement.executeUpdate();
+		conn.close();
+		return records > 0;
 	}
 }

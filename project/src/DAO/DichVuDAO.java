@@ -17,11 +17,7 @@ public class DichVuDAO {
 	public static List<DichVuDTO> getDSDichVu() throws SQLException {
 		Connection conn = DBHelper.getConnection();
 		Statement statement = conn.createStatement();
-		String query = 
-				"SELECT * from DichVu "
-				+ "JOIN LoaiDichVu "
-				+ "ON DichVu.MaLoaiDichVu = LoaiDichVu.MaLoaiDichVu	"
-				+ "WHERE DichVu.KhaDung = true";
+		String query = "SELECT * from DichVu WHERE KhaDung = true";
 		ResultSet rs = statement.executeQuery(query);
 		
 		List<DichVuDTO> output = new ArrayList<DichVuDTO>();
@@ -87,5 +83,25 @@ public class DichVuDAO {
 		int output = statement.executeUpdate();
 		conn.close();
 		return output > 0;
+	}
+
+	public static DichVuDTO getDichVuById(int maDichVu) throws SQLException {
+		Connection conn = DBHelper.getConnection();
+		String query = "SELECT * FROM DichVu WHERE MaDichVu = ?";
+		PreparedStatement statement = conn.prepareStatement(query);
+		statement.setInt(1, maDichVu);
+		ResultSet rs = statement.executeQuery();
+		rs.next();
+
+		LoaiDichVuDTO loaiDichVu = LoaiDichVuBUS.getLoaiDichVuById(rs.getInt("MaLoaiDichVu"));
+		NhaCungCapDTO nhaCungCap = NhaCungCapBUS.getNhaCungCapById(rs.getInt("MaNhaCungCap"));
+		DichVuDTO output = new DichVuDTO(rs.getInt("MaDichVu"), 
+				rs.getString("TenDichVu"), 
+				rs.getString("DonViTinh"), 
+				rs.getInt("SoLuongTon"), 
+				rs.getInt("DonGia"),
+				loaiDichVu, nhaCungCap);
+		conn.close();
+		return output;
 	}
 }

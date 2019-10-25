@@ -11,9 +11,17 @@ public class LoaiPhongBUS {
 	}
 
 	public static boolean deleteLoaiPhong(Integer maLoaiPhong) throws SQLException {
-		if (LoaiPhongDAO.checkLoaiPhong(maLoaiPhong)) {
+		return LoaiPhongDAO.deleteLoaiPhong(maLoaiPhong);
+	}
+
+	public static boolean insertLoaiPhong(LoaiPhongDTO loaiPhong) throws SQLException {
+		if (LoaiPhongDAO.checkLoaiPhong(loaiPhong.getTenLoaiPhong())) {
 			return false;
 		}
-		return LoaiPhongDAO.deleteLoaiPhong(maLoaiPhong);
+		return LoaiPhongDAO.insertLoaiPhong(loaiPhong);
+	}
+
+	public static boolean updateLoaiPhong(LoaiPhongDTO loaiPhong) throws SQLException {
+		return LoaiPhongDAO.updateLoaiPhong(loaiPhong);
 	}
 }

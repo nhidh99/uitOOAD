@@ -61,6 +61,5 @@ public class DangNhapController implements Initializable {
 		mainStage = PopUpStageHelper.createPopUpStage("/application/main.fxml", 1280, 800);
 		FXMLLoader loader = (FXMLLoader) mainStage.getUserData();
 		mainController = loader.getController();
-		
 	}
 }

@@ -59,4 +59,16 @@ public class NhanVienDTO {
 		this.taiKhoan = taiKhoan;
 		this.matKhau = matKhau;
 	}
+
+	public NhanVienDTO(String tenNhanVien, String cmnd, String diaChi, String email, 
+			String soDienThoai, String chucVu, String taiKhoan, String matKhau) {
+		this.tenNhanVien = tenNhanVien;
+		this.cmnd = cmnd;
+		this.diaChi = diaChi;
+		this.email = email;
+		this.soDienThoai = soDienThoai;
+		this.chucVu = chucVu;
+		this.taiKhoan = taiKhoan;
+		this.matKhau = matKhau;
+	}
 }
