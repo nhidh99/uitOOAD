@@ -55,15 +55,15 @@ VIEW `view_dsptphong` AS
         `pt`.`SoDienThoai` AS `SoDienThoai`,
         `ptp`.`NgayNhan` AS `NgayNhan`,
         `ptp`.`NgayTra` AS `NgayTra`,
-        `ptp`.`TienCoc` AS `TienCoc`
+        `ptp`.`TienCoc` AS `TienCoc`,
+        `ptp`.`ThanhTien` AS `ThanhTien`
     FROM
         (`pt_phong` `ptp`
         JOIN `phieuthue` `pt` ON ((`pt`.`MaPhieuThue` = `ptp`.`MaPhieuThue`)))
     WHERE
         ((`ptp`.`MaHoaDon` IS NULL)
             AND (`pt`.`ThanhToanCoc` = TRUE))
-    ORDER BY `ptp`.`NgayNhan` DESC;
-
+    ORDER BY `ptp`.`NgayNhan` DESC
 
 CREATE 
     ALGORITHM = UNDEFINED 

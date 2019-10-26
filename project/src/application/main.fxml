@@ -323,7 +323,7 @@
                                              <children>
                                                 <HBox alignment="CENTER" layoutY="63.0" spacing="20.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                    <children>
-                                                      <Button alignment="CENTER" mnemonicParsing="false" prefHeight="32.0" prefWidth="340.0" text="💸  THÊM VÀO HOÁ ĐƠN" textFill="#427921">
+                                                      <Button alignment="CENTER" mnemonicParsing="false" onAction="#handleThemVaoHoaDon" prefHeight="32.0" prefWidth="340.0" text="💸  THÊM VÀO HOÁ ĐƠN" textFill="#427921">
                                                          <font>
                                                             <Font name="System Bold" size="20.0" />
                                                          </font></Button>
@@ -1525,7 +1525,7 @@
                                                    <font>
                                                       <Font name="System Bold" size="20.0" />
                                                    </font></Label>
-                                                <Label text="0 phòng" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                                                <Label fx:id="lbHD_SoLuong" text="0 phòng" GridPane.columnIndex="2" GridPane.rowIndex="1">
                                                    <font>
                                                       <Font size="20.0" />
                                                    </font></Label>
@@ -1568,11 +1568,12 @@
                                        <children>
                                           <BorderPane prefHeight="313.0" prefWidth="380.0">
                                              <center>
-                                                <TableView prefHeight="358.0" prefWidth="720.0">
+                                                <TableView fx:id="tvHDPhong" prefHeight="358.0" prefWidth="720.0">
                                                    <columns>
-                                                      <TableColumn prefWidth="75.0" text="Số phòng" />
-                                                      <TableColumn prefWidth="122.39994812011719" text="Tiền cọc" visible="false" />
-                                                      <TableColumn prefWidth="122.39994812011719" text="Thành tiền" />
+                                                      <TableColumn fx:id="tcHD_SoPhong" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Mã phòng" />
+                                                      <TableColumn fx:id="tcHD_TienCoc" prefWidth="122.39994812011719" text="Tiền cọc" visible="false" />
+                                                      <TableColumn fx:id="tcHD_ThanhTienValue" prefWidth="122.39994812011719" text="Tiền cọc" visible="false" />
+                                                      <TableColumn fx:id="tcHD_ThanhTien" prefWidth="122.39994812011719" style="-fx-alignment: CENTER;" text="Thành tiền" />
                                                    </columns>
                                                    <columnResizePolicy>
                                                       <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -1589,7 +1590,7 @@
                                                          <font>
                                                             <Font name="System Bold" size="20.0" />
                                                          </font></Button>
-                                                      <Button alignment="CENTER" mnemonicParsing="false" prefWidth="165.0" text="🗑 XOÁ" textFill="BROWN">
+                                                      <Button alignment="CENTER" mnemonicParsing="false" onAction="#handleXoaHoaDonPhong" prefWidth="165.0" text="🗑 XOÁ" textFill="BROWN">
                                                          <font>
                                                             <Font name="System Bold" size="20.0" />
                                                          </font></Button>
@@ -1722,11 +1723,11 @@
                                                          <font>
                                                             <Font size="20.0" />
                                                          </font></Label>
-                                                      <Label text="Tiền PTCK:" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                                      <Label text="Tiền cọc:" GridPane.columnIndex="1" GridPane.rowIndex="2">
                                                          <font>
                                                             <Font name="System Bold" size="20.0" />
                                                          </font></Label>
-                                                      <Label text="Tiền cọc:" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                                      <Label text="Tiền PTCK:" GridPane.columnIndex="1" GridPane.rowIndex="3">
                                                          <font>
                                                             <Font name="System Bold" size="20.0" />
                                                          </font></Label>
@@ -1738,19 +1739,19 @@
                                                          <font>
                                                             <Font name="System Bold" size="20.0" />
                                                          </font></Label>
-                                                      <Label text="900,000" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                                                      <Label fx:id="lbHD_TienPhong" text="0" GridPane.columnIndex="2" GridPane.rowIndex="1">
                                                          <font>
                                                             <Font size="20.0" />
                                                          </font></Label>
-                                                      <Label text="500,000" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                                                      <Label fx:id="lbHD_TienCoc" text="0" GridPane.columnIndex="2" GridPane.rowIndex="2">
                                                          <font>
                                                             <Font size="20.0" />
                                                          </font></Label>
-                                                      <Label text="-200,000" GridPane.columnIndex="2" GridPane.rowIndex="3">
+                                                      <Label text="0" GridPane.columnIndex="2" GridPane.rowIndex="3">
                                                          <font>
                                                             <Font size="20.0" />
                                                          </font></Label>
-                                                      <Label text="900,000" GridPane.columnIndex="2" GridPane.rowIndex="4">
+                                                      <Label text="0" GridPane.columnIndex="2" GridPane.rowIndex="4">
                                                          <font>
                                                             <Font size="20.0" />
                                                          </font></Label>

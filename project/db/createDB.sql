@@ -57,6 +57,22 @@ CREATE TABLE `hoadon` (
   CONSTRAINT `fk_hd_nv` FOREIGN KEY (`MaNhanVien`) REFERENCES `nhanvien` (`MaNhanVien`)
 ) ENGINE=InnoDB AUTO_INCREMENT=13001 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+CREATE TABLE `phieuthue` (
+  `MaPhieuThue` int(11) NOT NULL AUTO_INCREMENT,
+  `MaNhanVien` int(11) NOT NULL,
+  `NgayLapPhieu` date NOT NULL,
+  `TenKhachThue` varchar(45) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `CMND` varchar(45) NOT NULL,
+  `SoDienThoai` varchar(45) NOT NULL,
+  `Email` varchar(45) NOT NULL,
+  `ThanhToanCoc` tinyint(1) NOT NULL DEFAULT '0',
+  `TongTienCoc` decimal(15,0) unsigned NOT NULL DEFAULT '0',
+  `GhiChu` varchar(45) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  PRIMARY KEY (`MaPhieuThue`),
+  KEY `fk_pt_nv_idx` (`MaNhanVien`),
+  CONSTRAINT `fk_pt_nv` FOREIGN KEY (`MaNhanVien`) REFERENCES `nhanvien` (`MaNhanVien`)
+) ENGINE=InnoDB AUTO_INCREMENT=16001 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
 CREATE TABLE `pt_phong` (
   `MaPTPhong` int(11) NOT NULL AUTO_INCREMENT,
   `MaPhieuThue` int(11) DEFAULT NULL,
@@ -88,22 +104,6 @@ CREATE TABLE `khachhang` (
   KEY `fk_kh_ptp_idx` (`MaPTPhong`),
   CONSTRAINT `fk_kh_ptp` FOREIGN KEY (`MaPTPhong`) REFERENCES `pt_phong` (`MaPTPhong`)
 ) ENGINE=InnoDB AUTO_INCREMENT=15001 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
-CREATE TABLE `phieuthue` (
-  `MaPhieuThue` int(11) NOT NULL AUTO_INCREMENT,
-  `MaNhanVien` int(11) NOT NULL,
-  `NgayLapPhieu` date NOT NULL,
-  `TenKhachThue` varchar(45) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `CMND` varchar(45) NOT NULL,
-  `SoDienThoai` varchar(45) NOT NULL,
-  `Email` varchar(45) NOT NULL,
-  `ThanhToanCoc` tinyint(1) NOT NULL DEFAULT '0',
-  `TongTienCoc` decimal(15,0) unsigned NOT NULL DEFAULT '0',
-  `GhiChu` varchar(45) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  PRIMARY KEY (`MaPhieuThue`),
-  KEY `fk_pt_nv_idx` (`MaNhanVien`),
-  CONSTRAINT `fk_pt_nv` FOREIGN KEY (`MaNhanVien`) REFERENCES `nhanvien` (`MaNhanVien`)
-) ENGINE=InnoDB AUTO_INCREMENT=16001 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 CREATE TABLE `loaidichvu` (
   `MaLoaiDichVu` int(11) NOT NULL AUTO_INCREMENT,

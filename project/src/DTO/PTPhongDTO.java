@@ -112,7 +112,7 @@ public class PTPhongDTO {
 	public Integer getTienCocValue() {
 		return tienCoc;
 	}
-	
+
 	public String getThanhTien() {
 		return MoneyFormatHelper.format(thanhTien);
 	}
