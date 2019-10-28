@@ -19,24 +19,24 @@ DELIMITER ;
 
 DELIMITER $$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `check_PTPhong`(
-	IN check_MaPTPhong INT
+	IN check_MaPTPhong INT,
+    IN check_MaPhong VARCHAR(15)
 )
 BEGIN
 SELECT EXISTS (
 	SELECT * FROM PT_Phong PTP 
-	JOIN PhieuThue PT 
+	LEFT JOIN PhieuThue PT 
 	ON PTP.MaPhieuThue = PT.MaPhieuThue
 	WHERE MaPTPhong = check_MaPTPhong
+    AND MaPhong = check_MaPhong
 	AND MaHoaDon IS NULL
-    AND NOT EXISTS (
+	AND NOT EXISTS (
 		SELECT *
-        FROM Phong
-        WHERE MaPTPHienTai = PTP.MaPTPhong LIMIT 1) 
-        LIMIT 1
+		FROM Phong P
+		WHERE P.MaPTPHienTai = check_MaPTPhong LIMIT 1)
 );
 END$$
 DELIMITER ;
-
 
 DELIMITER $$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `del_DichVu`(
@@ -138,11 +138,14 @@ BEGIN
 		SELECT *
 		FROM PT_Phong PTP
 		WHERE PTP.MaPhong = P.MaPhong
+        AND MaHoaDon IS NULL
 	) OR NOT EXISTS (
 		SELECT *
         FROM PT_Phong
-        WHERE (NgayNhan BETWEEN search_NgayNhan AND search_NgayTra)
-        OR (NgayTra BETWEEN search_NgayNhan AND search_NgayTra)
+        WHERE ((NgayNhan BETWEEN search_NgayNhan AND search_NgayTra)
+        OR (NgayTra BETWEEN search_NgayNhan AND search_NgayTra))
+        AND MaPhong = P.MaPhong
 	));
 END$$
 DELIMITER ;
+

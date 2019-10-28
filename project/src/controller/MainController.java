@@ -9,8 +9,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.stream.Collectors;
-
 import BUS.*;
 import DTO.*;
 import controller.nhanvien.SuaNhanVienController;
@@ -45,7 +43,6 @@ import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Callback;
-import javafx.collections.ListChangeListener.Change;
 
 public class MainController implements Initializable {
 	@FXML
@@ -150,6 +147,10 @@ public class MainController implements Initializable {
 	Button btnDV_XoaDichVu;
 	@FXML
 	Button btnDV_SuaDichVu;
+	@FXML
+	Button btnHD_ThanhToan;
+	@FXML
+	Button btnHD_ChotThongTin;
 
 	@FXML
 	Label lbTC_DonGia;
@@ -170,9 +171,6 @@ public class MainController implements Initializable {
 	Label lbPT_SoLuongPhong;
 	@FXML
 	Label lbPT_TongCoc;
-
-	@FXML
-	Label lbHD_TenNhanVien;
 
 	@FXML
 	Label lbPhong_MaPhong;
@@ -236,11 +234,19 @@ public class MainController implements Initializable {
 	Label lbNV_ChucVu;
 
 	@FXML
+	Label lbHD_TenNhanVien;
+	@FXML
+	Label lbHD_TienPtck;
+	@FXML
 	Label lbHD_TienPhong;
 	@FXML
 	Label lbHD_TienCoc;
 	@FXML
 	Label lbHD_SoLuong;
+	@FXML
+	Label lbHD_TamTinh;
+	@FXML
+	Label lbHD_TienThua;
 
 	@FXML
 	TextField tfPT_KhachThue;
@@ -252,6 +258,19 @@ public class MainController implements Initializable {
 	TextField tfPT_Email;
 	@FXML
 	TextField tfPT_GhiChu;
+
+	@FXML
+	TextField tfHD_TenKhach;
+	@FXML
+	TextField tfHD_DienThoai;
+	@FXML
+	TextField tfHD_CMND;
+	@FXML
+	TextField tfHD_Email;
+	@FXML
+	TextField tfHD_GhiChu;
+	@FXML
+	TextField tfHD_TienNhan;
 
 	@FXML
 	TableView<KhachDTO> tvKhach;
@@ -362,11 +381,32 @@ public class MainController implements Initializable {
 	@FXML
 	TableColumn<PTPhongDTO, String> tcHD_SoPhong;
 	@FXML
+	TableColumn<PTPhongDTO, String> tcHD_MaPTP;
+	@FXML
 	TableColumn<PTPhongDTO, Integer> tcHD_TienCoc;
 	@FXML
 	TableColumn<PTPhongDTO, Integer> tcHD_ThanhTienValue;
 	@FXML
 	TableColumn<PTPhongDTO, String> tcHD_ThanhTien;
+
+	@FXML
+	TableView<HoaDonDTO> tvHoaDon;
+	@FXML
+	TableColumn<HoaDonDTO, Integer> tcHD_STT;
+	@FXML
+	TableColumn<HoaDonDTO, Integer> tcHD_MaHD;
+	@FXML
+	TableColumn<HoaDonDTO, String> tcHD_NgayLap;
+	@FXML
+	TableColumn<HoaDonDTO, String> tcHD_NhanVien;
+	@FXML
+	TableColumn<HoaDonDTO, String> tcHD_TenKhach;
+	@FXML
+	TableColumn<HoaDonDTO, String> tcHD_DienThoai;
+	@FXML
+	TableColumn<HoaDonDTO, String> tcHD_CMND;
+	@FXML
+	TableColumn<HoaDonDTO, String> tcHD_TriGia;
 
 	@FXML
 	TableView<NhanVienDTO> tvNhanVien;
@@ -445,11 +485,20 @@ public class MainController implements Initializable {
 	@FXML
 	TableColumn<LoaiPhongDTO, String> tcLP_DonGia;
 
+	@FXML
+	TableView<HDPtckDTO> tvHDPtck;
+	@FXML
+	TableColumn<HDPtckDTO, Integer> tcHDPtck_NoiDung;
+	@FXML
+	TableColumn<HDPtckDTO, String> tcHDPtck_TriGia;
+
 	ObservableList<PTPhongDTO> dsHDPhong = FXCollections.observableArrayList();
+	ObservableList<HDPtckDTO> dsHDPtck = FXCollections.observableArrayList();
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		initTables();
+		initTextFields();
 		initComboboxes();
 		initDatePickers();
 		initSpinners();
@@ -459,7 +508,25 @@ public class MainController implements Initializable {
 		loadComboboxes();
 	}
 
-	private void reCalculateTienCoc() {
+	private void calculateTamTinh() {
+		Integer tamTinh = MoneyFormatHelper.fromString(lbHD_TienPhong.getText())
+				- MoneyFormatHelper.fromString(lbHD_TienCoc.getText())
+				+ MoneyFormatHelper.fromString(lbHD_TienPtck.getText());
+		lbHD_TamTinh.setText(MoneyFormatHelper.format(tamTinh));
+		calculateTienThua();
+	}
+
+	private void calculateTienThua() {
+		try {
+			Integer tienThua = Integer.parseInt(tfHD_TienNhan.getText())
+					- MoneyFormatHelper.fromString(lbHD_TamTinh.getText());
+			lbHD_TienThua.setText(MoneyFormatHelper.format(tienThua));
+		} catch (NumberFormatException ex) {
+			lbHD_TienThua.setText(null);
+		}
+	}
+
+	private void calculateTienCoc() {
 		if (cbTC_DatCoc.isSelected()) {
 			Integer phanTramCoc = Integer
 					.parseInt(lbTS_TiLeTienCoc.getText().substring(0, lbTS_TiLeTienCoc.getText().length() - 1));
@@ -478,7 +545,9 @@ public class MainController implements Initializable {
 		initTablePtpPtck();
 		initTableKhach();
 		initTableHDPhong();
+		initTableHDPtck();
 		initTablePTPhong();
+		initTableHoaDon();
 		initTableDichVu();
 		initTableNhanVien();
 		initTableLoaiPhong();
@@ -491,6 +560,7 @@ public class MainController implements Initializable {
 		loadTablePhong();
 		loadTablePhieuThue();
 		loadTablePTPhong();
+		loadTableHoaDon();
 		loadTableDichVu();
 		loadTableNhanVien();
 		loadTableLoaiPhong();
@@ -513,13 +583,17 @@ public class MainController implements Initializable {
 		}
 	}
 
+	private void initTextFields() {
+		tfHD_TienNhan.textProperty().addListener((obs, oldValue, newValue) -> calculateTienThua());
+	}
+
 	private void initSpinners() {
 		snTC_SoDem.valueProperty().addListener((obs, soDemCu, soDemMoi) -> {
 			LocalDate ngayTra = dpTC_NgayNhan.getValue().plusDays(soDemMoi);
 			lbTC_NgayTra.setText(DateFormatHelper.toString(ngayTra));
 			tpTC_Phong.getChildren().clear();
 			bpTC_ThongTinPhong.setVisible(false);
-			reCalculateTienCoc();
+			calculateTienCoc();
 		});
 
 		snTC_GioNhan.valueProperty().addListener((obs, soDemCu, soDemMoi) -> {
@@ -550,7 +624,7 @@ public class MainController implements Initializable {
 		cbbTC_LoaiPhong.valueProperty().addListener((obs, loaiPhongCu, loaiPhongMoi) -> {
 			lbTC_DonGia.setText(MoneyFormatHelper.format(loaiPhongMoi.getDonGiaValue(), "VND"));
 			bpTC_ThongTinPhong.setVisible(false);
-			reCalculateTienCoc();
+			calculateTienCoc();
 		});
 	}
 
@@ -573,7 +647,7 @@ public class MainController implements Initializable {
 	private void initCheckboxes() {
 		cbTC_DatCoc.selectedProperty().addListener((obs, oldValue, newValue) -> {
 			if (newValue == true) {
-				reCalculateTienCoc();
+				calculateTienCoc();
 			} else {
 				lbTC_TienCoc.setText("0 VND");
 			}
@@ -655,14 +729,41 @@ public class MainController implements Initializable {
 				Integer tienCoc = dsHDPhong.stream().mapToInt(PTPhongDTO::getTienCocValue).sum();
 				Integer tienPhong = dsHDPhong.stream().mapToInt(PTPhongDTO::getThanhTienValue).sum();
 				lbHD_SoLuong.setText(soLuong + " phòng");
-				lbHD_TienCoc.setText(MoneyFormatHelper.format(tienCoc, "VND"));
+				lbHD_TienCoc.setText(MoneyFormatHelper.format(tienCoc));
 				lbHD_TienPhong.setText(MoneyFormatHelper.format(tienPhong));
+				calculateTamTinh();
 			}
 		});
+		tcHD_MaPTP.setCellValueFactory(new PropertyValueFactory<>("MaPTPhong"));
 		tcHD_SoPhong.setCellValueFactory(new PropertyValueFactory<>("MaPhong"));
 		tcHD_TienCoc.setCellValueFactory(new PropertyValueFactory<>("TienCoc"));
 		tcHD_ThanhTien.setCellValueFactory(new PropertyValueFactory<>("ThanhTien"));
 		tcHD_ThanhTienValue.setCellValueFactory(new PropertyValueFactory<>("ThanhTienValue"));
+	}
+
+	private void initTableHDPtck() {
+		dsHDPtck.addListener(new ListChangeListener<HDPtckDTO>() {
+			@Override
+			public void onChanged(Change<? extends HDPtckDTO> arg0) {
+				Integer tienPtck = dsHDPtck.stream().mapToInt(HDPtckDTO::getTriGiaValue).sum();
+				lbHD_TienPtck.setText(MoneyFormatHelper.format(tienPtck));
+				calculateTamTinh();
+			}
+		});
+		tcHDPtck_NoiDung.setCellValueFactory(new PropertyValueFactory<>("noiDung"));
+		tcHDPtck_TriGia.setCellValueFactory(new PropertyValueFactory<>("triGia"));
+	}
+
+	private void initTableHoaDon() {
+		tcHD_STT.setCellValueFactory(
+				column -> new ReadOnlyObjectWrapper<Integer>(tvHoaDon.getItems().indexOf(column.getValue()) + 1));
+		tcHD_MaHD.setCellValueFactory(new PropertyValueFactory<>("MaHoaDon"));
+		tcHD_NgayLap.setCellValueFactory(new PropertyValueFactory<>("NgayHoaDon"));
+		tcHD_NhanVien.setCellValueFactory(new PropertyValueFactory<>("TenNhanVien"));
+		tcHD_TenKhach.setCellValueFactory(new PropertyValueFactory<>("TenKhach"));
+		tcHD_DienThoai.setCellValueFactory(new PropertyValueFactory<>("DienThoai"));
+		tcHD_CMND.setCellValueFactory(new PropertyValueFactory<>("CMND"));
+		tcHD_TriGia.setCellValueFactory(new PropertyValueFactory<>("GiaTri"));
 	}
 
 	private void initTableDichVu() {
@@ -970,6 +1071,20 @@ public class MainController implements Initializable {
 			alert.showAndWait();
 		}
 	}
+	
+	public void loadTableHoaDon() {
+		try {
+			ObservableList<HoaDonDTO> dsHoaDon = FXCollections.observableArrayList();
+			HoaDonBUS.getDSHoaDon().stream().forEach(hd -> dsHoaDon.add(hd));
+			tvHoaDon.setItems(dsHoaDon);
+		} catch (SQLException SQLException) {
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Lỗi");
+			alert.setHeaderText("Tải hoá đơn thất bại!");
+			alert.setContentText("Lỗi database!");
+			alert.showAndWait();
+		}
+	}
 
 	public void loadTablePhieuThue() {
 		try {
@@ -1116,6 +1231,15 @@ public class MainController implements Initializable {
 		default:
 			break;
 		}
+	}
+
+	public void insertHDPtck(HDPtckDTO hdPtck) {
+		dsHDPtck.add(hdPtck);
+		tvHDPtck.setItems(dsHDPtck);
+		Alert alert = new Alert(AlertType.INFORMATION);
+		alert.setTitle("Thành công");
+		alert.setHeaderText("Thêm ptck " + hdPtck.getNoiDung() + " thành công!");
+		alert.showAndWait();
 	}
 
 	public void handleTraCuuPhong() {
@@ -2303,5 +2427,183 @@ public class MainController implements Initializable {
 			alert.setContentText("Vui lòng chọn phòng cần xoá!");
 			alert.showAndWait();
 		}
+	}
+
+	public void handleXemChiTietHoaDon(ActionEvent e) {
+		try {
+			String link = "/application/popupChiTietHD.fxml";
+			Stage popUpStage = PopUpStageHelper.createPopUpStage(link, 800, 400);
+			FXMLLoader loader = (FXMLLoader) popUpStage.getUserData();
+			CTHDController controller = loader.getController();
+			String maPhong = tvHDPhong.getSelectionModel().getSelectedItem().getMaPhong();
+			Integer maPTP = PhongBUS.getMaPTP(maPhong);
+			controller.initialize(maPTP);
+			popUpStage.setTitle("CHI TIẾT THUÊ PHÒNG " + maPhong);
+			popUpStage.showAndWait();
+		} catch (SQLException ex) {
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Lỗi");
+			alert.setHeaderText("Không thể tải chi tiết thuê phòng!");
+			alert.setContentText("Lỗi database!");
+			alert.showAndWait();
+		} catch (NullPointerException nex) {
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Lỗi");
+			alert.setHeaderText("Xem chi tiết thuê phòng thất bại!");
+			alert.setContentText("Vui lòng chọn phòng cần xem!");
+			alert.showAndWait();
+		}
+	}
+
+	public void handleThemHDPtck(ActionEvent e) {
+		String link = "/application/popupHDPtck.fxml";
+		Stage popUpStage = PopUpStageHelper.createPopUpStage(link, 550, 380);
+		popUpStage.getScene().setUserData(this);
+		popUpStage.showAndWait();
+	}
+
+	public void handleXoaHDPtck(ActionEvent e) {
+		try {
+			HDPtckDTO hdPtck = tvHDPtck.getSelectionModel().getSelectedItem();
+			if (ConfirmDialogHelper.confirm("Xác nhận xoá ptck " + hdPtck.getNoiDung() + "?")) {
+				dsHDPtck.remove(hdPtck);
+				tvHDPtck.setItems(dsHDPtck);
+				Alert alert = new Alert(AlertType.INFORMATION);
+				alert.setTitle("Thành công");
+				alert.setHeaderText("Đã xoá ptck " + hdPtck.getNoiDung());
+				alert.showAndWait();
+			}
+		} catch (NullPointerException nex) {
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Lỗi");
+			alert.setHeaderText("Xoá ptck hoá đơn thất bại!");
+			alert.setContentText("Vui lòng chọn ptck cần xoá!");
+			alert.showAndWait();
+		}
+	}
+
+	public void handleThanhToanHoaDon(ActionEvent e) {
+		try {
+			if (dsHDPhong.isEmpty()) {
+				Alert alert = new Alert(AlertType.INFORMATION);
+				alert.setTitle("Thất bại");
+				alert.setHeaderText("Tạo hoá đơn thất bại!");
+				alert.setContentText("Vui lòng thêm ít nhất 1 phòng để thanh toán!");
+				alert.showAndWait();
+				return;
+			}
+
+			NhanVienDTO nhanVien = NhanVienBUS.getNhanVienById(Integer.valueOf(lbNV_MaNhanVien.getText()));
+			HoaDonDTO hoaDon = new HoaDonDTO(nhanVien, DateFormatHelper.getDate(dpHD_NgayLap.getValue()),
+					tfHD_TenKhach.getText(), tfHD_CMND.getText(), tfHD_DienThoai.getText(), tfHD_Email.getText(),
+					MoneyFormatHelper.fromString(lbHD_TienPhong.getText()),
+					MoneyFormatHelper.fromString(lbHD_TienPtck.getText()),
+					MoneyFormatHelper.fromString(lbHD_TienCoc.getText()),
+					MoneyFormatHelper.fromString(lbHD_TamTinh.getText()), Integer.valueOf(tfHD_TienNhan.getText()),
+					MoneyFormatHelper.fromString(lbHD_TienThua.getText()), tfHD_GhiChu.getText());
+
+			if (HoaDonBUS.insertHoaDon(hoaDon)) {
+				// set mã hoá đơn vừa tạo
+				Integer maHoaDon = HoaDonBUS.getMaxMaHoaDon();
+				hoaDon.setMaHoaDon(maHoaDon);
+				dsHDPtck.stream().forEach(hdPtck -> hdPtck.setHoaDon(hoaDon));
+
+				// thêm các phụ thu chiết khấu của hoá đơn
+				boolean insertHDPtck = dsHDPtck.stream().allMatch(hdPtck -> {
+					try {
+						return HDPtckBUS.insertHDPtck(hdPtck);
+					} catch (SQLException ex1) {
+						Alert alert = new Alert(AlertType.INFORMATION);
+						alert.setTitle("Thất bại");
+						alert.setHeaderText("Tạo chi tiết hoá đơn thất bại!");
+						alert.setContentText("Lỗi database!");
+						alert.showAndWait();
+						return false;
+					}
+				});
+
+				// cập nhật mã hoá đơn cho phiếu thuê phòng
+				boolean updateHDPhong = dsHDPhong.stream().allMatch(ptp -> {
+					try {
+						return PTPhongBUS.updateMaHoaDon(ptp.getMaPTPhong(), maHoaDon);
+					} catch (SQLException ex2) {
+						Alert alert = new Alert(AlertType.INFORMATION);
+						alert.setTitle("Thất bại");
+						alert.setHeaderText("Tạo chi tiết hoá đơn thất bại!");
+						alert.setContentText("Lỗi database!");
+						alert.showAndWait();
+						return false;
+					}
+				});
+
+				if (insertHDPtck && updateHDPhong) {
+					// thông báo
+					Alert alert = new Alert(AlertType.INFORMATION);
+					alert.setTitle("Thành công");
+					alert.setHeaderText("Đã tạo thành công hoá đơn!");
+					alert.showAndWait();
+
+					// xoá thông tin hiện tại
+					tfHD_TenKhach.clear();
+					tfHD_CMND.clear();
+					tfHD_DienThoai.clear();
+					tfHD_Email.clear();
+					tfHD_GhiChu.clear();
+					tfHD_TienNhan.setText("0");
+					dsHDPhong.clear();
+					dsHDPtck.clear();
+
+					// cập nhật lại các bảng
+					loadTablePhong();
+					loadTableHoaDon();
+					handleTraCuuPhong();
+				} else {
+					Alert alert = new Alert(AlertType.INFORMATION);
+					alert.setTitle("Thất bại");
+					alert.setHeaderText("Tạo chi tiết hoá đơn thất bại!");
+					alert.showAndWait();
+				}
+			} else {
+				Alert alert = new Alert(AlertType.INFORMATION);
+				alert.setTitle("Thất bại");
+				alert.setHeaderText("Tạo hoá đơn thất bại!");
+				alert.showAndWait();
+			}
+		} catch (SQLException ex3) {
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Thất bại");
+			alert.setHeaderText("Tạo hoá đơn thất bại!");
+			alert.setContentText("Lỗi database!");
+			alert.showAndWait();
+		}
+	}
+
+	public void handleTaoHoaDonMoi(ActionEvent e) {
+		if (ConfirmDialogHelper.confirm("Xác nhận tạo hoá đơn mới?", "Các thông tin vừa nhập sẽ bị xoá!")) {
+			tfHD_TenKhach.clear();
+			tfHD_CMND.clear();
+			tfHD_DienThoai.clear();
+			tfHD_Email.clear();
+			tfHD_GhiChu.clear();
+			tfHD_TienNhan.setText("0");
+			dsHDPhong.clear();
+			dsHDPtck.clear();
+		}
+	}
+
+	public void handleChotThongTin(ActionEvent e) {
+		if (btnHD_ThanhToan.isDisable()) {
+			btnHD_ChotThongTin.setText("🔒 SỬA THÔNG TIN");
+		} else {
+			btnHD_ChotThongTin.setText("🔒 CHỐT THÔNG TIN");
+		}
+		dpHD_NgayLap.setDisable(!dpHD_NgayLap.isDisable());
+		tfHD_TenKhach.setDisable(!tfHD_TenKhach.isDisable());
+		tfHD_CMND.setDisable(!tfHD_CMND.isDisable());
+		tfHD_DienThoai.setDisable(!tfHD_DienThoai.isDisable());
+		;
+		tfHD_Email.setDisable(!tfHD_Email.isDisable());
+		tfHD_GhiChu.setDisable(!tfHD_GhiChu.isDisable());
+		btnHD_ThanhToan.setDisable(!btnHD_ThanhToan.isDisable());
 	}
 }

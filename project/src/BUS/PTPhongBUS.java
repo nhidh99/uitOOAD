@@ -38,4 +38,8 @@ public class PTPhongBUS {
 	public static List<PTPhongDTO> getDSPTPhongByMaPhong(String maPhong) throws SQLException {
 		return PTPhongDAO.getDSPTPhongByMaPhong(maPhong);
 	}
+
+	public static boolean updateMaHoaDon(Integer maPTP, Integer maHoaDon) throws SQLException {
+		return PTPhongDAO.updateMaHoaDon(maPTP, maHoaDon);
+	}
 }

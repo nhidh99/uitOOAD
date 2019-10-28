@@ -131,4 +131,15 @@ public class PTPhongDAO {
 		conn.close();
 		return output;
 	}
+
+	public static boolean updateMaHoaDon(Integer maPTP, Integer maHoaDon) throws SQLException {
+		Connection conn = DBHelper.getConnection();
+		String query = "UPDATE PT_Phong SET MaHoaDon = ? WHERE MaPTPhong = ?";
+		PreparedStatement statement = conn.prepareStatement(query);
+		statement.setInt(1, maHoaDon);
+		statement.setInt(2, maPTP);
+		int records = statement.executeUpdate();
+		conn.close();
+		return records > 0;
+	}
 }

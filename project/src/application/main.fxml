@@ -1159,7 +1159,7 @@
                                                       <Insets right="10.0" />
                                                    </GridPane.margin>
                                                 </DatePicker>
-                                                <TextField fx:id="tfPT_KhachThue" GridPane.columnIndex="2" GridPane.rowIndex="3">
+                                                <TextField fx:id="tfPT_KhachThue" promptText="Họ tên khách" GridPane.columnIndex="2" GridPane.rowIndex="3">
                                                    <GridPane.margin>
                                                       <Insets right="10.0" />
                                                    </GridPane.margin>
@@ -1167,7 +1167,7 @@
                                                       <Font size="18.0" />
                                                    </font>
                                                 </TextField>
-                                                <TextField fx:id="tfPT_DienThoai" GridPane.columnIndex="2" GridPane.rowIndex="4">
+                                                <TextField fx:id="tfPT_DienThoai" promptText="SĐT khách" GridPane.columnIndex="2" GridPane.rowIndex="4">
                                                    <GridPane.margin>
                                                       <Insets right="10.0" />
                                                    </GridPane.margin>
@@ -1175,7 +1175,7 @@
                                                       <Font size="18.0" />
                                                    </font>
                                                 </TextField>
-                                                <TextField fx:id="tfPT_CMND" GridPane.columnIndex="5" GridPane.rowIndex="3">
+                                                <TextField fx:id="tfPT_CMND" promptText="CMND khách" GridPane.columnIndex="5" GridPane.rowIndex="3">
                                                    <GridPane.margin>
                                                       <Insets right="10.0" />
                                                    </GridPane.margin>
@@ -1183,7 +1183,7 @@
                                                       <Font size="18.0" />
                                                    </font>
                                                 </TextField>
-                                                <TextField fx:id="tfPT_Email" GridPane.columnIndex="5" GridPane.rowIndex="4">
+                                                <TextField fx:id="tfPT_Email" promptText="Email khách" GridPane.columnIndex="5" GridPane.rowIndex="4">
                                                    <GridPane.margin>
                                                       <Insets right="10.0" />
                                                    </GridPane.margin>
@@ -1191,7 +1191,7 @@
                                                       <Font size="18.0" />
                                                    </font>
                                                 </TextField>
-                                                <TextField fx:id="tfPT_GhiChu" GridPane.columnIndex="2" GridPane.columnSpan="4" GridPane.rowIndex="5">
+                                                <TextField fx:id="tfPT_GhiChu" promptText="Ghi chú (nếu có)" GridPane.columnIndex="2" GridPane.columnSpan="4" GridPane.rowIndex="5">
                                                    <GridPane.margin>
                                                       <Insets right="10.0" />
                                                    </GridPane.margin>
@@ -1465,7 +1465,7 @@
                                                    <font>
                                                       <Font size="20.0" />
                                                    </font></Label>
-                                                <TextField GridPane.columnIndex="2" GridPane.rowIndex="4">
+                                                <TextField fx:id="tfHD_DienThoai" promptText="SĐT khách" GridPane.columnIndex="2" GridPane.rowIndex="4">
                                                    <GridPane.margin>
                                                       <Insets right="10.0" />
                                                    </GridPane.margin>
@@ -1473,7 +1473,7 @@
                                                       <Font size="18.0" />
                                                    </font>
                                                 </TextField>
-                                                <TextField GridPane.columnIndex="5" GridPane.rowIndex="2">
+                                                <TextField fx:id="tfHD_CMND" promptText="CMND khách" GridPane.columnIndex="5" GridPane.rowIndex="2">
                                                    <GridPane.margin>
                                                       <Insets right="10.0" />
                                                    </GridPane.margin>
@@ -1481,7 +1481,7 @@
                                                       <Font size="18.0" />
                                                    </font>
                                                 </TextField>
-                                                <TextField GridPane.columnIndex="5" GridPane.rowIndex="3">
+                                                <TextField fx:id="tfHD_Email" promptText="Email khách" GridPane.columnIndex="5" GridPane.rowIndex="3">
                                                    <GridPane.margin>
                                                       <Insets right="10.0" />
                                                    </GridPane.margin>
@@ -1489,7 +1489,7 @@
                                                       <Font size="18.0" />
                                                    </font>
                                                 </TextField>
-                                                <TextField GridPane.columnIndex="2" GridPane.rowIndex="3">
+                                                <TextField fx:id="tfHD_TenKhach" promptText="Họ tên khách" GridPane.columnIndex="2" GridPane.rowIndex="3">
                                                    <GridPane.margin>
                                                       <Insets right="10.0" />
                                                    </GridPane.margin>
@@ -1513,7 +1513,7 @@
                                                    <font>
                                                       <Font name="System Bold" size="20.0" />
                                                    </font></Label>
-                                                <TextField GridPane.columnIndex="5" GridPane.rowIndex="4">
+                                                <TextField fx:id="tfHD_GhiChu" promptText="Ghi chú (nếu có)" GridPane.columnIndex="5" GridPane.rowIndex="4">
                                                    <GridPane.margin>
                                                       <Insets right="10.0" />
                                                    </GridPane.margin>
@@ -1535,11 +1535,11 @@
                                                    </font></Label>
                                                 <HBox alignment="BOTTOM_CENTER" spacing="20.0" GridPane.columnSpan="6" GridPane.rowIndex="5">
                                                    <children>
-                                                      <Button alignment="CENTER" mnemonicParsing="false" prefWidth="370.0" text="🔒 CHỐT THÔNG TIN KHÁCH" textFill="#00868b">
+                                                      <Button fx:id="btnHD_ChotThongTin" alignment="CENTER" mnemonicParsing="false" onAction="#handleChotThongTin" prefWidth="370.0" text="🔒 CHỐT THÔNG TIN" textFill="#00868b">
                                                          <font>
                                                             <Font name="System Bold" size="20.0" />
                                                          </font></Button>
-                                                      <Button alignment="CENTER" mnemonicParsing="false" prefWidth="370.0" text="📇  HOÁ ĐƠN MỚI" textFill="#427921">
+                                                      <Button alignment="CENTER" mnemonicParsing="false" onAction="#handleTaoHoaDonMoi" prefWidth="370.0" text="📇  HOÁ ĐƠN MỚI" textFill="#427921">
                                                          <font>
                                                             <Font name="System Bold" size="20.0" />
                                                          </font></Button>
@@ -1571,6 +1571,7 @@
                                                 <TableView fx:id="tvHDPhong" prefHeight="358.0" prefWidth="720.0">
                                                    <columns>
                                                       <TableColumn fx:id="tcHD_SoPhong" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Mã phòng" />
+                                                      <TableColumn fx:id="tcHD_MaPTP" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Mã PTP" visible="false" />
                                                       <TableColumn fx:id="tcHD_TienCoc" prefWidth="122.39994812011719" text="Tiền cọc" visible="false" />
                                                       <TableColumn fx:id="tcHD_ThanhTienValue" prefWidth="122.39994812011719" text="Tiền cọc" visible="false" />
                                                       <TableColumn fx:id="tcHD_ThanhTien" prefWidth="122.39994812011719" style="-fx-alignment: CENTER;" text="Thành tiền" />
@@ -1579,14 +1580,14 @@
                                                       <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                                                    </columnResizePolicy>
                                                    <BorderPane.margin>
-                                                      <Insets bottom="10.0" />
+                                                      <Insets bottom="10.0" left="5.0" />
                                                    </BorderPane.margin>
                                                 </TableView>
                                              </center>
                                              <bottom>
                                                 <HBox alignment="CENTER" prefHeight="45.0" prefWidth="783.0" spacing="10.0" BorderPane.alignment="CENTER">
                                                    <children>
-                                                      <Button alignment="CENTER" mnemonicParsing="false" prefWidth="165.0" text="📑 CHI TIẾT" textFill="#00868b">
+                                                      <Button alignment="CENTER" mnemonicParsing="false" onAction="#handleXemChiTietHoaDon" prefWidth="180.0" text="📑 CHI TIẾT" textFill="#00868b">
                                                          <font>
                                                             <Font name="System Bold" size="20.0" />
                                                          </font></Button>
@@ -1595,6 +1596,9 @@
                                                             <Font name="System Bold" size="20.0" />
                                                          </font></Button>
                                                    </children>
+                                                   <BorderPane.margin>
+                                                      <Insets right="5.0" />
+                                                   </BorderPane.margin>
                                                 </HBox>
                                              </bottom>
                                              <top>
@@ -1627,10 +1631,11 @@
                                           </BorderPane>
                                           <BorderPane prefHeight="313.0" prefWidth="390.0">
                                              <center>
-                                                <TableView prefHeight="319.0" prefWidth="422.0">
+                                                <TableView fx:id="tvHDPtck" prefHeight="319.0" prefWidth="422.0">
                                                   <columns>
-                                                    <TableColumn prefWidth="75.0" text="Nội dung" />
-                                                      <TableColumn prefWidth="75.0" text="Trị giá" />
+                                                    <TableColumn fx:id="tcHDPtck_NoiDung" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Nội dung" />
+                                                      <TableColumn fx:id="tcHDPtck_TriGia" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Trị giá" />
+                                                      <TableColumn fx:id="tcHDPtck_TriGiaValue" prefWidth="75.0" text="Trị giá" visible="false" />
                                                   </columns>
                                                    <columnResizePolicy>
                                                       <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -1643,15 +1648,11 @@
                                              <bottom>
                                                 <HBox alignment="CENTER" prefHeight="45.0" prefWidth="359.0" spacing="10.0" BorderPane.alignment="CENTER">
                                                    <children>
-                                                      <Button alignment="CENTER" mnemonicParsing="false" prefWidth="115.0" text="📤 THÊM" textFill="#00868b">
+                                                      <Button alignment="CENTER" mnemonicParsing="false" onAction="#handleThemHDPtck" prefWidth="180.0" text="📤 THÊM" textFill="#00868b">
                                                          <font>
                                                             <Font name="System Bold" size="20.0" />
                                                          </font></Button>
-                                                      <Button alignment="CENTER" mnemonicParsing="false" prefWidth="115.0" text="🗑 XOÁ" textFill="BROWN">
-                                                         <font>
-                                                            <Font name="System Bold" size="20.0" />
-                                                         </font></Button>
-                                                      <Button alignment="CENTER" mnemonicParsing="false" prefWidth="115.0" text="⚙ SỬA" textFill="#427921">
+                                                      <Button alignment="CENTER" mnemonicParsing="false" onAction="#handleXoaHDPtck" prefWidth="180.0" text="🗑 XOÁ" textFill="BROWN">
                                                          <font>
                                                             <Font name="System Bold" size="20.0" />
                                                          </font></Button>
@@ -1747,11 +1748,11 @@
                                                          <font>
                                                             <Font size="20.0" />
                                                          </font></Label>
-                                                      <Label text="0" GridPane.columnIndex="2" GridPane.rowIndex="3">
+                                                      <Label fx:id="lbHD_TienPtck" text="0" GridPane.columnIndex="2" GridPane.rowIndex="3">
                                                          <font>
                                                             <Font size="20.0" />
                                                          </font></Label>
-                                                      <Label text="0" GridPane.columnIndex="2" GridPane.rowIndex="4">
+                                                      <Label fx:id="lbHD_TamTinh" text="0" GridPane.columnIndex="2" GridPane.rowIndex="4">
                                                          <font>
                                                             <Font size="20.0" />
                                                          </font></Label>
@@ -1771,11 +1772,11 @@
                                                          <font>
                                                             <Font name="System Bold" size="20.0" />
                                                          </font></Label>
-                                                      <Label text="hd - nhận" GridPane.columnIndex="2" GridPane.rowIndex="6">
+                                                      <Label fx:id="lbHD_TienThua" text="0" GridPane.columnIndex="2" GridPane.rowIndex="6">
                                                          <font>
                                                             <Font size="20.0" />
                                                          </font></Label>
-                                                      <TextField prefWidth="140.0" GridPane.columnIndex="2" GridPane.rowIndex="5">
+                                                      <TextField fx:id="tfHD_TienNhan" prefWidth="140.0" text="0" GridPane.columnIndex="2" GridPane.rowIndex="5">
                                                          <font>
                                                             <Font size="18.0" />
                                                          </font>
@@ -1827,7 +1828,7 @@
                                                 <Insets right="7.0" />
                                              </BorderPane.margin>
                                              <children>
-                                                <Button alignment="CENTER" mnemonicParsing="false" prefHeight="44.0" prefWidth="370.0" text="💰 THANH TOÁN" textFill="#427921">
+                                                <Button fx:id="btnHD_ThanhToan" alignment="CENTER" disable="true" mnemonicParsing="false" onAction="#handleThanhToanHoaDon" prefHeight="44.0" prefWidth="370.0" text="💰 THANH TOÁN" textFill="#427921">
                                                    <font>
                                                       <Font name="System Bold" size="20.0" />
                                                    </font>
@@ -1856,17 +1857,17 @@
                      <content>
                         <BorderPane prefHeight="298.0" prefWidth="1080.0">
                            <center>
-                              <TableView prefHeight="295.0" prefWidth="1080.0">
+                              <TableView fx:id="tvHoaDon" prefHeight="295.0" prefWidth="1080.0">
                                  <columns>
-                                    <TableColumn minWidth="-Infinity" prefWidth="-1.0" text="STT" />
-                                    <TableColumn minWidth="-Infinity" prefWidth="-1.0" text="Mã hoá đơn" />
-                                    <TableColumn minWidth="-1.0" prefWidth="-1.0" text="Ngày lập" />
-                                    <TableColumn minWidth="-1.0" prefWidth="-1.0" text="Nhân viên" />
-                                    <TableColumn minWidth="-1.0" prefWidth="-1.0" text="Khách thanh toán" />
-                                    <TableColumn minWidth="-1.0" prefWidth="-1.0" text="CMND" />
+                                    <TableColumn fx:id="tcHD_STT" minWidth="-Infinity" prefWidth="-1.0" style="-fx-alignment: CENTER;" text="STT" />
+                                    <TableColumn fx:id="tcHD_MaHD" minWidth="-Infinity" prefWidth="-1.0" style="-fx-alignment: CENTER;" text="Mã hoá đơn" />
+                                    <TableColumn fx:id="tcHD_NgayLap" minWidth="-1.0" prefWidth="-1.0" style="-fx-alignment: CENTER;" text="Ngày lập" />
+                                    <TableColumn fx:id="tcHD_NhanVien" minWidth="-1.0" prefWidth="-1.0" style="-fx-alignment: CENTER;" text="Nhân viên" />
+                                    <TableColumn fx:id="tcHD_TenKhach" minWidth="-1.0" prefWidth="-1.0" style="-fx-alignment: CENTER;" text="Tên khách" />
+                                    <TableColumn fx:id="tcHD_DienThoai" minWidth="-1.0" prefWidth="-1.0" style="-fx-alignment: CENTER;" text="Điện thoại" />
                                     <TableColumn minWidth="-1.0" prefWidth="-1.0" text="Số điện thoại" visible="false" />
-                                    <TableColumn minWidth="-1.0" prefWidth="-1.0" text="Trị giá" />
-                                    <TableColumn minWidth="-1.0" prefWidth="-1.0" text="Ghi chú" />
+                                    <TableColumn fx:id="tcHD_CMND" minWidth="-1.0" prefWidth="-1.0" style="-fx-alignment: CENTER;" text="CMND" />
+                                    <TableColumn fx:id="tcHD_TriGia" minWidth="-1.0" prefWidth="-1.0" style="-fx-alignment: CENTER;" text="Trị giá" />
                                  </columns>
                                  <columnResizePolicy>
                                     <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
