@@ -1,31 +1,20 @@
 package DTO;
 
 public class ThongKeDoanhThuDTO {
-	private String thang;
-	private int tienPhong;
-	private int tienDichVu;
-	private int tienPTCK;
 	
-	public ThongKeDoanhThuDTO(String thang, int tienPhong, int tienDichVu, int tienPTCK) {
+	private Integer thang;
+	private Integer doanhThu;
+	
+	public ThongKeDoanhThuDTO(Integer thang, Integer doanhThu) {
 		this.thang = thang;
-		this.tienDichVu = tienDichVu;
-		this.tienPhong = tienPhong;
-		this.tienPTCK = tienPTCK;
+		this.doanhThu = doanhThu;
 	}
 	
-	public String getThang() {
+	public Integer getThang() {
 		return this.thang;
 	}
 	
-	public int getTienPhong() {
-		return this.tienPhong;
-	}
-	
-	public int getTienDichVu() {
-		return this.tienDichVu;
-	}
-	
-	public int getTienPTCK() {
-		return this.tienPTCK;
+	public Integer getDoanhThu() {
+		return this.doanhThu;
 	}
 }

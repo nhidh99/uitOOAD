@@ -7,7 +7,9 @@ import DAO.TinhTrangDAO;
 import DTO.TinhTrangDTO;
 
 public class TinhTrangBUS {
-	public static List<TinhTrangDTO> getDSTinhTrang() throws SQLException{
+
+	public static List<TinhTrangDTO> getDSTinhTrang() throws SQLException {
 		return TinhTrangDAO.getDSTinhTrang();
 	}
+
 }

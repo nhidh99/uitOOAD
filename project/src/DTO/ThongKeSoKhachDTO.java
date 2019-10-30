@@ -1,19 +1,19 @@
 package DTO;
 
 public class ThongKeSoKhachDTO {
-	private int soKhach;
-	private String thang;
+	private Integer soKhach;
+	private Integer thang;
 	
-	public ThongKeSoKhachDTO(int soKhach, String thang) {
+	public ThongKeSoKhachDTO(Integer soKhach, Integer thang) {
 		this.soKhach = soKhach;
 		this.thang = thang;
 	}
 	
-	public int getSoKhach() {
+	public Integer getSoKhach() {
 		return this.soKhach;
 	}
 	
-	public String getThang() {
+	public Integer getThang() {
 		return this.thang;
 	}
 }

@@ -1,21 +1,23 @@
 package DTO;
 
-import javafx.beans.property.*;
-
 public class LoaiDichVuDTO {
-	private SimpleIntegerProperty maLoaiDichVu;
-	private SimpleStringProperty tenLoaiDichVu;
+	private Integer maLoaiDichVu;
+	private String tenLoaiDichVu;
 	
 	public Integer getMaLoaiDichVu() {
-		return maLoaiDichVu.get();
+		return maLoaiDichVu;
 	}
 	
 	public String getTenLoaiDichVu() {
-		return tenLoaiDichVu.get();
+		return tenLoaiDichVu;
 	}
 	
 	public LoaiDichVuDTO(Integer maLoaiDichVu, String tenLoaiDichVu) {
-		this.maLoaiDichVu = new SimpleIntegerProperty(maLoaiDichVu);
-		this.tenLoaiDichVu = new SimpleStringProperty(tenLoaiDichVu);
+		this.maLoaiDichVu = maLoaiDichVu;
+		this.tenLoaiDichVu = tenLoaiDichVu;
+	}
+	
+	public LoaiDichVuDTO(String tenLoaiDichVu) {
+		this.tenLoaiDichVu = tenLoaiDichVu;
 	}
 }

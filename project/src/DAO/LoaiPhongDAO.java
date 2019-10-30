@@ -16,21 +16,18 @@ public class LoaiPhongDAO {
 
 		List<LoaiPhongDTO> output = new ArrayList<LoaiPhongDTO>();
 		while (rs.next()) {
-			output.add(new LoaiPhongDTO(
-					rs.getInt("MaLoaiPhong"),
-					rs.getString("TenLoaiPhong"),
-					rs.getInt("SoKhachToiDa"),
-					rs.getInt("DonGia")));
+			output.add(new LoaiPhongDTO(rs.getInt("MaLoaiPhong"), rs.getString("TenLoaiPhong"),
+					rs.getInt("SoKhachToiDa"), rs.getInt("DonGia")));
 		}
 		conn.close();
 		return output;
 	}
 
-	public static boolean checkLoaiPhong(Integer maLoaiPhong) throws SQLException {
+	public static boolean checkLoaiPhong(String tenLoaiPhong) throws SQLException {
 		Connection conn = DBHelper.getConnection();
-		String query = "SELECT EXISTS (SELECT 1 FROM Phong WHERE MaLoaiPhong = ? LIMIT 1)";
+		String query = "SELECT EXISTS (SELECT 1 FROM LoaiPhong WHERE TenLoaiPhong = ? LIMIT 1)";
 		PreparedStatement statement = conn.prepareStatement(query);
-		statement.setInt(1, maLoaiPhong);
+		statement.setString(1, tenLoaiPhong);
 		ResultSet rs = statement.executeQuery();
 		rs.next();
 		boolean isExist = rs.getBoolean(1);
@@ -47,23 +44,29 @@ public class LoaiPhongDAO {
 		conn.close();
 		return true;
 	}
-	
-	public static LoaiPhongDTO getLoaiPhong(Integer maLoaiPhong) throws SQLException {
-		Connection conn = DBHelper.getConnection();
-		String query = "SELECT * from LoaiPhong WHERE MaLoaiPhong = ?";
-		PreparedStatement statement = conn.prepareStatement(query);
-		statement.setInt(1, maLoaiPhong);
-		ResultSet rs = statement.executeQuery();
 
-		List<LoaiPhongDTO> output = new ArrayList<LoaiPhongDTO>();
-		while (rs.next()) {
-			output.add(new LoaiPhongDTO(
-					rs.getInt("MaLoaiPhong"),
-					rs.getString("TenLoaiPhong"),
-					rs.getInt("SoKhachToiDa"),
-					rs.getInt("DonGia")));
-		}
+	public static boolean insertLoaiPhong(LoaiPhongDTO loaiPhong) throws SQLException {
+		Connection conn = DBHelper.getConnection();
+		String query = "INSERT INTO loaiphong (TenLoaiPhong, SoKhachToiDa, DonGia) VALUES (?, ?, ?)";
+		PreparedStatement statement = conn.prepareStatement(query);
+		statement.setString(1, loaiPhong.getTenLoaiPhong());
+		statement.setInt(2, loaiPhong.getSoKhachToiDa());
+		statement.setInt(3, loaiPhong.getDonGiaValue());
+		int records = statement.executeUpdate();
 		conn.close();
-		return  output.get(0);
+		return records > 0;
+	}
+
+	public static boolean updateLoaiPhong(LoaiPhongDTO loaiPhong) throws SQLException {
+		Connection conn = DBHelper.getConnection();
+		String query = "UPDATE loaiphong SET TenLoaiPhong = ?, SoKhachToiDa = ?, DonGia = ? WHERE MaLoaiPhong = ?";
+		PreparedStatement statement = conn.prepareStatement(query);
+		statement.setString(1, loaiPhong.getTenLoaiPhong());
+		statement.setInt(2, loaiPhong.getSoKhachToiDa());
+		statement.setInt(3, loaiPhong.getDonGiaValue());
+		statement.setInt(4, loaiPhong.getMaLoaiPhong());
+		statement.execute();
+		conn.close();
+		return true;
 	}
 }

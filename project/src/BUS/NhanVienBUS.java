@@ -12,14 +12,10 @@ public class NhanVienBUS {
 	}
 
 	public static boolean insertNhanVien(NhanVienDTO nhanVien) throws SQLException {
-		if (NhanVienDAO.checkNhanVien(nhanVien)) {
+		if (NhanVienDAO.checkInsNhanVien(nhanVien)) {
 			return false;
 		}
 		return NhanVienDAO.insertNhanVien(nhanVien);
-	}
-
-	public static Integer getMaxMaNhanVien() throws SQLException {
-		return NhanVienDAO.getMaxMaNhanVien();
 	}
 	
 	public static NhanVienDTO getNhanVienById(Integer id) throws SQLException {
@@ -31,7 +27,7 @@ public class NhanVienBUS {
 	}
 
 	public static boolean updateNhanVien(NhanVienDTO nhanVien) throws SQLException {
-		if (NhanVienDAO.checkNhanVien(nhanVien)) {
+		if (NhanVienDAO.checkUpdNhanVien(nhanVien)) {
 			return false;
 		}
 		return NhanVienDAO.updateNhanVien(nhanVien);
@@ -39,5 +35,9 @@ public class NhanVienBUS {
 
 	public static boolean deleteNhanVien(Integer id) throws SQLException {
 		return NhanVienDAO.deleteNhanVien(id);
+	}
+	
+	public static boolean checkLoginNhanVien(String username, String password) throws SQLException {
+		return NhanVienDAO.checkLoginNhanVien(username, password);
 	}
 }

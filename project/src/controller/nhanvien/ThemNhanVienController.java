@@ -15,7 +15,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
@@ -23,8 +22,6 @@ import javafx.stage.Stage;
 
 public class ThemNhanVienController implements Initializable {
 
-	@FXML
-	Label lbMaNhanVien;
 	@FXML
 	TextField tfHoTen;
 	@FXML
@@ -46,27 +43,22 @@ public class ThemNhanVienController implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		ObservableList<String> dsChucVu = FXCollections.observableArrayList("Kế toán", "Lễ tân", "Quản lí");
+		ObservableList<String> dsChucVu = FXCollections.observableArrayList("Káº¿ toÃ¡n", "Lá»… tÃ¢n", "Quáº£n lÃ­");
 		cbbChucVu.setItems(dsChucVu);
 		cbbChucVu.getSelectionModel().selectFirst();
-		
-		try {
-			Integer maxMaNhanVien = NhanVienBUS.getMaxMaNhanVien();
-			lbMaNhanVien.setText(Integer.toString(maxMaNhanVien + 1));
-		} catch (SQLException SQLException) {
-			Alert alert = new Alert(AlertType.INFORMATION);
-			alert.setTitle("Lỗi");
-			alert.setHeaderText("Không thể tạo mã nhân viên!");
-			alert.setContentText("Lỗi database!");
-			alert.showAndWait();	
-		}
-		
 	}
 
 	public void handleThemNhanVien(ActionEvent event) {
 		if (pfMatKhau.getText().equals(pfMatKhau2.getText())) {
+			if(tfHoTen.getText().matches("^[a-zA-Z]$") || !tfCMND.getText().matches("^[0-9]{1,15}$") || !tfDienThoai.getText().matches("^[0-9]{11}$")) {
+				Alert alert = new Alert(AlertType.INFORMATION);
+				alert.setTitle("Thất bại");	
+				alert.setHeaderText("Sửa thông tin nhân viên thất bại!");
+				alert.setContentText("Tên khách chỉ gồm chữ cái viết hoa và viết thường! | CMND chỉ gồm chữ số và có tối đa 15 kí tự! | Số điện thoại chỉ có tối đa 11 chữ số! | Tiền nhận chỉ gồm chữ cố!");
+				alert.showAndWait();
+			}
+			
 			NhanVienDTO nhanVien = new NhanVienDTO(
-					Integer.parseInt(lbMaNhanVien.getText()),
 					tfHoTen.getText(),
 					tfCMND.getText(),
 					tfDiaChi.getText(),
@@ -77,45 +69,53 @@ public class ThemNhanVienController implements Initializable {
 					pfMatKhau.getText());
 
 			try {
+				if(tfHoTen.getText().matches("^[0-9]$") || !tfCMND.getText().matches("^[0-9]{1,15}$") || !tfDienThoai.getText().matches("^[0-9]{11}$")) {
+					Alert alert = new Alert(AlertType.INFORMATION);
+					alert.setTitle("Thất bại");	
+					alert.setHeaderText("Sửa thông tin nhân viên thất bại!");
+					alert.setContentText("Tên khách chỉ gồm chữ cái viết hoa và viết thường! | CMND chỉ gồm chữ số và có tối đa 15 kí tự! | Số điện thoại chỉ có tối đa 11 chữ số! | Tiền nhận chỉ gồm chữ cố!");
+					alert.showAndWait();
+				}
+				
 				if (NhanVienBUS.insertNhanVien(nhanVien)) {
 					Alert alert = new Alert(AlertType.INFORMATION);
-					alert.setTitle("Thành công");
-					alert.setHeaderText("Thêm nhân viên thành công!");
-					alert.setContentText(String.format("Thêm thành công %s %s.", nhanVien.getChucVu(), nhanVien.getTenNhanVien()));
+					alert.setTitle("ThÃ nh cÃ´ng");
+					alert.setHeaderText("ThÃªm nhÃ¢n viÃªn thÃ nh cÃ´ng!");
+					alert.setContentText(String.format("ThÃªm thÃ nh cÃ´ng %s %s.", nhanVien.getChucVu(), nhanVien.getTenNhanVien()));
 					alert.showAndWait();
 					
-					MainController mainController = (MainController) lbMaNhanVien.getScene().getUserData();
+					MainController mainController = (MainController) tfHoTen.getScene().getUserData();
 					mainController.loadTableNhanVien();
-					Stage stage = (Stage) lbMaNhanVien.getScene().getWindow();
+					Stage stage = (Stage) tfHoTen.getScene().getWindow();
 					stage.close();
 				}
 				else {
 					Alert alert = new Alert(AlertType.INFORMATION);
-					alert.setTitle("Thất bại");
-					alert.setHeaderText("Thêm nhân viên thất bại!");
-					alert.setContentText("Nhân viên vừa tạo trùng CMND hoặc tên tài khoản.");
+					alert.setTitle("Tháº¥t báº¡i");
+					alert.setHeaderText("ThÃªm nhÃ¢n viÃªn tháº¥t báº¡i!");
+					alert.setContentText("NhÃ¢n viÃªn vá»«a táº¡o trÃ¹ng CMND hoáº·c tÃªn tÃ i khoáº£n.");
 					alert.showAndWait();
 				}
 			}
 			catch (SQLException SQLException) {
 				Alert alert = new Alert(AlertType.INFORMATION);
-				alert.setTitle("Lỗi");
-				alert.setHeaderText("Không thể tạo nhân viên!");
-				alert.setContentText("Lỗi database!");
+				alert.setTitle("Lá»—i");
+				alert.setHeaderText("KhÃ´ng thá»ƒ táº¡o nhÃ¢n viÃªn!");
+				alert.setContentText("Lá»—i database!");
 				alert.showAndWait();				
 			}
 		}
 		else {
 			Alert alert = new Alert(AlertType.INFORMATION);
-			alert.setTitle("Lỗi");
-			alert.setHeaderText("Không thể tạo nhân viên!");
-			alert.setContentText("Mật khẩu không trùng khớp!");
+			alert.setTitle("Lá»—i");
+			alert.setHeaderText("KhÃ´ng thá»ƒ táº¡o nhÃ¢n viÃªn!");
+			alert.setContentText("Máº­t kháº©u khÃ´ng trÃ¹ng khá»›p!");
 			alert.showAndWait();
 		}
 	}
 
 	public void handleHuyThemNhanVien(ActionEvent event) {
-		Stage stage = (Stage) lbMaNhanVien.getScene().getWindow();
+		Stage stage = (Stage) tfHoTen.getScene().getWindow();
 		stage.close();
 	}
 }
