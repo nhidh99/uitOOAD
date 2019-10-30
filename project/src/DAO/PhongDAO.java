@@ -93,14 +93,14 @@ public class PhongDAO {
 
 	public static boolean insertPhong(PhongDTO phong) throws SQLException {
 		Connection conn = DBHelper.getConnection();
-		String query = "INSERT INTO Phong (MaPhong, MaLoaiPhong, MaTinhTrang, GhiChu) VALUES(?,?,?,?)";
+		String query = "CALL ins_Phong(?,?,?,?)";
 		PreparedStatement statement = conn.prepareStatement(query);
 		statement.setString(1, phong.getMaPhong());
 		statement.setInt(2, phong.getLoaiPhong().getMaLoaiPhong());
 		statement.setInt(3, phong.getTinhTrang().getMaTinhTrang());
 		statement.setString(4, phong.getGhiChu());
 		int records = statement.executeUpdate();
-		conn.close();
+		conn.close();	
 		return records > 0;
 	}
 

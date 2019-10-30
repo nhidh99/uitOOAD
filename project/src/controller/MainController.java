@@ -26,6 +26,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -42,6 +43,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.stage.Window;
+import javafx.stage.WindowEvent;
 import javafx.util.Callback;
 
 public class MainController implements Initializable {
@@ -504,6 +507,20 @@ public class MainController implements Initializable {
 		loadComboboxes();
 	}
 
+	public void initStage() {
+		Stage mainStage = (Stage) lbPhong_MaPhong.getScene().getWindow();
+		mainStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+			@Override
+			public void handle(WindowEvent event) {
+				if (ConfirmDialogHelper.confirm("Xác nhận đăng xuất?")) {
+					Stage loginStage = PopUpStageHelper.createPopUpStage("/application/dangNhap.fxml", 500, 300);
+					loginStage.show();
+				} else
+					event.consume();
+			}
+		});
+	}
+
 	private void calculateTamTinh() {
 		Integer tiLeVAT = Integer.parseInt(lbTS_TiLeThueVAT.getText().split("%")[0]);
 		Integer tamTinh = (MoneyFormatHelper.fromString(lbHD_TienPhong.getText())
@@ -607,7 +624,7 @@ public class MainController implements Initializable {
 		snTC_GioNhan.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 23, 8));
 		snTC_GioTra.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 23, 12));
 
-		int curMonth = Calendar.getInstance().get(Calendar.MONTH);
+		int curMonth = Calendar.getInstance().get(Calendar.MONTH) + 1;
 		int curYear = Calendar.getInstance().get(Calendar.YEAR);
 		snTK_DoanhThu.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(2000, 3000, curYear));
 		snTK_LuongKhach.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(2000, 3000, curYear));
@@ -638,7 +655,6 @@ public class MainController implements Initializable {
 			tpTC_Phong.getChildren().clear();
 			bpTC_ThongTinPhong.setVisible(false);
 		});
-
 	}
 
 	private void initCheckboxes() {
@@ -1068,7 +1084,7 @@ public class MainController implements Initializable {
 			alert.showAndWait();
 		}
 	}
-	
+
 	public void loadTableHoaDon() {
 		try {
 			ObservableList<HoaDonDTO> dsHoaDon = FXCollections.observableArrayList();
@@ -1664,6 +1680,7 @@ public class MainController implements Initializable {
 				}
 			}
 		} catch (SQLException SQLException) {
+			SQLException.printStackTrace();
 			Alert alert = new Alert(AlertType.INFORMATION);
 			alert.setTitle("Lỗi");
 			alert.setHeaderText("Không thể xóa phiếu thuê!");
@@ -1684,8 +1701,15 @@ public class MainController implements Initializable {
 			if (phieuThue.getThanhToanCocValue()) {
 				if (ConfirmDialogHelper
 						.confirm("Xác nhận huỷ thanh toán cọc của phiếu thuê " + phieuThue.getMaPhieuThue())) {
-					PhieuThueBUS.updateThanhToanCoc(phieuThue.getMaPhieuThue(), false);
-					loadTablePhieuThue();
+					if (PhieuThueBUS.updateThanhToanCoc(phieuThue.getMaPhieuThue(), false)) {
+						loadTablePhieuThue();
+					} else {
+						Alert alert = new Alert(AlertType.INFORMATION);
+						alert.setTitle("Lỗi");
+						alert.setHeaderText("Không thể cập nhật phiếu thuê!");
+						alert.setContentText("Đã có phòng trong phiếu được thanh toán!");
+						alert.showAndWait();
+					}
 				}
 			} else if (ConfirmDialogHelper
 					.confirm("Xác nhận thanh toán cọc của phiếu thuê " + phieuThue.getMaPhieuThue())) {
@@ -2115,11 +2139,14 @@ public class MainController implements Initializable {
 			barChart.setStyle("-fx-font-size: 16px");
 
 			int nam = snTK_DoanhThu.getValue();
+			XYChart.Series<String, Number> series = new XYChart.Series<>();
+			series.setName("Doanh thu theo tháng trong năm " + nam);
+
 			for (ThongKeDoanhThuDTO thongke : ThongKeBUS.getDoanhThuTheoNam(nam)) {
-				XYChart.Series<String, Number> series = new XYChart.Series<>();
 				series.getData().add(new XYChart.Data<>(thongke.getThang().toString(), thongke.getDoanhThu()));
-				barChart.getData().add(series);
 			}
+			
+			barChart.getData().add(series);
 			bpTK_DoanhThu.setCenter(barChart);
 		} catch (SQLException ex) {
 			Alert alert = new Alert(AlertType.INFORMATION);
@@ -2149,6 +2176,7 @@ public class MainController implements Initializable {
 			for (ThongKeSoKhachDTO thongke : ThongKeBUS.getSoKhachTheoNam(nam)) {
 				series.getData().add(new XYChart.Data<>(thongke.getThang().toString(), thongke.getSoKhach()));
 			}
+			
 			barChart.getData().add(series);
 			bpTK_LuongKhach.setCenter(barChart);
 		} catch (SQLException ex) {
@@ -2174,11 +2202,14 @@ public class MainController implements Initializable {
 
 			int thang = snTK_LoaiPhongThang.getValue();
 			int nam = snTK_LoaiPhongNam.getValue();
+			XYChart.Series<String, Number> series = new XYChart.Series<>();
+			series.setName("Doanh thu theo loại phòng trong tháng " + thang + "/" + nam);
+
 			for (ThongKeLoaiPhongDTO thongke : ThongKeBUS.getLoaiPhongTheoThang(thang, nam)) {
-				XYChart.Series<String, Number> series = new XYChart.Series<>();
 				series.getData().add(new XYChart.Data<>(thongke.getLoaiPhong(), thongke.getDoanhThu()));
-				barChart.getData().add(series);
 			}
+			
+			barChart.getData().add(series);
 			bpTK_LoaiPhong.setCenter(barChart);
 		} catch (SQLException ex) {
 			Alert alert = new Alert(AlertType.INFORMATION);
@@ -2202,11 +2233,14 @@ public class MainController implements Initializable {
 
 			int thang = snTK_LoaiDichVuThang.getValue();
 			int nam = snTK_LoaiDichVuNam.getValue();
+			XYChart.Series<String, Number> series = new XYChart.Series<>();
+			series.setName("Doanh thu theo loại dịch vụ trong tháng " + thang + "/" + nam);
+
 			for (ThongKeLoaiDichVuDTO thongke : ThongKeBUS.getLoaiDichVuTheoThang(thang, nam)) {
-				XYChart.Series<String, Number> series = new XYChart.Series<>();
 				series.getData().add(new XYChart.Data<>(thongke.getTenLoaiDichVu(), thongke.getDoanhThu()));
-				barChart.getData().add(series);
 			}
+			
+			barChart.getData().add(series);
 			bpTK_LoaiDichVu.setCenter(barChart);
 		} catch (SQLException ex) {
 			Alert alert = new Alert(AlertType.INFORMATION);
@@ -2580,7 +2614,7 @@ public class MainController implements Initializable {
 			tfHD_DienThoai.clear();
 			tfHD_Email.clear();
 			tfHD_GhiChu.clear();
- 			dsHDPhong.clear();
+			dsHDPhong.clear();
 			dsHDPtck.clear();
 		}
 	}
@@ -2595,20 +2629,33 @@ public class MainController implements Initializable {
 		tfHD_TenKhach.setDisable(!tfHD_TenKhach.isDisable());
 		tfHD_CMND.setDisable(!tfHD_CMND.isDisable());
 		tfHD_DienThoai.setDisable(!tfHD_DienThoai.isDisable());
-		
+
 		tfHD_Email.setDisable(!tfHD_Email.isDisable());
 		tfHD_GhiChu.setDisable(!tfHD_GhiChu.isDisable());
 		btnHD_ThanhToan.setDisable(!btnHD_ThanhToan.isDisable());
 	}
-	
+
 	public void handleXemHoaDon(ActionEvent e) {
-		String link = "/application/popupHoaDon.fxml";
-		Stage popUpStage = PopUpStageHelper.createPopUpStage(link, 1180, 750);
-		popUpStage.getScene().setUserData(this);
-		FXMLLoader loader = (FXMLLoader) popUpStage.getUserData();
-		HoaDonController controller = loader.getController();
-		HoaDonDTO hoaDon = tvHoaDon.getSelectionModel().getSelectedItem();
-		controller.initialize(hoaDon);
-		popUpStage.showAndWait();
+		try {
+			HoaDonDTO hoaDon = tvHoaDon.getSelectionModel().getSelectedItem();
+			String link = "/application/popupHoaDon.fxml";
+			Stage popUpStage = PopUpStageHelper.createPopUpStage(link, 1180, 750);
+			popUpStage.getScene().setUserData(this);
+			FXMLLoader loader = (FXMLLoader) popUpStage.getUserData();
+			HoaDonController controller = loader.getController();
+			controller.initialize(hoaDon);
+			popUpStage.showAndWait();
+		} catch (NullPointerException ex) {
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Thất bại");
+			alert.setHeaderText("Không thể xem thông tin hoá đơn!");
+			alert.setContentText("Vui lòng chọn hoá đơn cần xem!");
+			alert.showAndWait();
+		}
+	}
+
+	public void handleDangXuat(ActionEvent e) {
+		Window window = (Stage) lbPhong_MaPhong.getScene().getWindow();
+		window.fireEvent(new WindowEvent(window, WindowEvent.WINDOW_CLOSE_REQUEST));
 	}
 }

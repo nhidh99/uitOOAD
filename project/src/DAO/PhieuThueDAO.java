@@ -138,4 +138,18 @@ public class PhieuThueDAO {
 		conn.close();
 		return output;
 	}
+
+	public static boolean checkThanhToanCoc(Integer maPhieuThue) throws SQLException {
+		Connection conn = DBHelper.getConnection();
+		String query = "SELECT EXISTS (SELECT 1 FROM PT_Phong PTP "
+				+ "JOIN PhieuThue PT ON PTP.MaPhieuThue = PT.MaPhieuThue "
+				+ "WHERE PT.MaPhieuThue = ? AND MaHoaDon IS NOT NULL LIMIT 1)";
+		PreparedStatement statement = conn.prepareStatement(query);
+		statement.setInt(1, maPhieuThue);
+		ResultSet rs = statement.executeQuery();
+		rs.next();
+		boolean output = rs.getBoolean(1);
+		conn.close();
+		return output;
+	}
 }

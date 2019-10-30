@@ -41,7 +41,8 @@ VIEW `view_dsphong` AS
         JOIN `tinhtrang`)
     WHERE
         ((`phong`.`MaLoaiPhong` = `loaiphong`.`MaLoaiPhong`)
-            AND (`phong`.`MaTinhTrang` = `tinhtrang`.`MaTinhTrang`));
+            AND (`phong`.`MaTinhTrang` = `tinhtrang`.`MaTinhTrang`)
+            AND (`phong`.`KhaDung` = TRUE));
 
 CREATE 
     ALGORITHM = UNDEFINED 
@@ -55,6 +56,7 @@ VIEW `view_dsptphong` AS
         `pt`.`SoDienThoai` AS `SoDienThoai`,
         `ptp`.`NgayNhan` AS `NgayNhan`,
         `ptp`.`NgayTra` AS `NgayTra`,
+        `ptp`.`DonGiaThue` AS `DonGiaThue`,
         `ptp`.`TienCoc` AS `TienCoc`,
         `ptp`.`ThanhTien` AS `ThanhTien`
     FROM
@@ -63,7 +65,7 @@ VIEW `view_dsptphong` AS
     WHERE
         ((`ptp`.`MaHoaDon` IS NULL)
             AND (`pt`.`ThanhToanCoc` = TRUE))
-    ORDER BY `ptp`.`NgayNhan` DESC
+    ORDER BY `ptp`.`NgayNhan` DESC;
 
 CREATE 
     ALGORITHM = UNDEFINED 
@@ -98,22 +100,7 @@ VIEW `view_tkloaidichvuthang` AS
     GROUP BY `ldv`.`TenLoaiDichVu` , `Thang` , `Nam`
     ORDER BY `Nam` , `Thang`;
 
-CREATE 
-    ALGORITHM = UNDEFINED 
-    DEFINER = `root`@`localhost` 
-    SQL SECURITY DEFINER
-VIEW `view_tkloaiphongthang` AS
-    SELECT 
-        `pt_phong`.`LoaiPhongThue` AS `LoaiPhongThue`,
-        SUM(`pt_phong`.`ThanhTien`) AS `TienPhong`,
-        MONTH(`pt_phong`.`NgayTra`) AS `Thang`,
-        YEAR(`pt_phong`.`NgayTra`) AS `Nam`
-    FROM
-        `pt_phong`
-    WHERE
-        (`pt_phong`.`MaHoaDon` IS NOT NULL)
-    GROUP BY `pt_phong`.`LoaiPhongThue` , `Thang` , `Nam`
-    ORDER BY `Nam` , `Thang`;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `view_tkloaiphongthang` AS select `pt_phong`.`LoaiPhongThue` AS `LoaiPhongThue`,sum(`pt_phong`.`ThanhTien`) AS `TienPhong`,month(`pt_phong`.`NgayTra`) AS `Thang`,year(`pt_phong`.`NgayTra`) AS `Nam` from `pt_phong` where (`pt_phong`.`MaHoaDon` is not null) group by `pt_phong`.`LoaiPhongThue`,`Thang`,`Nam` order by `Nam`,`Thang`;
 
 CREATE 
     ALGORITHM = UNDEFINED 

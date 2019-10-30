@@ -5,24 +5,26 @@ import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 import BUS.NhanVienBUS;
+import javafx.application.Platform;
 import javafx.fxml.*;
 import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import controller.MainController;
+import helper.ConfirmDialogHelper;
 import helper.PopUpStageHelper;
 
 public class DangNhapController implements Initializable {
-	
+
 	private Stage mainStage;
 	private MainController mainController;
-	
-	@FXML 
+
+	@FXML
 	private TextField tfDN_TaiKhoan;
 	@FXML
 	private PasswordField pfDN_MatKhau;
-	
-	
+
 	public void handleDangNhap() {
 		String username = tfDN_TaiKhoan.getText();
 		String password = pfDN_MatKhau.getText();
@@ -33,8 +35,7 @@ public class DangNhapController implements Initializable {
 				loginStage.close();
 				mainController.loadNhanVienByUsername(username);
 				mainStage.showAndWait();
-			}
-			else {
+			} else {
 				Alert alert = new Alert(AlertType.INFORMATION);
 				alert.setTitle("Lỗi");
 				alert.setHeaderText("Không thể đăng nhập!");
@@ -49,16 +50,22 @@ public class DangNhapController implements Initializable {
 			alert.showAndWait();
 		}
 	}
-		
+
 	public void handleThoat() {
-		System.exit(0);
+		Platform.exit();
 	}
-	
+
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		tfDN_TaiKhoan.setPromptText("username");
 		pfDN_MatKhau.setPromptText("password");
 		mainStage = PopUpStageHelper.createPopUpStage("/application/main.fxml", 1280, 800);
+		mainStage.getScene().getWindow().addEventFilter(WindowEvent.WINDOW_CLOSE_REQUEST, e -> {
+			if (ConfirmDialogHelper.confirm("Xác nhận đăng xuất?")) {
+				PopUpStageHelper.createPopUpStage("/application/dangNhap.fxml", 500, 300).show();
+			} else
+				e.consume();
+		});
 		FXMLLoader loader = (FXMLLoader) mainStage.getUserData();
 		mainController = loader.getController();
 	}

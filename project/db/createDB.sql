@@ -18,6 +18,7 @@ CREATE TABLE `phong` (
   `MaTinhTrang` int(11) NOT NULL,
   `MaPTPHienTai` int(11) DEFAULT NULL,
   `GhiChu` varchar(45) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `KhaDung` tinyint(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`MaPhong`),
   KEY `fk_phong_loaiphong_idx` (`MaLoaiPhong`),
   KEY `fk_phong_tinhtrang_idx` (`MaTinhTrang`),
@@ -169,9 +170,5 @@ CREATE TABLE `ptck_hoadon` (
 
 CREATE TABLE `thamso` (
   `TiLeTienCoc` float unsigned NOT NULL,
-  `TiLeThueVAT` float unsigned NOT NULL,
-  `PhuThuQuaKhach` float unsigned NOT NULL,
-  `PhuThuTraPhongTre` float unsigned NOT NULL,
-  `SoNgayTraCoc` int(10) unsigned NOT NULL
+  `TiLeThueVAT` float unsigned NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-

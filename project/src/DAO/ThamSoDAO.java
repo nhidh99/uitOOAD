@@ -19,9 +19,7 @@ public class ThamSoDAO {
 		
 		ThamSoDTO output = new ThamSoDTO(
 				rs.getFloat("TiLeThueVAT"),
-				rs.getFloat("TiLeTienCoc"),
-				rs.getFloat("PhuThuQuaKhach"),
-				rs.getFloat("PhuThuTraPhongTre"));
+				rs.getFloat("TiLeTienCoc"));
 		
 		conn.close();
 		return output;
@@ -29,12 +27,10 @@ public class ThamSoDAO {
 
 	public static boolean updateThamSo(ThamSoDTO thamSo) throws SQLException {
 		Connection conn = DBHelper.getConnection();
-		String query = "UPDATE ThamSo SET TiLeThueVAT = ?, TiLeTienCoc = ?, PhuThuQuaKhach = ?, PhuThuTraPhongTre = ?";
+		String query = "UPDATE ThamSo SET TiLeThueVAT = ?, TiLeTienCoc = ?";
 		PreparedStatement statement = conn.prepareStatement(query);
 		statement.setFloat(1, thamSo.getTiLeThueVAT());
 		statement.setFloat(2, thamSo.getTiLeTienCoc());
-		statement.setFloat(3, thamSo.getPhuThuQuaKhach());
-		statement.setFloat(4, thamSo.getPhuthuTraPhongTre());
 		int records = statement.executeUpdate();
 		conn.close();
 		return records > 0;

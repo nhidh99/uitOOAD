@@ -323,11 +323,7 @@
                                              <children>
                                                 <HBox alignment="CENTER" layoutY="63.0" spacing="20.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                    <children>
-                                                      <Button alignment="CENTER" mnemonicParsing="false" onAction="#handleThemVaoHoaDon" prefHeight="32.0" prefWidth="340.0" text="💸  THÊM VÀO HOÁ ĐƠN" textFill="#427921">
-                                                         <font>
-                                                            <Font name="System Bold" size="20.0" />
-                                                         </font></Button>
-                                                      <Button alignment="CENTER" mnemonicParsing="false" prefHeight="32.0" prefWidth="340.0" text="⏰  GIA HẠN PHÒNG" textFill="PURPLE">
+                                                      <Button alignment="CENTER" mnemonicParsing="false" onAction="#handleThemVaoHoaDon" prefHeight="44.0" prefWidth="675.0" text="💸  THÊM VÀO HOÁ ĐƠN" textFill="#427921">
                                                          <font>
                                                             <Font name="System Bold" size="20.0" />
                                                          </font></Button>
@@ -2111,7 +2107,7 @@
                                                       <Font name="System Bold" size="20.0" />
                                                    </font>
                                                 </Button>
-                                                <Button alignment="CENTER" mnemonicParsing="false" prefHeight="32.0" prefWidth="490.0" text="  🔒 ĐĂNG XUẤT" textFill="BROWN">
+                                                <Button alignment="CENTER" mnemonicParsing="false" onAction="#handleDangXuat" prefHeight="32.0" prefWidth="490.0" text="  🔒 ĐĂNG XUẤT" textFill="BROWN">
                                                    <font>
                                                       <Font name="System Bold" size="20.0" />
                                                    </font>

@@ -31,7 +31,7 @@ public class ThamSoController {
 
 	public void handleXacNhan(ActionEvent e) {
 		try {
-			ThamSoDTO thamSo = new ThamSoDTO((float) snTiLeVAT.getValue() / 100, (float) snTiLeCoc.getValue() / 100, 0, 0);
+			ThamSoDTO thamSo = new ThamSoDTO((float) snTiLeVAT.getValue() / 100, (float) snTiLeCoc.getValue() / 100);
 
 			if (ThamSoBUS.updateThamSo(thamSo)) {
 				Alert alert = new Alert(AlertType.INFORMATION);

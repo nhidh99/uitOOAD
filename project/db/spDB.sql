@@ -6,13 +6,15 @@ BEGIN
 	SELECT EXISTS (
 		SELECT *
 		FROM PT_Phong PTP
+        LEFT JOIN Phong P 
+        ON P.MaPTPHienTai = PTP.MaPTPhong
 		WHERE PTP.MaPhieuThue = check_MaPhieuThue
-		AND (EXISTS (
+        AND ((EXISTS (
 			SELECT * 
 			FROM Phong P
-			WHERE P.MaPTPHienTai = PTP.MaPTPhong
+            WHERE MaPTPHienTai IS NOT NULL
             LIMIT 1) 
-		) OR PTP.MaHoaDon IS NOT NULL)
+		) OR PTP.MaHoaDon IS NOT NULL))
 	LIMIT 1;
 END$$
 DELIMITER ;
@@ -108,6 +110,53 @@ END$$
 DELIMITER ;
 
 DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `del_Phong`(
+	IN del_MaPhong VARCHAR(10)
+)
+BEGIN
+	IF (EXISTS (SELECT 1
+		FROM PT_Phong PTP
+		WHERE PTP.MaPhong = 101 AND MaHoaDon IS NOT NULL)
+		AND NOT EXISTS (SELECT 1
+		FROM PT_Phong PTP
+		WHERE PTP.MaPhong = 101 AND MaHoaDon IS NULL))
+    THEN
+		UPDATE Phong
+        SET KhaDung = false
+        WHERE MaPhong = del_MaPhong;
+	ELSEIF NOT EXISTS (SELECT 1
+		FROM PT_Phong PTP
+		WHERE PTP.MaPhong = del_MaPhong)
+	THEN	
+		DELETE FROM Phong WHERE MaPhong = del_MaPhong;
+	END IF;
+END$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ins_Phong`(
+	IN ins_MaPhong VARCHAR(10),
+    IN ins_MaLoaiPhong INT,
+    IN ins_MaTinhTrang INT,
+    IN ins_GhiChu VARCHAR(45)
+)
+BEGIN
+	IF EXISTS (SELECT * FROM Phong WHERE MaPhong = ins_MaPhong AND KhaDung = false)
+    THEN
+		UPDATE Phong
+        SET MaLoaiPhong = ins_MaLoaiPhong,
+			MaTinhTrang = ins_MaTinhTrang,
+			GhiChu = ins_GhiChu,
+			KhaDung = true
+		WHERE MaPhong = ins_MaPhong;
+	ELSE
+		INSERT INTO Phong (MaPhong, MaLoaiPhong, MaTinhTrang, GhiChu)
+        VALUES (ins_MaPhong, ins_MaLoaiPhong, ins_MaTinhTrang, ins_GhiChu);
+    END IF;
+END$$
+DELIMITER ;
+
+DELIMITER $$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `login_NhanVien`(
 	IN login_TenTaiKhoan VARCHAR(45),
     IN login_MatKhau VARCHAR(45)
@@ -134,6 +183,7 @@ BEGIN
 	JOIN LoaiPhong LP ON LP.MaLoaiPhong = P.MaLoaiPhong
 	JOIN TinhTrang TT ON TT.MaTinhTrang = P.MaTinhTrang
 	WHERE LP.MaLoaiPhong = search_MaLoaiPhong
+    AND P.KhaDung = true
     AND (NOT EXISTS (
 		SELECT *
 		FROM PT_Phong PTP
@@ -148,4 +198,3 @@ BEGIN
 	));
 END$$
 DELIMITER ;
-
