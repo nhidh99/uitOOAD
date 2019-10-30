@@ -15,347 +15,362 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<TabPane prefHeight="400.0" prefWidth="800.0" style="-fx-open-tab-animation: NONE; -fx-close-tab-animation: NONE; -fx-tab-min-width: 160;" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.CTHDController">
-   <tabs>
-      <Tab style="-fx-font-size: 16; -fx-font-weight: bold; -fx-padding: 10;" text="📋 THÔNG TIN THUÊ">
-         <content>
-            <BorderPane prefHeight="200.0" prefWidth="200.0">
-               <center>
-                  <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="TOP_CENTER">
-                     <children>
-                        <GridPane alignment="CENTER" hgap="10.0" prefHeight="190.0" prefWidth="761.0" scaleShape="false" vgap="12.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                           <columnConstraints>
-                              <ColumnConstraints halignment="RIGHT" hgrow="NEVER" maxWidth="28.00001220703126" minWidth="-Infinity" prefWidth="28.00001220703126" />
-                              <ColumnConstraints halignment="LEFT" hgrow="NEVER" maxWidth="-Infinity" minWidth="-Infinity" />
-                              <ColumnConstraints hgrow="NEVER" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="180.0" />
-                              <ColumnConstraints halignment="CENTER" hgrow="NEVER" maxWidth="-Infinity" minWidth="10.0" />
-                              <ColumnConstraints halignment="RIGHT" hgrow="NEVER" maxWidth="-Infinity" minWidth="-Infinity" />
-                              <ColumnConstraints hgrow="NEVER" maxWidth="-Infinity" minWidth="-Infinity" />
-                              <ColumnConstraints hgrow="NEVER" maxWidth="-Infinity" minWidth="-Infinity" />
-                           </columnConstraints>
-                           <rowConstraints>
-                              <RowConstraints />
-                              <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" />
-                              <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" valignment="CENTER" vgrow="SOMETIMES" />
-                              <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" valignment="CENTER" vgrow="SOMETIMES" />
-                              <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" valignment="CENTER" vgrow="SOMETIMES" />
-                              <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" valignment="CENTER" vgrow="SOMETIMES" />
-                              <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" valignment="CENTER" vgrow="SOMETIMES" />
-                              <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" valignment="CENTER" vgrow="SOMETIMES" />
-                           </rowConstraints>
+
+<BorderPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.CTHDController">
+   <center>
+      <TabPane prefHeight="400.0" prefWidth="800.0" style="-fx-open-tab-animation: NONE; -fx-close-tab-animation: NONE; -fx-tab-min-width: 160;" tabClosingPolicy="UNAVAILABLE">
+         <tabs>
+            <Tab style="-fx-font-size: 16; -fx-font-weight: bold; -fx-padding: 10;" text="📋 THÔNG TIN THUÊ">
+               <content>
+                  <BorderPane prefHeight="200.0" prefWidth="200.0">
+                     <center>
+                        <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="TOP_CENTER">
                            <children>
-                              <Label text="Khách thuê:" GridPane.columnIndex="1" GridPane.rowIndex="2">
-                                 <font>
-                                    <Font name="System Bold" size="20.0" />
-                                 </font>
-                              </Label>
-                              <Label text="CMND:" GridPane.columnIndex="1" GridPane.rowIndex="3">
-                                 <font>
-                                    <Font name="System Bold" size="20.0" />
-                                 </font>
-                              </Label>
-                              <Label fx:id="lbPhong_KhachThue" text="Đinh Hoàng Nhi" wrapText="true" GridPane.columnIndex="2" GridPane.rowIndex="2">
-                                 <font>
-                                    <Font size="20.0" />
-                                 </font>
-                              </Label>
-                              <Label fx:id="lbPhong_CMND" text="17520853" GridPane.columnIndex="2" GridPane.rowIndex="3">
-                                 <font>
-                                    <Font size="20.0" />
-                                 </font>
-                              </Label>
-                              <Label text="Điện thoại:" GridPane.columnIndex="1" GridPane.rowIndex="4" GridPane.valignment="CENTER">
-                                 <GridPane.margin>
-                                    <Insets />
-                                 </GridPane.margin>
-                                 <font>
-                                    <Font name="System Bold" size="20.0" />
-                                 </font>
-                              </Label>
-                              <Label fx:id="lbPhong_DienThoai" text="0336887109" GridPane.columnIndex="2" GridPane.rowIndex="4" GridPane.valignment="CENTER">
-                                 <GridPane.margin>
-                                    <Insets />
-                                 </GridPane.margin>
-                                 <font>
-                                    <Font size="20.0" />
-                                 </font>
-                              </Label>
-                              <Label text="👤" GridPane.rowIndex="2">
-                                 <font>
-                                    <Font name="System Bold Italic" size="20.0" />
-                                 </font>
-                              </Label>
-                              <Label text="🏷" GridPane.rowIndex="3">
-                                 <font>
-                                    <Font name="System Bold Italic" size="20.0" />
-                                 </font>
-                              </Label>
-                              <Label text="📞" GridPane.rowIndex="4" GridPane.valignment="CENTER">
-                                 <GridPane.margin>
-                                    <Insets />
-                                 </GridPane.margin>
-                                 <font>
-                                    <Font name="System Bold Italic" size="20.0" />
-                                 </font>
-                              </Label>
-                              <Label text="🔑" GridPane.columnIndex="4" GridPane.rowIndex="2">
-                                 <font>
-                                    <Font name="System Bold Italic" size="20.0" />
-                                 </font>
-                              </Label>
-                              <Label text="Ngày nhận:" GridPane.columnIndex="5" GridPane.rowIndex="2">
-                                 <font>
-                                    <Font name="System Bold" size="20.0" />
-                                 </font>
-                              </Label>
-                              <Label fx:id="lbPhong_NgayNhan" text="08h 06/08/2019" GridPane.columnIndex="6" GridPane.rowIndex="2">
-                                 <font>
-                                    <Font size="20.0" />
-                                 </font>
-                              </Label>
-                              <Label text="💵" GridPane.columnIndex="4" GridPane.rowIndex="5">
-                                 <font>
-                                    <Font name="System Bold Italic" size="20.0" />
-                                 </font>
-                              </Label>
-                              <Label text="Ngày trả:" GridPane.columnIndex="5" GridPane.rowIndex="3">
-                                 <font>
-                                    <Font name="System Bold" size="20.0" />
-                                 </font>
-                              </Label>
-                              <Label fx:id="lbPhong_NgayTra" text="12h 08/08/2019" GridPane.columnIndex="6" GridPane.rowIndex="3">
-                                 <font>
-                                    <Font size="20.0" />
-                                 </font>
-                              </Label>
-                              <Label text="💲" GridPane.columnIndex="4" GridPane.rowIndex="4">
-                                 <font>
-                                    <Font name="System Bold Italic" size="20.0" />
-                                 </font>
-                              </Label>
-                              <Label text="Tiền cọc:" GridPane.columnIndex="5" GridPane.rowIndex="5">
-                                 <font>
-                                    <Font name="System Bold" size="20.0" />
-                                 </font>
-                              </Label>
-                              <Label text="Đơn giá:" GridPane.columnIndex="5" GridPane.rowIndex="4">
-                                 <font>
-                                    <Font name="System Bold" size="20.0" />
-                                 </font>
-                              </Label>
-                              <Label fx:id="lbPhong_DonGiaThue" text="300,000 VND" GridPane.columnIndex="6" GridPane.rowIndex="4">
-                                 <font>
-                                    <Font size="20.0" />
-                                 </font>
-                              </Label>
-                              <Label text="Nhân viên:" GridPane.columnIndex="1" GridPane.rowIndex="5">
-                                 <font>
-                                    <Font name="System Bold" size="20.0" />
-                                 </font>
-                              </Label>
-                              <Label fx:id="lbPhong_NhanVien" contentDisplay="CENTER" text="Phạm Trung Trường" wrapText="true" GridPane.columnIndex="2" GridPane.rowIndex="5">
-                                 <font>
-                                    <Font size="20.0" />
-                                 </font>
-                              </Label>
-                              <Label text="Ngày lập:" GridPane.columnIndex="5" GridPane.rowIndex="1">
-                                 <font>
-                                    <Font name="System Bold" size="20.0" />
-                                 </font>
-                              </Label>
-                              <Label fx:id="lbPhong_NgayLap" text="05/08/2019" GridPane.columnIndex="6" GridPane.rowIndex="1">
-                                 <font>
-                                    <Font size="20.0" />
-                                 </font>
-                              </Label>
-                              <Label text="Mã PTP:" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                                 <font>
-                                    <Font name="System Bold" size="20.0" />
-                                 </font>
-                              </Label>
-                              <Label fx:id="lbPhong_MaPTP" text="1652436287" GridPane.columnIndex="2" GridPane.rowIndex="1">
-                                 <font>
-                                    <Font size="20.0" />
-                                 </font>
-                              </Label>
-                              <Label text="📝" GridPane.rowIndex="1">
-                                 <font>
-                                    <Font name="System Bold Italic" size="20.0" />
-                                 </font>
-                              </Label>
-                              <Label text="📅" GridPane.columnIndex="4" GridPane.rowIndex="1">
-                                 <font>
-                                    <Font size="20.0" />
-                                 </font>
-                              </Label>
-                              <Label text="🔒" GridPane.columnIndex="4" GridPane.rowIndex="3">
-                                 <font>
-                                    <Font name="System Bold Italic" size="20.0" />
-                                 </font>
-                              </Label>
-                              <Label text="✍" GridPane.rowIndex="5">
-                                 <font>
-                                    <Font name="System Bold Italic" size="20.0" />
-                                 </font>
-                              </Label>
-                              <Separator orientation="VERTICAL" prefHeight="200.0" GridPane.columnIndex="3" GridPane.rowSpan="7">
-                                 <GridPane.margin>
-                                    <Insets left="10.0" right="10.0" />
-                                 </GridPane.margin>
-                                 <padding>
-                                    <Insets bottom="8.0" />
-                                 </padding>
-                              </Separator>
-                              <Separator prefWidth="200.0" GridPane.columnSpan="7" GridPane.rowIndex="6" />
-                              <Label text="Tiền dịch vụ:" GridPane.columnIndex="1" GridPane.rowIndex="7">
-                                 <font>
-                                    <Font name="System Bold" size="20.0" />
-                                 </font>
-                              </Label>
-                              <Label fx:id="lbPhong_TienDichVu" text="300,000 VND" GridPane.columnIndex="2" GridPane.rowIndex="7">
-                                 <font>
-                                    <Font size="20.0" />
-                                 </font>
-                              </Label>
-                              <Label text="Tiền PTCK:" GridPane.columnIndex="5" GridPane.rowIndex="7">
-                                 <font>
-                                    <Font name="System Bold" size="20.0" />
-                                 </font>
-                              </Label>
-                              <Label fx:id="lbPhong_TienPTCK" text="-100,000 VND" GridPane.columnIndex="6" GridPane.rowIndex="7">
-                                 <font>
-                                    <Font size="20.0" />
-                                 </font>
-                              </Label>
-                              <Label text="🎁" GridPane.rowIndex="7">
-                                 <font>
-                                    <Font name="System Bold Italic" size="20.0" />
-                                 </font>
-                              </Label>
-                              <Label text="🔖" GridPane.columnIndex="4" GridPane.rowIndex="7">
-                                 <font>
-                                    <Font name="System Bold Italic" size="20.0" />
-                                 </font>
-                              </Label>
-                              <Label fx:id="lbPhong_TienCoc" text="300,000 VND" GridPane.columnIndex="6" GridPane.rowIndex="5">
-                                 <font>
-                                    <Font size="20.0" />
-                                 </font>
-                              </Label>
-                              <Label text="🏨">
-                                 <font>
-                                    <Font name="System Bold" size="20.0" />
-                                 </font>
-                              </Label>
-                              <Label text="Mã phòng:" GridPane.columnIndex="1">
-                                 <font>
-                                    <Font name="System Bold" size="20.0" />
-                                 </font>
-                              </Label>
-                              <Label text="Loại phòng:" GridPane.columnIndex="5">
-                                 <font>
-                                    <Font name="System Bold" size="20.0" />
-                                 </font>
-                              </Label>
-                              <Label text="🏛" GridPane.columnIndex="4">
-                                 <font>
-                                    <Font name="System Bold" size="20.0" />
-                                 </font>
-                              </Label>
-                              <Label fx:id="lbPhong_LoaiPhong" text="1652436287" GridPane.columnIndex="6">
-                                 <font>
-                                    <Font size="20.0" />
-                                 </font>
-                              </Label>
-                              <Label fx:id="lbPhong_MaPhong" text="1652436287" GridPane.columnIndex="2">
-                                 <font>
-                                    <Font size="20.0" />
-                                 </font>
-                              </Label>
+                              <GridPane alignment="CENTER" hgap="10.0" prefHeight="190.0" prefWidth="761.0" scaleShape="false" vgap="12.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <columnConstraints>
+                                    <ColumnConstraints halignment="RIGHT" hgrow="NEVER" maxWidth="28.00001220703126" minWidth="-Infinity" prefWidth="28.00001220703126" />
+                                    <ColumnConstraints halignment="LEFT" hgrow="NEVER" maxWidth="-Infinity" minWidth="-Infinity" />
+                                    <ColumnConstraints hgrow="NEVER" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="180.0" />
+                                    <ColumnConstraints halignment="CENTER" hgrow="NEVER" maxWidth="-Infinity" minWidth="10.0" />
+                                    <ColumnConstraints halignment="RIGHT" hgrow="NEVER" maxWidth="-Infinity" minWidth="-Infinity" />
+                                    <ColumnConstraints hgrow="NEVER" maxWidth="-Infinity" minWidth="-Infinity" />
+                                    <ColumnConstraints hgrow="NEVER" maxWidth="-Infinity" minWidth="-Infinity" />
+                                 </columnConstraints>
+                                 <rowConstraints>
+                                    <RowConstraints />
+                                    <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" />
+                                    <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" valignment="CENTER" vgrow="SOMETIMES" />
+                                    <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" valignment="CENTER" vgrow="SOMETIMES" />
+                                    <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" valignment="CENTER" vgrow="SOMETIMES" />
+                                    <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" valignment="CENTER" vgrow="SOMETIMES" />
+                                    <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" valignment="CENTER" vgrow="SOMETIMES" />
+                                    <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" valignment="CENTER" vgrow="SOMETIMES" />
+                                 </rowConstraints>
+                                 <children>
+                                    <Label text="Khách thuê:" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                       <font>
+                                          <Font name="System Bold" size="20.0" />
+                                       </font>
+                                    </Label>
+                                    <Label text="CMND:" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                       <font>
+                                          <Font name="System Bold" size="20.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="lbPhong_KhachThue" text="Đinh Hoàng Nhi" wrapText="true" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                                       <font>
+                                          <Font size="20.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="lbPhong_CMND" text="17520853" GridPane.columnIndex="2" GridPane.rowIndex="3">
+                                       <font>
+                                          <Font size="20.0" />
+                                       </font>
+                                    </Label>
+                                    <Label text="Điện thoại:" GridPane.columnIndex="1" GridPane.rowIndex="4" GridPane.valignment="CENTER">
+                                       <GridPane.margin>
+                                          <Insets />
+                                       </GridPane.margin>
+                                       <font>
+                                          <Font name="System Bold" size="20.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="lbPhong_DienThoai" text="0336887109" GridPane.columnIndex="2" GridPane.rowIndex="4" GridPane.valignment="CENTER">
+                                       <GridPane.margin>
+                                          <Insets />
+                                       </GridPane.margin>
+                                       <font>
+                                          <Font size="20.0" />
+                                       </font>
+                                    </Label>
+                                    <Label text="👤" GridPane.rowIndex="2">
+                                       <font>
+                                          <Font name="System Bold Italic" size="20.0" />
+                                       </font>
+                                    </Label>
+                                    <Label text="🏷" GridPane.rowIndex="3">
+                                       <font>
+                                          <Font name="System Bold Italic" size="20.0" />
+                                       </font>
+                                    </Label>
+                                    <Label text="📞" GridPane.rowIndex="4" GridPane.valignment="CENTER">
+                                       <GridPane.margin>
+                                          <Insets />
+                                       </GridPane.margin>
+                                       <font>
+                                          <Font name="System Bold Italic" size="20.0" />
+                                       </font>
+                                    </Label>
+                                    <Label text="🔑" GridPane.columnIndex="4" GridPane.rowIndex="2">
+                                       <font>
+                                          <Font name="System Bold Italic" size="20.0" />
+                                       </font>
+                                    </Label>
+                                    <Label text="Ngày nhận:" GridPane.columnIndex="5" GridPane.rowIndex="2">
+                                       <font>
+                                          <Font name="System Bold" size="20.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="lbPhong_NgayNhan" text="08h 06/08/2019" GridPane.columnIndex="6" GridPane.rowIndex="2">
+                                       <font>
+                                          <Font size="20.0" />
+                                       </font>
+                                    </Label>
+                                    <Label text="💵" GridPane.columnIndex="4" GridPane.rowIndex="5">
+                                       <font>
+                                          <Font name="System Bold Italic" size="20.0" />
+                                       </font>
+                                    </Label>
+                                    <Label text="Ngày trả:" GridPane.columnIndex="5" GridPane.rowIndex="3">
+                                       <font>
+                                          <Font name="System Bold" size="20.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="lbPhong_NgayTra" text="12h 08/08/2019" GridPane.columnIndex="6" GridPane.rowIndex="3">
+                                       <font>
+                                          <Font size="20.0" />
+                                       </font>
+                                    </Label>
+                                    <Label text="💲" GridPane.columnIndex="4" GridPane.rowIndex="4">
+                                       <font>
+                                          <Font name="System Bold Italic" size="20.0" />
+                                       </font>
+                                    </Label>
+                                    <Label text="Tiền cọc:" GridPane.columnIndex="5" GridPane.rowIndex="5">
+                                       <font>
+                                          <Font name="System Bold" size="20.0" />
+                                       </font>
+                                    </Label>
+                                    <Label text="Đơn giá:" GridPane.columnIndex="5" GridPane.rowIndex="4">
+                                       <font>
+                                          <Font name="System Bold" size="20.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="lbPhong_DonGiaThue" text="300,000 VND" GridPane.columnIndex="6" GridPane.rowIndex="4">
+                                       <font>
+                                          <Font size="20.0" />
+                                       </font>
+                                    </Label>
+                                    <Label text="Nhân viên:" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                                       <font>
+                                          <Font name="System Bold" size="20.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="lbPhong_NhanVien" contentDisplay="CENTER" text="Phạm Trung Trường" wrapText="true" GridPane.columnIndex="2" GridPane.rowIndex="5">
+                                       <font>
+                                          <Font size="20.0" />
+                                       </font>
+                                    </Label>
+                                    <Label text="Ngày lập:" GridPane.columnIndex="5" GridPane.rowIndex="1">
+                                       <font>
+                                          <Font name="System Bold" size="20.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="lbPhong_NgayLap" text="05/08/2019" GridPane.columnIndex="6" GridPane.rowIndex="1">
+                                       <font>
+                                          <Font size="20.0" />
+                                       </font>
+                                    </Label>
+                                    <Label text="Mã PTP:" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                       <font>
+                                          <Font name="System Bold" size="20.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="lbPhong_MaPTP" text="1652436287" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                                       <font>
+                                          <Font size="20.0" />
+                                       </font>
+                                    </Label>
+                                    <Label text="📝" GridPane.rowIndex="1">
+                                       <font>
+                                          <Font name="System Bold Italic" size="20.0" />
+                                       </font>
+                                    </Label>
+                                    <Label text="📅" GridPane.columnIndex="4" GridPane.rowIndex="1">
+                                       <font>
+                                          <Font size="20.0" />
+                                       </font>
+                                    </Label>
+                                    <Label text="🔒" GridPane.columnIndex="4" GridPane.rowIndex="3">
+                                       <font>
+                                          <Font name="System Bold Italic" size="20.0" />
+                                       </font>
+                                    </Label>
+                                    <Label text="✍" GridPane.rowIndex="5">
+                                       <font>
+                                          <Font name="System Bold Italic" size="20.0" />
+                                       </font>
+                                    </Label>
+                                    <Separator orientation="VERTICAL" prefHeight="200.0" GridPane.columnIndex="3" GridPane.rowSpan="7">
+                                       <GridPane.margin>
+                                          <Insets left="10.0" right="10.0" />
+                                       </GridPane.margin>
+                                       <padding>
+                                          <Insets bottom="8.0" />
+                                       </padding>
+                                    </Separator>
+                                    <Separator prefWidth="200.0" GridPane.columnSpan="7" GridPane.rowIndex="6" />
+                                    <Label text="Tiền dịch vụ:" GridPane.columnIndex="1" GridPane.rowIndex="7">
+                                       <font>
+                                          <Font name="System Bold" size="20.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="lbPhong_TienDichVu" text="300,000 VND" GridPane.columnIndex="2" GridPane.rowIndex="7">
+                                       <font>
+                                          <Font size="20.0" />
+                                       </font>
+                                    </Label>
+                                    <Label text="Tiền PTCK:" GridPane.columnIndex="5" GridPane.rowIndex="7">
+                                       <font>
+                                          <Font name="System Bold" size="20.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="lbPhong_TienPTCK" text="-100,000 VND" GridPane.columnIndex="6" GridPane.rowIndex="7">
+                                       <font>
+                                          <Font size="20.0" />
+                                       </font>
+                                    </Label>
+                                    <Label text="🎁" GridPane.rowIndex="7">
+                                       <font>
+                                          <Font name="System Bold Italic" size="20.0" />
+                                       </font>
+                                    </Label>
+                                    <Label text="🔖" GridPane.columnIndex="4" GridPane.rowIndex="7">
+                                       <font>
+                                          <Font name="System Bold Italic" size="20.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="lbPhong_TienCoc" text="300,000 VND" GridPane.columnIndex="6" GridPane.rowIndex="5">
+                                       <font>
+                                          <Font size="20.0" />
+                                       </font>
+                                    </Label>
+                                    <Label text="🏨">
+                                       <font>
+                                          <Font name="System Bold" size="20.0" />
+                                       </font>
+                                    </Label>
+                                    <Label text="Mã phòng:" GridPane.columnIndex="1">
+                                       <font>
+                                          <Font name="System Bold" size="20.0" />
+                                       </font>
+                                    </Label>
+                                    <Label text="Loại phòng:" GridPane.columnIndex="5">
+                                       <font>
+                                          <Font name="System Bold" size="20.0" />
+                                       </font>
+                                    </Label>
+                                    <Label text="🏛" GridPane.columnIndex="4">
+                                       <font>
+                                          <Font name="System Bold" size="20.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="lbPhong_LoaiPhong" text="1652436287" GridPane.columnIndex="6">
+                                       <font>
+                                          <Font size="20.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="lbPhong_MaPhong" text="1652436287" GridPane.columnIndex="2">
+                                       <font>
+                                          <Font size="20.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                                 <effect>
+                                    <Blend />
+                                 </effect>
+                              </GridPane>
                            </children>
-                           <effect>
-                              <Blend />
-                           </effect>
-                        </GridPane>
-                     </children>
-                  </AnchorPane>
-               </center>
-            </BorderPane>
-         </content>
-      </Tab>
-      <Tab style="-fx-font-size: 16; -fx-font-weight: bold; -fx-padding: 10;" text="👥 KHÁCH THUÊ">
-         <content>
-            <BorderPane prefHeight="200.0" prefWidth="200.0">
-               <center>
-                  <TableView fx:id="tvKhach" prefHeight="351.0" prefWidth="631.0" BorderPane.alignment="CENTER">
-                     <columns>
-                        <TableColumn fx:id="tcKhach_STT" editable="false" minWidth="-1.0" prefWidth="-1.0" style="-fx-alignment: CENTER; -fx-font-size: 15;" text="STT" />
-                        <TableColumn fx:id="tcKhach_MaKhach" editable="false" minWidth="0.0" prefWidth="-1.0" style="-fx-alignment: CENTER;" text="Mã khách" visible="false" />
-                        <TableColumn fx:id="tcKhach_HoTen" editable="false" minWidth="0.0" prefWidth="-1.0" style="-fx-alignment: CENTER; -fx-font-size: 15;" text="Họ tên" />
-                        <TableColumn fx:id="tcKhach_SoDienThoai" editable="false" minWidth="-1.0" prefWidth="-1.0" style="-fx-alignment: CENTER; -fx-font-size: 15;" text="Số điện thoại" />
-                        <TableColumn fx:id="tcKhach_CMND" editable="false" minWidth="-1.0" prefWidth="-1.0" style="-fx-alignment: CENTER; -fx-font-size: 15;" text="CMND" />
-                        <TableColumn fx:id="tcKhach_GioiTinh" editable="false" minWidth="-1.0" prefWidth="-1.0" style="-fx-alignment: CENTER; -fx-font-size: 15;" text="Giới tính" />
-                        <TableColumn fx:id="tcKhach_QuocTich" editable="false" minWidth="-1.0" prefWidth="-1.0" style="-fx-alignment: CENTER; -fx-font-size: 15;" text="Quốc tịch" />
-                     </columns>
-                     <BorderPane.margin>
-                        <Insets bottom="15.0" />
-                     </BorderPane.margin>
-                     <columnResizePolicy>
-                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-                     </columnResizePolicy>
-                  </TableView>
-               </center>
-            </BorderPane>
-         </content>
-      </Tab>
-      <Tab style="-fx-font-size: 16; -fx-font-weight: bold; -fx-padding: 10;" text="🎲 DỊCH VỤ">
-         <content>
-            <BorderPane prefHeight="200.0" prefWidth="200.0">
-               <center>
-                  <TableView fx:id="tvPtpDichVu" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-                     <columns>
-                        <TableColumn fx:id="tcPtpDV_STT" minWidth="-1.0" prefWidth="-1.0" style="-fx-alignment: CENTER; -fx-font-size: 15;" text="STT" />
-                        <TableColumn fx:id="tcPtpDV_MaPTPDV" minWidth="-1.0" prefWidth="-1.0" style="-fx-alignment: CENTER;" text="Mã PTPDV" visible="false" />
-                        <TableColumn fx:id="tcPtpDV_TenDichVu" minWidth="-1.0" prefWidth="-1.0" style="-fx-alignment: CENTER; -fx-font-size: 15;" text="Dịch vụ" />
-                        <TableColumn fx:id="tcPtpDV_SoLuong" minWidth="-1.0" prefWidth="-1.0" style="-fx-alignment: CENTER; -fx-font-size: 15;" text="Số lượng" />
-                        <TableColumn fx:id="tcPtpDV_DonViTinh" minWidth="-1.0" prefWidth="-1.0" style="-fx-alignment: CENTER; -fx-font-size: 15;" text="Đơn vị tính" />
-                        <TableColumn fx:id="tcPtpDV_DonGia" minWidth="-1.0" prefWidth="-1.0" style="-fx-alignment: CENTER; -fx-font-size: 15;" text="Đơn giá" />
-                        <TableColumn fx:id="tcPtpDV_ThanhTien" minWidth="-1.0" prefWidth="-1.0" style="-fx-alignment: CENTER; -fx-font-size: 15;" text="Thành tiền" />
-                     </columns>
-                     <columnResizePolicy>
-                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-                     </columnResizePolicy>
-                     <BorderPane.margin>
-                        <Insets bottom="15.0" />
-                     </BorderPane.margin>
-                  </TableView>
-               </center>
-            </BorderPane>
-         </content>
-      </Tab>
-      <Tab style="-fx-font-size: 16; -fx-font-weight: bold; -fx-padding: 10;" text="💲 PHỤ THU / CHIẾT KHẤU">
-         <content>
-            <BorderPane prefHeight="200.0" prefWidth="200.0">
-               <center>
-                  <TableView fx:id="tvPtpPTCK" prefHeight="340.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-                     <columns>
-                        <TableColumn fx:id="tcPtpPTCK_STT" minWidth="-1.0" prefWidth="-1.0" style="-fx-alignment: CENTER; -fx-font-size: 15;" text="STT" />
-                        <TableColumn fx:id="tcPtpPTCK_MaPTCK" minWidth="-1.0" prefWidth="-1.0" style="-fx-alignment: CENTER;" text="Mã PTCK" visible="false" />
-                        <TableColumn fx:id="tcPtpPTCK_NoiDung" minWidth="-1.0" prefWidth="-1.0" style="-fx-alignment: CENTER; -fx-font-size: 15;" text="Nội dung" />
-                        <TableColumn fx:id="tcPtpPTCK_SoLuong" minWidth="-1.0" prefWidth="-1.0" style="-fx-alignment: CENTER; -fx-font-size: 15;" text="Số lượng" />
-                        <TableColumn fx:id="tcPtpPTCK_DonGia" minWidth="-1.0" prefWidth="-1.0" style="-fx-alignment: CENTER; -fx-font-size: 15;" text="Đơn giá" />
-                        <TableColumn fx:id="tcPtpPTCK_ThanhTien" minWidth="-1.0" prefWidth="-1.0" style="-fx-alignment: CENTER; -fx-font-size: 15;" text="Thành tiền" />
-                     </columns>
-                     <columnResizePolicy>
-                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-                     </columnResizePolicy>
-                     <BorderPane.margin>
-                        <Insets bottom="15.0" />
-                     </BorderPane.margin>
-                  </TableView>
-               </center>
-            </BorderPane>
-         </content>
-      </Tab>
-   </tabs>
-</TabPane>
+                        </AnchorPane>
+                     </center>
+                  </BorderPane>
+               </content>
+            </Tab>
+            <Tab style="-fx-font-size: 16; -fx-font-weight: bold; -fx-padding: 10;" text="👥 KHÁCH THUÊ">
+               <content>
+                  <BorderPane prefHeight="200.0" prefWidth="200.0">
+                     <center>
+                        <TableView fx:id="tvKhach" prefHeight="351.0" prefWidth="631.0" BorderPane.alignment="CENTER">
+                           <columns>
+                              <TableColumn fx:id="tcKhach_STT" editable="false" minWidth="-1.0" prefWidth="-1.0" style="-fx-alignment: CENTER; -fx-font-size: 15;" text="STT" />
+                              <TableColumn fx:id="tcKhach_MaKhach" editable="false" minWidth="0.0" prefWidth="-1.0" style="-fx-alignment: CENTER;" text="Mã khách" visible="false" />
+                              <TableColumn fx:id="tcKhach_HoTen" editable="false" minWidth="0.0" prefWidth="-1.0" style="-fx-alignment: CENTER; -fx-font-size: 15;" text="Họ tên" />
+                              <TableColumn fx:id="tcKhach_SoDienThoai" editable="false" minWidth="-1.0" prefWidth="-1.0" style="-fx-alignment: CENTER; -fx-font-size: 15;" text="Số điện thoại" />
+                              <TableColumn fx:id="tcKhach_CMND" editable="false" minWidth="-1.0" prefWidth="-1.0" style="-fx-alignment: CENTER; -fx-font-size: 15;" text="CMND" />
+                              <TableColumn fx:id="tcKhach_GioiTinh" editable="false" minWidth="-1.0" prefWidth="-1.0" style="-fx-alignment: CENTER; -fx-font-size: 15;" text="Giới tính" />
+                              <TableColumn fx:id="tcKhach_QuocTich" editable="false" minWidth="-1.0" prefWidth="-1.0" style="-fx-alignment: CENTER; -fx-font-size: 15;" text="Quốc tịch" />
+                           </columns>
+                           <BorderPane.margin>
+                              <Insets bottom="15.0" />
+                           </BorderPane.margin>
+                           <columnResizePolicy>
+                              <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                           </columnResizePolicy>
+                        </TableView>
+                     </center>
+                  </BorderPane>
+               </content>
+            </Tab>
+            <Tab style="-fx-font-size: 16; -fx-font-weight: bold; -fx-padding: 10;" text="🎲 DỊCH VỤ">
+               <content>
+                  <BorderPane prefHeight="200.0" prefWidth="200.0">
+                     <center>
+                        <TableView fx:id="tvPtpDichVu" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                           <columns>
+                              <TableColumn fx:id="tcPtpDV_STT" minWidth="-1.0" prefWidth="-1.0" style="-fx-alignment: CENTER; -fx-font-size: 15;" text="STT" />
+                              <TableColumn fx:id="tcPtpDV_MaPTPDV" minWidth="-1.0" prefWidth="-1.0" style="-fx-alignment: CENTER;" text="Mã PTPDV" visible="false" />
+                              <TableColumn fx:id="tcPtpDV_TenDichVu" minWidth="-1.0" prefWidth="-1.0" style="-fx-alignment: CENTER; -fx-font-size: 15;" text="Dịch vụ" />
+                              <TableColumn fx:id="tcPtpDV_SoLuong" minWidth="-1.0" prefWidth="-1.0" style="-fx-alignment: CENTER; -fx-font-size: 15;" text="Số lượng" />
+                              <TableColumn fx:id="tcPtpDV_DonViTinh" minWidth="-1.0" prefWidth="-1.0" style="-fx-alignment: CENTER; -fx-font-size: 15;" text="Đơn vị tính" />
+                              <TableColumn fx:id="tcPtpDV_DonGia" minWidth="-1.0" prefWidth="-1.0" style="-fx-alignment: CENTER; -fx-font-size: 15;" text="Đơn giá" />
+                              <TableColumn fx:id="tcPtpDV_ThanhTien" minWidth="-1.0" prefWidth="-1.0" style="-fx-alignment: CENTER; -fx-font-size: 15;" text="Thành tiền" />
+                           </columns>
+                           <columnResizePolicy>
+                              <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                           </columnResizePolicy>
+                           <BorderPane.margin>
+                              <Insets bottom="15.0" />
+                           </BorderPane.margin>
+                        </TableView>
+                     </center>
+                  </BorderPane>
+               </content>
+            </Tab>
+            <Tab style="-fx-font-size: 16; -fx-font-weight: bold; -fx-padding: 10;" text="💲 PHỤ THU / CHIẾT KHẤU">
+               <content>
+                  <BorderPane prefHeight="200.0" prefWidth="200.0">
+                     <center>
+                        <TableView fx:id="tvPtpPTCK" prefHeight="340.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                           <columns>
+                              <TableColumn fx:id="tcPtpPTCK_STT" minWidth="-1.0" prefWidth="-1.0" style="-fx-alignment: CENTER; -fx-font-size: 15;" text="STT" />
+                              <TableColumn fx:id="tcPtpPTCK_MaPTCK" minWidth="-1.0" prefWidth="-1.0" style="-fx-alignment: CENTER;" text="Mã PTCK" visible="false" />
+                              <TableColumn fx:id="tcPtpPTCK_NoiDung" minWidth="-1.0" prefWidth="-1.0" style="-fx-alignment: CENTER; -fx-font-size: 15;" text="Nội dung" />
+                              <TableColumn fx:id="tcPtpPTCK_SoLuong" minWidth="-1.0" prefWidth="-1.0" style="-fx-alignment: CENTER; -fx-font-size: 15;" text="Số lượng" />
+                              <TableColumn fx:id="tcPtpPTCK_DonGia" minWidth="-1.0" prefWidth="-1.0" style="-fx-alignment: CENTER; -fx-font-size: 15;" text="Đơn giá" />
+                              <TableColumn fx:id="tcPtpPTCK_ThanhTien" minWidth="-1.0" prefWidth="-1.0" style="-fx-alignment: CENTER; -fx-font-size: 15;" text="Thành tiền" />
+                           </columns>
+                           <columnResizePolicy>
+                              <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                           </columnResizePolicy>
+                           <BorderPane.margin>
+                              <Insets bottom="15.0" />
+                           </BorderPane.margin>
+                        </TableView>
+                     </center>
+                  </BorderPane>
+               </content>
+            </Tab>
+         </tabs>
+      </TabPane>
+   </center>
+   <top>
+      <Label text="🔖 CHI TIẾT HOÁ ĐƠN" BorderPane.alignment="CENTER">
+         <font>
+            <Font name="System Bold" size="36.0" />
+         </font>
+         <BorderPane.margin>
+            <Insets bottom="10.0" top="10.0" />
+         </BorderPane.margin>
+      </Label>
+   </top>
+</BorderPane>

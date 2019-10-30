@@ -18,32 +18,20 @@ public class ThamSoController {
 	Spinner<Integer> snTiLeVAT;
 	@FXML
 	Spinner<Integer> snTiLeCoc;
-	@FXML
-	Spinner<Integer> snPTQuaKhach;
-	@FXML
-	Spinner<Integer> snPTTraPhongTre;
 
 	public void initialize(ThamSoDTO thamSo) {
 		snTiLeVAT.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 100));
 		snTiLeCoc.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 100));
-		snPTQuaKhach.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 100));
-		snPTTraPhongTre.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 100));
 
 		snTiLeVAT.focusedProperty().addListener((obs, oldValue, newValue) -> snTiLeVAT.increment(0));
 		snTiLeCoc.focusedProperty().addListener((obs, oldValue, newValue) -> snTiLeCoc.increment(0));
-		snPTQuaKhach.focusedProperty().addListener((obs, oldValue, newValue) -> snPTQuaKhach.increment(0));
-		snPTTraPhongTre.focusedProperty().addListener((obs, oldValue, newValue) -> snPTTraPhongTre.increment(0));
 
 		snTiLeVAT.getValueFactory().setValue((int) (thamSo.getTiLeThueVAT() * 100));
-		snTiLeCoc.getValueFactory().setValue((int) (thamSo.getTiLeTienCoc() * 100));
-		snPTQuaKhach.getValueFactory().setValue((int) (thamSo.getPhuThuQuaKhach() * 100));
-		snPTTraPhongTre.getValueFactory().setValue((int) (thamSo.getPhuthuTraPhongTre() * 100));
-	}
+		snTiLeCoc.getValueFactory().setValue((int) (thamSo.getTiLeTienCoc() * 100));	}
 
 	public void handleXacNhan(ActionEvent e) {
 		try {
-			ThamSoDTO thamSo = new ThamSoDTO((float) snTiLeVAT.getValue() / 100, (float) snTiLeCoc.getValue() / 100,
-					(float) snPTQuaKhach.getValue() / 100, (float) snPTTraPhongTre.getValue() / 100);
+			ThamSoDTO thamSo = new ThamSoDTO((float) snTiLeVAT.getValue() / 100, (float) snTiLeCoc.getValue() / 100, 0, 0);
 
 			if (ThamSoBUS.updateThamSo(thamSo)) {
 				Alert alert = new Alert(AlertType.INFORMATION);

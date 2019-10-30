@@ -213,10 +213,6 @@ public class MainController implements Initializable {
 	Label lbTS_TiLeThueVAT;
 	@FXML
 	Label lbTS_TiLeTienCoc;
-	@FXML
-	Label lbTS_QuaKhach;
-	@FXML
-	Label lbTS_TraPhongTre;
 
 	@FXML
 	Label lbNV_MaNhanVien;
@@ -509,9 +505,10 @@ public class MainController implements Initializable {
 	}
 
 	private void calculateTamTinh() {
-		Integer tamTinh = MoneyFormatHelper.fromString(lbHD_TienPhong.getText())
+		Integer tiLeVAT = Integer.parseInt(lbTS_TiLeThueVAT.getText().split("%")[0]);
+		Integer tamTinh = (MoneyFormatHelper.fromString(lbHD_TienPhong.getText())
 				- MoneyFormatHelper.fromString(lbHD_TienCoc.getText())
-				+ MoneyFormatHelper.fromString(lbHD_TienPtck.getText());
+				+ MoneyFormatHelper.fromString(lbHD_TienPtck.getText())) * (100 + tiLeVAT) / 100;
 		lbHD_TamTinh.setText(MoneyFormatHelper.format(tamTinh));
 		calculateTienThua();
 	}
@@ -1175,8 +1172,6 @@ public class MainController implements Initializable {
 			ThamSoDTO thamSo = ThamSoBUS.getThamSo();
 			lbTS_TiLeTienCoc.setText(String.format("%.0f", thamSo.getTiLeTienCoc() * 100) + "%");
 			lbTS_TiLeThueVAT.setText(String.format("%.0f", thamSo.getTiLeThueVAT() * 100) + "%");
-			lbTS_QuaKhach.setText(String.format("%.0f", thamSo.getPhuThuQuaKhach() * 100) + "%");
-			lbTS_TraPhongTre.setText(String.format("%.0f", thamSo.getPhuthuTraPhongTre() * 100) + "%");
 		} catch (SQLException SQLException) {
 			Alert alert = new Alert(AlertType.INFORMATION);
 			alert.setTitle("Lỗi");
@@ -2038,7 +2033,7 @@ public class MainController implements Initializable {
 	public void handleSuaThamSo(ActionEvent e) {
 		try {
 			String link = "/application/popupThamSo.fxml";
-			Stage popUpStage = PopUpStageHelper.createPopUpStage(link, 580, 400);
+			Stage popUpStage = PopUpStageHelper.createPopUpStage(link, 450, 300);
 			popUpStage.getScene().setUserData(this);
 			FXMLLoader loader = (FXMLLoader) popUpStage.getUserData();
 			ThamSoController controller = loader.getController();
@@ -2432,7 +2427,7 @@ public class MainController implements Initializable {
 	public void handleXemChiTietHoaDon(ActionEvent e) {
 		try {
 			String link = "/application/popupChiTietHD.fxml";
-			Stage popUpStage = PopUpStageHelper.createPopUpStage(link, 800, 400);
+			Stage popUpStage = PopUpStageHelper.createPopUpStage(link, 800, 475);
 			FXMLLoader loader = (FXMLLoader) popUpStage.getUserData();
 			CTHDController controller = loader.getController();
 			String maPhong = tvHDPhong.getSelectionModel().getSelectedItem().getMaPhong();
@@ -2585,8 +2580,7 @@ public class MainController implements Initializable {
 			tfHD_DienThoai.clear();
 			tfHD_Email.clear();
 			tfHD_GhiChu.clear();
-			tfHD_TienNhan.setText("0");
-			dsHDPhong.clear();
+ 			dsHDPhong.clear();
 			dsHDPtck.clear();
 		}
 	}
@@ -2601,9 +2595,20 @@ public class MainController implements Initializable {
 		tfHD_TenKhach.setDisable(!tfHD_TenKhach.isDisable());
 		tfHD_CMND.setDisable(!tfHD_CMND.isDisable());
 		tfHD_DienThoai.setDisable(!tfHD_DienThoai.isDisable());
-		;
+		
 		tfHD_Email.setDisable(!tfHD_Email.isDisable());
 		tfHD_GhiChu.setDisable(!tfHD_GhiChu.isDisable());
 		btnHD_ThanhToan.setDisable(!btnHD_ThanhToan.isDisable());
+	}
+	
+	public void handleXemHoaDon(ActionEvent e) {
+		String link = "/application/popupHoaDon.fxml";
+		Stage popUpStage = PopUpStageHelper.createPopUpStage(link, 1180, 750);
+		popUpStage.getScene().setUserData(this);
+		FXMLLoader loader = (FXMLLoader) popUpStage.getUserData();
+		HoaDonController controller = loader.getController();
+		HoaDonDTO hoaDon = tvHoaDon.getSelectionModel().getSelectedItem();
+		controller.initialize(hoaDon);
+		popUpStage.showAndWait();
 	}
 }

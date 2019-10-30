@@ -81,7 +81,7 @@ public class PhongDAO {
 
 	public static boolean checkPhong(String maPhong) throws SQLException {
 		Connection conn = DBHelper.getConnection();
-		String query = "SELECT EXISTS (SELECT 1 FROM Phong WHERE MaPhong = ?)";
+		String query = "SELECT EXISTS (SELECT 1 FROM Phong WHERE MaPhong = ? AND KhaDung = true)";
 		PreparedStatement statement = conn.prepareStatement(query);
 		statement.setString(1, maPhong);
 		ResultSet rs = statement.executeQuery();
@@ -106,7 +106,7 @@ public class PhongDAO {
 
 	public static boolean deletePhong(String maPhong) throws SQLException {
 		Connection conn = DBHelper.getConnection();
-		String query = "DELETE FROM phong WHERE MaPhong = ? ";
+		String query = "CALL del_Phong(?)";
 		PreparedStatement statement = conn.prepareStatement(query);
 		statement.setString(1, maPhong);
 		int records = statement.executeUpdate();

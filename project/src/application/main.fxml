@@ -1339,19 +1339,15 @@
                            <bottom>
                               <HBox alignment="CENTER" prefWidth="1080.0" spacing="10.0" BorderPane.alignment="CENTER">
                                  <children>
-                                    <Button alignment="CENTER" mnemonicParsing="false" onAction="#handleXemChiTietPhieuThue" prefWidth="270.0" text="📝  XEM CHI TIẾT" textFill="#00868b">
+                                    <Button alignment="CENTER" mnemonicParsing="false" onAction="#handleXemChiTietPhieuThue" prefWidth="400.0" text="📝  XEM CHI TIẾT" textFill="#00868b">
                                        <font>
                                           <Font name="System Bold" size="20.0" />
                                        </font></Button>
-                                    <Button alignment="CENTER" mnemonicParsing="false" onAction="#handleXoaPhieuThue" prefWidth="270.0" text="🗑  XOÁ PHIẾU THUÊ" textFill="BROWN">
+                                    <Button alignment="CENTER" mnemonicParsing="false" onAction="#handleXoaPhieuThue" prefWidth="400.0" text="🗑  XOÁ PHIẾU THUÊ" textFill="BROWN">
                                        <font>
                                           <Font name="System Bold" size="20.0" />
                                        </font></Button>
-                                    <Button alignment="CENTER" mnemonicParsing="false" onAction="#handleThanhToanCoc" prefWidth="270.0" text="⚙  THANH TOÁN CỌC" textFill="#427921">
-                                       <font>
-                                          <Font name="System Bold" size="20.0" />
-                                       </font></Button>
-                                    <Button alignment="CENTER" mnemonicParsing="false" prefWidth="270.0" text="🖨  IN PHIẾU THUÊ" textFill="PURPLE">
+                                    <Button alignment="CENTER" mnemonicParsing="false" onAction="#handleThanhToanCoc" prefWidth="400.0" text="⚙  THANH TOÁN CỌC" textFill="#427921">
                                        <font>
                                           <Font name="System Bold" size="20.0" />
                                        </font></Button>
@@ -1633,7 +1629,7 @@
                                              <center>
                                                 <TableView fx:id="tvHDPtck" prefHeight="319.0" prefWidth="422.0">
                                                   <columns>
-                                                    <TableColumn fx:id="tcHDPtck_NoiDung" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Nội dung" />
+                                                    <TableColumn fx:id="tcHDPtck_NoiDung" prefWidth="75.0" text="Nội dung" />
                                                       <TableColumn fx:id="tcHDPtck_TriGia" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Trị giá" />
                                                       <TableColumn fx:id="tcHDPtck_TriGiaValue" prefWidth="75.0" text="Trị giá" visible="false" />
                                                   </columns>
@@ -1880,16 +1876,7 @@
                            <bottom>
                               <HBox alignment="CENTER" prefWidth="1080.0" spacing="10.0" BorderPane.alignment="CENTER">
                                  <children>
-                                    <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefWidth="270.0" text="📝  XEM CHI TIẾT" textFill="#00868b">
-                                       <font>
-                                          <Font name="System Bold" size="20.0" />
-                                       </font></Button>
-                                    <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefWidth="270.0" text="⚙  SỬA KHÁCH" textFill="#427921">
-                                       <font>
-                                          <Font name="System Bold" size="20.0" />
-                                       </font>
-                                    </Button>
-                                    <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefWidth="270.0" text="🖨  IN HOÁ ĐƠN" textFill="PURPLE">
+                                    <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleXemHoaDon" prefHeight="44.0" prefWidth="1216.0" text="📝  XEM CHI TIẾT" textFill="#00868b">
                                        <font>
                                           <Font name="System Bold" size="20.0" />
                                        </font></Button>
@@ -2409,15 +2396,13 @@
                            <center>
                               <AnchorPane BorderPane.alignment="CENTER">
                                  <children>
-                                    <GridPane alignment="TOP_CENTER" hgap="10.0" vgap="15.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <GridPane alignment="CENTER" hgap="10.0" vgap="15.0" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                        <columnConstraints>
                                           <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" />
                                           <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" />
                                           <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" />
                                        </columnConstraints>
                                        <rowConstraints>
-                                          <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" vgrow="SOMETIMES" />
-                                          <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" vgrow="SOMETIMES" />
                                           <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" vgrow="SOMETIMES" />
                                           <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" vgrow="SOMETIMES" />
                                        </rowConstraints>
@@ -2446,36 +2431,6 @@
                                              <font>
                                                 <Font size="20.0" />
                                              </font></Label>
-                                          <Label text="💶" GridPane.rowIndex="2">
-                                             <font>
-                                                <Font size="20.0" />
-                                             </font>
-                                          </Label>
-                                          <Label text="Phụ thu quá khách:" GridPane.columnIndex="1" GridPane.rowIndex="2">
-                                             <font>
-                                                <Font name="System Bold" size="20.0" />
-                                             </font>
-                                          </Label>
-                                          <Label fx:id="lbTS_QuaKhach" text="?" GridPane.columnIndex="2" GridPane.rowIndex="2">
-                                             <font>
-                                                <Font size="20.0" />
-                                             </font>
-                                          </Label>
-                                          <Label text="Phụ thu trả phòng trễ:" GridPane.columnIndex="1" GridPane.rowIndex="3">
-                                             <font>
-                                                <Font name="System Bold" size="20.0" />
-                                             </font>
-                                          </Label>
-                                          <Label text="💰" GridPane.rowIndex="3">
-                                             <font>
-                                                <Font name="System Bold" size="20.0" />
-                                             </font>
-                                          </Label>
-                                          <Label fx:id="lbTS_TraPhongTre" text="?" GridPane.columnIndex="2" GridPane.rowIndex="3">
-                                             <font>
-                                                <Font size="20.0" />
-                                             </font>
-                                          </Label>
                                        </children>
                                        <padding>
                                           <Insets bottom="10.0" top="15.0" />

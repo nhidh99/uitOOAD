@@ -18,7 +18,7 @@ public class PTPhongDAO {
 	public static boolean insertPTPhong(PTPhongDTO ptp) throws SQLException {
 		long soDem = DateFormatHelper.diffDays(ptp.getNgayTraValue(), ptp.getNgayNhanValue());
 		long thanhTien = soDem * ptp.getDonGiaThueValue();
-		
+
 		Connection conn = DBHelper.getConnection();
 		String query = "INSERT INTO PT_Phong (MaPhong, LoaiPhongThue, SoKhachToiDa,"
 				+ "NgayNhan, NgayTra, DonGiaThue, TienCoc, ThanhTien) VALUES (?,?,?,?,?,?,?,?)";
@@ -30,8 +30,8 @@ public class PTPhongDAO {
 		statement.setTimestamp(5, ptp.getNgayTraValue());
 		statement.setInt(6, ptp.getDonGiaThueValue());
 		statement.setInt(7, ptp.getTienCocValue());
-		statement.setLong(8, thanhTien);		
-		
+		statement.setLong(8, thanhTien);
+
 		int records = statement.executeUpdate();
 		conn.close();
 		return records > 0;
@@ -46,8 +46,9 @@ public class PTPhongDAO {
 		List<PTPhongDTO> output = new ArrayList<PTPhongDTO>();
 		while (rs.next()) {
 			PhongDTO phong = PhongDAO.getPhongById(rs.getString("MaPhong"));
-			PTPhongDTO ptp = new PTPhongDTO(rs.getInt("MaPTPhong"), phong, rs.getTimestamp("NgayNhan"),
-					rs.getTimestamp("NgayTra"), rs.getInt("TienCoc"), rs.getInt("ThanhTien"));
+			PTPhongDTO ptp = new PTPhongDTO(rs.getInt("MaPTPhong"), phong, rs.getInt("DonGiaThue"),
+					rs.getTimestamp("NgayNhan"), rs.getTimestamp("NgayTra"), rs.getInt("TienCoc"),
+					rs.getInt("ThanhTien"));
 			output.add(ptp);
 		}
 		conn.close();
@@ -63,8 +64,9 @@ public class PTPhongDAO {
 		List<PTPhongDTO> output = new ArrayList<PTPhongDTO>();
 		while (rs.next()) {
 			PhongDTO phong = PhongDAO.getPhongById(rs.getString("MaPhong"));
-			PTPhongDTO ptp = new PTPhongDTO(rs.getInt("MaPTPhong"), phong, rs.getTimestamp("NgayNhan"),
-					rs.getTimestamp("NgayTra"), rs.getInt("TienCoc"), rs.getInt("ThanhTien"));
+			PTPhongDTO ptp = new PTPhongDTO(rs.getInt("MaPTPhong"), phong, rs.getInt("DonGiaThue"),
+					rs.getTimestamp("NgayNhan"), rs.getTimestamp("NgayTra"), rs.getInt("TienCoc"),
+					rs.getInt("ThanhTien"));
 			output.add(ptp);
 		}
 		conn.close();
@@ -96,8 +98,8 @@ public class PTPhongDAO {
 		ResultSet rs = statement.executeQuery(query);
 		rs.next();
 		PhongDTO phong = PhongDAO.getPhongById(rs.getString("MaPhong"));
-		PTPhongDTO output = new PTPhongDTO(rs.getInt("MaPTPhong"), phong, rs.getTimestamp("NgayNhan"),
-				rs.getTimestamp("NgayTra"), rs.getInt("TienCoc"), rs.getInt("ThanhTien"));
+		PTPhongDTO output = new PTPhongDTO(rs.getInt("MaPTPhong"), phong, rs.getInt("DonGiaThue"),
+				rs.getTimestamp("NgayNhan"), rs.getTimestamp("NgayTra"), rs.getInt("TienCoc"), rs.getInt("ThanhTien"));
 		conn.close();
 		return output;
 	}
@@ -111,8 +113,27 @@ public class PTPhongDAO {
 		List<PTPhongDTO> output = new ArrayList<PTPhongDTO>();
 		while (rs.next()) {
 			PhongDTO phong = PhongDAO.getPhongById(maPhong);
-			PTPhongDTO ptp = new PTPhongDTO(rs.getInt("MaPTPhong"), phong, rs.getTimestamp("NgayNhan"),
-					rs.getTimestamp("NgayTra"), rs.getInt("TienCoc"), rs.getInt("ThanhTien"));
+			PTPhongDTO ptp = new PTPhongDTO(rs.getInt("MaPTPhong"), phong, rs.getInt("DonGiaThue"),
+					rs.getTimestamp("NgayNhan"), rs.getTimestamp("NgayTra"), rs.getInt("TienCoc"),
+					rs.getInt("ThanhTien"));
+			output.add(ptp);
+		}
+		conn.close();
+		return output;
+	}
+	
+	public static List<PTPhongDTO> getDSPTPhongByMaHD(Integer maHD) throws SQLException {
+		Connection conn = DBHelper.getConnection();
+		String query = "SELECT * FROM PT_Phong WHERE MaHoaDon = ?";
+		PreparedStatement statement = conn.prepareStatement(query);
+		statement.setInt(1, maHD);
+		ResultSet rs = statement.executeQuery();
+		List<PTPhongDTO> output = new ArrayList<PTPhongDTO>();
+		while (rs.next()) {
+			PhongDTO phong = PhongDAO.getPhongById(rs.getString("MaPhong"));
+			PTPhongDTO ptp = new PTPhongDTO(rs.getInt("MaPTPhong"), phong, rs.getInt("DonGiaThue"),
+					rs.getTimestamp("NgayNhan"), rs.getTimestamp("NgayTra"), rs.getInt("TienCoc"),
+					rs.getInt("ThanhTien"));
 			output.add(ptp);
 		}
 		conn.close();

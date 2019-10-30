@@ -13,6 +13,7 @@ public class PTPhongDTO {
 	private Integer maPhieuThuePhong;
 	private PhieuThueDTO phieuThue;
 	private PhongDTO phong;
+	private HoaDonDTO hoaDon;
 	private String loaiPhongThue;
 	private Integer soKhachToiDa;
 	private Integer donGiaThue;
@@ -21,14 +22,14 @@ public class PTPhongDTO {
 	private Integer tienCoc;
 	private Integer thanhTien;
 
-	public PTPhongDTO(Integer maPTP, PhongDTO phong, Timestamp ngayNhan, Timestamp ngayTra, Integer tienCoc,
+	public PTPhongDTO(Integer maPTP, PhongDTO phong, Integer donGiaThue, Timestamp ngayNhan, Timestamp ngayTra, Integer tienCoc,
 			Integer thanhTien) {
 		LoaiPhongDTO loaiPhong = phong.getLoaiPhong();
 		this.maPhieuThuePhong = maPTP;
 		this.phong = phong;
 		this.loaiPhongThue = loaiPhong.getTenLoaiPhong();
 		this.soKhachToiDa = loaiPhong.getSoKhachToiDa();
-		this.donGiaThue = loaiPhong.getDonGiaValue();
+		this.donGiaThue = donGiaThue;
 		this.ngayNhan = ngayNhan;
 		this.ngayTra = ngayTra;
 		this.tienCoc = tienCoc;
@@ -127,5 +128,13 @@ public class PTPhongDTO {
 
 	public String getDienThoai() {
 		return phieuThue.getSoDienThoai();
+	}
+	
+	public HoaDonDTO getHoaDon() {
+		return hoaDon;
+	}
+	
+	public void setHoaDon(HoaDonDTO hoaDon) {
+		this.hoaDon = hoaDon;
 	}
 }
