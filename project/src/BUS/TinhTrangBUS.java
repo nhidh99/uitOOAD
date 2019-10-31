@@ -12,5 +12,4 @@ public class TinhTrangBUS {
 		return TinhTrangDAO.getDSTinhTrang();
 	}
 
-	
 }

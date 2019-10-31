@@ -8,7 +8,6 @@ import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
-
 import DTO.*;
 import helper.DBHelper;
 
@@ -16,7 +15,7 @@ public class PhongDAO {
 	public static List<PhongDTO> getDSPhong() throws SQLException {
 		Connection conn = DBHelper.getConnection();
 		Statement statement = conn.createStatement();
-		String query = "SELECT * FROM view_DSPhong";
+		String query = "SELECT * FROM view_DSPhong ORDER BY MaPhong";
 		ResultSet rs = statement.executeQuery(query);
 
 		List<PhongDTO> output = new ArrayList<PhongDTO>();
@@ -82,7 +81,7 @@ public class PhongDAO {
 
 	public static boolean checkPhong(String maPhong) throws SQLException {
 		Connection conn = DBHelper.getConnection();
-		String query = "SELECT EXISTS (SELECT 1 FROM Phong WHERE MaPhong = ?)";
+		String query = "SELECT EXISTS (SELECT 1 FROM Phong WHERE MaPhong = ? AND KhaDung = true)";
 		PreparedStatement statement = conn.prepareStatement(query);
 		statement.setString(1, maPhong);
 		ResultSet rs = statement.executeQuery();
@@ -94,20 +93,20 @@ public class PhongDAO {
 
 	public static boolean insertPhong(PhongDTO phong) throws SQLException {
 		Connection conn = DBHelper.getConnection();
-		String query = "INSERT INTO Phong (MaPhong, MaLoaiPhong, MaTinhTrang, GhiChu) VALUES(?,?,?,?)";
+		String query = "CALL ins_Phong(?,?,?,?)";
 		PreparedStatement statement = conn.prepareStatement(query);
 		statement.setString(1, phong.getMaPhong());
 		statement.setInt(2, phong.getLoaiPhong().getMaLoaiPhong());
 		statement.setInt(3, phong.getTinhTrang().getMaTinhTrang());
 		statement.setString(4, phong.getGhiChu());
 		int records = statement.executeUpdate();
-		conn.close();
+		conn.close();	
 		return records > 0;
 	}
 
 	public static boolean deletePhong(String maPhong) throws SQLException {
 		Connection conn = DBHelper.getConnection();
-		String query = "DELETE FROM phong WHERE MaPhong = ? ";
+		String query = "CALL del_Phong(?)";
 		PreparedStatement statement = conn.prepareStatement(query);
 		statement.setString(1, maPhong);
 		int records = statement.executeUpdate();
@@ -123,8 +122,53 @@ public class PhongDAO {
 		statement.setInt(2, phong.getTinhTrang().getMaTinhTrang());
 		statement.setString(3, phong.getGhiChu());
 		statement.setString(4, phong.getMaPhong());
-		statement.execute();
+		int records = statement.executeUpdate();
 		conn.close();
-		return true;
+		return records > 0;
+	}
+
+	public static List<String> findPhongByTenKhach(String ten) throws SQLException {
+		Connection conn = DBHelper.getConnection();
+		String query = "SELECT DISTINCT MaPhong "
+				+ "FROM PT_Phong PTP JOIN KhachHang KH "
+				+ "ON PTP.MaPTPhong = KH.MaPTPhong "
+				+ "WHERE HoTen = ? ORDER BY MaPhong";
+		PreparedStatement statement = conn.prepareStatement(query);
+		statement.setString(1, ten);
+		ResultSet rs = statement.executeQuery();		
+		List<String> output = new ArrayList<String>();
+		while (rs.next()) {
+			output.add(rs.getString("MaPhong"));
+		}
+		conn.close();
+		return output;		
+	}
+	
+	public static List<String> findPhongByCMNDKhach(String CMND) throws SQLException {
+		Connection conn = DBHelper.getConnection();
+		String query = "SELECT DISTINCT MaPhong "
+				+ "FROM PT_Phong PTP JOIN KhachHang KH "
+				+ "ON PTP.MaPTPhong = KH.MaPTPhong "
+				+ "WHERE CMND = ? ORDER BY MaPhong";
+		PreparedStatement statement = conn.prepareStatement(query);
+		statement.setString(1, CMND);
+		ResultSet rs = statement.executeQuery();		
+		List<String> output = new ArrayList<String>();
+		while (rs.next()) {
+			output.add(rs.getString("MaPhong"));
+		}
+		conn.close();
+		return output;		
+	}
+
+	public static boolean updateNhanPhong(String maPhong, Integer maPTPhong) throws SQLException {
+		Connection conn = DBHelper.getConnection();
+		String query = "UPDATE Phong SET MaPTPHienTai = ?, MaTinhTrang = 11001 WHERE MaPhong = ?";
+		PreparedStatement statement = conn.prepareStatement(query);
+		statement.setInt(1, maPTPhong);
+		statement.setString(2, maPhong);
+		int records = statement.executeUpdate();
+		conn.close();
+		return records > 0;
 	}
 }

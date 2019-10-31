@@ -35,6 +35,9 @@ public class PhieuThueBUS {
 	}
 
 	public static boolean updateThanhToanCoc(Integer maPhieuThue, Boolean thanhToanCoc) throws SQLException {
+		if (PhieuThueDAO.checkThanhToanCoc(maPhieuThue)) {
+			return false;
+		}
 		return PhieuThueDAO.updateThanhToanCoc(maPhieuThue, thanhToanCoc);
 	}
 }

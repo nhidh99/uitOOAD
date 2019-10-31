@@ -1,9 +1,11 @@
 package DTO;
 
+import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.Date;
 
+import DAO.PhieuThueDAO;
 import helper.DateFormatHelper;
 import helper.MoneyFormatHelper;
 
@@ -11,6 +13,7 @@ public class PTPhongDTO {
 	private Integer maPhieuThuePhong;
 	private PhieuThueDTO phieuThue;
 	private PhongDTO phong;
+	private HoaDonDTO hoaDon;
 	private String loaiPhongThue;
 	private Integer soKhachToiDa;
 	private Integer donGiaThue;
@@ -18,19 +21,26 @@ public class PTPhongDTO {
 	private Timestamp ngayTra;
 	private Integer tienCoc;
 	private Integer thanhTien;
-	
-	public PTPhongDTO(Integer maPTP, PhongDTO phong, Timestamp ngayNhan, Timestamp ngayTra, Integer tienCoc) {
+
+	public PTPhongDTO(Integer maPTP, PhongDTO phong, Integer donGiaThue, Timestamp ngayNhan, Timestamp ngayTra, Integer tienCoc,
+			Integer thanhTien) {
 		LoaiPhongDTO loaiPhong = phong.getLoaiPhong();
 		this.maPhieuThuePhong = maPTP;
 		this.phong = phong;
 		this.loaiPhongThue = loaiPhong.getTenLoaiPhong();
 		this.soKhachToiDa = loaiPhong.getSoKhachToiDa();
-		this.donGiaThue = loaiPhong.getDonGiaValue();
+		this.donGiaThue = donGiaThue;
 		this.ngayNhan = ngayNhan;
 		this.ngayTra = ngayTra;
 		this.tienCoc = tienCoc;
+		this.thanhTien = thanhTien;
+		try {
+			this.phieuThue = PhieuThueDAO.getPhieuThueByMaPTP(maPTP);
+		} catch (SQLException ex) {
+			this.phieuThue = null;
+		}
 	}
-	
+
 	public PTPhongDTO(PhongDTO phong, Timestamp ngayNhan, Timestamp ngayTra, Integer tienCoc) {
 		LoaiPhongDTO loaiPhong = phong.getLoaiPhong();
 		this.phong = phong;
@@ -69,7 +79,7 @@ public class PTPhongDTO {
 	public String getDonGiaThue() {
 		return MoneyFormatHelper.format(donGiaThue);
 	}
-	
+
 	public Integer getDonGiaThueValue() {
 		return donGiaThue;
 	}
@@ -99,13 +109,32 @@ public class PTPhongDTO {
 	public String getTienCoc() {
 		return MoneyFormatHelper.format(tienCoc);
 	}
-	
+
 	public Integer getTienCocValue() {
 		return tienCoc;
 	}
 
-	public Integer getThanhTien() {
+	public String getThanhTien() {
+		return MoneyFormatHelper.format(thanhTien);
+	}
+
+	public Integer getThanhTienValue() {
 		return thanhTien;
 	}
 
+	public String getKhachThue() {
+		return phieuThue.getTenKhachThue();
+	}
+
+	public String getDienThoai() {
+		return phieuThue.getSoDienThoai();
+	}
+	
+	public HoaDonDTO getHoaDon() {
+		return hoaDon;
+	}
+	
+	public void setHoaDon(HoaDonDTO hoaDon) {
+		this.hoaDon = hoaDon;
+	}
 }

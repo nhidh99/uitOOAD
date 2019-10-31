@@ -20,19 +20,30 @@ public class PTPhongBUS {
 		return PTPhongDAO.getDSPTPhongByMaPhieu(maPhieuThue);
 	}
 
-	public static boolean deleteAllPhieuDangKy() throws SQLException {
-		return PTPhongDAO.deleteAllPhieuDangKy();
+	public static boolean deleteAllPTPhong() throws SQLException {
+		return PTPhongDAO.deleteAllPTPhong();
 	}
 	
-	public static boolean deletePhieuDangKy(Integer maPTPhong) throws SQLException {
-		return PTPhongDAO.deletePhieuDangKy(maPTPhong);
+	public static boolean deletePTPhong(PTPhongDTO ptPhong) throws SQLException {
+		if (PTPhongDAO.checkPTPhong(ptPhong)) {
+			return PTPhongDAO.deletePTPhong(ptPhong.getMaPTPhong());
+		}
+		return false;
 	}
 
 	public static PTPhongDTO getPTPhongById(Integer maPTP) throws SQLException {
 		return PTPhongDAO.getPTPhongById(maPTP);
 	}
 	
-	public static boolean doiPhong(Integer maPTP, Integer maPhong) throws SQLException {
-		return PTPhongDAO.doiPhong(maPTP, maPhong);
+	public static List<PTPhongDTO> getDSPTPhongByMaPhong(String maPhong) throws SQLException {
+		return PTPhongDAO.getDSPTPhongByMaPhong(maPhong);
+	}
+
+	public static boolean updateMaHoaDon(Integer maPTP, Integer maHoaDon) throws SQLException {
+		return PTPhongDAO.updateMaHoaDon(maPTP, maHoaDon);
+	}
+
+	public static List<PTPhongDTO> getDSPTPhongByMaHD(Integer maHD) throws SQLException {
+		return PTPhongDAO.getDSPTPhongByMaHD(maHD);
 	}
 }

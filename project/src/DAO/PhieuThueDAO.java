@@ -102,9 +102,12 @@ public class PhieuThueDAO {
 		statement.setString(1, newPhieuThue.getTenKhachThue());
 		statement.setString(2, newPhieuThue.getCMND());
 		statement.setString(3, newPhieuThue.getEmail());
-		statement.setString(4, newPhieuThue.getSoDienThoai());
-		statement.setString(5, newPhieuThue.getGhiChu());
+		statement.setString(4, newPhieuThue.getSoDienThoai());		
 		statement.setInt(6, newPhieuThue.getMaPhieuThue());
+		if (newPhieuThue.getGhiChu().trim().isEmpty()) {
+			statement.setNull(5, Types.NVARCHAR);
+		}
+		else statement.setString(5, newPhieuThue.getGhiChu());
 		int records = statement.executeUpdate();
 		conn.close();
 		return records > 0;
@@ -132,6 +135,20 @@ public class PhieuThueDAO {
 		NhanVienDTO nhanVien = NhanVienBUS.getNhanVienById(rs.getInt("MaNhanVien"));
 		PhieuThueDTO output = new PhieuThueDTO(nhanVien, rs.getDate("NgayLapPhieu"), rs.getString("TenKhachThue"), rs.getString("CMND"), 
 				rs.getString("SoDienThoai"), rs.getString("Email"), rs.getString("GhiChu"));
+		conn.close();
+		return output;
+	}
+
+	public static boolean checkThanhToanCoc(Integer maPhieuThue) throws SQLException {
+		Connection conn = DBHelper.getConnection();
+		String query = "SELECT EXISTS (SELECT 1 FROM PT_Phong PTP "
+				+ "JOIN PhieuThue PT ON PTP.MaPhieuThue = PT.MaPhieuThue "
+				+ "WHERE PT.MaPhieuThue = ? AND MaHoaDon IS NOT NULL LIMIT 1)";
+		PreparedStatement statement = conn.prepareStatement(query);
+		statement.setInt(1, maPhieuThue);
+		ResultSet rs = statement.executeQuery();
+		rs.next();
+		boolean output = rs.getBoolean(1);
 		conn.close();
 		return output;
 	}
