@@ -19,6 +19,15 @@ public class TimKhachController {
 	TextField tfCMND;
 
 	public void handleTimTheoTen(ActionEvent e) {
+		if (!tfHoTen.getText().matches("^([^0-9]{1,30})$")) {
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Thất bại!");
+			alert.setHeaderText("Tìm khách theo tên thất bại!");
+			alert.setContentText("Tên khách tối đa 30 kí tự và không chứa số");
+			alert.showAndWait();
+			return;
+		}
+		
 		try {
 			List<String> listPhong = PhongBUS.findPhongByTenKhach(tfHoTen.getText());
 			Alert alert = new Alert(AlertType.INFORMATION);
@@ -37,6 +46,15 @@ public class TimKhachController {
 	}
 
 	public void handleTimTheoCMND(ActionEvent e) {
+		if (!tfCMND.getText().matches("^[0-9]{1,15}$")) {
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Thất bại!");
+			alert.setHeaderText("Tìm khách theo CMND thất bại!");
+			alert.setContentText("CMND chỉ chứa số và không quá 15 kí tự");
+			alert.showAndWait();
+			return;
+		}
+
 		try {
 			List<String> listPhong = PhongBUS.findPhongByCMNDKhach(tfCMND.getText());
 			Alert alert = new Alert(AlertType.INFORMATION);

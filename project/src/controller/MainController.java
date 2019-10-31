@@ -408,6 +408,8 @@ public class MainController implements Initializable {
 	TableColumn<HoaDonDTO, String> tcHD_CMND;
 	@FXML
 	TableColumn<HoaDonDTO, String> tcHD_TriGia;
+	@FXML
+	TableColumn<HoaDonDTO, String> tcHD_TongCong;
 
 	@FXML
 	TableView<NhanVienDTO> tvNhanVien;
@@ -621,11 +623,11 @@ public class MainController implements Initializable {
 			tpTC_Phong.getChildren().clear();
 			bpTC_ThongTinPhong.setVisible(false);
 		});
-
+		
 		snTC_SoDem.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 30, 1));
 		snTC_GioNhan.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 23, 8));
 		snTC_GioTra.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 23, 12));
-
+		
 		int curMonth = Calendar.getInstance().get(Calendar.MONTH) + 1;
 		int curYear = Calendar.getInstance().get(Calendar.YEAR);
 		snTK_DoanhThu.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(2000, 3000, curYear));
@@ -638,9 +640,13 @@ public class MainController implements Initializable {
 
 	private void initComboboxes() {
 		cbbTC_LoaiPhong.valueProperty().addListener((obs, loaiPhongCu, loaiPhongMoi) -> {
-			lbTC_DonGia.setText(MoneyFormatHelper.format(loaiPhongMoi.getDonGiaValue(), "VND"));
-			bpTC_ThongTinPhong.setVisible(false);
-			calculateTienCoc();
+			try {
+				lbTC_DonGia.setText(MoneyFormatHelper.format(loaiPhongMoi.getDonGiaValue(), "VND"));
+				bpTC_ThongTinPhong.setVisible(false);
+				calculateTienCoc();
+			} catch (Exception ex) {
+				// do nothing
+			}
 		});
 	}
 
@@ -779,6 +785,7 @@ public class MainController implements Initializable {
 		tcHD_DienThoai.setCellValueFactory(new PropertyValueFactory<>("DienThoai"));
 		tcHD_CMND.setCellValueFactory(new PropertyValueFactory<>("CMND"));
 		tcHD_TriGia.setCellValueFactory(new PropertyValueFactory<>("GiaTri"));
+		tcHD_TongCong.setCellValueFactory(new PropertyValueFactory<>("TongCong"));
 	}
 
 	private void initTableDichVu() {
@@ -1499,6 +1506,20 @@ public class MainController implements Initializable {
 
 	public void handleLapPhieuThue(ActionEvent e) {
 		if (ConfirmDialogHelper.confirm("Bạn đã chắc chắn các thông tin để lập phiếu?")) {
+			if (!(tfPT_KhachThue.getText().matches("^([^0-9]{1,30})$") && tfPT_CMND.getText().matches("^[0-9]{1,15}$")
+					&& tfPT_DienThoai.getText().matches("^[0-9]{1,15}$") && tfPT_Email.getText().matches("^.{1,45}$")
+					&& tfPT_GhiChu.getText().matches("^.{0,45}$") && tvPTPhong.getItems().size() > 0)) {
+				Alert alert = new Alert(AlertType.INFORMATION);
+				alert.setTitle("Thất bại!");
+				alert.setHeaderText("Lập phiếu thuê thất bại!");
+				alert.setContentText(
+						"- Tên khách tối đa 30 kí tự và không chứa số.\n" + "- CMND chỉ chứa số và tối đa 15 kí tự.\n"
+								+ "- Điện thoại chỉ chứa số và tối đa 15 kí tự.\n" + "- Email tối đa 45 kí tự.\n"
+								+ "- Ghi chú tối đa 45 kí tự.\n" + "- Phải có ít nhất 1 phòng thuê trong danh sách.");
+				alert.showAndWait();
+				return;
+			}
+
 			try {
 				NhanVienDTO nhanVien = NhanVienBUS.getNhanVienById(Integer.parseInt(lbNV_MaNhanVien.getText()));
 				PhieuThueDTO phieuThue = new PhieuThueDTO(nhanVien, DateFormatHelper.getDate(dpPT_NgayLap.getValue()),
@@ -1673,6 +1694,7 @@ public class MainController implements Initializable {
 					alert.setContentText(String.format("Đã xoá thành công phiếu thuê %s.", phieuThue.getMaPhieuThue()));
 					alert.showAndWait();
 					loadTablePhieuThue();
+					loadTableHoaDon();
 				} else {
 					Alert alert = new Alert(AlertType.INFORMATION);
 					alert.setTitle("Lỗi");
@@ -2486,6 +2508,44 @@ public class MainController implements Initializable {
 		}
 	}
 
+	public void handleXoaHoaDon(ActionEvent e) {
+		try {
+			HoaDonDTO hoaDon = tvHoaDon.getSelectionModel().getSelectedItem();
+			if (hoaDon == null)
+				throw new NullPointerException();
+
+			if (ConfirmDialogHelper.confirm(String.format("Xác nhận xoá hoá đơn %s?", hoaDon.getMaHoaDon()))) {
+				if (HoaDonBUS.deleteHoaDon(hoaDon.getMaHoaDon())) {
+					Alert alert = new Alert(AlertType.INFORMATION);
+					alert.setTitle("Thành công");
+					alert.setHeaderText("Xóa hoá đơn thành công!");
+					alert.setContentText(String.format("Đã xoá thành công hoá đơn %s.", hoaDon.getMaHoaDon()));
+					alert.showAndWait();
+					loadTablePhieuThue();
+					loadTableHoaDon();
+				} else {
+					Alert alert = new Alert(AlertType.INFORMATION);
+					alert.setTitle("Lỗi");
+					alert.setHeaderText("Không thể xóa hoá đơn!");
+					alert.showAndWait();
+				}
+			}
+		} catch (SQLException SQLException) {
+			SQLException.printStackTrace();
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Lỗi");
+			alert.setHeaderText("Không thể xóa hoá đơn!");
+			alert.setContentText("Lỗi database!");
+			alert.showAndWait();
+		} catch (NullPointerException NullPointerException) {
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Lỗi");
+			alert.setHeaderText("Không thể xoá hoá đơn!");
+			alert.setContentText("Vui lòng chọn hoá đơn cần xoá!");
+			alert.showAndWait();
+		}
+	}
+
 	public void handleThemHDPtck(ActionEvent e) {
 		String link = "/application/popupHDPtck.fxml";
 		Stage popUpStage = PopUpStageHelper.createPopUpStage(link, 550, 380);
@@ -2514,6 +2574,15 @@ public class MainController implements Initializable {
 	}
 
 	public void handleThanhToanHoaDon(ActionEvent e) {
+		if (!(tfHD_TienNhan.getText().matches("^[0-9]{1,9}$") && lbHD_TienThua.getText().charAt(0) != '-')) {
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Thất bại!");
+			alert.setHeaderText("Thanh toán hoá đơn thất bại!");
+			alert.setContentText("- Tiền nhận chỉ gồm số không quá 1 tỉ.\n" + "- Tiền thừa không thể là số âm.");
+			alert.showAndWait();
+			return;
+		}
+
 		try {
 			if (dsHDPhong.isEmpty()) {
 				Alert alert = new Alert(AlertType.INFORMATION);
@@ -2584,6 +2653,17 @@ public class MainController implements Initializable {
 					dsHDPhong.clear();
 					dsHDPtck.clear();
 
+					// đặt lại enable các button
+					btnHD_ChotThongTin.setText("🔒 CHỐT THÔNG TIN");
+					dpHD_NgayLap.setDisable(!dpHD_NgayLap.isDisable());
+					tfHD_TenKhach.setDisable(!tfHD_TenKhach.isDisable());
+					tfHD_CMND.setDisable(!tfHD_CMND.isDisable());
+					tfHD_DienThoai.setDisable(!tfHD_DienThoai.isDisable());
+
+					tfHD_Email.setDisable(!tfHD_Email.isDisable());
+					tfHD_GhiChu.setDisable(!tfHD_GhiChu.isDisable());
+					btnHD_ThanhToan.setDisable(!btnHD_ThanhToan.isDisable());
+
 					// cập nhật lại các bảng
 					loadTablePhong();
 					loadTableHoaDon();
@@ -2623,6 +2703,18 @@ public class MainController implements Initializable {
 
 	public void handleChotThongTin(ActionEvent e) {
 		if (btnHD_ThanhToan.isDisable()) {
+			if (!(tfHD_TenKhach.getText().matches("^([^0-9]{1,30})$") && tfHD_CMND.getText().matches("^[0-9]{1,15}$")
+					&& tfHD_DienThoai.getText().matches("^[0-9]{1,15}$") && tfHD_Email.getText().matches("^.{1,45}$")
+					&& tfHD_GhiChu.getText().matches("^.{0,45}$"))) {
+				Alert alert = new Alert(AlertType.INFORMATION);
+				alert.setTitle("Thất bại!");
+				alert.setHeaderText("Chốt thông tin khách thất bại!");
+				alert.setContentText("- Tên khách tối đa 30 kí tự và không chứa số.\n"
+						+ "- CMND tối đa 15 kí tự và chỉ chứa số.\n" + "- Điện thoại tối đa 15 kí tự và chỉ chứa số.\n"
+						+ "- Email tối đa 45 kí tự.\n" + "- Ghi chú tối đa 45 kí tự");
+				alert.showAndWait();
+				return;
+			}
 			btnHD_ChotThongTin.setText("🔒 SỬA THÔNG TIN");
 		} else {
 			btnHD_ChotThongTin.setText("🔒 CHỐT THÔNG TIN");
@@ -2631,7 +2723,6 @@ public class MainController implements Initializable {
 		tfHD_TenKhach.setDisable(!tfHD_TenKhach.isDisable());
 		tfHD_CMND.setDisable(!tfHD_CMND.isDisable());
 		tfHD_DienThoai.setDisable(!tfHD_DienThoai.isDisable());
-
 		tfHD_Email.setDisable(!tfHD_Email.isDisable());
 		tfHD_GhiChu.setDisable(!tfHD_GhiChu.isDisable());
 		btnHD_ThanhToan.setDisable(!btnHD_ThanhToan.isDisable());
@@ -2686,7 +2777,7 @@ public class MainController implements Initializable {
 			alert.showAndWait();
 		}
 	}
-	
+
 	public void handleInThongKeLuongKhach(ActionEvent e) {
 		try {
 			List<ArrayList<String>> CTBC = new ArrayList<ArrayList<String>>();
@@ -2741,7 +2832,7 @@ public class MainController implements Initializable {
 			alert.showAndWait();
 		}
 	}
-	
+
 	public void handleInThongKeLoaiDichVu(ActionEvent e) {
 		try {
 			List<ArrayList<String>> CTBC = new ArrayList<ArrayList<String>>();

@@ -41,6 +41,28 @@ public class TuyChinhNhanVienController {
 	}
 	
 	public void handleTuyChinhNhanVien(ActionEvent event) {
+		
+		if (!(tfHoTen.getText().matches("^([^0-9]{1,30})$") 
+				&& tfCMND.getText().matches("^[0-9]{1,15}$")
+				&& tfDienThoai.getText().matches("^[0-9]{1,15}$") 
+				&& tfEmail.getText().matches("^.{1,45}$")
+				&& tfDiaChi.getText().matches("^.{0,45}$") 
+				&& pfMatKhau.getText().matches("^.{6,30}$"))) {
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Thất bại!");
+			alert.setHeaderText("Cập nhật thông tin nhân viên thất bại!");
+			alert.setContentText(
+					"- Tên nhân viên đa 30 kí tự và không chứa số.\n" 
+					+ "- CMND chỉ chứa số và tối đa 15 kí tự.\n"
+					+ "- Điện thoại chỉ chứa số và tối đa 15 kí tự.\n" 
+					+ "- Email tối đa 45 kí tự.\n"
+					+ "- Địa chỉ tối đa 45 kí tự.\n" 
+					+ "- Tên tài khoản từ 6-20 kí tự, chỉ chấp nhận chữ không dấu, số và kí tự '_'"
+					+ "- Mật khẩu từ 6-30 kí tự.");
+			alert.showAndWait();
+			return;
+		}
+		
 		if (pfMatKhau.getText().equals(pfMatKhau2.getText())) {
 			NhanVienDTO nhanVien = new NhanVienDTO(
 					Integer.parseInt(lbMaNhanVien.getText()),

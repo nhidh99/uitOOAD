@@ -36,6 +36,15 @@ public class SuaPtpDichVuController {
 	}
 
 	public void handleXacNhan(ActionEvent e) {
+		if (!tfDonGia.getText().matches("^[0-9]{1,8}$")) {
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Thất bại!");
+			alert.setHeaderText("Thêm dịch vụ thất bại!");
+			alert.setContentText("- Đơn giá là số không âm dưới 100 triệu VND.");
+			alert.showAndWait();
+			return;
+		}
+
 		try {
 			ptp_dv.setDonGia(Integer.parseInt(tfDonGia.getText()));
 			if (PtpDichVuBUS.updatePtpDichVu(ptp_dv)) {

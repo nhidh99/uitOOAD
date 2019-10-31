@@ -16,7 +16,7 @@ public class TinhTrangDAO {
 		Connection conn = DBHelper.getConnection();
 		String query = "SELECT * FROM TinhTrang WHERE TenTinhTrang != ?";
 		PreparedStatement statement = conn.prepareStatement(query);
-		statement.setString(1, "Thuê");		
+		statement.setString(1, "ThuÃª");		
 		ResultSet rs = statement.executeQuery();
 		
 		List<TinhTrangDTO> output = new ArrayList<TinhTrangDTO>();

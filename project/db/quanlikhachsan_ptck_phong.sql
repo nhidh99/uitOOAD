@@ -1,3 +1,5 @@
+CREATE DATABASE  IF NOT EXISTS `quanlikhachsan` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
+USE `quanlikhachsan`;
 -- MySQL dump 10.13  Distrib 8.0.17, for Win64 (x86_64)
 --
 -- Host: localhost    Database: quanlikhachsan
@@ -31,8 +33,8 @@ CREATE TABLE `ptck_phong` (
   `TriGia` decimal(15,0) NOT NULL,
   PRIMARY KEY (`MaPTCKPhong`),
   KEY `fk_ptck_phong_idx` (`MaPTPhong`),
-  CONSTRAINT `fk_ptck_ptp` FOREIGN KEY (`MaPTPhong`) REFERENCES `pt_phong` (`MaPTPhong`)
-) ENGINE=InnoDB AUTO_INCREMENT=20014 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  CONSTRAINT `fk_ptck_ptp` FOREIGN KEY (`MaPTPhong`) REFERENCES `pt_phong` (`MaPTPhong`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=20017 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -111,4 +113,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-10-30 15:02:52
+-- Dump completed on 2019-11-01  4:55:28

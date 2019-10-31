@@ -44,16 +44,21 @@ public class LoaiPhongController {
 	}
 
 	public void handleXacNhan(ActionEvent e) {
-		if (tfSoKhachToiDa.getText().trim().isEmpty() || tfLoaiPhong.getText().trim().isEmpty()
-				|| tfDonGia.getText().trim().isEmpty()) {
+		
+		if (!(tfLoaiPhong.getText().matches("^.{1,15}$") 
+				&& tfSoKhachToiDa.getText().matches("^[1-9]{1}$") 
+				&& tfDonGia.getText().matches("^[0-9]{1,8}$"))) {
 			Alert alert = new Alert(AlertType.INFORMATION);
-			alert.setTitle("Lỗi");
-			alert.setHeaderText("Không thể thêm loại phòng!");
-			alert.setContentText("Các thông tin không được để trống!");
+			alert.setTitle("Thất bại!");
+			alert.setHeaderText("Hiệu chỉnh loại phòng thất bại!");
+			alert.setContentText(
+					"- Tên loại phòng tối đa 15 kí tự.\n"
+					+ "- Số khách tối đa từ 1-9 khách.\n" 
+					+ "- Đơn giá là số không âm dưới 100 triệu.");
 			alert.showAndWait();
 			return;
 		}
-
+		
 		switch (tag) {
 		case INSERT: {
 			try {
@@ -67,6 +72,8 @@ public class LoaiPhongController {
 					alert.setContentText("");
 					alert.showAndWait();
 					MainController controller = (MainController) lbTieuDe.getScene().getUserData();
+					controller.loadTablePhong();
+					controller.handleTraCuuPhong();
 					controller.loadTableLoaiPhong();
 					controller.loadComboboxes();
 					Stage stage = (Stage) lbTieuDe.getScene().getWindow();
@@ -99,6 +106,8 @@ public class LoaiPhongController {
 					alert.setContentText("");
 					alert.showAndWait();
 					MainController controller = (MainController) lbTieuDe.getScene().getUserData();
+					controller.loadTablePhong();
+					controller.handleTraCuuPhong();
 					controller.loadTableLoaiPhong();
 					controller.loadComboboxes();
 					Stage stage = (Stage) lbTieuDe.getScene().getWindow();

@@ -97,4 +97,13 @@ public class HoaDonDAO {
 		}
 		return output;
 	}
+
+	public static boolean deleteHoaDon(Integer maHoaDon) throws SQLException {
+		Connection conn = DBHelper.getConnection();
+		String query = "DELETE FROM HoaDon WHERE MaHoaDon = " + maHoaDon;
+		Statement statement = conn.createStatement();
+		int records = statement.executeUpdate(query);		
+		conn.close();
+		return records > 0;
+	}
 }

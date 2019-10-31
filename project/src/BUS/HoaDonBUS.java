@@ -23,4 +23,8 @@ public class HoaDonBUS {
 	public static HoaDonDTO getHoaDonById(Integer maHoaDon) throws SQLException {
 		return HoaDonDAO.getHoaDonById(maHoaDon);
 	}
+
+	public static boolean deleteHoaDon(Integer maHoaDon) throws SQLException {
+		return HoaDonDAO.deleteHoaDon(maHoaDon);
+	}
 }

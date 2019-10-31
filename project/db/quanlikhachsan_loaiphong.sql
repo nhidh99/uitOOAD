@@ -1,3 +1,5 @@
+CREATE DATABASE  IF NOT EXISTS `quanlikhachsan` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
+USE `quanlikhachsan`;
 -- MySQL dump 10.13  Distrib 8.0.17, for Win64 (x86_64)
 --
 -- Host: localhost    Database: quanlikhachsan
@@ -28,7 +30,7 @@ CREATE TABLE `loaiphong` (
   `SoKhachToiDa` int(10) unsigned NOT NULL,
   `DonGia` decimal(15,0) unsigned NOT NULL,
   PRIMARY KEY (`MaLoaiPhong`)
-) ENGINE=InnoDB AUTO_INCREMENT=10010 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10011 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -37,7 +39,7 @@ CREATE TABLE `loaiphong` (
 
 LOCK TABLES `loaiphong` WRITE;
 /*!40000 ALTER TABLE `loaiphong` DISABLE KEYS */;
-INSERT INTO `loaiphong` VALUES (10001,'Single',1,150000),(10002,'Double',2,200000),(10003,'Triple',3,250000),(10004,'Quad',4,300000),(10005,'Double-Double',4,400000);
+INSERT INTO `loaiphong` VALUES (10001,'Single',1,150000),(10002,'Double',2,200000),(10003,'Triple',3,250000),(10004,'Quad',4,350000),(10005,'Double-Double',4,400000);
 /*!40000 ALTER TABLE `loaiphong` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -50,4 +52,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-10-30 15:02:50
+-- Dump completed on 2019-11-01  4:55:27

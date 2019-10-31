@@ -881,7 +881,7 @@
                                                 <Font name="System Bold" size="20.0" />
                                              </font>
                                           </Label>
-                                          <Spinner fx:id="snTC_GioNhan" editable="true" prefWidth="180.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                                          <Spinner fx:id="snTC_GioNhan" prefWidth="180.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
                                           <Label text="🕗" GridPane.rowIndex="1">
                                              <font>
                                                 <Font name="System Bold" size="20.0" />
@@ -903,7 +903,7 @@
                                                 <Font name="System Bold" size="20.0" />
                                              </font>
                                           </Label>
-                                          <Spinner fx:id="snTC_GioTra" editable="true" prefWidth="180.0" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+                                          <Spinner fx:id="snTC_GioTra" prefWidth="180.0" GridPane.columnIndex="2" GridPane.rowIndex="4" />
                                        </children>
                                        <effect>
                                           <Blend />
@@ -1457,6 +1457,14 @@
                                                    <font>
                                                       <Font size="20.0" />
                                                    </font></Label>
+                                                <TextField fx:id="tfHD_TenKhach" promptText="Họ tên khách" GridPane.columnIndex="2" GridPane.rowIndex="3">
+                                                   <GridPane.margin>
+                                                      <Insets right="10.0" />
+                                                   </GridPane.margin>
+                                                   <font>
+                                                      <Font size="18.0" />
+                                                   </font>
+                                                </TextField>
                                                 <TextField fx:id="tfHD_DienThoai" promptText="SĐT khách" GridPane.columnIndex="2" GridPane.rowIndex="4">
                                                    <GridPane.margin>
                                                       <Insets right="10.0" />
@@ -1481,7 +1489,7 @@
                                                       <Font size="18.0" />
                                                    </font>
                                                 </TextField>
-                                                <TextField fx:id="tfHD_TenKhach" promptText="Họ tên khách" GridPane.columnIndex="2" GridPane.rowIndex="3">
+                                                <TextField fx:id="tfHD_GhiChu" promptText="Ghi chú (nếu có)" GridPane.columnIndex="5" GridPane.rowIndex="4">
                                                    <GridPane.margin>
                                                       <Insets right="10.0" />
                                                    </GridPane.margin>
@@ -1505,14 +1513,6 @@
                                                    <font>
                                                       <Font name="System Bold" size="20.0" />
                                                    </font></Label>
-                                                <TextField fx:id="tfHD_GhiChu" promptText="Ghi chú (nếu có)" GridPane.columnIndex="5" GridPane.rowIndex="4">
-                                                   <GridPane.margin>
-                                                      <Insets right="10.0" />
-                                                   </GridPane.margin>
-                                                   <font>
-                                                      <Font size="18.0" />
-                                                   </font>
-                                                </TextField>
                                                 <Label text="Số lượng:" GridPane.columnIndex="1" GridPane.rowIndex="1">
                                                    <font>
                                                       <Font name="System Bold" size="20.0" />
@@ -1625,7 +1625,7 @@
                                              <center>
                                                 <TableView fx:id="tvHDPtck" prefHeight="319.0" prefWidth="422.0">
                                                   <columns>
-                                                    <TableColumn fx:id="tcHDPtck_NoiDung" prefWidth="75.0" text="Nội dung" />
+                                                    <TableColumn fx:id="tcHDPtck_NoiDung" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Nội dung" />
                                                       <TableColumn fx:id="tcHDPtck_TriGia" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Trị giá" />
                                                       <TableColumn fx:id="tcHDPtck_TriGiaValue" prefWidth="75.0" text="Trị giá" visible="false" />
                                                   </columns>
@@ -1858,8 +1858,9 @@
                                     <TableColumn fx:id="tcHD_TenKhach" minWidth="-1.0" prefWidth="-1.0" style="-fx-alignment: CENTER;" text="Tên khách" />
                                     <TableColumn fx:id="tcHD_DienThoai" minWidth="-1.0" prefWidth="-1.0" style="-fx-alignment: CENTER;" text="Điện thoại" />
                                     <TableColumn minWidth="-1.0" prefWidth="-1.0" text="Số điện thoại" visible="false" />
-                                    <TableColumn fx:id="tcHD_CMND" minWidth="-1.0" prefWidth="-1.0" style="-fx-alignment: CENTER;" text="CMND" />
-                                    <TableColumn fx:id="tcHD_TriGia" minWidth="-1.0" prefWidth="-1.0" style="-fx-alignment: CENTER;" text="Trị giá" />
+                                    <TableColumn fx:id="tcHD_CMND" minWidth="-1.0" prefWidth="-1.0" style="-fx-alignment: CENTER;" text="CMND" visible="false" />
+                                    <TableColumn fx:id="tcHD_TriGia" minWidth="-1.0" prefWidth="-1.0" style="-fx-alignment: CENTER;" text="Tạm tính" visible="false" />
+                                    <TableColumn fx:id="tcHD_TongCong" minWidth="-1.0" prefWidth="-1.0" style="-fx-alignment: CENTER;" text="Tổng cộng" />
                                  </columns>
                                  <columnResizePolicy>
                                     <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -1876,6 +1877,11 @@
                                        <font>
                                           <Font name="System Bold" size="20.0" />
                                        </font></Button>
+                                    <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleXoaHoaDon" prefHeight="44.0" prefWidth="1216.0" text="🗑 XOÁ HOÁ ĐƠN" textFill="BROWN">
+                                       <font>
+                                          <Font name="System Bold" size="20.0" />
+                                       </font>
+                                    </Button>
                                  </children>
                               </HBox>
                            </bottom>
@@ -1910,7 +1916,7 @@
                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                      </columnResizePolicy>
                      <BorderPane.margin>
-                        <Insets bottom="10.0" />
+                        <Insets bottom="20.0" />
                      </BorderPane.margin>
                   </TableView>
                </center>

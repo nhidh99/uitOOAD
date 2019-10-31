@@ -1,3 +1,5 @@
+CREATE DATABASE  IF NOT EXISTS `quanlikhachsan` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
+USE `quanlikhachsan`;
 -- MySQL dump 10.13  Distrib 8.0.17, for Win64 (x86_64)
 --
 -- Host: localhost    Database: quanlikhachsan
@@ -29,8 +31,10 @@ CREATE TABLE `ptp_dv` (
   `SoLuong` int(10) unsigned NOT NULL,
   `GiaDichVu` decimal(15,0) unsigned NOT NULL,
   `ThanhTien` decimal(15,0) unsigned NOT NULL,
-  PRIMARY KEY (`MaPTPDV`)
-) ENGINE=InnoDB AUTO_INCREMENT=21020 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  PRIMARY KEY (`MaPTPDV`),
+  KEY `fk_ptpdv_ptp_idx` (`MaPTPhong`),
+  CONSTRAINT `fk_ptpdv_ptp` FOREIGN KEY (`MaPTPhong`) REFERENCES `pt_phong` (`MaPTPhong`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=21040 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -39,7 +43,7 @@ CREATE TABLE `ptp_dv` (
 
 LOCK TABLES `ptp_dv` WRITE;
 /*!40000 ALTER TABLE `ptp_dv` DISABLE KEYS */;
-INSERT INTO `ptp_dv` VALUES (21019,14097,19004,1,10000,10000);
+INSERT INTO `ptp_dv` VALUES (21019,14097,19004,1,10000,10000),(21026,14141,19004,1,15000,15000),(21039,14141,19005,1,200000,200000);
 /*!40000 ALTER TABLE `ptp_dv` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -117,4 +121,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-10-30 15:02:53
+-- Dump completed on 2019-11-01  4:55:29

@@ -47,6 +47,24 @@ public class SuaNhanVienController {
 
 	public void handleSuaNhanVien(ActionEvent event) {
 		try {
+			if (!(tfHoTen.getText().matches("^([^0-9]{1,30})$") 
+					&& tfCMND.getText().matches("^[0-9]{1,15}$")
+					&& tfDienThoai.getText().matches("^[0-9]{1,15}$") 
+					&& tfEmail.getText().matches("^.{1,45}$")
+					&& tfDiaChi.getText().matches("^.{0,45}$"))) {
+				Alert alert = new Alert(AlertType.INFORMATION);
+				alert.setTitle("Thất bại!");
+				alert.setHeaderText("Sửa nhân viên thất bại!");
+				alert.setContentText(
+						"- Tên nhân viên đa 30 kí tự và không chứa số.\n" 
+						+ "- CMND chỉ chứa số và tối đa 15 kí tự.\n"
+						+ "- Điện thoại chỉ chứa số và tối đa 15 kí tự.\n" 
+						+ "- Email tối đa 45 kí tự.\n"
+						+ "- Địa chỉ tối đa 45 kí tự.\n");
+				alert.showAndWait();
+				return;
+			}
+			
 			NhanVienDTO nhanVien = new NhanVienDTO(Integer.parseInt(lbMaNhanVien.getText()), tfHoTen.getText(),
 					tfCMND.getText(), tfDiaChi.getText(), tfEmail.getText(), tfDienThoai.getText(),
 					cbbChucVu.getSelectionModel().getSelectedItem(), null, null);

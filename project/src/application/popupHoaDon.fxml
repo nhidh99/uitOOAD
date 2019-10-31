@@ -438,9 +438,9 @@
                                     <Font size="20.0" />
                                  </font>
                               </Label>
-                              <Label alignment="CENTER" contentDisplay="CENTER" text="[Đã gồm thuế VAT và trừ tiền cọc]" GridPane.columnSpan="4" GridPane.halignment="CENTER" GridPane.rowIndex="7" GridPane.valignment="CENTER">
+                              <Label alignment="CENTER" contentDisplay="CENTER" text="(Tạm tính đã gồm thuế VAT và trừ tiền cọc)" GridPane.columnSpan="4" GridPane.halignment="CENTER" GridPane.rowIndex="7" GridPane.valignment="CENTER">
                                  <font>
-                                    <Font name="System Bold Italic" size="20.0" />
+                                    <Font name="System Italic" size="18.0" />
                                  </font>
                               </Label>
                            </children>

@@ -91,6 +91,19 @@ public class PtpPtckController implements Initializable {
 	}
 
 	public void handleXacNhan(ActionEvent e) {
+		
+		if (!(tfNoiDung.getText().matches("^.{1,45}$")
+				&& tfDonGia.getText().matches("^[0-9]{1,8}$"))) {
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Thất bại!");
+			alert.setHeaderText("Thêm ptck thất bại!");
+			alert.setContentText(
+					"- Nội dung ptck tối đa 45 kí tự.\n"
+					+ "- Đơn giá ptck là số không âm dưới 100 triệu.");
+			alert.showAndWait();
+			return;
+		}
+		
 		switch (tag) {
 		case INSERT: {
 			PtpPtckDTO ptck = new PtpPtckDTO(ptPhong, tfNoiDung.getText(), snSoLuong.getValue(),

@@ -82,7 +82,7 @@
                      </font>
                   </TextField>
                   <ComboBox fx:id="cbbTonKho" prefWidth="200.0" style="-fx-font-size: 16;" GridPane.columnIndex="2" GridPane.rowIndex="4" />
-                  <Spinner fx:id="snSoLuongTon" prefWidth="200.0" style="-fx-font-size: 16;" GridPane.columnIndex="2" GridPane.rowIndex="5" />
+                  <Spinner fx:id="snSoLuongTon" editable="true" prefWidth="200.0" style="-fx-font-size: 16;" GridPane.columnIndex="2" GridPane.rowIndex="5" />
                   <ComboBox fx:id="cbbLoaiDichVu" prefWidth="200.0" style="-fx-font-size: 16;" GridPane.columnIndex="2" GridPane.rowIndex="6" />
                   <ComboBox fx:id="cbbNhaCungCap" prefWidth="200.0" style="-fx-font-size: 16;" GridPane.columnIndex="2" GridPane.rowIndex="7" />
                   <Label text="🔖" GridPane.rowIndex="1">

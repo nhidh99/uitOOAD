@@ -1,3 +1,5 @@
+CREATE DATABASE  IF NOT EXISTS `quanlikhachsan` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
+USE `quanlikhachsan`;
 -- MySQL dump 10.13  Distrib 8.0.17, for Win64 (x86_64)
 --
 -- Host: localhost    Database: quanlikhachsan
@@ -40,7 +42,7 @@ CREATE TABLE `hoadon` (
   PRIMARY KEY (`MaHoaDon`),
   KEY `fk_hd_nv_idx` (`MaNhanVien`),
   CONSTRAINT `fk_hd_nv` FOREIGN KEY (`MaNhanVien`) REFERENCES `nhanvien` (`MaNhanVien`)
-) ENGINE=InnoDB AUTO_INCREMENT=13005 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=13015 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -49,7 +51,7 @@ CREATE TABLE `hoadon` (
 
 LOCK TABLES `hoadon` WRITE;
 /*!40000 ALTER TABLE `hoadon` DISABLE KEYS */;
-INSERT INTO `hoadon` VALUES (13002,12001,'2019-10-29','Đinh Hoàng Long','025793366','0336887109','longdh94@gmail.com',500000,300000,150000,650000,700000,50000,''),(13004,12001,'2019-10-29','vsdv','sdvdsvsd','dsvdsv','sdv',250000,0,0,275000,300000,25000,'vsd');
+INSERT INTO `hoadon` VALUES (13002,12001,'2019-10-29','Đinh Hoàng Long','025793366','0336887109','longdh94@gmail.com',500000,300000,150000,650000,700000,50000,''),(13005,12001,'2019-11-01','Hồ Hoàng Hải','025793344','0336887109','haihh@gmail.com',150000,0,0,165000,170000,5000,NULL),(13014,12001,'2019-11-01','adsd','321','123','dasd',365000,0,0,401500,450000,48500,'dsadas');
 /*!40000 ALTER TABLE `hoadon` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -62,4 +64,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-10-30 15:02:50
+-- Dump completed on 2019-11-01  4:55:26

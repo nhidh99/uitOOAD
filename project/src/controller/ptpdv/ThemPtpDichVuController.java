@@ -39,6 +39,18 @@ public class ThemPtpDichVuController implements Initializable {
 	public void initialize(URL location, ResourceBundle resources) {
 		loadCbbDichVu();
 		cbbDichVu.getSelectionModel().selectFirst();
+		snSoLuong.focusedProperty().addListener((obs, oldValue, newValue) -> {
+			try {
+				if (newValue == false)
+					snSoLuong.increment(0);
+			} catch (NumberFormatException ex) {
+				Alert alert = new Alert(AlertType.INFORMATION);
+				alert.setTitle("Lỗi");
+				alert.setHeaderText("Thêm dịch vụ thất bại!");
+				alert.setContentText("Thông tin số lượng không hợp lệ!");
+				alert.showAndWait();
+			}
+		});
 	}
 
 	public void initialize(PTPhongDTO ptPhong) {
@@ -47,6 +59,15 @@ public class ThemPtpDichVuController implements Initializable {
 	}
 
 	public void handleThemDichVu() {
+		if (!tfDonGia.getText().matches("^[0-9]{1,8}$")) {
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Thất bại!");
+			alert.setHeaderText("Thêm dịch vụ thất bại!");
+			alert.setContentText("- Đơn giá là số không âm dưới 100 triệu VND.");
+			alert.showAndWait();
+			return;
+		}
+
 		try {
 			if (snSoLuong.isDisable()) {
 				Alert alert = new Alert(AlertType.INFORMATION);

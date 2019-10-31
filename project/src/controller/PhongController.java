@@ -164,6 +164,19 @@ public class PhongController implements Initializable {
 	}
 
 	public void handleXacNhan(ActionEvent e) {
+
+		if (!(tfMaPhong.getText().matches("^.{1,10}$") 
+				&& tfGhiChu.getText().matches("^.{0,45}$") )) {
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Thất bại!");
+			alert.setHeaderText("Hiệu chỉnh phòng thất bại!");
+			alert.setContentText(
+					"Mã phòng tối đa 10 kí tự.\n"
+					+ "Ghi chú tối đa 45 kí tự.");
+			alert.showAndWait();
+			return;
+		}
+		
 		switch (tag) {
 		case INSERT: {
 			try {

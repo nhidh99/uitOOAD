@@ -100,6 +100,10 @@ public class HoaDonDTO {
 	public String getTienThua() {
 		return MoneyFormatHelper.format(tienThua);
 	}
+	
+	public String getTongCong() {
+		return MoneyFormatHelper.format(tienNhan - tienThua + tongTienCoc);
+	}
 
 	public String getGhiChu() {
 		return ghiChu;

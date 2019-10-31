@@ -40,6 +40,19 @@ public class NhaCungCapController {
 	}
 
 	public void handleXacNhan(ActionEvent e) {
+		
+		if (!(tfNhaCungCap.getText().matches("^.{1,30}$") 
+				&& tfSoDienThoai.getText().matches("^[0-9]{1,15}$"))) {
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Thất bại!");
+			alert.setHeaderText("Hiệu chỉnh nhà cung cấp thất bại!");
+			alert.setContentText(
+					"- Tên nhà cungg cấp tối đa 30 kí tự.\n"
+					+ "- Số điện thoại chỉ gồm số, tối đa 15 kí tự.");
+			alert.showAndWait();
+			return;
+		}
+		
 		if (tfNhaCungCap.getText().trim().isEmpty() || tfSoDienThoai.getText().trim().isEmpty()) {
 			Alert alert = new Alert(AlertType.INFORMATION);
 			alert.setTitle("Lỗi");

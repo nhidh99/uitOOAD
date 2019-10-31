@@ -23,11 +23,35 @@ public class ThamSoController {
 		snTiLeVAT.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 100));
 		snTiLeCoc.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 100));
 
-		snTiLeVAT.focusedProperty().addListener((obs, oldValue, newValue) -> snTiLeVAT.increment(0));
-		snTiLeCoc.focusedProperty().addListener((obs, oldValue, newValue) -> snTiLeCoc.increment(0));
+		snTiLeVAT.focusedProperty().addListener((obs, oldValue, newValue) -> {
+			try {
+				if (newValue == false) {
+					snTiLeVAT.increment(0);
+				}
+			} catch (Exception ex) {
+				Alert alert = new Alert(AlertType.INFORMATION);
+				alert.setTitle("Lỗi");
+				alert.setHeaderText("Sửa các tham số thất bại!");
+				alert.setContentText("Thông tin tham số không hợp lệ!");
+				alert.showAndWait();
+			}
+		});
+
+		snTiLeCoc.focusedProperty().addListener((obs, oldValue, newValue) -> {
+			try {
+				snTiLeCoc.increment(0);
+			} catch (Exception ex) {
+				Alert alert = new Alert(AlertType.INFORMATION);
+				alert.setTitle("Lỗi");
+				alert.setHeaderText("Sửa các tham số thất bại!");
+				alert.setContentText("Thông tin tham số không hợp lệ!");
+				alert.showAndWait();
+			}
+		});
 
 		snTiLeVAT.getValueFactory().setValue((int) (thamSo.getTiLeThueVAT() * 100));
-		snTiLeCoc.getValueFactory().setValue((int) (thamSo.getTiLeTienCoc() * 100));	}
+		snTiLeCoc.getValueFactory().setValue((int) (thamSo.getTiLeTienCoc() * 100));
+	}
 
 	public void handleXacNhan(ActionEvent e) {
 		try {
@@ -50,7 +74,6 @@ public class ThamSoController {
 				alert.showAndWait();
 			}
 		} catch (SQLException ex) {
-			ex.printStackTrace();
 			Alert alert = new Alert(AlertType.INFORMATION);
 			alert.setTitle("Lỗi");
 			alert.setHeaderText("Sửa các tham số thất bại!");

@@ -44,7 +44,6 @@ public class DichVuController implements Initializable {
 	private ComboBox<NhaCungCapDTO> cbbNhaCungCap;
 
 	private Integer maDichVu;
-	
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -52,8 +51,8 @@ public class DichVuController implements Initializable {
 			initCbbLoaiDichVu();
 			initCbbNhaCungCap();
 			initCbbTonKho();
+			initSpinnerSoLuongTon();
 			maDichVu = null;
-			snSoLuongTon.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 200));
 		} catch (SQLException e) {
 			Alert alert = new Alert(AlertType.INFORMATION);
 			alert.setTitle("Lỗi");
@@ -62,14 +61,31 @@ public class DichVuController implements Initializable {
 			alert.showAndWait();
 		}
 	}
-	
+
+	private void initSpinnerSoLuongTon() {
+		snSoLuongTon.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 200));
+		snSoLuongTon.focusedProperty().addListener((obs, oldValue, newValue) -> {
+			try {
+				if (newValue == false) {
+					snSoLuongTon.increment(0);
+				}
+			} catch (NumberFormatException ex) {
+				Alert alert = new Alert(AlertType.INFORMATION);
+				alert.setTitle("Lỗi");
+				alert.setHeaderText("Hiệu chỉnh dịch vụ thất bại!");
+				alert.setContentText("Thông tin số lượng tồn không hợp lệ!");
+				alert.showAndWait();
+			}
+		});
+	}
+
 	public void initialize(DichVuDTO dichVu) {
 		lbTieuDe.setText("🎲 SỬA DỊCH VỤ");
 		maDichVu = dichVu.getMaDichVu();
 		tfTenDichVu.setText(dichVu.getTenDichVu());
 		tfDonViTinh.setText(dichVu.getDonViTinh());
 		tfDonGia.setText(dichVu.getDonGiaValue().toString());
-		
+
 		ObservableList<LoaiDichVuDTO> dsLoaiDichVu = cbbLoaiDichVu.getItems();
 		for (int i = 0; i < dsLoaiDichVu.size(); i++) {
 			if (dichVu.getMaLoaiDichVu().equals(dsLoaiDichVu.get(i).getMaLoaiDichVu())) {
@@ -77,7 +93,7 @@ public class DichVuController implements Initializable {
 				break;
 			}
 		}
-		
+
 		ObservableList<NhaCungCapDTO> dsNhaCungCap = cbbNhaCungCap.getItems();
 		for (int i = 0; i < dsNhaCungCap.size(); i++) {
 			if (dichVu.getMaNhaCungCap().equals(dsNhaCungCap.get(i).getMaNhaCungCap())) {
@@ -165,11 +181,24 @@ public class DichVuController implements Initializable {
 	}
 
 	public void handleXacNhan(ActionEvent e) {
+
+		if (!(tfTenDichVu.getText().matches("^.{1,30}$") && tfDonViTinh.getText().matches("^([^0-9]{1,30})$")
+				&& tfDonGia.getText().matches("^[0-9]{1,9}$"))) {
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Thất bại!");
+			alert.setHeaderText("Thêm dịch vụ thất bại!");
+			alert.setContentText("- Tên dịch vụ tối đa 30 kí tự.\n"
+					+ "- Đơn vị tính tối đa 30 kí tự và không chứa số.\n" + "- Đơn giá là số không âm dưới 1 tỉ VND.");
+			alert.showAndWait();
+			return;
+		}
+
 		DichVuDTO dichVu = new DichVuDTO(maDichVu, tfTenDichVu.getText(), tfDonViTinh.getText(),
-				snSoLuongTon.isDisable() ? -1 : snSoLuongTon.getValue(), Integer.parseInt(tfDonGia.getText()),
+				snSoLuongTon.isDisable() ? -1 : snSoLuongTon.getValue(), Integer.parseUnsignedInt(tfDonGia.getText()),
 				cbbLoaiDichVu.getSelectionModel().getSelectedItem(),
 				cbbNhaCungCap.getSelectionModel().getSelectedItem());
 		try {
+
 			if (maDichVu == null) {
 				if (DichVuBUS.insertDichVu(dichVu)) {
 					Alert alert = new Alert(AlertType.INFORMATION);
@@ -210,6 +239,12 @@ public class DichVuController implements Initializable {
 			alert.setTitle("Lỗi");
 			alert.setHeaderText("Thêm dịch vụ thất bại!");
 			alert.setContentText("Lỗi database!");
+			alert.showAndWait();
+		} catch (NumberFormatException numberFormatException) {
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Lỗi");
+			alert.setHeaderText("Thêm dịch vụ thất bại!");
+			alert.setContentText("Số lượng tồn không hợp lệ!");
 			alert.showAndWait();
 		}
 	}

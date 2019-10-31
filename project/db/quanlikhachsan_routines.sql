@@ -1,3 +1,5 @@
+CREATE DATABASE  IF NOT EXISTS `quanlikhachsan` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
+USE `quanlikhachsan`;
 -- MySQL dump 10.13  Distrib 8.0.17, for Win64 (x86_64)
 --
 -- Host: localhost    Database: quanlikhachsan
@@ -201,7 +203,7 @@ SET character_set_client = @saved_cs_client;
 /*!50001 SET collation_connection      = utf8mb4_0900_ai_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
-/*!50001 VIEW `view_tkdoanhthunam` AS select sum(`hoadon`.`GiaTri`) AS `DoanhThu`,month(`hoadon`.`NgayHoaDon`) AS `Thang`,year(`hoadon`.`NgayHoaDon`) AS `Nam` from `hoadon` group by `Thang`,`Nam` order by `Nam`,`Thang` */;
+/*!50001 VIEW `view_tkdoanhthunam` AS select (sum(`hoadon`.`GiaTri`) + sum(`hoadon`.`TongTienCoc`)) AS `DoanhThu`,month(`hoadon`.`NgayHoaDon`) AS `Thang`,year(`hoadon`.`NgayHoaDon`) AS `Nam` from `hoadon` group by `Thang`,`Nam` order by `Nam`,`Thang` */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
@@ -219,7 +221,7 @@ SET character_set_client = @saved_cs_client;
 /*!50001 SET collation_connection      = utf8mb4_0900_ai_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
-/*!50001 VIEW `view_tkloaiphongthang` AS select `pt_phong`.`LoaiPhongThue` AS `LoaiPhongThue`,sum(`pt_phong`.`ThanhTien`) AS `TienPhong`,month(`pt_phong`.`NgayTra`) AS `Thang`,year(`pt_phong`.`NgayTra`) AS `Nam` from `pt_phong` where (`pt_phong`.`MaHoaDon` is not null) group by `pt_phong`.`LoaiPhongThue`,`Thang`,`Nam` order by `Nam`,`Thang` */;
+/*!50001 VIEW `view_tkloaiphongthang` AS select `pt_phong`.`LoaiPhongThue` AS `LoaiPhongThue`,(sum(`pt_phong`.`ThanhTien`) + sum(`pt_phong`.`TienCoc`)) AS `TienPhong`,month(`pt_phong`.`NgayTra`) AS `Thang`,year(`pt_phong`.`NgayTra`) AS `Nam` from `pt_phong` where (`pt_phong`.`MaHoaDon` is not null) group by `pt_phong`.`LoaiPhongThue`,`Thang`,`Nam` order by `Nam`,`Thang` */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
@@ -586,4 +588,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-10-30 15:02:53
+-- Dump completed on 2019-11-01  4:55:29

@@ -69,6 +69,22 @@ public class KhachController implements Initializable {
 
 	public void handleXacNhan(ActionEvent e) {
 
+		if (!(tfHoTen.getText().matches("^([^0-9]{1,30})$")
+				&& tfCMND.getText().matches("^[0-9]{1,15}$")
+				&& tfDienThoai.getText().matches("^[0-9]{1,15}$")
+				&& tfQuocTich.getText().matches("^([^0-9]{1,20})$"))) {
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Thất bại!");
+			alert.setHeaderText("Thêm khách thất bại!");
+			alert.setContentText(
+					"- Tên khách tối đa 30 kí tự và không chứa số.\n"
+					+ "- CMND tối đa 15 kí tự và chỉ chứa số.\n" 
+					+ "- Điện thoại tối đa 15 kí tự và chỉ chứa số.\n"
+					+ "- Quốc tịch tối đa 20 kí tự và không chứa số.");
+			alert.showAndWait();
+			return;
+		}
+		
 		switch (tag) {
 		case INSERT: {
 			KhachDTO khach = new KhachDTO(ptPhong, tfHoTen.getText(), tfCMND.getText(), tfDienThoai.getText(),

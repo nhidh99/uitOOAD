@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
+import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 import DTO.*;
@@ -58,10 +59,10 @@ public class PhongDAO {
 		statement.setString(1, maPhong);
 		ResultSet rs = statement.executeQuery();
 		rs.next();
-		
+
 		TinhTrangDTO tinhTrang = new TinhTrangDTO(rs.getInt("MaTinhTrang"), rs.getString("TenTinhTrang"));
-		LoaiPhongDTO loaiPhong = new LoaiPhongDTO(rs.getInt("MaLoaiPhong"), rs.getString("TenLoaiPhong"), 
-				rs.getInt("SoKhachToiDa"), rs.getInt("DonGia"));		
+		LoaiPhongDTO loaiPhong = new LoaiPhongDTO(rs.getInt("MaLoaiPhong"), rs.getString("TenLoaiPhong"),
+				rs.getInt("SoKhachToiDa"), rs.getInt("DonGia"));
 		PhongDTO output = new PhongDTO(rs.getString("MaPhong"), loaiPhong, tinhTrang, rs.getString("GhiChu"));
 		conn.close();
 		return output;
@@ -73,7 +74,7 @@ public class PhongDAO {
 		PreparedStatement statement = conn.prepareStatement(query);
 		statement.setString(1, maPhong);
 		ResultSet rs = statement.executeQuery();
-		rs.next();		
+		rs.next();
 		Integer output = rs.getInt(1);
 		conn.close();
 		return output;
@@ -98,9 +99,12 @@ public class PhongDAO {
 		statement.setString(1, phong.getMaPhong());
 		statement.setInt(2, phong.getLoaiPhong().getMaLoaiPhong());
 		statement.setInt(3, phong.getTinhTrang().getMaTinhTrang());
-		statement.setString(4, phong.getGhiChu());
+		if (!phong.getGhiChu().trim().isEmpty()) {
+			statement.setString(4, phong.getGhiChu());
+		} else
+			statement.setNull(4, Types.VARCHAR);
 		int records = statement.executeUpdate();
-		conn.close();	
+		conn.close();
 		return records > 0;
 	}
 
@@ -120,7 +124,10 @@ public class PhongDAO {
 		PreparedStatement statement = conn.prepareStatement(query);
 		statement.setInt(1, phong.getLoaiPhong().getMaLoaiPhong());
 		statement.setInt(2, phong.getTinhTrang().getMaTinhTrang());
-		statement.setString(3, phong.getGhiChu());
+		if (!phong.getGhiChu().trim().isEmpty()) {
+			statement.setString(3, phong.getGhiChu());
+		} else
+			statement.setNull(3, Types.VARCHAR);
 		statement.setString(4, phong.getMaPhong());
 		int records = statement.executeUpdate();
 		conn.close();
@@ -129,36 +136,32 @@ public class PhongDAO {
 
 	public static List<String> findPhongByTenKhach(String ten) throws SQLException {
 		Connection conn = DBHelper.getConnection();
-		String query = "SELECT DISTINCT MaPhong "
-				+ "FROM PT_Phong PTP JOIN KhachHang KH "
-				+ "ON PTP.MaPTPhong = KH.MaPTPhong "
-				+ "WHERE HoTen = ? ORDER BY MaPhong";
+		String query = "SELECT DISTINCT MaPhong " + "FROM PT_Phong PTP JOIN KhachHang KH "
+				+ "ON PTP.MaPTPhong = KH.MaPTPhong " + "WHERE HoTen = ? ORDER BY MaPhong";
 		PreparedStatement statement = conn.prepareStatement(query);
 		statement.setString(1, ten);
-		ResultSet rs = statement.executeQuery();		
+		ResultSet rs = statement.executeQuery();
 		List<String> output = new ArrayList<String>();
 		while (rs.next()) {
 			output.add(rs.getString("MaPhong"));
 		}
 		conn.close();
-		return output;		
+		return output;
 	}
-	
+
 	public static List<String> findPhongByCMNDKhach(String CMND) throws SQLException {
 		Connection conn = DBHelper.getConnection();
-		String query = "SELECT DISTINCT MaPhong "
-				+ "FROM PT_Phong PTP JOIN KhachHang KH "
-				+ "ON PTP.MaPTPhong = KH.MaPTPhong "
-				+ "WHERE CMND = ? ORDER BY MaPhong";
+		String query = "SELECT DISTINCT MaPhong " + "FROM PT_Phong PTP JOIN KhachHang KH "
+				+ "ON PTP.MaPTPhong = KH.MaPTPhong " + "WHERE CMND = ? ORDER BY MaPhong";
 		PreparedStatement statement = conn.prepareStatement(query);
 		statement.setString(1, CMND);
-		ResultSet rs = statement.executeQuery();		
+		ResultSet rs = statement.executeQuery();
 		List<String> output = new ArrayList<String>();
 		while (rs.next()) {
 			output.add(rs.getString("MaPhong"));
 		}
 		conn.close();
-		return output;		
+		return output;
 	}
 
 	public static boolean updateNhanPhong(String maPhong, Integer maPTPhong) throws SQLException {

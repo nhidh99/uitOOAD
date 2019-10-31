@@ -17,14 +17,15 @@ public class LoaiDichVuController {
 		INSERT, UPDATE
 	}
 
-	@FXML Label lbTieuDe;
-	
-	@FXML TextField tfLoaiDichVu;
+	@FXML
+	Label lbTieuDe;
+
+	@FXML
+	TextField tfLoaiDichVu;
 
 	LoaiDichVuDTO loaiDichVu;
-	
-	Tag tag = Tag.INSERT;
 
+	Tag tag = Tag.INSERT;
 
 	public void initialize(LoaiDichVuDTO loaiDichVu) {
 		tag = Tag.UPDATE;
@@ -32,13 +33,13 @@ public class LoaiDichVuController {
 		lbTieuDe.setText("📦  SỬA LOẠI DỊCH VỤ");
 		tfLoaiDichVu.setText(loaiDichVu.getTenLoaiDichVu());
 	}
-	
+
 	public void handleXacNhan(ActionEvent e) {
-		if (tfLoaiDichVu.getText().trim().isEmpty()) {
+		if (!(tfLoaiDichVu.getText().matches("^.{1,20}$"))) {
 			Alert alert = new Alert(AlertType.INFORMATION);
-			alert.setTitle("Lỗi");
-			alert.setHeaderText("Không thể xử lí loại dịch vụ mới khi chưa nhập nội dung!");
-			alert.setContentText("Vui lòng nhập tên loại dịch vụ để xử lí!");
+			alert.setTitle("Thất bại!");
+			alert.setHeaderText("Hiệu chỉnh loại dịch vụ thất bại!");
+			alert.setContentText("Tên loại dịch vụ tối đa 20 kí tự");
 			alert.showAndWait();
 			return;
 		}

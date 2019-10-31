@@ -189,7 +189,7 @@ public class PDFCreateHelper {
 		contents.beginText();
 		contents.setFont(fontBold, 13);
 		contents.newLineAtOffset(startX + 150, yCordinate - leading);
-		contents.showText("Tổng cộng:");
+		contents.showText("Tạm tính:");
 		contents.newLineAtOffset(0, -leading);
 		contents.showText("Tiền nhận:");
 		contents.newLineAtOffset(0, -leading);
@@ -201,8 +201,7 @@ public class PDFCreateHelper {
 		contents.beginText();
 		contents.setFont(font, 13);
 		contents.newLineAtOffset(endX - 260, yCordinate - leading);
-		contents.showText(MoneyFormatHelper.format((MoneyFormatHelper.fromString(thongTinHoaDon.get(9))
-				+ MoneyFormatHelper.fromString(thongTinHoaDon.get(11)))) + " VND");
+		contents.showText(thongTinHoaDon.get(9) + " VND");
 		contents.newLineAtOffset(0, -leading);
 		contents.showText(thongTinHoaDon.get(8) + " VND");
 		contents.newLineAtOffset(0, -leading);
@@ -434,7 +433,8 @@ public class PDFCreateHelper {
 		Desktop.getDesktop().open(new File(fileName));
 	}
 
-	public static void createLoaiPhongThangPDF(int thang, int nam, List<ArrayList<String>> content, Integer tongDoanhThu) throws IOException {
+	public static void createLoaiPhongThangPDF(int thang, int nam, List<ArrayList<String>> content,
+			Integer tongDoanhThu) throws IOException {
 		PDDocument doc = new PDDocument();
 		PDPage page = new PDPage();
 		doc.addPage(page);
@@ -461,7 +461,8 @@ public class PDFCreateHelper {
 		contents.beginText();
 		contents.newLineAtOffset((page.getCropBox().getUpperRightX() / 2)
 				- ((fontBold.getStringWidth(String.format("BÁO CÁO LOẠI PHÒNG THÁNG %d/%d", thang, nam)) / 1000 * 20)
-						/ 2), yCordinate);
+						/ 2),
+				yCordinate);
 		contents.setFont(fontBold, 20);
 		contents.showText(String.format("BÁO CÁO LOẠI PHÒNG THÁNG %d/%d ", thang, nam));
 		contents.endText();
@@ -499,7 +500,8 @@ public class PDFCreateHelper {
 		Desktop.getDesktop().open(new File(fileName));
 	}
 
-	public static void createSoKhachNamPDF(Integer nam, List<ArrayList<String>> content, Integer tongSoKhach) throws IOException {
+	public static void createSoKhachNamPDF(Integer nam, List<ArrayList<String>> content, Integer tongSoKhach)
+			throws IOException {
 		PDDocument doc = new PDDocument();
 		PDPage page = new PDPage();
 		doc.addPage(page);
@@ -565,7 +567,8 @@ public class PDFCreateHelper {
 		Desktop.getDesktop().open(new File(fileName));
 	}
 
-	public static void createLoaiDichVuPDF(int thang, int nam, List<ArrayList<String>> content, Integer tongDoanhThu) throws IOException {
+	public static void createLoaiDichVuPDF(int thang, int nam, List<ArrayList<String>> content, Integer tongDoanhThu)
+			throws IOException {
 		PDDocument doc = new PDDocument();
 		PDPage page = new PDPage();
 		doc.addPage(page);
@@ -592,7 +595,8 @@ public class PDFCreateHelper {
 		contents.beginText();
 		contents.newLineAtOffset((page.getCropBox().getUpperRightX() / 2)
 				- ((fontBold.getStringWidth(String.format("BÁO CÁO LOẠI DỊCH VỤ THÁNG %d/%d", thang, nam)) / 1000 * 20)
-						/ 2), yCordinate);
+						/ 2),
+				yCordinate);
 		contents.setFont(fontBold, 20);
 		contents.showText(String.format("BÁO CÁO LOẠI DỊCH VỤ THÁNG %d/%d ", thang, nam));
 		contents.endText();
