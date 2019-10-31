@@ -1,0 +1,24 @@
+#main-tab .tab-label {
+	-fx-font-size: 20;
+}
+
+.date-picker, .spinner, .combo-box {
+	-fx-font-size: 17;
+}
+
+.table-view .table-column {
+	-fx-font-size: 15;
+}
+
+.tab .tab-label {
+    -fx-alignment: CENTER;
+    -fx-font-size: 16;
+    -fx-padding: 0 10 0 10;
+    -fx-font-weight: bold;
+}
+
+.tab-pane {
+  -fx-tab-min-height: 45;
+  -fx-tab-max-height: 45;
+  -fx-tab-min-width: 160;
+}

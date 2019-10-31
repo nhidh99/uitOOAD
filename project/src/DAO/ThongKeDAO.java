@@ -18,13 +18,19 @@ public class ThongKeDAO {
 
 	public static List<ThongKeDoanhThuDTO> getDoanhThuTheoNam(Integer nam) throws SQLException {
 		Connection conn = DBHelper.getConnection();
-		String query = "SELECT Thang, DoanhThu FROM view_tkDoanhThuNam WHERE Nam = " + nam;
+		String query = "SELECT * FROM view_tkDoanhThuNam WHERE Nam = " + nam;
 		Statement statement = conn.createStatement();
 		ResultSet rs = statement.executeQuery(query);
 
+		long tongDoanhThu = 0;
 		List<ThongKeDoanhThuDTO> output = new ArrayList<ThongKeDoanhThuDTO>();
 		while (rs.next()) {
 			output.add(new ThongKeDoanhThuDTO(rs.getInt("Thang"), rs.getInt("DoanhThu")));
+			tongDoanhThu += rs.getInt("DoanhThu");
+		}
+		
+		for (ThongKeDoanhThuDTO tk : output) {
+			tk.setTile((float) (tk.getDoanhThu()) / tongDoanhThu * 100);
 		}
 		conn.close();
 		return output;
@@ -40,6 +46,8 @@ public class ThongKeDAO {
 		while (rs.next()) {
 			output.add(new ThongKeSoKhachDTO(rs.getInt("LuongKhach"), rs.getInt("Thang")));
 		}
+		Integer tongSoKhach = output.stream().mapToInt(ThongKeSoKhachDTO::getSoKhach).sum();
+		output.stream().forEach(tk -> tk.setTiLe((float) tk.getSoKhach() / tongSoKhach * 100));
 		conn.close();
 		return output;
 	}
@@ -56,6 +64,8 @@ public class ThongKeDAO {
 		while (rs.next()) {
 			output.add(new ThongKeLoaiPhongDTO(rs.getString("LoaiPhongThue"), rs.getInt("TienPhong")));
 		}
+		Integer tongDoanhThu = output.stream().mapToInt(ThongKeLoaiPhongDTO::getDoanhThu).sum();
+		output.stream().forEach(tk -> tk.setTiLe((float) tk.getDoanhThu() / tongDoanhThu * 100));
 		conn.close();
 		return output;
 	}
@@ -68,10 +78,13 @@ public class ThongKeDAO {
 		statement.setInt(2, nam);
 		ResultSet rs = statement.executeQuery();
 		
-		List<ThongKeLoaiDichVuDTO> listThongKe = new ArrayList<ThongKeLoaiDichVuDTO>();
+		List<ThongKeLoaiDichVuDTO> output = new ArrayList<ThongKeLoaiDichVuDTO>();
 		while (rs.next()) {
-			listThongKe.add(new ThongKeLoaiDichVuDTO(rs.getInt("DoanhThu"), rs.getString("TenLoaiDichVu")));
+			output.add(new ThongKeLoaiDichVuDTO(rs.getInt("DoanhThu"), rs.getString("TenLoaiDichVu")));
 		}
-		return listThongKe;
+		
+		Integer tongDoanhThu = output.stream().mapToInt(ThongKeLoaiDichVuDTO::getDoanhThu).sum();
+		output.stream().forEach(tk -> tk.setTiLe((float) tk.getDoanhThu() / tongDoanhThu * 100));
+		return output;
 	}
 }

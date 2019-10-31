@@ -1,6 +1,11 @@
 package controller;
 
+import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import BUS.NhanVienBUS;
 import BUS.PTPhongBUS;
 import BUS.PhieuThueBUS;
@@ -8,9 +13,11 @@ import DTO.PTPhongDTO;
 import DTO.PhieuThueDTO;
 import helper.ConfirmDialogHelper;
 import helper.MoneyFormatHelper;
+import helper.PDFCreateHelper;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -172,7 +179,7 @@ public class PhieuThueController {
 		}
 	}
 
-	public void handleCapNhatPhieuThue() {
+	public void handleCapNhatPhieuThue(ActionEvent e) {
 		try {
 			PhieuThueDTO newPhieuThue = new PhieuThueDTO(phieuThue.getMaPhieuThue(), null, null,
 					tfPT_KhachThue.getText(), tfPT_CMND.getText(), tfPT_DienThoai.getText(), tfPT_Email.getText(), 
@@ -205,6 +212,32 @@ public class PhieuThueController {
 		}
 	}
 
+	public void handleInPhieuThue(ActionEvent e) throws IOException {
+		List<ArrayList<String>> CTPT = new ArrayList<ArrayList<String>>();
+		String[] firstRowValue = {"Mã phòng", "Loại phòng", "Tiền cọc (VND)", "Nhận phòng", "Trả phòng"};
+		CTPT.add(new ArrayList<String>(Arrays.asList(firstRowValue)));
+		for(PTPhongDTO ptp : tvPTPhong.getItems()) {
+			String[] rowValue = {ptp.getMaPhong(), ptp.getLoaiPhongThue(), ptp.getTienCoc(), ptp.getNgayNhan(), ptp.getNgayTra()};
+			CTPT.add(new ArrayList<String>(Arrays.asList(rowValue)));
+		}
+		
+		List<String> thongTinPhieu = new ArrayList<String>();
+		String[] value = {
+				phieuThue.getMaPhieuThue().toString(), 
+				tfPT_KhachThue.getText(),
+				tfPT_CMND.getText(), 
+				tfPT_Email.getText(),
+				lbPT_SoLuongPhong.getText(),
+				lbPT_TenNhanVien.getText(),
+				lbPT_NgayLap.getText(),
+				tfPT_DienThoai.getText(),
+				lbPT_TongCoc.getText(),
+				(tfPT_GhiChu.getText() == null) ? "Không có" : tfPT_GhiChu.getText()
+		};
+		thongTinPhieu.addAll(new ArrayList<String> (Arrays.asList(value)));
+		PDFCreateHelper.createPhieuThuePDF(thongTinPhieu, CTPT);
+	}
+	
 	public void handleDong() {
 		Stage stage = (Stage) lbPT_NgayLap.getScene().getWindow();
 		stage.close();

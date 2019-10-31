@@ -1,7 +1,11 @@
 package controller;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import BUS.HDPtckBUS;
@@ -9,6 +13,7 @@ import BUS.PTPhongBUS;
 import DTO.HDPtckDTO;
 import DTO.HoaDonDTO;
 import DTO.PTPhongDTO;
+import helper.PDFCreateHelper;
 import helper.PopUpStageHelper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -145,5 +150,35 @@ public class HoaDonController implements Initializable {
 			alert.setContentText("Vui lòng chọn phòng cần xem!");
 			alert.showAndWait();
 		}
+	}
+	
+	public void handleInHoaDon(ActionEvent e) throws IOException {
+		List<String> thongTinHoaDon = new ArrayList<String>();
+		String[] value = {
+				lbHD_KhachTra.getText(), 
+				lbHD_DienThoai.getText(),
+				lbHD_CMND.getText(), 
+				lbHD_Email.getText(),
+				lbHD_SoLuong.getText(),
+				lbHD_NgayLap.getText(),
+				lbHD_TenNhanVien.getText(),
+				lbHD_GhiChu.getText() == null ? "Không có" : lbHD_GhiChu.getText(),
+				lbHD_TienNhan.getText(),
+				lbHD_TamTinh.getText(),
+				lbHD_TienThua.getText(),
+				lbHD_TienCoc.getText()
+		};
+		
+		thongTinHoaDon.addAll(new ArrayList<String> (Arrays.asList(value)));
+		List<PTPhongDTO> listPhong = new ArrayList<PTPhongDTO>();
+		for(PTPhongDTO ptp : tvHDPhong.getItems()) {
+			listPhong.add(ptp);
+		}
+		
+		List<HDPtckDTO> listPtck = new ArrayList<HDPtckDTO>();
+		for(HDPtckDTO ptck : tvHDPtck.getItems()) {
+			listPtck.add(ptck);
+		}
+		PDFCreateHelper.createHoaDonPDF(listPhong, listPtck, thongTinHoaDon);
 	}
 }

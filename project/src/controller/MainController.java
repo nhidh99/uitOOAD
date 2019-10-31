@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -20,6 +21,7 @@ import custom.control.RoomDetailPane;
 import helper.ConfirmDialogHelper;
 import helper.DateFormatHelper;
 import helper.MoneyFormatHelper;
+import helper.PDFCreateHelper;
 import helper.PopUpStageHelper;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
@@ -2145,13 +2147,13 @@ public class MainController implements Initializable {
 			for (ThongKeDoanhThuDTO thongke : ThongKeBUS.getDoanhThuTheoNam(nam)) {
 				series.getData().add(new XYChart.Data<>(thongke.getThang().toString(), thongke.getDoanhThu()));
 			}
-			
+
 			barChart.getData().add(series);
 			bpTK_DoanhThu.setCenter(barChart);
 		} catch (SQLException ex) {
 			Alert alert = new Alert(AlertType.INFORMATION);
 			alert.setTitle("Thất bại");
-			alert.setHeaderText("Không thể xem báo cáo doanh thu tháng!");
+			alert.setHeaderText("Không thể xem báo cáo doanh thu năm!");
 			alert.setContentText("Lỗi database!");
 			alert.showAndWait();
 		}
@@ -2176,7 +2178,7 @@ public class MainController implements Initializable {
 			for (ThongKeSoKhachDTO thongke : ThongKeBUS.getSoKhachTheoNam(nam)) {
 				series.getData().add(new XYChart.Data<>(thongke.getThang().toString(), thongke.getSoKhach()));
 			}
-			
+
 			barChart.getData().add(series);
 			bpTK_LuongKhach.setCenter(barChart);
 		} catch (SQLException ex) {
@@ -2208,7 +2210,7 @@ public class MainController implements Initializable {
 			for (ThongKeLoaiPhongDTO thongke : ThongKeBUS.getLoaiPhongTheoThang(thang, nam)) {
 				series.getData().add(new XYChart.Data<>(thongke.getLoaiPhong(), thongke.getDoanhThu()));
 			}
-			
+
 			barChart.getData().add(series);
 			bpTK_LoaiPhong.setCenter(barChart);
 		} catch (SQLException ex) {
@@ -2239,7 +2241,7 @@ public class MainController implements Initializable {
 			for (ThongKeLoaiDichVuDTO thongke : ThongKeBUS.getLoaiDichVuTheoThang(thang, nam)) {
 				series.getData().add(new XYChart.Data<>(thongke.getTenLoaiDichVu(), thongke.getDoanhThu()));
 			}
-			
+
 			barChart.getData().add(series);
 			bpTK_LoaiDichVu.setCenter(barChart);
 		} catch (SQLException ex) {
@@ -2657,5 +2659,115 @@ public class MainController implements Initializable {
 	public void handleDangXuat(ActionEvent e) {
 		Window window = (Stage) lbPhong_MaPhong.getScene().getWindow();
 		window.fireEvent(new WindowEvent(window, WindowEvent.WINDOW_CLOSE_REQUEST));
+	}
+
+	public void handleInThongKeDoanhThu(ActionEvent e) {
+		try {
+			List<ArrayList<String>> CTBC = new ArrayList<ArrayList<String>>();
+			String[] firstRowValue = { "Tháng", "Doanh thu (VND)", "Tỉ lệ (%)" };
+			CTBC.add(new ArrayList<String>(Arrays.asList(firstRowValue)));
+
+			Integer tongDoanhThu = ThongKeBUS.getDoanhThuTheoNam(snTK_DoanhThu.getValue()).stream()
+					.mapToInt(ThongKeDoanhThuDTO::getDoanhThu).sum();
+
+			ThongKeBUS.getDoanhThuTheoNam(snTK_DoanhThu.getValue()).stream().forEach(bc -> {
+				String[] rowValue = { bc.getThang().toString(), MoneyFormatHelper.format(bc.getDoanhThu()),
+						String.format("%.2f", bc.getTiLe()) };
+				CTBC.add(new ArrayList<String>(Arrays.asList(rowValue)));
+			});
+
+			PDFCreateHelper.createDoanhThuNamPDF(snTK_DoanhThu.getValue(), CTBC, tongDoanhThu);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Thất bại");
+			alert.setHeaderText("Không thể xuất báo cáo!");
+			alert.setContentText("Lỗi database hoặc link file!");
+			alert.showAndWait();
+		}
+	}
+	
+	public void handleInThongKeLuongKhach(ActionEvent e) {
+		try {
+			List<ArrayList<String>> CTBC = new ArrayList<ArrayList<String>>();
+			String[] firstRowValue = { "Tháng", "Số khách", "Tỉ lệ (%)" };
+			CTBC.add(new ArrayList<String>(Arrays.asList(firstRowValue)));
+
+			Integer tongSoKhach = ThongKeBUS.getSoKhachTheoNam(snTK_DoanhThu.getValue()).stream()
+					.mapToInt(ThongKeSoKhachDTO::getSoKhach).sum();
+
+			ThongKeBUS.getSoKhachTheoNam(snTK_DoanhThu.getValue()).stream().forEach(bc -> {
+				String[] rowValue = { bc.getThang().toString(), bc.getSoKhach().toString(),
+						String.format("%.2f", bc.getTiLe()) };
+				CTBC.add(new ArrayList<String>(Arrays.asList(rowValue)));
+			});
+
+			PDFCreateHelper.createSoKhachNamPDF(snTK_DoanhThu.getValue(), CTBC, tongSoKhach);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Thất bại");
+			alert.setHeaderText("Không thể xuất báo cáo!");
+			alert.setContentText("Lỗi database hoặc link file!");
+			alert.showAndWait();
+		}
+	}
+
+	public void handleInThongKeLoaiPhong(ActionEvent e) {
+		try {
+			List<ArrayList<String>> CTBC = new ArrayList<ArrayList<String>>();
+			String[] firstRowValue = { "Loại phòng", "Doanh thu (VND)", "Tỉ lệ (%)" };
+			CTBC.add(new ArrayList<String>(Arrays.asList(firstRowValue)));
+
+			int thang = snTK_LoaiPhongThang.getValue();
+			int nam = snTK_LoaiPhongNam.getValue();
+
+			Integer tongDoanhThu = ThongKeBUS.getLoaiPhongTheoThang(thang, nam).stream()
+					.mapToInt(ThongKeLoaiPhongDTO::getDoanhThu).sum();
+
+			ThongKeBUS.getLoaiPhongTheoThang(thang, nam).forEach(bc -> {
+				String[] rowValue = { bc.getLoaiPhong(), MoneyFormatHelper.format(bc.getDoanhThu()),
+						String.format("%.2f", bc.getTiLe()) };
+				CTBC.add(new ArrayList<String>(Arrays.asList(rowValue)));
+			});
+
+			PDFCreateHelper.createLoaiPhongThangPDF(thang, nam, CTBC, tongDoanhThu);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Thất bại");
+			alert.setHeaderText("Không thể xuất báo cáo!");
+			alert.setContentText("Lỗi database hoặc link file!");
+			alert.showAndWait();
+		}
+	}
+	
+	public void handleInThongKeLoaiDichVu(ActionEvent e) {
+		try {
+			List<ArrayList<String>> CTBC = new ArrayList<ArrayList<String>>();
+			String[] firstRowValue = { "Loại dịch vụ", "Doanh thu (VND)", "Tỉ lệ (%)" };
+			CTBC.add(new ArrayList<String>(Arrays.asList(firstRowValue)));
+
+			int thang = snTK_LoaiDichVuThang.getValue();
+			int nam = snTK_LoaiDichVuNam.getValue();
+
+			Integer tongDoanhThu = ThongKeBUS.getLoaiDichVuTheoThang(thang, nam).stream()
+					.mapToInt(ThongKeLoaiDichVuDTO::getDoanhThu).sum();
+
+			ThongKeBUS.getLoaiDichVuTheoThang(thang, nam).forEach(bc -> {
+				String[] rowValue = { bc.getTenLoaiDichVu(), MoneyFormatHelper.format(bc.getDoanhThu()),
+						String.format("%.2f", bc.getTiLe()) };
+				CTBC.add(new ArrayList<String>(Arrays.asList(rowValue)));
+			});
+
+			PDFCreateHelper.createLoaiDichVuPDF(thang, nam, CTBC, tongDoanhThu);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Thất bại");
+			alert.setHeaderText("Không thể xuất báo cáo!");
+			alert.setContentText("Lỗi database hoặc link file!");
+			alert.showAndWait();
+		}
 	}
 }

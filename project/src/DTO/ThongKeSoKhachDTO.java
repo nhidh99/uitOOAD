@@ -3,6 +3,7 @@ package DTO;
 public class ThongKeSoKhachDTO {
 	private Integer soKhach;
 	private Integer thang;
+	private Float tiLe;
 	
 	public ThongKeSoKhachDTO(Integer soKhach, Integer thang) {
 		this.soKhach = soKhach;
@@ -15,5 +16,13 @@ public class ThongKeSoKhachDTO {
 	
 	public Integer getThang() {
 		return this.thang;
+	}
+
+	public Float getTiLe() {
+		return tiLe;
+	}
+
+	public void setTiLe(Float tiLe) {
+		this.tiLe = tiLe;
 	}
 }
