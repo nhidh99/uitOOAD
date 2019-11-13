@@ -14,17 +14,20 @@ public class TinhTrangDAO {
 
 	public static List<TinhTrangDTO> getDSTinhTrang() throws SQLException {
 		Connection conn = DBHelper.getConnection();
-		String query = "SELECT * FROM TinhTrang WHERE TenTinhTrang != ?";
-		PreparedStatement statement = conn.prepareStatement(query);
-		statement.setString(1, "Thuê");		
-		ResultSet rs = statement.executeQuery();
-		
-		List<TinhTrangDTO> output = new ArrayList<TinhTrangDTO>();
-		while (rs.next()) {
-			TinhTrangDTO tinhTrang = new TinhTrangDTO(rs.getInt("MaTinhTrang"), rs.getString("TenTinhTrang"));
-			output.add(tinhTrang);
+		try {
+			String query = "SELECT * FROM TinhTrang WHERE TenTinhTrang != ?";
+			PreparedStatement statement = conn.prepareStatement(query);
+			statement.setString(1, "Thuê");
+			ResultSet rs = statement.executeQuery();
+
+			List<TinhTrangDTO> output = new ArrayList<TinhTrangDTO>();
+			while (rs.next()) {
+				TinhTrangDTO tinhTrang = new TinhTrangDTO(rs.getInt("MaTinhTrang"), rs.getString("TenTinhTrang"));
+				output.add(tinhTrang);
+			}
+			return output;
+		} finally {
+			conn.close();
 		}
-		conn.close();
-		return output;
 	}
 }

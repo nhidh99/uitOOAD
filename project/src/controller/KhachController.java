@@ -97,8 +97,8 @@ public class KhachController implements Initializable {
 					alert.setContentText(String.format("Đã thêm khách khách: %s.", khach.getHoTen()));
 					alert.showAndWait();
 
-					MainController mainController = (MainController) lbTieuDe.getScene().getUserData();
-					mainController.loadTableKhach(ptPhong.getMaPTPhong());
+					Runnable reloadTableKhach = (Runnable) lbTieuDe.getScene().getUserData();
+					reloadTableKhach.run();
 					Stage stage = (Stage) lbTieuDe.getScene().getWindow();
 					stage.close();
 				} else {
@@ -128,8 +128,8 @@ public class KhachController implements Initializable {
 					alert.setContentText(String.format("Đã sửa khách khách: %s.", newKhach.getHoTen()));
 					alert.showAndWait();
 
-					MainController mainController = (MainController) lbTieuDe.getScene().getUserData();
-					mainController.loadTableKhach(ptPhong.getMaPTPhong());
+					Runnable reloadTableKhach = (Runnable) lbTieuDe.getScene().getUserData();
+					reloadTableKhach.run();
 					Stage stage = (Stage) lbTieuDe.getScene().getWindow();
 					stage.close();
 				} else {
@@ -149,5 +149,10 @@ public class KhachController implements Initializable {
 			break;
 		}
 		}
+	}
+	
+	public void handleHuyBo() {
+		Stage stage = (Stage) lbTieuDe.getScene().getWindow();
+		stage.close();
 	}
 }

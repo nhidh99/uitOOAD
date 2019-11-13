@@ -11,7 +11,6 @@ import BUS.PTPhongBUS;
 import BUS.PhieuThueBUS;
 import DTO.PTPhongDTO;
 import DTO.PhieuThueDTO;
-import helper.ConfirmDialogHelper;
 import helper.MoneyFormatHelper;
 import helper.PDFCreateHelper;
 import javafx.beans.property.ReadOnlyObjectWrapper;
@@ -124,61 +123,6 @@ public class PhieuThueController {
 				.format(tvPTPhong.getItems().stream().mapToInt(PTPhongDTO::getTienCocValue).sum(), "VND"));
 	}
 
-	public void handleXoaPTPhong() {
-		try {
-			PTPhongDTO ptp = tvPTPhong.getSelectionModel().getSelectedItem();
-			if (ptp == null) {
-				throw new NullPointerException();
-			}
-
-			boolean confirm;
-			if (tvPTPhong.getItems().size() > 1) {
-				confirm = ConfirmDialogHelper.confirm("Xác nhận xoá phòng " + ptp.getMaPhong() + " khỏi phiếu thuê?");
-			} else {
-				confirm = ConfirmDialogHelper.confirm("Xác nhận xoá phòng " + ptp.getMaPhong() + " khỏi phiếu thuê?",
-						"Sau khi xoá phòng cuối cùng, phiếu thuê sẽ tự bị xoá!");
-			}
-
-			if (confirm) {
-				if (PTPhongBUS.deletePTPhong(ptp)) {
-					loadTablePTPhong();
-					Alert alert = new Alert(AlertType.INFORMATION);
-					alert.setTitle("Thành công");
-					alert.setHeaderText("Xoá thành công phòng " + ptp.getMaPhong() + " khỏi phiếu thuê!");
-					alert.showAndWait();
-
-					Scene scene = lbPT_NgayLap.getScene();
-					MainController controller = (MainController) scene.getUserData();
-					controller.handleTraCuuPhong();
-
-					if (tvPTPhong.getItems().size() == 0) {
-						controller.loadTablePhieuThue();
-						Stage stage = (Stage) scene.getWindow();
-						stage.close();
-					}
-				} else {
-					Alert alert = new Alert(AlertType.INFORMATION);
-					alert.setTitle("Lỗi");
-					alert.setHeaderText("Xoá phòng trong phiếu thuê thất bại!");
-					alert.setContentText("Không thể xoá phiếu thuê của phòng đang được thuê hoặc đã thanh toán");
-					alert.showAndWait();
-				}
-			}
-		} catch (SQLException SQLException) {
-			Alert alert = new Alert(AlertType.INFORMATION);
-			alert.setTitle("Lỗi");
-			alert.setHeaderText("Xoá phòng trong phiếu thuê thất bại!");
-			alert.setContentText("Lỗi database!");
-			alert.showAndWait();
-		} catch (NullPointerException NullPointerException) {
-			Alert alert = new Alert(AlertType.INFORMATION);
-			alert.setTitle("Lỗi");
-			alert.setHeaderText("Xoá phòng trong phiếu thuê thất bại!");
-			alert.setContentText("Vui lòng chọn phòng cần xoá!");
-			alert.showAndWait();
-		}
-	}
-
 	public void handleCapNhatPhieuThue(ActionEvent e) {
 		try {
 			PhieuThueDTO newPhieuThue = new PhieuThueDTO(phieuThue.getMaPhieuThue(), null, null,
@@ -193,9 +137,8 @@ public class PhieuThueController {
 				alert.showAndWait();
 
 				Scene scene = lbPT_NgayLap.getScene();
-				MainController controller = (MainController) scene.getUserData();
-				controller.loadTablePhieuThue();
-				controller.loadTablePhong();
+				Runnable reloadTablePhieuThue = (Runnable) scene.getUserData();
+				reloadTablePhieuThue.run();
 			} else {
 				Alert alert = new Alert(AlertType.INFORMATION);
 				alert.setTitle("Thất bại");

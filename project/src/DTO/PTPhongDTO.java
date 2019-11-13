@@ -1,19 +1,18 @@
 package DTO;
 
-import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.Date;
 
-import DAO.PhieuThueDAO;
 import helper.DateFormatHelper;
 import helper.MoneyFormatHelper;
 
 public class PTPhongDTO {
 	private Integer maPhieuThuePhong;
+	private String maPhong;
 	private PhieuThueDTO phieuThue;
-	private PhongDTO phong;
 	private HoaDonDTO hoaDon;
+	private Integer maLoaiPhong;
 	private String loaiPhongThue;
 	private Integer soKhachToiDa;
 	private Integer donGiaThue;
@@ -22,28 +21,25 @@ public class PTPhongDTO {
 	private Integer tienCoc;
 	private Integer thanhTien;
 
-	public PTPhongDTO(Integer maPTP, PhongDTO phong, Integer donGiaThue, Timestamp ngayNhan, Timestamp ngayTra, Integer tienCoc,
-			Integer thanhTien) {
-		LoaiPhongDTO loaiPhong = phong.getLoaiPhong();
-		this.maPhieuThuePhong = maPTP;
-		this.phong = phong;
+	public PTPhongDTO(Integer maPhieuThuePhong, String maPhong, LoaiPhongDTO loaiPhong, PhieuThueDTO phieuThue, Integer donGiaThue,
+			Timestamp ngayNhan, Timestamp ngayTra, Integer tienCoc, Integer thanhTien) {
+		this.maPhieuThuePhong = maPhieuThuePhong;
+		this.maPhong = maPhong;
+		this.maLoaiPhong = loaiPhong.getMaLoaiPhong();
 		this.loaiPhongThue = loaiPhong.getTenLoaiPhong();
 		this.soKhachToiDa = loaiPhong.getSoKhachToiDa();
 		this.donGiaThue = donGiaThue;
+		this.phieuThue = phieuThue;
 		this.ngayNhan = ngayNhan;
 		this.ngayTra = ngayTra;
 		this.tienCoc = tienCoc;
 		this.thanhTien = thanhTien;
-		try {
-			this.phieuThue = PhieuThueDAO.getPhieuThueByMaPTP(maPTP);
-		} catch (SQLException ex) {
-			this.phieuThue = null;
-		}
 	}
 
-	public PTPhongDTO(PhongDTO phong, Timestamp ngayNhan, Timestamp ngayTra, Integer tienCoc) {
-		LoaiPhongDTO loaiPhong = phong.getLoaiPhong();
-		this.phong = phong;
+	public PTPhongDTO(String maPhong, LoaiPhongDTO loaiPhong, Timestamp ngayNhan, Timestamp ngayTra, Integer tienCoc) {
+		this.maPhong = maPhong;
+		this.maLoaiPhong = loaiPhong.getMaLoaiPhong();
+		this.loaiPhongThue = loaiPhong.getTenLoaiPhong();
 		this.loaiPhongThue = loaiPhong.getTenLoaiPhong();
 		this.soKhachToiDa = loaiPhong.getSoKhachToiDa();
 		this.donGiaThue = loaiPhong.getDonGiaValue();
@@ -57,15 +53,11 @@ public class PTPhongDTO {
 	}
 
 	public String getMaPhong() {
-		return phong.getMaPhong();
+		return maPhong;
 	}
 
 	public PhieuThueDTO getPhieuThue() {
 		return phieuThue;
-	}
-
-	public PhongDTO getPhong() {
-		return phong;
 	}
 
 	public String getLoaiPhongThue() {
@@ -122,19 +114,27 @@ public class PTPhongDTO {
 		return thanhTien;
 	}
 
-	public String getKhachThue() {
+	public String getTenKhachThue() {
 		return phieuThue.getTenKhachThue();
 	}
 
-	public String getDienThoai() {
+	public String getSoDienThoai() {
 		return phieuThue.getSoDienThoai();
 	}
-	
+
 	public HoaDonDTO getHoaDon() {
 		return hoaDon;
 	}
-	
+
 	public void setHoaDon(HoaDonDTO hoaDon) {
 		this.hoaDon = hoaDon;
+	}
+
+	public Integer getMaLoaiPhong() {
+		return maLoaiPhong;
+	}
+
+	public void setMaPhong(String maPhong) {
+		this.maPhong = maPhong;
 	}
 }

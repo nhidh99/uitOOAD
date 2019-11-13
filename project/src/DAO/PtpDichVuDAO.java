@@ -35,38 +35,47 @@ public class PtpDichVuDAO {
 
 	public static boolean insertPtpDichVu(PtpDichVuDTO ptp_dv) throws SQLException {
 		Connection conn = DBHelper.getConnection();
-		String query = "INSERT INTO PTP_DV (MaPTPhong, MaDichVu, SoLuong, GiaDichVu, ThanhTien) "
-				+ "VALUES (?, ?, ?, ?, ?)";
-		PreparedStatement statement = conn.prepareStatement(query);
-		statement.setInt(1, ptp_dv.getPTPhong().getMaPTPhong());
-		statement.setInt(2, ptp_dv.getMaDichVu());
-		statement.setInt(3, ptp_dv.getSoLuong());
-		statement.setInt(4, ptp_dv.getDonGiaValue());
-		statement.setInt(5, ptp_dv.getThanhTienValue());
-		int records = statement.executeUpdate();
-		conn.close();
-		return records > 0;
+		try {
+			String query = "INSERT INTO PTP_DV (MaPTPhong, MaDichVu, SoLuong, GiaDichVu, ThanhTien) "
+					+ "VALUES (?, ?, ?, ?, ?)";
+			PreparedStatement statement = conn.prepareStatement(query);
+			statement.setInt(1, ptp_dv.getPTPhong().getMaPTPhong());
+			statement.setInt(2, ptp_dv.getMaDichVu());
+			statement.setInt(3, ptp_dv.getSoLuong());
+			statement.setInt(4, ptp_dv.getDonGiaValue());
+			statement.setInt(5, ptp_dv.getThanhTienValue());
+			int records = statement.executeUpdate();
+			return records > 0;
+		} finally {
+			conn.close();
+		}
 	}
 
 	public static boolean deletePtpDichVu(Integer maPTPDichVu) throws SQLException {
 		Connection conn = DBHelper.getConnection();
-		String query = "DELETE FROM PTP_DV WHERE MaPTPDV = ?";
-		PreparedStatement statement = conn.prepareStatement(query);
-		statement.setInt(1, maPTPDichVu);
-		int records = statement.executeUpdate();
-		conn.close();
-		return records > 0;
+		try {
+			String query = "DELETE FROM PTP_DV WHERE MaPTPDV = ?";
+			PreparedStatement statement = conn.prepareStatement(query);
+			statement.setInt(1, maPTPDichVu);
+			int records = statement.executeUpdate();
+			return records > 0;
+		} finally {
+			conn.close();
+		}
 	}
 
 	public static boolean updatePtpDichVu(PtpDichVuDTO ptp_dv) throws SQLException {
 		Connection conn = DBHelper.getConnection();
-		String query = "UPDATE PTP_DV SET GiaDichVu = ?, ThanhTien = ? WHERE MaPTPDV = ?";
-		PreparedStatement statement = conn.prepareStatement(query);
-		statement.setInt(1, ptp_dv.getDonGiaValue());
-		statement.setInt(2, ptp_dv.getThanhTienValue());
-		statement.setInt(3, ptp_dv.getMaPTPDichVu());
-		int records = statement.executeUpdate();
-		conn.close();
-		return records > 0;
+		try {
+			String query = "UPDATE PTP_DV SET GiaDichVu = ?, ThanhTien = ? WHERE MaPTPDV = ?";
+			PreparedStatement statement = conn.prepareStatement(query);
+			statement.setInt(1, ptp_dv.getDonGiaValue());
+			statement.setInt(2, ptp_dv.getThanhTienValue());
+			statement.setInt(3, ptp_dv.getMaPTPDichVu());
+			int records = statement.executeUpdate();
+			return records > 0;
+		} finally {
+			conn.close();
+		}
 	}
 }

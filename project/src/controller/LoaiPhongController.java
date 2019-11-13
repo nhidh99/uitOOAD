@@ -71,11 +71,8 @@ public class LoaiPhongController {
 					alert.setHeaderText("Bạn đã thêm thành công loại phòng " + loaiPhong.getTenLoaiPhong());
 					alert.setContentText("");
 					alert.showAndWait();
-					MainController controller = (MainController) lbTieuDe.getScene().getUserData();
-					controller.loadTablePhong();
-					controller.handleTraCuuPhong();
-					controller.loadTableLoaiPhong();
-					controller.loadComboboxes();
+					Runnable reloadTableLoaiPhong = (Runnable) lbTieuDe.getScene().getUserData();
+					reloadTableLoaiPhong.run();
 					Stage stage = (Stage) lbTieuDe.getScene().getWindow();
 					stage.close();
 				} else {
@@ -105,11 +102,8 @@ public class LoaiPhongController {
 					alert.setHeaderText("Bạn đã sửa thành công loại phòng " + newLoaiPhong.getTenLoaiPhong());
 					alert.setContentText("");
 					alert.showAndWait();
-					MainController controller = (MainController) lbTieuDe.getScene().getUserData();
-					controller.loadTablePhong();
-					controller.handleTraCuuPhong();
-					controller.loadTableLoaiPhong();
-					controller.loadComboboxes();
+					Runnable reloadTableLoaiPhong = (Runnable) lbTieuDe.getScene().getUserData();
+					reloadTableLoaiPhong.run();
 					Stage stage = (Stage) lbTieuDe.getScene().getWindow();
 					stage.close();
 				} else {

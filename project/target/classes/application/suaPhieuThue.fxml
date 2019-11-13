@@ -253,7 +253,7 @@
                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                </columnResizePolicy>
                <BorderPane.margin>
-                  <Insets left="60.0" right="60.0" />
+                  <Insets bottom="30.0" left="60.0" right="60.0" />
                </BorderPane.margin>
             </TableView>
          </center>
@@ -264,16 +264,6 @@
                </BorderPane.margin>
             </Separator>
          </top>
-         <bottom>
-            <Button alignment="CENTER" mnemonicParsing="false" onAction="#handleXoaPTPhong" prefHeight="44.0" prefWidth="1057.0" text="🗑  XOÁ PHÒNG THUÊ" textFill="BROWN" BorderPane.alignment="CENTER">
-               <font>
-                  <Font name="System Bold" size="20.0" />
-               </font>
-               <BorderPane.margin>
-                  <Insets bottom="20.0" top="20.0" />
-               </BorderPane.margin>
-            </Button>
-         </bottom>
       </BorderPane>
    </bottom>
 </BorderPane>

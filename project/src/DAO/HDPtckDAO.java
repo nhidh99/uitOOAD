@@ -16,30 +16,36 @@ public class HDPtckDAO {
 
 	public static boolean insertHDPtck(HDPtckDTO hdPtck) throws SQLException {
 		Connection conn = DBHelper.getConnection();
-		String query = "INSERT INTO PTCK_HoaDon (MaHoaDon, NoiDung, TriGia) VALUES (?,?,?)";
-		PreparedStatement statement = conn.prepareStatement(query);
-		statement.setInt(1, hdPtck.getHoaDon().getMaHoaDon());
-		statement.setString(2, hdPtck.getNoiDung());
-		statement.setInt(3, hdPtck.getTriGiaValue());
-		int records = statement.executeUpdate();
-		conn.close();
-		return records > 0;
+		try {
+			String query = "INSERT INTO PTCK_HoaDon (MaHoaDon, NoiDung, TriGia) VALUES (?,?,?)";
+			PreparedStatement statement = conn.prepareStatement(query);
+			statement.setInt(1, hdPtck.getHoaDon().getMaHoaDon());
+			statement.setString(2, hdPtck.getNoiDung());
+			statement.setInt(3, hdPtck.getTriGiaValue());
+			int records = statement.executeUpdate();
+			return records > 0;
+		} finally {
+			conn.close();
+		}
 	}
 
 	public static List<HDPtckDTO> getDSHDPtckByMaHD(Integer maHD) throws SQLException {
 		Connection conn = DBHelper.getConnection();
-		String query = "SELECT * FROM PTCK_HoaDon WHERE MaHoaDon = ?";
-		PreparedStatement statement = conn.prepareStatement(query);
-		statement.setInt(1, maHD);
-		ResultSet rs = statement.executeQuery();
-		List<HDPtckDTO> output = new ArrayList<HDPtckDTO>();
-		while (rs.next()) {
-			HoaDonDTO hoaDon = HoaDonBUS.getHoaDonById(maHD);
-			HDPtckDTO ptckHD = new HDPtckDTO(rs.getInt("MaPTCKHD"), hoaDon, rs.getString("NoiDung"),
-					rs.getInt("TriGia"));
-			output.add(ptckHD);
+		try {
+			String query = "SELECT * FROM PTCK_HoaDon WHERE MaHoaDon = ?";
+			PreparedStatement statement = conn.prepareStatement(query);
+			statement.setInt(1, maHD);
+			ResultSet rs = statement.executeQuery();
+			List<HDPtckDTO> output = new ArrayList<HDPtckDTO>();
+			while (rs.next()) {
+				HoaDonDTO hoaDon = HoaDonBUS.getHoaDonById(maHD);
+				HDPtckDTO ptckHD = new HDPtckDTO(rs.getInt("MaPTCKHD"), hoaDon, rs.getString("NoiDung"),
+						rs.getInt("TriGia"));
+				output.add(ptckHD);
+			}
+			return output;
+		} finally {
+			conn.close();
 		}
-		conn.close();
-		return output;
 	}
 }

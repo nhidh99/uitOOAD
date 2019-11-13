@@ -10,9 +10,10 @@ public class LoaiPhongBUS {
 		return LoaiPhongDAO.getDSLoaiPhong();
 	}
 
-	public static boolean deleteLoaiPhong(Integer maLoaiPhong) throws SQLException {
-		return LoaiPhongDAO.deleteLoaiPhong(maLoaiPhong);
+	public static boolean deleteLoaiPhong(LoaiPhongDTO loaiPhong) throws SQLException {
+		return LoaiPhongDAO.deleteLoaiPhong(loaiPhong.getMaLoaiPhong());
 	}
+		
 
 	public static boolean insertLoaiPhong(LoaiPhongDTO loaiPhong) throws SQLException {
 		if (LoaiPhongDAO.checkLoaiPhong(loaiPhong.getTenLoaiPhong())) {

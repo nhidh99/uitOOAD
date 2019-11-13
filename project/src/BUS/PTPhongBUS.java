@@ -46,4 +46,8 @@ public class PTPhongBUS {
 	public static List<PTPhongDTO> getDSPTPhongByMaHD(Integer maHD) throws SQLException {
 		return PTPhongDAO.getDSPTPhongByMaHD(maHD);
 	}
+
+	public static boolean updatePTPhong(PTPhongDTO ptphong) throws SQLException {
+		return PTPhongDAO.updatePTPhong(ptphong);
+	}
 }

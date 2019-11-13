@@ -1,8 +1,6 @@
-CREATE DATABASE  IF NOT EXISTS `quanlikhachsan` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
-USE `quanlikhachsan`;
 -- MySQL dump 10.13  Distrib 8.0.17, for Win64 (x86_64)
 --
--- Host: localhost    Database: quanlikhachsan
+-- Host: 127.0.0.1    Database: quanlikhachsan
 -- ------------------------------------------------------
 -- Server version	8.0.17
 
@@ -62,6 +60,7 @@ SET @saved_cs_client     = @@character_set_client;
 /*!50001 CREATE VIEW `view_dsptphong` AS SELECT 
  1 AS `MaPTPhong`,
  1 AS `MaPhong`,
+ 1 AS `MaLoaiPhong`,
  1 AS `TenKhachThue`,
  1 AS `SoDienThoai`,
  1 AS `NgayNhan`,
@@ -94,7 +93,7 @@ DROP TABLE IF EXISTS `view_tkloaiphongthang`;
 SET @saved_cs_client     = @@character_set_client;
 /*!50503 SET character_set_client = utf8mb4 */;
 /*!50001 CREATE VIEW `view_tkloaiphongthang` AS SELECT 
- 1 AS `LoaiPhongThue`,
+ 1 AS `TenLoaiPhong`,
  1 AS `TienPhong`,
  1 AS `Thang`,
  1 AS `Nam`*/;
@@ -167,7 +166,7 @@ SET character_set_client = @saved_cs_client;
 /*!50001 SET collation_connection      = utf8mb4_0900_ai_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
-/*!50001 VIEW `view_dsphong` AS select `phong`.`MaPhong` AS `MaPhong`,`phong`.`MaLoaiPhong` AS `MaLoaiPhong`,`phong`.`MaTinhTrang` AS `MaTinhTrang`,`phong`.`GhiChu` AS `GhiChu`,`loaiphong`.`TenLoaiPhong` AS `TenLoaiPhong`,`loaiphong`.`DonGia` AS `DonGia`,`loaiphong`.`SoKhachToiDa` AS `SoKhachToiDa`,`tinhtrang`.`TenTinhTrang` AS `TenTinhTrang` from ((`phong` join `loaiphong`) join `tinhtrang`) where ((`phong`.`MaLoaiPhong` = `loaiphong`.`MaLoaiPhong`) and (`phong`.`MaTinhTrang` = `tinhtrang`.`MaTinhTrang`) and (`phong`.`KhaDung` = true)) */;
+/*!50001 VIEW `view_dsphong` AS select `phong`.`MaPhong` AS `MaPhong`,`phong`.`MaLoaiPhong` AS `MaLoaiPhong`,`phong`.`MaTinhTrang` AS `MaTinhTrang`,`phong`.`GhiChu` AS `GhiChu`,`loaiphong`.`TenLoaiPhong` AS `TenLoaiPhong`,`loaiphong`.`DonGia` AS `DonGia`,`loaiphong`.`SoKhachToiDa` AS `SoKhachToiDa`,`tinhtrang`.`TenTinhTrang` AS `TenTinhTrang` from ((`phong` join `loaiphong`) join `tinhtrang`) where ((`phong`.`MaLoaiPhong` = `loaiphong`.`MaLoaiPhong`) and (`phong`.`MaTinhTrang` = `tinhtrang`.`MaTinhTrang`)) */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
@@ -185,7 +184,7 @@ SET character_set_client = @saved_cs_client;
 /*!50001 SET collation_connection      = utf8mb4_0900_ai_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
-/*!50001 VIEW `view_dsptphong` AS select `ptp`.`MaPTPhong` AS `MaPTPhong`,`ptp`.`MaPhong` AS `MaPhong`,`pt`.`TenKhachThue` AS `TenKhachThue`,`pt`.`SoDienThoai` AS `SoDienThoai`,`ptp`.`NgayNhan` AS `NgayNhan`,`ptp`.`NgayTra` AS `NgayTra`,`ptp`.`DonGiaThue` AS `DonGiaThue`,`ptp`.`TienCoc` AS `TienCoc`,`ptp`.`ThanhTien` AS `ThanhTien` from (`pt_phong` `ptp` join `phieuthue` `pt` on((`pt`.`MaPhieuThue` = `ptp`.`MaPhieuThue`))) where ((`ptp`.`MaHoaDon` is null) and (`pt`.`ThanhToanCoc` = true)) order by `ptp`.`NgayNhan` desc */;
+/*!50001 VIEW `view_dsptphong` AS select `ptp`.`MaPTPhong` AS `MaPTPhong`,`ptp`.`MaPhong` AS `MaPhong`,`ptp`.`MaLoaiPhong` AS `MaLoaiPhong`,`pt`.`TenKhachThue` AS `TenKhachThue`,`pt`.`SoDienThoai` AS `SoDienThoai`,`ptp`.`NgayNhan` AS `NgayNhan`,`ptp`.`NgayTra` AS `NgayTra`,`ptp`.`DonGiaThue` AS `DonGiaThue`,`ptp`.`TienCoc` AS `TienCoc`,`ptp`.`ThanhTien` AS `ThanhTien` from (`pt_phong` `ptp` join `phieuthue` `pt` on((`pt`.`MaPhieuThue` = `ptp`.`MaPhieuThue`))) where ((`pt`.`ThanhToanCoc` = true) and (`ptp`.`KhaDung` = true)) order by `ptp`.`NgayNhan` desc */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
@@ -221,7 +220,7 @@ SET character_set_client = @saved_cs_client;
 /*!50001 SET collation_connection      = utf8mb4_0900_ai_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
-/*!50001 VIEW `view_tkloaiphongthang` AS select `pt_phong`.`LoaiPhongThue` AS `LoaiPhongThue`,(sum(`pt_phong`.`ThanhTien`) + sum(`pt_phong`.`TienCoc`)) AS `TienPhong`,month(`pt_phong`.`NgayTra`) AS `Thang`,year(`pt_phong`.`NgayTra`) AS `Nam` from `pt_phong` where (`pt_phong`.`MaHoaDon` is not null) group by `pt_phong`.`LoaiPhongThue`,`Thang`,`Nam` order by `Nam`,`Thang` */;
+/*!50001 VIEW `view_tkloaiphongthang` AS select `loaiphong`.`TenLoaiPhong` AS `TenLoaiPhong`,(sum(`pt_phong`.`ThanhTien`) + sum(`pt_phong`.`TienCoc`)) AS `TienPhong`,month(`pt_phong`.`NgayTra`) AS `Thang`,year(`pt_phong`.`NgayTra`) AS `Nam` from (`pt_phong` join `loaiphong` on((`pt_phong`.`MaLoaiPhong` = `loaiphong`.`MaLoaiPhong`))) where (`pt_phong`.`MaHoaDon` is not null) group by `pt_phong`.`MaLoaiPhong`,`Thang`,`Nam` order by `Nam`,`Thang` */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
@@ -293,6 +292,7 @@ BEGIN
 			SELECT * 
 			FROM Phong P
             WHERE MaPTPHienTai IS NOT NULL
+            AND P.MaPTPHienTai = PTP.MaPTPhong
             LIMIT 1) 
 		) OR PTP.MaHoaDon IS NOT NULL))
 	LIMIT 1;
@@ -403,6 +403,46 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `del_LoaiPhong` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `del_LoaiPhong`(
+	IN del_MaLoaiPhong INT
+)
+BEGIN
+	IF EXISTS (
+		SELECT 1 
+		FROM Phong
+        WHERE MaLoaiPhong = del_MaLoaiPhong
+	)
+    THEN
+		ROLLBACK;
+	ELSEIF EXISTS (
+		SELECT 1 
+		FROM PT_Phong
+        WHERE MaLoaiPhong = del_MaLoaiPhong
+	)
+    THEN
+ 		UPDATE LoaiPhong
+		SET KhaDung = false
+		WHERE MaLoaiPhong = del_MaLoaiPhong;
+    ELSE
+		DELETE FROM LoaiPhong
+		WHERE MaLoaiPhong = del_MaLoaiPhong;
+	END IF;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!50003 DROP PROCEDURE IF EXISTS `del_NhanVien` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -440,7 +480,7 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `del_Phong` */;
+/*!50003 DROP PROCEDURE IF EXISTS `del_PTPhong` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
@@ -450,60 +490,22 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `del_Phong`(
-	IN del_MaPhong VARCHAR(10)
+CREATE DEFINER=`root`@`localhost` PROCEDURE `del_PTPhong`(
+IN del_MaPTPhong INT
 )
 BEGIN
-	IF (EXISTS (SELECT 1
-		FROM PT_Phong PTP
-		WHERE PTP.MaPhong = 101 AND MaHoaDon IS NOT NULL)
-		AND NOT EXISTS (SELECT 1
-		FROM PT_Phong PTP
-		WHERE PTP.MaPhong = 101 AND MaHoaDon IS NULL))
-    THEN
-		UPDATE Phong
+	IF ((SELECT ThanhToanCoc
+		FROM PhieuThue PT
+		JOIN PT_Phong PTP
+        ON PT.MaPhieuThue = PTP.MaPhieuThue
+        WHERE MaPTPhong = del_MaPTPhong) = true)
+	THEN
+		UPDATE PT_Phong
         SET KhaDung = false
-        WHERE MaPhong = del_MaPhong;
-	ELSEIF NOT EXISTS (SELECT 1
-		FROM PT_Phong PTP
-		WHERE PTP.MaPhong = del_MaPhong)
-	THEN	
-		DELETE FROM Phong WHERE MaPhong = del_MaPhong;
-	END IF;
-END ;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `ins_Phong` */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `ins_Phong`(
-	IN ins_MaPhong VARCHAR(10),
-    IN ins_MaLoaiPhong INT,
-    IN ins_MaTinhTrang INT,
-    IN ins_GhiChu VARCHAR(45)
-)
-BEGIN
-	IF EXISTS (SELECT * FROM Phong WHERE MaPhong = ins_MaPhong AND KhaDung = false)
-    THEN
-		UPDATE Phong
-        SET MaLoaiPhong = ins_MaLoaiPhong,
-			MaTinhTrang = ins_MaTinhTrang,
-			GhiChu = ins_GhiChu,
-			KhaDung = true
-		WHERE MaPhong = ins_MaPhong;
+        WHERE MaPTPhong = del_MaPTPhong;
 	ELSE
-		INSERT INTO Phong (MaPhong, MaLoaiPhong, MaTinhTrang, GhiChu)
-        VALUES (ins_MaPhong, ins_MaLoaiPhong, ins_MaTinhTrang, ins_GhiChu);
+		DELETE FROM PT_Phong
+        WHERE MaPTPhong = del_MaPTPhong;
     END IF;
 END ;;
 DELIMITER ;
@@ -559,17 +561,18 @@ BEGIN
 	JOIN LoaiPhong LP ON LP.MaLoaiPhong = P.MaLoaiPhong
 	JOIN TinhTrang TT ON TT.MaTinhTrang = P.MaTinhTrang
 	WHERE LP.MaLoaiPhong = search_MaLoaiPhong
-    AND P.KhaDung = true
     AND (NOT EXISTS (
 		SELECT *
 		FROM PT_Phong PTP
 		WHERE PTP.MaPhong = P.MaPhong
+        AND KhaDung = true
         AND MaHoaDon IS NULL
 	) OR NOT EXISTS (
 		SELECT *
         FROM PT_Phong
         WHERE ((NgayNhan BETWEEN search_NgayNhan AND search_NgayTra)
         OR (NgayTra BETWEEN search_NgayNhan AND search_NgayTra))
+        AND KhaDung = true
         AND MaPhong = P.MaPhong
 	));
 END ;;
@@ -588,4 +591,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-11-01  4:55:29
+-- Dump completed on 2019-11-13 20:20:19

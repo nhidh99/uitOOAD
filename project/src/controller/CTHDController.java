@@ -7,11 +7,13 @@ import java.util.ResourceBundle;
 import BUS.KhachBUS;
 import BUS.PTPhongBUS;
 import BUS.PhieuThueBUS;
+import BUS.PhongBUS;
 import BUS.PtpDichVuBUS;
 import BUS.PtpPtckBUS;
 import DTO.KhachDTO;
 import DTO.PTPhongDTO;
 import DTO.PhieuThueDTO;
+import DTO.PhongDTO;
 import DTO.PtpDichVuDTO;
 import DTO.PtpPtckDTO;
 import helper.MoneyFormatHelper;
@@ -204,11 +206,12 @@ public class CTHDController implements Initializable {
 	private void loadTableChiTiet(Integer maPTP) {
 		try {
 			PTPhongDTO ptPhong = PTPhongBUS.getPTPhongById(maPTP);
+			PhongDTO phong = PhongBUS.getPhongById(ptPhong.getMaPhong());
 			PhieuThueDTO phieuThue = PhieuThueBUS.getPhieuThueByMaPTP(maPTP);
 			lbPhong_KhachThue.setText(phieuThue.getTenKhachThue());
-			lbPhong_MaPhong.setText(ptPhong.getPhong().getMaPhong());
+			lbPhong_MaPhong.setText(ptPhong.getMaPhong());
 			lbPhong_MaPTP.setText(maPTP.toString());
-			lbPhong_LoaiPhong.setText(ptPhong.getPhong().getLoaiPhong().getTenLoaiPhong());
+			lbPhong_LoaiPhong.setText(phong.getLoaiPhong().getTenLoaiPhong());
 			lbPhong_CMND.setText(phieuThue.getCMND());
 			lbPhong_DienThoai.setText(phieuThue.getSoDienThoai());
 			lbPhong_NhanVien.setText(phieuThue.getNhanVien().getTenNhanVien());

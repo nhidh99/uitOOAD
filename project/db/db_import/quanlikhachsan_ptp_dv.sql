@@ -1,8 +1,6 @@
-CREATE DATABASE  IF NOT EXISTS `quanlikhachsan` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
-USE `quanlikhachsan`;
 -- MySQL dump 10.13  Distrib 8.0.17, for Win64 (x86_64)
 --
--- Host: localhost    Database: quanlikhachsan
+-- Host: 127.0.0.1    Database: quanlikhachsan
 -- ------------------------------------------------------
 -- Server version	8.0.17
 
@@ -18,33 +16,33 @@ USE `quanlikhachsan`;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `ptck_phong`
+-- Table structure for table `ptp_dv`
 --
 
-DROP TABLE IF EXISTS `ptck_phong`;
+DROP TABLE IF EXISTS `ptp_dv`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `ptck_phong` (
-  `MaPTCKPhong` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `ptp_dv` (
+  `MaPTPDV` int(11) NOT NULL AUTO_INCREMENT,
   `MaPTPhong` int(11) NOT NULL,
-  `NoiDung` varchar(45) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `MaDichVu` int(11) NOT NULL,
   `SoLuong` int(10) unsigned NOT NULL,
-  `DonGia` decimal(15,0) NOT NULL,
-  `TriGia` decimal(15,0) NOT NULL,
-  PRIMARY KEY (`MaPTCKPhong`),
-  KEY `fk_ptck_phong_idx` (`MaPTPhong`),
-  CONSTRAINT `fk_ptck_ptp` FOREIGN KEY (`MaPTPhong`) REFERENCES `pt_phong` (`MaPTPhong`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=20017 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `GiaDichVu` decimal(15,0) unsigned NOT NULL,
+  `ThanhTien` decimal(15,0) unsigned NOT NULL,
+  PRIMARY KEY (`MaPTPDV`),
+  KEY `fk_ptpdv_ptp_idx` (`MaPTPhong`),
+  CONSTRAINT `fk_ptpdv_ptp` FOREIGN KEY (`MaPTPhong`) REFERENCES `pt_phong` (`MaPTPhong`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=21041 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `ptck_phong`
+-- Dumping data for table `ptp_dv`
 --
 
-LOCK TABLES `ptck_phong` WRITE;
-/*!40000 ALTER TABLE `ptck_phong` DISABLE KEYS */;
-INSERT INTO `ptck_phong` VALUES (20013,14097,'abc',2,20000,40000);
-/*!40000 ALTER TABLE `ptck_phong` ENABLE KEYS */;
+LOCK TABLES `ptp_dv` WRITE;
+/*!40000 ALTER TABLE `ptp_dv` DISABLE KEYS */;
+INSERT INTO `ptp_dv` VALUES (21026,14141,19004,1,15000,15000),(21039,14141,19005,1,200000,200000),(21040,14145,19004,1,15000,15000);
+/*!40000 ALTER TABLE `ptp_dv` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -55,9 +53,13 @@ UNLOCK TABLES;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `ptck_phong_AFTER_INSERT` AFTER INSERT ON `ptck_phong` FOR EACH ROW BEGIN
-	UPDATE pt_phong
-    SET ThanhTien = ThanhTien + NEW.SoLuong * NEW.DonGia
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `ptp_dv_AFTER_INSERT` AFTER INSERT ON `ptp_dv` FOR EACH ROW BEGIN
+	UPDATE dichvu 
+	SET SoLuongTon = IF (SoLuongTon = -1, -1, IF(SoLuongTon - NEW.SoLuong >= 0, SoLuongTon - NEW.SoLuong, SoLuongTon))
+	WHERE MaDichVu = NEW.MaDichVu;
+    
+    UPDATE pt_phong
+    SET ThanhTien = ThanhTien + NEW.SoLuong * NEW.GiaDichVu
     WHERE pt_phong.MaPTPhong = NEW.MaPTPhong;
 END */;;
 DELIMITER ;
@@ -74,9 +76,9 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `ptck_phong_AFTER_UPDATE` AFTER UPDATE ON `ptck_phong` FOR EACH ROW BEGIN
-	UPDATE pt_phong
-    SET ThanhTien = ThanhTien - (OLD.SoLuong * OLD.DonGia) + (NEW.SoLuong * NEW.DonGia)
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `ptp_dv_AFTER_UPDATE` AFTER UPDATE ON `ptp_dv` FOR EACH ROW BEGIN
+    UPDATE pt_phong
+    SET ThanhTien = ThanhTien - (OLD.SoLuong * OLD.GiaDichVu) + (NEW.SoLuong * NEW.GiaDichVu)
     WHERE pt_phong.MaPTPhong = NEW.MaPTPhong;
 END */;;
 DELIMITER ;
@@ -93,9 +95,13 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `ptck_phong_AFTER_DELETE` AFTER DELETE ON `ptck_phong` FOR EACH ROW BEGIN
-	UPDATE pt_phong
-    SET ThanhTien = ThanhTien - OLD.SoLuong * OLD.DonGia
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `ptp_dv_AFTER_DELETE` AFTER DELETE ON `ptp_dv` FOR EACH ROW BEGIN
+	UPDATE dichvu 
+	SET SoLuongTon = IF (SoLuongTon = -1, -1, SoLuongTon + OLD.SoLuong)
+	WHERE MaDichVu = OLD.MaDichVu;
+    
+    UPDATE pt_phong
+    SET ThanhTien = ThanhTien - OLD.SoLuong * OLD.GiaDichVu
     WHERE pt_phong.MaPTPhong = OLD.MaPTPhong;
 END */;;
 DELIMITER ;
@@ -113,4 +119,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-11-01  4:55:28
+-- Dump completed on 2019-11-13 20:20:19

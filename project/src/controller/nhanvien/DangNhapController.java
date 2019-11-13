@@ -57,11 +57,9 @@ public class DangNhapController implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		tfDN_TaiKhoan.setPromptText("username");
-		pfDN_MatKhau.setPromptText("password");
 		mainStage = PopUpStageHelper.createPopUpStage("/application/main.fxml", 1280, 800);
 		mainStage.getScene().getWindow().addEventFilter(WindowEvent.WINDOW_CLOSE_REQUEST, e -> {
-			if (ConfirmDialogHelper.confirm("Xác nhận đăng xuất?")) {
+			if (ConfirmDialogHelper.confirm("Xác nhận thoát?")) {
 				PopUpStageHelper.createPopUpStage("/application/dangNhap.fxml", 500, 300).show();
 			} else
 				e.consume();

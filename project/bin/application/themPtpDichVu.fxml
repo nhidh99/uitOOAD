@@ -53,7 +53,7 @@
                      </font>
                   </Label>
                   <ComboBox fx:id="cbbDichVu" prefWidth="230.0" style="-fx-font-size: 16;" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                  <Spinner fx:id="snSoLuong" editable="true" prefWidth="230.0" style="-fx-font-size: 16;" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                  <Spinner fx:id="snSoLuong" prefWidth="230.0" style="-fx-font-size: 16;" GridPane.columnIndex="2" GridPane.rowIndex="2" />
                   <Label text="🗳" GridPane.rowIndex="1">
                      <font>
                         <Font name="System Bold" size="20.0" />

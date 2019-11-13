@@ -104,7 +104,7 @@ public class PhongController implements Initializable {
 		lbTieuDe.setText("🏢  SỬA PHÒNG " + phong.getMaPhong());
 		tfMaPhong.setText(phong.getMaPhong());
 		tfMaPhong.setDisable(true);
-		tfGhiChu.setText(phong.getGhiChu());
+		tfGhiChu.setText(phong.getGhiChu() == null ? "" : phong.getGhiChu());
 
 		ObservableList<LoaiPhongDTO> dsLoaiPhong = cbbLoaiPhong.getItems();
 		for (int i = 0; i < dsLoaiPhong.size(); i++) {
@@ -165,18 +165,15 @@ public class PhongController implements Initializable {
 
 	public void handleXacNhan(ActionEvent e) {
 
-		if (!(tfMaPhong.getText().matches("^.{1,10}$") 
-				&& tfGhiChu.getText().matches("^.{0,45}$") )) {
+		if (!(tfMaPhong.getText().matches("^.{1,10}$") && tfGhiChu.getText().matches("^.{0,45}$"))) {
 			Alert alert = new Alert(AlertType.INFORMATION);
 			alert.setTitle("Thất bại!");
 			alert.setHeaderText("Hiệu chỉnh phòng thất bại!");
-			alert.setContentText(
-					"Mã phòng tối đa 10 kí tự.\n"
-					+ "Ghi chú tối đa 45 kí tự.");
+			alert.setContentText("Mã phòng tối đa 10 kí tự.\n" + "Ghi chú tối đa 45 kí tự.");
 			alert.showAndWait();
 			return;
 		}
-		
+
 		switch (tag) {
 		case INSERT: {
 			try {
@@ -191,9 +188,8 @@ public class PhongController implements Initializable {
 					alert.setContentText("Đã thêm thành công phòng " + phongMoi.getMaPhong());
 					alert.showAndWait();
 
-					MainController mainController = (MainController) tfMaPhong.getScene().getUserData();
-					mainController.loadTablePhong();
-					mainController.handleTraCuuPhong();
+					Runnable reloadTablePhong = (Runnable) tfMaPhong.getScene().getUserData();
+					reloadTablePhong.run();
 					Stage stage = (Stage) tfMaPhong.getScene().getWindow();
 					stage.close();
 				} else {
@@ -204,6 +200,7 @@ public class PhongController implements Initializable {
 					alert.showAndWait();
 				}
 			} catch (SQLException ex) {
+				ex.printStackTrace();
 				Alert alert = new Alert(AlertType.INFORMATION);
 				alert.setTitle("Thất bại");
 				alert.setHeaderText("Thêm phòng thất bại!");
@@ -226,9 +223,8 @@ public class PhongController implements Initializable {
 					alert.setContentText("Sửa thành công thông tin phòng " + phong.getMaPhong());
 					alert.showAndWait();
 
-					MainController mainController = (MainController) tfMaPhong.getScene().getUserData();
-					mainController.showChiTietPhong(phongMoi);
-					mainController.handleTraCuuPhong();
+					Runnable reloadTablePhong = (Runnable) tfMaPhong.getScene().getUserData();
+					reloadTablePhong.run();
 					Stage stage = (Stage) tfMaPhong.getScene().getWindow();
 					stage.close();
 				} else {

@@ -48,6 +48,11 @@
 			<location>C:/Users/Admin/Desktop/uitBundles/uitSE/SE100/project/src/application/popupDichVu.fxml</location>
 		</link>
 		<link>
+			<name>src/application/popupDoiPhong.fxml</name>
+			<type>1</type>
+			<location>C:/Users/Admin/Desktop/uitBundles/uitSE/SE100/project/src/application/popupDoiPhong.fxml</location>
+		</link>
+		<link>
 			<name>src/application/popupHDPtck.fxml</name>
 			<type>1</type>
 			<location>C:/Users/Admin/Desktop/uitBundles/uitSE/SE100/project/src/application/popupHDPtck.fxml</location>

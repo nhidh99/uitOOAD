@@ -71,8 +71,8 @@ public class NhaCungCapController {
 					alert.setTitle("Thành công");
 					alert.setHeaderText("Thêm thành công nhà cung cấp " + nhaCungCap.getTenNhaCungCap());
 					alert.showAndWait();
-					MainController controller = (MainController) lbTieuDe.getScene().getUserData();
-					controller.loadTableNhaCungCap();
+					Runnable reloadTableNhaCungCap = (Runnable) lbTieuDe.getScene().getUserData();
+					reloadTableNhaCungCap.run();
 					Stage stage = (Stage) lbTieuDe.getScene().getWindow();
 					stage.close();
 				} else {
@@ -104,9 +104,8 @@ public class NhaCungCapController {
 					alert.setTitle("Thành công");
 					alert.setHeaderText("Bạn đã sửa thành công nhà cung cấp " + newNhaCungCap.getTenNhaCungCap());
 					alert.showAndWait();
-					MainController controller = (MainController) lbTieuDe.getScene().getUserData();
-					controller.loadTableNhaCungCap();
-					controller.loadTableDichVu();
+					Runnable reloadTableNhaCungCap = (Runnable) lbTieuDe.getScene().getUserData();
+					reloadTableNhaCungCap.run();
 					Stage stage = (Stage) lbTieuDe.getScene().getWindow();
 					stage.close();
 				} else {

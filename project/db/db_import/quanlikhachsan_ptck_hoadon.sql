@@ -1,8 +1,6 @@
-CREATE DATABASE  IF NOT EXISTS `quanlikhachsan` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
-USE `quanlikhachsan`;
 -- MySQL dump 10.13  Distrib 8.0.17, for Win64 (x86_64)
 --
--- Host: localhost    Database: quanlikhachsan
+-- Host: 127.0.0.1    Database: quanlikhachsan
 -- ------------------------------------------------------
 -- Server version	8.0.17
 
@@ -18,27 +16,30 @@ USE `quanlikhachsan`;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `tinhtrang`
+-- Table structure for table `ptck_hoadon`
 --
 
-DROP TABLE IF EXISTS `tinhtrang`;
+DROP TABLE IF EXISTS `ptck_hoadon`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `tinhtrang` (
-  `MaTinhTrang` int(11) NOT NULL AUTO_INCREMENT,
-  `TenTinhTrang` varchar(45) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  PRIMARY KEY (`MaTinhTrang`)
-) ENGINE=InnoDB AUTO_INCREMENT=11008 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+CREATE TABLE `ptck_hoadon` (
+  `MaPTCKHD` int(11) NOT NULL AUTO_INCREMENT,
+  `MaHoaDon` int(11) NOT NULL,
+  `NoiDung` varchar(45) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `TriGia` decimal(15,0) NOT NULL,
+  PRIMARY KEY (`MaPTCKHD`),
+  KEY `fk_ptck_hd_idx` (`MaHoaDon`),
+  CONSTRAINT `fk_ptck_hd` FOREIGN KEY (`MaHoaDon`) REFERENCES `hoadon` (`MaHoaDon`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=22004 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `tinhtrang`
+-- Dumping data for table `ptck_hoadon`
 --
 
-LOCK TABLES `tinhtrang` WRITE;
-/*!40000 ALTER TABLE `tinhtrang` DISABLE KEYS */;
-INSERT INTO `tinhtrang` VALUES (11001,'Thuê'),(11002,'Trống'),(11003,'Hỏng'),(11004,'Sửa'),(11005,'Bẩn');
-/*!40000 ALTER TABLE `tinhtrang` ENABLE KEYS */;
+LOCK TABLES `ptck_hoadon` WRITE;
+/*!40000 ALTER TABLE `ptck_hoadon` DISABLE KEYS */;
+/*!40000 ALTER TABLE `ptck_hoadon` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -50,4 +51,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-11-01  4:55:28
+-- Dump completed on 2019-11-13 20:20:18

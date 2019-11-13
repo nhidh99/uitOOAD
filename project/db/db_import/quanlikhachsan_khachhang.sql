@@ -1,8 +1,6 @@
-CREATE DATABASE  IF NOT EXISTS `quanlikhachsan` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
-USE `quanlikhachsan`;
 -- MySQL dump 10.13  Distrib 8.0.17, for Win64 (x86_64)
 --
--- Host: localhost    Database: quanlikhachsan
+-- Host: 127.0.0.1    Database: quanlikhachsan
 -- ------------------------------------------------------
 -- Server version	8.0.17
 
@@ -18,31 +16,33 @@ USE `quanlikhachsan`;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `ptck_hoadon`
+-- Table structure for table `khachhang`
 --
 
-DROP TABLE IF EXISTS `ptck_hoadon`;
+DROP TABLE IF EXISTS `khachhang`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `ptck_hoadon` (
-  `MaPTCKHD` int(11) NOT NULL AUTO_INCREMENT,
-  `MaHoaDon` int(11) NOT NULL,
-  `NoiDung` varchar(45) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `TriGia` decimal(15,0) NOT NULL,
-  PRIMARY KEY (`MaPTCKHD`),
-  KEY `fk_ptck_hd_idx` (`MaHoaDon`),
-  CONSTRAINT `fk_ptck_hd` FOREIGN KEY (`MaHoaDon`) REFERENCES `hoadon` (`MaHoaDon`)
-) ENGINE=InnoDB AUTO_INCREMENT=22004 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+CREATE TABLE `khachhang` (
+  `MaKhachHang` int(11) NOT NULL AUTO_INCREMENT,
+  `MaPTPhong` int(11) NOT NULL,
+  `HoTen` varchar(45) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `CMND` varchar(45) NOT NULL,
+  `SoDienThoai` varchar(45) NOT NULL,
+  `GioiTinh` varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `QuocTich` varchar(45) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  PRIMARY KEY (`MaKhachHang`),
+  KEY `fk_kh_ptp_idx` (`MaPTPhong`),
+  CONSTRAINT `fk_kh_ptp` FOREIGN KEY (`MaPTPhong`) REFERENCES `pt_phong` (`MaPTPhong`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=15042 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `ptck_hoadon`
+-- Dumping data for table `khachhang`
 --
 
-LOCK TABLES `ptck_hoadon` WRITE;
-/*!40000 ALTER TABLE `ptck_hoadon` DISABLE KEYS */;
-INSERT INTO `ptck_hoadon` VALUES (22003,13002,'Trả phòng trễ',300000);
-/*!40000 ALTER TABLE `ptck_hoadon` ENABLE KEYS */;
+LOCK TABLES `khachhang` WRITE;
+/*!40000 ALTER TABLE `khachhang` DISABLE KEYS */;
+/*!40000 ALTER TABLE `khachhang` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -54,4 +54,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-11-01  4:55:29
+-- Dump completed on 2019-11-13 20:20:17

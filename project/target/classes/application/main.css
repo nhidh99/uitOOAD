@@ -1,5 +1,7 @@
 #main-tab .tab-label {
-	-fx-font-size: 20;
+	-fx-font-size: 35;
+	-fx-alignment: CENTER;
+	-fx-rotate: 90;
 }
 
 .date-picker, .spinner, .combo-box {
@@ -12,8 +14,8 @@
 
 .tab .tab-label {
     -fx-alignment: CENTER;
-    -fx-font-size: 16;
-    -fx-padding: 0 10 0 10;
+    -fx-font-size: 16.0;
+    -fx-padding: 0.0 10.0 0.0 10.0;
     -fx-font-weight: bold;
 }
 

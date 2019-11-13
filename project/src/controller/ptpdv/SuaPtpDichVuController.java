@@ -4,7 +4,6 @@ import java.sql.SQLException;
 
 import BUS.PtpDichVuBUS;
 import DTO.PtpDichVuDTO;
-import controller.MainController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -54,8 +53,8 @@ public class SuaPtpDichVuController {
 				alert.setContentText(String.format("Đã sửa dịch vụ %s", ptp_dv.getTenDichVu()));
 				alert.showAndWait();
 
-				MainController mainController = (MainController) lbPhieuThue.getScene().getUserData();
-				mainController.loadTablePTP_DV(ptp_dv.getPTPhong().getMaPTPhong());
+				Runnable reloadTablePTP_DV = (Runnable) lbDichVu.getScene().getUserData();
+				reloadTablePTP_DV.run();
 				Stage stage = (Stage) lbPhieuThue.getScene().getWindow();
 				stage.close();
 			}

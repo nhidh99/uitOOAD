@@ -1,8 +1,6 @@
 package controller.nhanvien;
 
 import DTO.*;
-import controller.MainController;
-
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
@@ -91,8 +89,8 @@ public class ThemNhanVienController implements Initializable {
 					alert.setContentText(String.format("Thêm thành công %s %s.", nhanVien.getChucVu(), nhanVien.getTenNhanVien()));
 					alert.showAndWait();
 					
-					MainController mainController = (MainController) tfHoTen.getScene().getUserData();
-					mainController.loadTableNhanVien();
+					Runnable reloadTableNhanVien = (Runnable) tfCMND.getScene().getUserData();
+					reloadTableNhanVien.run();
 					Stage stage = (Stage) tfHoTen.getScene().getWindow();
 					stage.close();
 				}

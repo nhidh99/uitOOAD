@@ -53,8 +53,9 @@ public class LoaiDichVuController {
 					alert.setTitle("Thành công");
 					alert.setHeaderText("Thêm thành công loại dịch vụ " + loaiDichVu.getTenLoaiDichVu());
 					alert.showAndWait();
-					MainController controller = (MainController) lbTieuDe.getScene().getUserData();
-					controller.loadTableLoaiDichVu();
+					Runnable reloadTableLoaiDichVu = (Runnable) lbTieuDe.getScene().getUserData();
+					reloadTableLoaiDichVu.run();
+
 				} else {
 					Alert alert = new Alert(AlertType.INFORMATION);
 					alert.setTitle("Thất bại");
@@ -65,7 +66,6 @@ public class LoaiDichVuController {
 				Stage stage = (Stage) lbTieuDe.getScene().getWindow();
 				stage.close();
 			} catch (SQLException ex) {
-				ex.printStackTrace();
 				Alert alert = new Alert(AlertType.INFORMATION);
 				alert.setTitle("Lỗi");
 				alert.setHeaderText("Không thể thêm loại dịch vụ!");
@@ -84,9 +84,10 @@ public class LoaiDichVuController {
 					alert.setHeaderText("Sửa thành công loại dịch vụ " + newLoaiDichVu.getTenLoaiDichVu());
 					alert.setContentText(String.format("Các dịch vụ %s sẽ trở thành dịch vụ %s", loaiDichVu.getTenLoaiDichVu(), newLoaiDichVu.getTenLoaiDichVu()));
 					alert.showAndWait();
-					MainController controller = (MainController) lbTieuDe.getScene().getUserData();
-					controller.loadTableLoaiDichVu();
-					controller.loadTableDichVu();
+					Runnable reloadTableLoaiDichVu = (Runnable) lbTieuDe.getScene().getUserData();
+					reloadTableLoaiDichVu.run();
+					Stage stage = (Stage) lbTieuDe.getScene().getWindow();
+					stage.close();
 				} else {
 					Alert alert = new Alert(AlertType.INFORMATION);
 					alert.setTitle("Thất bại");
@@ -94,8 +95,6 @@ public class LoaiDichVuController {
 					alert.setContentText("Vui lòng nhập lại loại dịch vụ khác!");
 					alert.showAndWait();
 				}
-				Stage stage = (Stage) lbTieuDe.getScene().getWindow();
-				stage.close();
 			} catch (SQLException ex) {
 				ex.printStackTrace();
 				Alert alert = new Alert(AlertType.INFORMATION);

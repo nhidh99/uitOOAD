@@ -1,8 +1,6 @@
-CREATE DATABASE  IF NOT EXISTS `quanlikhachsan` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
-USE `quanlikhachsan`;
 -- MySQL dump 10.13  Distrib 8.0.17, for Win64 (x86_64)
 --
--- Host: localhost    Database: quanlikhachsan
+-- Host: 127.0.0.1    Database: quanlikhachsan
 -- ------------------------------------------------------
 -- Server version	8.0.17
 
@@ -18,34 +16,30 @@ USE `quanlikhachsan`;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `khachhang`
+-- Table structure for table `loaiphong`
 --
 
-DROP TABLE IF EXISTS `khachhang`;
+DROP TABLE IF EXISTS `loaiphong`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `khachhang` (
-  `MaKhachHang` int(11) NOT NULL AUTO_INCREMENT,
-  `MaPTPhong` int(11) NOT NULL,
-  `HoTen` varchar(45) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `CMND` varchar(45) NOT NULL,
-  `SoDienThoai` varchar(45) NOT NULL,
-  `GioiTinh` varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `QuocTich` varchar(45) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  PRIMARY KEY (`MaKhachHang`),
-  KEY `fk_kh_ptp_idx` (`MaPTPhong`),
-  CONSTRAINT `fk_kh_ptp` FOREIGN KEY (`MaPTPhong`) REFERENCES `pt_phong` (`MaPTPhong`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=15039 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+CREATE TABLE `loaiphong` (
+  `MaLoaiPhong` int(11) NOT NULL AUTO_INCREMENT,
+  `TenLoaiPhong` varchar(45) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `SoKhachToiDa` int(10) unsigned NOT NULL,
+  `DonGia` decimal(15,0) unsigned NOT NULL,
+  `KhaDung` tinyint(1) NOT NULL DEFAULT '1',
+  PRIMARY KEY (`MaLoaiPhong`)
+) ENGINE=InnoDB AUTO_INCREMENT=10013 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `khachhang`
+-- Dumping data for table `loaiphong`
 --
 
-LOCK TABLES `khachhang` WRITE;
-/*!40000 ALTER TABLE `khachhang` DISABLE KEYS */;
-INSERT INTO `khachhang` VALUES (15008,14097,'Hồ Thanh Hải','17520853','0336887109','Nam','Việt Nam');
-/*!40000 ALTER TABLE `khachhang` ENABLE KEYS */;
+LOCK TABLES `loaiphong` WRITE;
+/*!40000 ALTER TABLE `loaiphong` DISABLE KEYS */;
+INSERT INTO `loaiphong` VALUES (10001,'Single',1,150000,1),(10002,'Double',2,200000,1),(10003,'Triple',3,250000,1),(10004,'Quad',4,350000,1),(10005,'Double-Double',4,400000,1);
+/*!40000 ALTER TABLE `loaiphong` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -57,4 +51,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-11-01  4:55:27
+-- Dump completed on 2019-11-13 20:20:16

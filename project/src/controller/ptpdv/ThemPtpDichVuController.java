@@ -9,7 +9,6 @@ import BUS.PtpDichVuBUS;
 import DTO.DichVuDTO;
 import DTO.PTPhongDTO;
 import DTO.PtpDichVuDTO;
-import controller.MainController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -89,9 +88,8 @@ public class ThemPtpDichVuController implements Initializable {
 						ptp_dv.getDonViTinh().toLowerCase(), ptp_dv.getDichVu().getTenDichVu()));
 				alert.showAndWait();
 
-				MainController mainController = (MainController) lbSoLuongTon.getScene().getUserData();
-				mainController.loadTablePTP_DV(ptPhong.getMaPTPhong());
-				mainController.loadTableDichVu();
+				Runnable reloadTablePTP_DV = (Runnable) lbSoLuongTon.getScene().getUserData();
+				reloadTablePTP_DV.run();
 				Stage stage = (Stage) lbSoLuongTon.getScene().getWindow();
 				stage.close();
 			} else {

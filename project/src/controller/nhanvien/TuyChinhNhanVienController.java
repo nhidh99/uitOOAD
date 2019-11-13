@@ -4,7 +4,6 @@ import java.sql.SQLException;
 
 import BUS.NhanVienBUS;
 import DTO.NhanVienDTO;
-import controller.MainController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -82,9 +81,8 @@ public class TuyChinhNhanVienController {
 					alert.setContentText(String.format("Sửa thành công thông tin %s %s.", nhanVien.getChucVu(), nhanVien.getTenNhanVien()));
 					alert.showAndWait();
 
-					MainController mainController = (MainController) lbMaNhanVien.getScene().getUserData();
-					mainController.loadTableNhanVien();
-					mainController.loadNhanVienByUsername(nhanVien.getTaiKhoan());
+					Runnable reloadTableNhanVien = (Runnable) tfCMND.getScene().getUserData();
+					reloadTableNhanVien.run();
 					Stage stage = (Stage) lbMaNhanVien.getScene().getWindow();
 					stage.close();
 				} else {

@@ -117,8 +117,8 @@ public class PtpPtckController implements Initializable {
 					alert.setContentText(String.format("Nội dung phụ thu/chiết khấu: %s.", ptck.getNoiDung()));
 					alert.showAndWait();
 
-					MainController mainController = (MainController) lbPhieuThue.getScene().getUserData();
-					mainController.loadTablePtpPTCK(ptPhong.getMaPTPhong());
+					Runnable reloadTablePTP_PTCK = (Runnable) lbPhieuThue.getScene().getUserData();
+					reloadTablePTP_PTCK.run();
 					Stage stage = (Stage) lbPhieuThue.getScene().getWindow();
 					stage.close();
 				} else {
@@ -149,8 +149,8 @@ public class PtpPtckController implements Initializable {
 					alert.setContentText(String.format("Nội dung phụ thu/chiết khấu: %s.", ptck.getNoiDung()));
 					alert.showAndWait();
 
-					MainController mainController = (MainController) lbPhieuThue.getScene().getUserData();
-					mainController.loadTablePtpPTCK(ptPhong.getMaPTPhong());
+					Runnable reloadTablePTP_PTCK = (Runnable) lbPhieuThue.getScene().getUserData();
+					reloadTablePTP_PTCK.run();
 					Stage stage = (Stage) lbPhieuThue.getScene().getWindow();
 					stage.close();
 				} else {

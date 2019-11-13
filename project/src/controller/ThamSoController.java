@@ -62,8 +62,9 @@ public class ThamSoController {
 				alert.setTitle("Thành công");
 				alert.setHeaderText("Sửa các tham số thành công!");
 				alert.showAndWait();
-				MainController controller = (MainController) snTiLeVAT.getScene().getUserData();
-				controller.loadTableThamSo();
+
+				Runnable reloadTableThamSo = (Runnable) snTiLeCoc.getScene().getUserData();
+				reloadTableThamSo.run();
 				Stage stage = (Stage) snTiLeVAT.getScene().getWindow();
 				stage.close();
 			} else {

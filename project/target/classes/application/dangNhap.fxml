@@ -57,7 +57,7 @@
                         <Font name="System Bold" size="20.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="tfDN_TaiKhoan" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="44.0" prefWidth="213.0" GridPane.columnIndex="2">
+                  <TextField fx:id="tfDN_TaiKhoan" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="44.0" prefWidth="213.0" promptText="Tài khoản" GridPane.columnIndex="2">
                      <GridPane.margin>
                         <Insets left="15.0" />
                      </GridPane.margin>
@@ -65,7 +65,7 @@
                         <Font size="20.0" />
                      </font>
                   </TextField>
-                  <PasswordField fx:id="pfDN_MatKhau" prefHeight="44.0" prefWidth="201.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                  <PasswordField fx:id="pfDN_MatKhau" prefHeight="44.0" prefWidth="201.0" promptText="Mật khẩu" GridPane.columnIndex="2" GridPane.rowIndex="1">
                      <GridPane.margin>
                         <Insets left="15.0" />
                      </GridPane.margin>

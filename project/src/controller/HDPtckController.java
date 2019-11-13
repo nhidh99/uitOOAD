@@ -2,6 +2,7 @@ package controller;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.function.Function;
 
 import DTO.HDPtckDTO;
 import javafx.collections.FXCollections;
@@ -28,8 +29,8 @@ public class HDPtckController implements Initializable {
 		cbbPTCK.getSelectionModel().selectFirst();
 	}
 
+	@SuppressWarnings("unchecked")
 	public void handleXacNhan(ActionEvent e) {
-		
 		if (!(tfNoiDung.getText().matches("^.{1,45}$")
 				&& tfTriGia.getText().matches("^[0-9]{1,8}$"))) {
 			Alert alert = new Alert(AlertType.INFORMATION);
@@ -44,8 +45,8 @@ public class HDPtckController implements Initializable {
 		
 		Integer triGia = (cbbPTCK.getSelectionModel().getSelectedIndex() == 0 ? 1 : -1) * Integer.valueOf(tfTriGia.getText());
 		HDPtckDTO hdPtck = new HDPtckDTO(tfNoiDung.getText(), triGia);		
-		MainController controller = (MainController) cbbPTCK.getScene().getUserData();
-		controller.insertHDPtck(hdPtck);
+		Function<HDPtckDTO, Void> insertHDPtck = (Function<HDPtckDTO, Void>) tfNoiDung.getScene().getUserData();
+		insertHDPtck.apply(hdPtck);
 		Stage stage = (Stage) cbbPTCK.getScene().getWindow();
 		stage.close();
 	}

@@ -206,10 +206,10 @@ public class DichVuController implements Initializable {
 					alert.setHeaderText("Thêm dịch vụ thành công!");
 					alert.setContentText("Đã thêm dịch vụ " + dichVu.getTenDichVu());
 					alert.showAndWait();
+					Runnable reloadTableDichVu = (Runnable) lbTieuDe.getScene().getUserData();
+					reloadTableDichVu.run();
 					Stage stage = (Stage) tfTenDichVu.getScene().getWindow();
 					stage.close();
-					MainController controller = (MainController) stage.getScene().getUserData();
-					controller.loadTableDichVu();
 				} else {
 					Alert alert = new Alert(AlertType.INFORMATION);
 					alert.setTitle("Lỗi");
@@ -223,10 +223,10 @@ public class DichVuController implements Initializable {
 					alert.setHeaderText("Sửa dịch vụ thành công!");
 					alert.setContentText("Đã sửa dịch vụ " + dichVu.getTenDichVu());
 					alert.showAndWait();
+					Runnable reloadTableDichVu = (Runnable) lbTieuDe.getScene().getUserData();
+					reloadTableDichVu.run();
 					Stage stage = (Stage) tfTenDichVu.getScene().getWindow();
 					stage.close();
-					MainController controller = (MainController) stage.getScene().getUserData();
-					controller.loadTableDichVu();
 				} else {
 					Alert alert = new Alert(AlertType.INFORMATION);
 					alert.setTitle("Lỗi");

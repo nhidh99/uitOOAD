@@ -10,6 +10,8 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.function.Function;
+
 import BUS.*;
 import DTO.*;
 import controller.nhanvien.SuaNhanVienController;
@@ -18,6 +20,7 @@ import controller.ptpdv.SuaPtpDichVuController;
 import controller.ptpdv.ThemPtpDichVuController;
 import custom.control.ListRoomDetailPane;
 import custom.control.RoomDetailPane;
+import helper.AlertHelper;
 import helper.ConfirmDialogHelper;
 import helper.DateFormatHelper;
 import helper.MoneyFormatHelper;
@@ -498,6 +501,72 @@ public class MainController implements Initializable {
 	ObservableList<PTPhongDTO> dsHDPhong = FXCollections.observableArrayList();
 	ObservableList<HDPtckDTO> dsHDPtck = FXCollections.observableArrayList();
 
+	Runnable reloadTablePhong = () -> {
+		loadTablePhong();
+		loadTablePTPhong();
+		handleTraCuuPhong();
+	};
+
+	Runnable reloadTableKhach = () -> {
+		loadTableKhach(Integer.valueOf(lbPhong_MaPTP.getText()));
+	};
+
+	Runnable reloadTablePTP_PTCK = () -> {
+		loadTablePtpPTCK(Integer.valueOf(lbPhong_MaPTP.getText()));
+	};
+
+	Runnable reloadTablePTP_DV = () -> {
+		loadTablePTP_DV(Integer.valueOf(lbPhong_MaPTP.getText()));
+		loadTableDichVu();
+	};
+
+	Runnable reloadTableDichVu = () -> {
+		loadTableDichVu();
+	};
+
+	Runnable reloadTableLoaiPhong = () -> {
+		loadTableLoaiPhong();
+		loadTablePTPhong();
+		loadTablePhong();
+		loadComboboxes();
+		handleTraCuuPhong();
+	};
+
+	Runnable reloadTablePhieuThue = () -> {
+		loadTablePhieuThue();
+		loadTablePhong();
+		handleTraCuuPhong();
+	};
+
+	Runnable reloadTableLoaiDichVu = () -> {
+		loadTableLoaiDichVu();
+		loadTableDichVu();
+	};
+
+	Runnable reloadTableThamSo = () -> {
+		loadTableThamSo();
+	};
+
+	Runnable reloadTableNhanVien = () -> {
+		loadTableNhanVien();
+		loadNhanVienByUsername((String) lbNV_MaNhanVien.getUserData());
+	};
+
+	Runnable reloadTableNhaCungCap = () -> {
+		loadTableNhaCungCap();
+		loadTableDichVu();
+	};
+
+	Function<HDPtckDTO, Void> insertHDPtck = (hdPtck) -> {
+		dsHDPtck.add(hdPtck);
+		tvHDPtck.setItems(dsHDPtck);
+		Alert alert = new Alert(AlertType.INFORMATION);
+		alert.setTitle("Thành công");
+		alert.setHeaderText("Thêm ptck " + hdPtck.getNoiDung() + " thành công!");
+		alert.showAndWait();
+		return null;
+	};
+
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		initTables();
@@ -623,11 +692,11 @@ public class MainController implements Initializable {
 			tpTC_Phong.getChildren().clear();
 			bpTC_ThongTinPhong.setVisible(false);
 		});
-		
+
 		snTC_SoDem.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 30, 1));
 		snTC_GioNhan.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 23, 8));
 		snTC_GioTra.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 23, 12));
-		
+
 		int curMonth = Calendar.getInstance().get(Calendar.MONTH) + 1;
 		int curYear = Calendar.getInstance().get(Calendar.YEAR);
 		snTK_DoanhThu.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(2000, 3000, curYear));
@@ -843,8 +912,8 @@ public class MainController implements Initializable {
 		tcPhongPTP_STT.setCellValueFactory(
 				column -> new ReadOnlyObjectWrapper<Integer>(tvPhongPTP.getItems().indexOf(column.getValue()) + 1));
 		tcPhongPTP_MaPTP.setCellValueFactory(new PropertyValueFactory<>("maPTPhong"));
-		tcPhongPTP_KhachThue.setCellValueFactory(new PropertyValueFactory<>("khachThue"));
-		tcPhongPTP_DienThoai.setCellValueFactory(new PropertyValueFactory<>("dienThoai"));
+		tcPhongPTP_KhachThue.setCellValueFactory(new PropertyValueFactory<>("tenKhachThue"));
+		tcPhongPTP_DienThoai.setCellValueFactory(new PropertyValueFactory<>("soDienThoai"));
 		tcPhongPTP_NgayNhan.setCellValueFactory(new PropertyValueFactory<>("ngayNhan"));
 		tcPhongPTP_NgayTra.setCellValueFactory(new PropertyValueFactory<>("ngayTra"));
 	}
@@ -945,11 +1014,9 @@ public class MainController implements Initializable {
 						btnPhong_XoaPhong.setDisable(false);
 					}
 				} catch (Exception ex) {
-					ex.printStackTrace();
 				}
 			}
 		}
-
 		RoomClickedHandler handler = new RoomClickedHandler();
 		try {
 			tpPhong.getChildren().clear();
@@ -1039,9 +1106,10 @@ public class MainController implements Initializable {
 	public void loadTableChiTiet(Integer maPTP) {
 		try {
 			PTPhongDTO ptPhong = PTPhongBUS.getPTPhongById(maPTP);
+			PhongDTO phong = PhongBUS.getPhongById(ptPhong.getMaPhong());
 			PhieuThueDTO phieuThue = PhieuThueBUS.getPhieuThueByMaPTP(maPTP);
 			lbPhong_KhachThue.setText(phieuThue.getTenKhachThue());
-			lbPhong_TinhTrang.setText(ptPhong.getPhong().getTinhTrang().getTenTinhTrang());
+			lbPhong_TinhTrang.setText(phong.getTinhTrang().getTenTinhTrang());
 			lbPhong_CMND.setText(phieuThue.getCMND());
 			lbPhong_DienThoai.setText(phieuThue.getSoDienThoai());
 			lbPhong_NhanVien.setText(phieuThue.getNhanVien().getTenNhanVien());
@@ -1051,7 +1119,6 @@ public class MainController implements Initializable {
 			lbPhong_DonGiaThue.setText(ptPhong.getDonGiaThue() + " VND");
 			lbPhong_TienCoc.setText(ptPhong.getTienCoc() + " VND");
 		} catch (SQLException ex) {
-			ex.printStackTrace();
 			Alert alert = new Alert(AlertType.INFORMATION);
 			alert.setTitle("Lỗi");
 			alert.setHeaderText("Không thể tải danh sách chi tiết phòng!");
@@ -1066,7 +1133,6 @@ public class MainController implements Initializable {
 			PTPhongBUS.getDSPTPhongByMaPhong(maPhong).stream().forEach(ptp -> dsPTPhong.add(ptp));
 			tvPhongPTP.setItems(dsPTPhong);
 		} catch (SQLException ex) {
-			ex.printStackTrace();
 			Alert alert = new Alert(AlertType.INFORMATION);
 			alert.setTitle("Lỗi");
 			alert.setHeaderText("Không thể tải danh sách chi tiết phòng!");
@@ -1210,6 +1276,7 @@ public class MainController implements Initializable {
 		try {
 			NhanVienDTO nhanVien = NhanVienBUS.getNhanVienByUsername(username);
 			lbNV_MaNhanVien.setText(nhanVien.getMaNhanVien().toString());
+			lbNV_MaNhanVien.setUserData(nhanVien.getTaiKhoan());
 			lbNV_TenNhanVien.setText(nhanVien.getTenNhanVien());
 			lbNV_CMND.setText(nhanVien.getCMND());
 			lbNV_DiaChi.setText(nhanVien.getDiaChi());
@@ -1251,15 +1318,6 @@ public class MainController implements Initializable {
 		default:
 			break;
 		}
-	}
-
-	public void insertHDPtck(HDPtckDTO hdPtck) {
-		dsHDPtck.add(hdPtck);
-		tvHDPtck.setItems(dsHDPtck);
-		Alert alert = new Alert(AlertType.INFORMATION);
-		alert.setTitle("Thành công");
-		alert.setHeaderText("Thêm ptck " + hdPtck.getNoiDung() + " thành công!");
-		alert.showAndWait();
 	}
 
 	public void handleTraCuuPhong() {
@@ -1321,7 +1379,7 @@ public class MainController implements Initializable {
 	public void handleThemNhanVien(ActionEvent e) {
 		String link = "/application/themNhanVien.fxml";
 		Stage popUpStage = PopUpStageHelper.createPopUpStage(link, 980, 460);
-		popUpStage.getScene().setUserData(this);
+		popUpStage.getScene().setUserData(reloadTableNhanVien);
 		popUpStage.showAndWait();
 	}
 
@@ -1343,7 +1401,7 @@ public class MainController implements Initializable {
 				FXMLLoader loader = (FXMLLoader) popUpStage.getUserData();
 				SuaNhanVienController controller = loader.getController();
 				controller.initialize(nhanVien);
-				popUpStage.getScene().setUserData(this);
+				popUpStage.getScene().setUserData(reloadTableNhanVien);
 				popUpStage.showAndWait();
 			}
 		} catch (NullPointerException NullPointerException) {
@@ -1363,7 +1421,7 @@ public class MainController implements Initializable {
 			FXMLLoader loader = (FXMLLoader) popUpStage.getUserData();
 			TuyChinhNhanVienController controller = loader.getController();
 			controller.initialize(nhanVien);
-			popUpStage.getScene().setUserData(this);
+			popUpStage.getScene().setUserData(reloadTableNhanVien);
 			popUpStage.showAndWait();
 		} catch (SQLException SQLException) {
 			Alert alert = new Alert(AlertType.INFORMATION);
@@ -1423,7 +1481,7 @@ public class MainController implements Initializable {
 	public void handleThemDichVu(ActionEvent e) {
 		String link = "/application/popupDichVu.fxml";
 		Stage popUpStage = PopUpStageHelper.createPopUpStage(link, 500, 550);
-		popUpStage.getScene().setUserData(this);
+		popUpStage.getScene().setUserData(reloadTableDichVu);
 		popUpStage.showAndWait();
 	}
 
@@ -1465,7 +1523,7 @@ public class MainController implements Initializable {
 			DichVuDTO dichVu = tvDichVu.getSelectionModel().getSelectedItem();
 			String link = "/application/popupDichVu.fxml";
 			Stage popUpStage = PopUpStageHelper.createPopUpStage(link, 500, 550);
-			popUpStage.getScene().setUserData(this);
+			popUpStage.getScene().setUserData(reloadTableDichVu);
 			FXMLLoader loader = (FXMLLoader) popUpStage.getUserData();
 			DichVuController controller = loader.getController();
 			controller.initialize(dichVu);
@@ -1591,13 +1649,16 @@ public class MainController implements Initializable {
 			Calendar cal = Calendar.getInstance();
 			cal.setTime(DateFormatHelper.getDate(dpTC_NgayNhan.getValue()));
 			cal.set(Calendar.HOUR, snTC_GioNhan.getValue());
+
 			Timestamp ngayNhan = new Timestamp(cal.getTimeInMillis());
 			cal.setTime(DateFormatHelper.getDate(lbTC_NgayTra.getText()));
 			cal.set(Calendar.HOUR, snTC_GioTra.getValue());
+
+			String maPhong = lbTC_MaPhong.getText();
+			LoaiPhongDTO loaiPhong = cbbTC_LoaiPhong.getSelectionModel().getSelectedItem();
 			Timestamp ngayTra = new Timestamp(cal.getTimeInMillis());
-			PhongDTO phong = PhongBUS.getPhongById(lbTC_MaPhong.getText());
 			Integer tienCoc = MoneyFormatHelper.fromString(lbTC_TienCoc.getText());
-			PTPhongDTO ptPhong = new PTPhongDTO(phong, ngayNhan, ngayTra, tienCoc);
+			PTPhongDTO ptPhong = new PTPhongDTO(maPhong, loaiPhong, ngayNhan, ngayTra, tienCoc);
 
 			if (PTPhongBUS.insertPTPhong(ptPhong)) {
 				// tải lại phiếu thuê phòng
@@ -1669,7 +1730,7 @@ public class MainController implements Initializable {
 			FXMLLoader loader = (FXMLLoader) popUpChiTiet.getUserData();
 			PhieuThueController controller = loader.getController();
 			controller.initialize(phieuThue.getMaPhieuThue());
-			popUpChiTiet.getScene().setUserData(this);
+			popUpChiTiet.getScene().setUserData(reloadTablePhieuThue);
 			popUpChiTiet.showAndWait();
 		} catch (NullPointerException NullPointerException) {
 			Alert alert = new Alert(AlertType.INFORMATION);
@@ -1694,7 +1755,6 @@ public class MainController implements Initializable {
 					alert.setContentText(String.format("Đã xoá thành công phiếu thuê %s.", phieuThue.getMaPhieuThue()));
 					alert.showAndWait();
 					loadTablePhieuThue();
-					loadTableHoaDon();
 				} else {
 					Alert alert = new Alert(AlertType.INFORMATION);
 					alert.setTitle("Lỗi");
@@ -1704,7 +1764,6 @@ public class MainController implements Initializable {
 				}
 			}
 		} catch (SQLException SQLException) {
-			SQLException.printStackTrace();
 			Alert alert = new Alert(AlertType.INFORMATION);
 			alert.setTitle("Lỗi");
 			alert.setHeaderText("Không thể xóa phiếu thuê!");
@@ -1758,13 +1817,19 @@ public class MainController implements Initializable {
 
 	public void handleThemPtpDichVu(ActionEvent e) {
 		try {
+			PTPhongDTO ptPhong = PTPhongBUS.getPTPhongById(Integer.parseInt(lbPhong_MaPTP.getText()));
+			if (dsHDPhong.stream().anyMatch(pt -> ptPhong.getMaPhong().equals(pt.getMaPhong()))) {
+				AlertHelper.showAlert("Lỗi", "Phòng thuộc hoá đơn thanh toán",
+						"Vui lòng xoá phòng khỏi danh sách hoá đơn để thêm dịch vụ!");
+				return;
+			}
+
 			String link = "/application/themPtpDichVu.fxml";
 			Stage popUpStage = PopUpStageHelper.createPopUpStage(link, 980, 460);
 			FXMLLoader loader = (FXMLLoader) popUpStage.getUserData();
 			ThemPtpDichVuController controller = loader.getController();
-			PTPhongDTO ptPhong = PTPhongBUS.getPTPhongById(Integer.parseInt(lbPhong_MaPTP.getText()));
 			controller.initialize(ptPhong);
-			popUpStage.getScene().setUserData(this);
+			popUpStage.getScene().setUserData(reloadTablePTP_DV);
 			popUpStage.showAndWait();
 		} catch (SQLException ex) {
 			Alert alert = new Alert(AlertType.INFORMATION);
@@ -1777,13 +1842,19 @@ public class MainController implements Initializable {
 
 	public void handleSuaPtpDichVu(ActionEvent e) {
 		try {
+			PtpDichVuDTO ptp_dv = tvPtpDichVu.getSelectionModel().getSelectedItem();
+			if (dsHDPhong.stream().anyMatch(pt -> ptp_dv.getPTPhong().getMaPhong().equals(pt.getMaPhong()))) {
+				AlertHelper.showAlert("Lỗi", "Phòng thuộc hoá đơn thanh toán",
+						"Vui lòng xoá phòng khỏi danh sách hoá đơn để sửa dịch vụ!");
+				return;
+			}
+			
 			String link = "/application/suaPtpDichVu.fxml";
 			Stage popUpStage = PopUpStageHelper.createPopUpStage(link, 500, 350);
 			FXMLLoader loader = (FXMLLoader) popUpStage.getUserData();
 			SuaPtpDichVuController controller = loader.getController();
-			PtpDichVuDTO ptp_dv = tvPtpDichVu.getSelectionModel().getSelectedItem();
 			controller.initialize(ptp_dv);
-			popUpStage.getScene().setUserData(this);
+			popUpStage.getScene().setUserData(reloadTablePTP_DV);
 			popUpStage.showAndWait();
 		} catch (NullPointerException ex) {
 			Alert alert = new Alert(AlertType.INFORMATION);
@@ -1796,13 +1867,19 @@ public class MainController implements Initializable {
 
 	public void handleXoaPtpDichVu(ActionEvent e) {
 		try {
-			PtpDichVuDTO ptpDichVu = tvPtpDichVu.getSelectionModel().getSelectedItem();
-			if (ConfirmDialogHelper.confirm("Xác nhận xoá dịch vụ " + ptpDichVu.getTenDichVu() + "?")) {
-				if (PtpDichVuBUS.deletePtpDichVu(ptpDichVu.getMaPTPDichVu())) {
+			PtpDichVuDTO ptp_dv = tvPtpDichVu.getSelectionModel().getSelectedItem();
+			if (dsHDPhong.stream().anyMatch(pt -> ptp_dv.getPTPhong().getMaPhong().equals(pt.getMaPhong()))) {
+				AlertHelper.showAlert("Lỗi", "Phòng thuộc hoá đơn thanh toán",
+						"Vui lòng xoá phòng khỏi danh sách hoá đơn để xoá dịch vụ!");
+				return;
+			}
+			
+			if (ConfirmDialogHelper.confirm("Xác nhận xoá dịch vụ " + ptp_dv.getTenDichVu() + "?")) {
+				if (PtpDichVuBUS.deletePtpDichVu(ptp_dv.getMaPTPDichVu())) {
 					Alert alert = new Alert(AlertType.INFORMATION);
 					alert.setTitle("Thành công");
 					alert.setHeaderText("Xóa loại dịch vụ thành công!");
-					alert.setContentText("Đã xóa dịch vụ " + ptpDichVu.getTenDichVu() + "!");
+					alert.setContentText("Đã xóa dịch vụ " + ptp_dv.getTenDichVu() + "!");
 					alert.showAndWait();
 					loadTablePTP_DV(Integer.parseInt(lbPhong_MaPTP.getText()));
 					loadTableDichVu();
@@ -1830,13 +1907,20 @@ public class MainController implements Initializable {
 
 	public void handleThemPtpPtck(ActionEvent e) {
 		try {
+			PTPhongDTO ptPhong = PTPhongBUS.getPTPhongById(Integer.parseInt(lbPhong_MaPTP.getText()));
+			if (dsHDPhong.stream().anyMatch(pt -> ptPhong.getMaPhong().equals(pt.getMaPhong()))) {
+				AlertHelper.showAlert("Lỗi", "Phòng thuộc hoá đơn thanh toán",
+						"Vui lòng xoá phòng khỏi danh sách hoá đơn để thêm ptck!");
+				return;
+			}
+			
 			String link = "/application/popupPtpPtck.fxml";
 			Stage popUpStage = PopUpStageHelper.createPopUpStage(link, 600, 560);
 			FXMLLoader loader = (FXMLLoader) popUpStage.getUserData();
 			PtpPtckController controller = loader.getController();
-			PTPhongDTO ptPhong = PTPhongBUS.getPTPhongById(Integer.parseInt(lbPhong_MaPTP.getText()));
+			
 			controller.initialize(ptPhong);
-			popUpStage.getScene().setUserData(this);
+			popUpStage.getScene().setUserData(reloadTablePTP_PTCK);
 			popUpStage.showAndWait();
 		} catch (SQLException ex) {
 			Alert alert = new Alert(AlertType.INFORMATION);
@@ -1849,13 +1933,19 @@ public class MainController implements Initializable {
 
 	public void handleSuaPtpPtck(ActionEvent e) {
 		try {
+			PtpPtckDTO ptck = tvPtpPTCK.getSelectionModel().getSelectedItem();
+			if (dsHDPhong.stream().anyMatch(pt -> ptck.getPTPhong().getMaPhong().equals(pt.getMaPhong()))) {
+				AlertHelper.showAlert("Lỗi", "Phòng thuộc hoá đơn thanh toán",
+						"Vui lòng xoá phòng khỏi danh sách hoá đơn để sửa ptck!");
+				return;
+			}
+			
 			String link = "/application/popupPtpPtck.fxml";
 			Stage popUpStage = PopUpStageHelper.createPopUpStage(link, 600, 560);
 			FXMLLoader loader = (FXMLLoader) popUpStage.getUserData();
 			PtpPtckController controller = loader.getController();
-			PtpPtckDTO ptck = tvPtpPTCK.getSelectionModel().getSelectedItem();
 			controller.initialize(ptck);
-			popUpStage.getScene().setUserData(this);
+			popUpStage.getScene().setUserData(reloadTablePTP_PTCK);
 			popUpStage.showAndWait();
 		} catch (NullPointerException ex) {
 			Alert alert = new Alert(AlertType.INFORMATION);
@@ -1869,6 +1959,12 @@ public class MainController implements Initializable {
 	public void handleXoaPtpPtck(ActionEvent e) {
 		try {
 			PtpPtckDTO ptpPtck = tvPtpPTCK.getSelectionModel().getSelectedItem();
+			if (dsHDPhong.stream().anyMatch(pt -> ptpPtck.getPTPhong().getMaPhong().equals(pt.getMaPhong()))) {
+				AlertHelper.showAlert("Lỗi", "Phòng thuộc hoá đơn thanh toán",
+						"Vui lòng xoá phòng khỏi danh sách hoá đơn để xoá ptck!");
+				return;
+			}
+			
 			if (ConfirmDialogHelper.confirm("Xác nhận xoá ptck: " + ptpPtck.getNoiDung() + "?")) {
 				if (PtpPtckBUS.deletePtpPtck(ptpPtck.getMaPTCKPhong())) {
 					Alert alert = new Alert(AlertType.INFORMATION);
@@ -1902,7 +1998,7 @@ public class MainController implements Initializable {
 	public void handleThemLoaiDichVu(ActionEvent e) {
 		String link = "/application/popupLoaiDichVu.fxml";
 		Stage popUpStage = PopUpStageHelper.createPopUpStage(link, 500, 250);
-		popUpStage.getScene().setUserData(this);
+		popUpStage.getScene().setUserData(reloadTableLoaiDichVu);
 		popUpStage.showAndWait();
 	}
 
@@ -1914,7 +2010,7 @@ public class MainController implements Initializable {
 			FXMLLoader loader = (FXMLLoader) popUpStage.getUserData();
 			LoaiDichVuController controller = loader.getController();
 			controller.initialize(loaiDichVu);
-			popUpStage.getScene().setUserData(this);
+			popUpStage.getScene().setUserData(reloadTableLoaiDichVu);
 			popUpStage.showAndWait();
 		} catch (NullPointerException ex) {
 			Alert alert = new Alert(AlertType.INFORMATION);
@@ -1964,7 +2060,7 @@ public class MainController implements Initializable {
 	public void handleThemLoaiPhong(ActionEvent e) {
 		String link = "/application/popupLoaiPhong.fxml";
 		Stage popUpStage = PopUpStageHelper.createPopUpStage(link, 540, 360);
-		popUpStage.getScene().setUserData(this);
+		popUpStage.getScene().setUserData(reloadTableLoaiPhong);
 		popUpStage.showAndWait();
 	}
 
@@ -1976,7 +2072,7 @@ public class MainController implements Initializable {
 			FXMLLoader loader = (FXMLLoader) popUpStage.getUserData();
 			LoaiPhongController controller = loader.getController();
 			controller.initialize(loaiPhong);
-			popUpStage.getScene().setUserData(this);
+			popUpStage.getScene().setUserData(reloadTableLoaiPhong);
 			popUpStage.showAndWait();
 		} catch (NullPointerException ex) {
 			Alert alert = new Alert(AlertType.INFORMATION);
@@ -1992,14 +2088,13 @@ public class MainController implements Initializable {
 			LoaiPhongDTO loaiPhong = tvLoaiPhong.getSelectionModel().getSelectedItem();
 			if (ConfirmDialogHelper.confirm("Xác nhận xóa loại phòng " + loaiPhong.getTenLoaiPhong() + "?")) {
 				try {
-					if (LoaiPhongBUS.deleteLoaiPhong(loaiPhong.getMaLoaiPhong())) {
+					if (LoaiPhongBUS.deleteLoaiPhong(loaiPhong)) {
 						Alert alert = new Alert(AlertType.INFORMATION);
 						alert.setTitle("Thành công");
 						alert.setHeaderText("Xóa loại phòng thành công!");
 						alert.setContentText("Đã xóa loại phòng " + loaiPhong.getTenLoaiPhong() + "!");
 						alert.showAndWait();
-						loadTableLoaiPhong();
-						loadComboboxes();
+						reloadTableLoaiPhong.run();
 					} else {
 						Alert alert = new Alert(AlertType.INFORMATION);
 						alert.setTitle("Lỗi");
@@ -2027,7 +2122,7 @@ public class MainController implements Initializable {
 	public void handleThemNhaCungCap(ActionEvent e) {
 		String link = "/application/popupNhaCungCap.fxml";
 		Stage popUpStage = PopUpStageHelper.createPopUpStage(link, 520, 320);
-		popUpStage.getScene().setUserData(this);
+		popUpStage.getScene().setUserData(reloadTableNhaCungCap);
 		popUpStage.showAndWait();
 	}
 
@@ -2039,7 +2134,7 @@ public class MainController implements Initializable {
 			FXMLLoader loader = (FXMLLoader) popUpStage.getUserData();
 			NhaCungCapController controller = loader.getController();
 			controller.initialize(nhaCungCap);
-			popUpStage.getScene().setUserData(this);
+			popUpStage.getScene().setUserData(reloadTableNhaCungCap);
 			popUpStage.showAndWait();
 		} catch (NullPointerException ex) {
 			Alert alert = new Alert(AlertType.INFORMATION);
@@ -2082,7 +2177,7 @@ public class MainController implements Initializable {
 		try {
 			String link = "/application/popupThamSo.fxml";
 			Stage popUpStage = PopUpStageHelper.createPopUpStage(link, 450, 300);
-			popUpStage.getScene().setUserData(this);
+			popUpStage.getScene().setUserData(reloadTableThamSo);
 			FXMLLoader loader = (FXMLLoader) popUpStage.getUserData();
 			ThamSoController controller = loader.getController();
 			ThamSoDTO thamSo = ThamSoBUS.getThamSo();
@@ -2100,7 +2195,7 @@ public class MainController implements Initializable {
 	public void handleThemPhong(ActionEvent e) {
 		String link = "/application/popupPhong.fxml";
 		Stage popUpStage = PopUpStageHelper.createPopUpStage(link, 480, 530);
-		popUpStage.getScene().setUserData(this);
+		popUpStage.getScene().setUserData(reloadTablePhong);
 		popUpStage.showAndWait();
 	}
 
@@ -2112,7 +2207,7 @@ public class MainController implements Initializable {
 			FXMLLoader loader = (FXMLLoader) popUpStage.getUserData();
 			PhongController controller = loader.getController();
 			controller.initialize(phong);
-			popUpStage.getScene().setUserData(this);
+			popUpStage.getScene().setUserData(reloadTablePhong);
 			popUpStage.showAndWait();
 		} catch (SQLException ex) {
 			Alert alert = new Alert(AlertType.INFORMATION);
@@ -2133,8 +2228,7 @@ public class MainController implements Initializable {
 					alert.setHeaderText("Xóa loại phòng thành công!");
 					alert.setContentText("Đã xóa phòng " + maPhong + "!");
 					alert.showAndWait();
-					loadTablePhong();
-					handleTraCuuPhong();
+					reloadTablePhong.run();
 				} else {
 					Alert alert = new Alert(AlertType.INFORMATION);
 					alert.setTitle("Thất bại");
@@ -2146,6 +2240,31 @@ public class MainController implements Initializable {
 			Alert alert = new Alert(AlertType.INFORMATION);
 			alert.setTitle("Thất bại");
 			alert.setHeaderText("Xóa phòng thất bại!");
+			alert.setContentText("Lỗi database!");
+			alert.showAndWait();
+		}
+	}
+
+	public void handleDoiPhong() {
+		try {
+			PTPhongDTO ptp = PTPhongBUS.getPTPhongById(Integer.valueOf(lbPhong_MaPTP.getText()));
+			if (dsHDPhong.stream().anyMatch(pt -> ptp.getMaPhong().equals(pt.getMaPhong()))) {
+				AlertHelper.showAlert("Lỗi", "Phòng thuộc hoá đơn thanh toán",
+						"Vui lòng xoá phòng khỏi danh sách hoá đơn để đổi phòng!");
+				return;
+			}
+			
+			String link = "/application/popupDoiPhong.fxml";
+			Stage popUpStage = PopUpStageHelper.createPopUpStage(link, 460, 420);
+			FXMLLoader loader = (FXMLLoader) popUpStage.getUserData();
+			DoiPhongController controller = loader.getController();
+			controller.initialize(ptp);
+			popUpStage.getScene().setUserData(reloadTablePhong);
+			popUpStage.showAndWait();
+		} catch (SQLException ex) {
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Lỗi");
+			alert.setHeaderText("Không thể sửa phòng số!");
 			alert.setContentText("Lỗi database!");
 			alert.showAndWait();
 		}
@@ -2204,7 +2323,6 @@ public class MainController implements Initializable {
 			barChart.getData().add(series);
 			bpTK_LuongKhach.setCenter(barChart);
 		} catch (SQLException ex) {
-			ex.printStackTrace();
 			Alert alert = new Alert(AlertType.INFORMATION);
 			alert.setTitle("Thất bại");
 			alert.setHeaderText("Không thể xem báo cáo lượng khách!");
@@ -2236,6 +2354,7 @@ public class MainController implements Initializable {
 			barChart.getData().add(series);
 			bpTK_LoaiPhong.setCenter(barChart);
 		} catch (SQLException ex) {
+			ex.printStackTrace();
 			Alert alert = new Alert(AlertType.INFORMATION);
 			alert.setTitle("Thất bại");
 			alert.setHeaderText("Không thể xem báo cáo loại phòng theo tháng!");
@@ -2277,13 +2396,19 @@ public class MainController implements Initializable {
 
 	public void handleThemKhach(ActionEvent e) {
 		try {
+			PTPhongDTO ptPhong = PTPhongBUS.getPTPhongById(Integer.valueOf(lbPhong_MaPTP.getText()));
+			if (dsHDPhong.stream().anyMatch(pt -> ptPhong.getMaPhong().equals(pt.getMaPhong()))) {
+				AlertHelper.showAlert("Lỗi", "Phòng thuộc hoá đơn thanh toán",
+						"Vui lòng xoá phòng khỏi danh sách hoá đơn để thêm khách!");
+				return;
+			}
+			
 			String link = "/application/popupKhach.fxml";
 			Stage popUpStage = PopUpStageHelper.createPopUpStage(link, 480, 530);
 			FXMLLoader loader = (FXMLLoader) popUpStage.getUserData();
 			KhachController controller = loader.getController();
-			PTPhongDTO ptPhong = PTPhongBUS.getPTPhongById(Integer.valueOf(lbPhong_MaPTP.getText()));
 			controller.initialize(ptPhong);
-			popUpStage.getScene().setUserData(this);
+			popUpStage.getScene().setUserData(reloadTableKhach);
 			popUpStage.showAndWait();
 		} catch (SQLException ex) {
 			Alert alert = new Alert(AlertType.INFORMATION);
@@ -2296,13 +2421,19 @@ public class MainController implements Initializable {
 
 	public void handleSuaKhach(ActionEvent e) {
 		try {
+			KhachDTO khach = tvKhach.getSelectionModel().getSelectedItem();
+			if (dsHDPhong.stream().anyMatch(pt -> khach.getPTPhong().getMaPhong().equals(pt.getMaPhong()))) {
+				AlertHelper.showAlert("Lỗi", "Phòng thuộc hoá đơn thanh toán",
+						"Vui lòng xoá phòng khỏi danh sách hoá đơn để sửa khách!");
+				return;
+			}
+			
 			String link = "/application/popupKhach.fxml";
 			Stage popUpStage = PopUpStageHelper.createPopUpStage(link, 480, 530);
 			FXMLLoader loader = (FXMLLoader) popUpStage.getUserData();
 			KhachController controller = loader.getController();
-			KhachDTO khach = tvKhach.getSelectionModel().getSelectedItem();
 			controller.initialize(khach);
-			popUpStage.getScene().setUserData(this);
+			popUpStage.getScene().setUserData(reloadTableKhach);
 			popUpStage.showAndWait();
 		} catch (NullPointerException ex) {
 			Alert alert = new Alert(AlertType.INFORMATION);
@@ -2316,6 +2447,12 @@ public class MainController implements Initializable {
 	public void handleXoaKhach(ActionEvent e) {
 		try {
 			KhachDTO khach = tvKhach.getSelectionModel().getSelectedItem();
+			if (dsHDPhong.stream().anyMatch(pt -> khach.getPTPhong().getMaPhong().equals(pt.getMaPhong()))) {
+				AlertHelper.showAlert("Lỗi", "Phòng thuộc hoá đơn thanh toán",
+						"Vui lòng xoá phòng khỏi danh sách hoá đơn để xoá khách!");
+				return;
+			}
+			
 			if (ConfirmDialogHelper.confirm("Xác nhận xoá khách " + khach.getHoTen() + "?")) {
 				if (KhachBUS.deleteKhach(khach.getMaKhachHang())) {
 					Alert alert = new Alert(AlertType.INFORMATION);
@@ -2521,7 +2658,6 @@ public class MainController implements Initializable {
 					alert.setHeaderText("Xóa hoá đơn thành công!");
 					alert.setContentText(String.format("Đã xoá thành công hoá đơn %s.", hoaDon.getMaHoaDon()));
 					alert.showAndWait();
-					loadTablePhieuThue();
 					loadTableHoaDon();
 				} else {
 					Alert alert = new Alert(AlertType.INFORMATION);
@@ -2549,7 +2685,7 @@ public class MainController implements Initializable {
 	public void handleThemHDPtck(ActionEvent e) {
 		String link = "/application/popupHDPtck.fxml";
 		Stage popUpStage = PopUpStageHelper.createPopUpStage(link, 550, 380);
-		popUpStage.getScene().setUserData(this);
+		popUpStage.getScene().setUserData(insertHDPtck);
 		popUpStage.showAndWait();
 	}
 
@@ -2733,7 +2869,6 @@ public class MainController implements Initializable {
 			HoaDonDTO hoaDon = tvHoaDon.getSelectionModel().getSelectedItem();
 			String link = "/application/popupHoaDon.fxml";
 			Stage popUpStage = PopUpStageHelper.createPopUpStage(link, 1180, 750);
-			popUpStage.getScene().setUserData(this);
 			FXMLLoader loader = (FXMLLoader) popUpStage.getUserData();
 			HoaDonController controller = loader.getController();
 			controller.initialize(hoaDon);
@@ -2769,7 +2904,6 @@ public class MainController implements Initializable {
 
 			PDFCreateHelper.createDoanhThuNamPDF(snTK_DoanhThu.getValue(), CTBC, tongDoanhThu);
 		} catch (Exception ex) {
-			ex.printStackTrace();
 			Alert alert = new Alert(AlertType.INFORMATION);
 			alert.setTitle("Thất bại");
 			alert.setHeaderText("Không thể xuất báo cáo!");
@@ -2795,7 +2929,6 @@ public class MainController implements Initializable {
 
 			PDFCreateHelper.createSoKhachNamPDF(snTK_DoanhThu.getValue(), CTBC, tongSoKhach);
 		} catch (Exception ex) {
-			ex.printStackTrace();
 			Alert alert = new Alert(AlertType.INFORMATION);
 			alert.setTitle("Thất bại");
 			alert.setHeaderText("Không thể xuất báo cáo!");
@@ -2824,7 +2957,6 @@ public class MainController implements Initializable {
 
 			PDFCreateHelper.createLoaiPhongThangPDF(thang, nam, CTBC, tongDoanhThu);
 		} catch (Exception ex) {
-			ex.printStackTrace();
 			Alert alert = new Alert(AlertType.INFORMATION);
 			alert.setTitle("Thất bại");
 			alert.setHeaderText("Không thể xuất báo cáo!");
@@ -2853,7 +2985,6 @@ public class MainController implements Initializable {
 
 			PDFCreateHelper.createLoaiDichVuPDF(thang, nam, CTBC, tongDoanhThu);
 		} catch (Exception ex) {
-			ex.printStackTrace();
 			Alert alert = new Alert(AlertType.INFORMATION);
 			alert.setTitle("Thất bại");
 			alert.setHeaderText("Không thể xuất báo cáo!");
