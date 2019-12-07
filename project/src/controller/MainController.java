@@ -2918,16 +2918,16 @@ public class MainController implements Initializable {
 			String[] firstRowValue = { "Tháng", "Số khách", "Tỉ lệ (%)" };
 			CTBC.add(new ArrayList<String>(Arrays.asList(firstRowValue)));
 
-			Integer tongSoKhach = ThongKeBUS.getSoKhachTheoNam(snTK_DoanhThu.getValue()).stream()
+			Integer tongSoKhach = ThongKeBUS.getSoKhachTheoNam(snTK_LuongKhach.getValue()).stream()
 					.mapToInt(ThongKeSoKhachDTO::getSoKhach).sum();
 
-			ThongKeBUS.getSoKhachTheoNam(snTK_DoanhThu.getValue()).stream().forEach(bc -> {
+			ThongKeBUS.getSoKhachTheoNam(snTK_LuongKhach.getValue()).stream().forEach(bc -> {
 				String[] rowValue = { bc.getThang().toString(), bc.getSoKhach().toString(),
 						String.format("%.2f", bc.getTiLe()) };
 				CTBC.add(new ArrayList<String>(Arrays.asList(rowValue)));
 			});
 
-			PDFCreateHelper.createSoKhachNamPDF(snTK_DoanhThu.getValue(), CTBC, tongSoKhach);
+			PDFCreateHelper.createSoKhachNamPDF(snTK_LuongKhach.getValue(), CTBC, tongSoKhach);
 		} catch (Exception ex) {
 			Alert alert = new Alert(AlertType.INFORMATION);
 			alert.setTitle("Thất bại");

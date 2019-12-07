@@ -1,6 +1,5 @@
 eclipse.preferences.version=1
 encoding//src/DTO/PhieuThueDTO.java=UTF-8
-encoding//src/application/Main.java=UTF-8
 encoding//src/controller/CTHDController.java=UTF-8
 encoding//src/controller/DichVuController.java=UTF-8
 encoding//src/controller/HDPtckController.java=UTF-8
@@ -23,3 +22,4 @@ encoding//src/controller/ptpdv/SuaPtpDichVuController.java=UTF-8
 encoding//src/controller/ptpdv/ThemPtpDichVuController.java=UTF-8
 encoding//src/helper/ConfirmDialogHelper.java=UTF-8
 encoding//src/helper/PopUpStageHelper.java=UTF-8
+encoding/<project>=UTF-8

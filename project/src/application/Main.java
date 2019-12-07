@@ -28,7 +28,7 @@ public class Main extends Application {
 		} catch (ClassNotFoundException e) {
 			Alert alert = new Alert(AlertType.ERROR);
 			alert.setTitle("Lỗi");
-			alert.setHeaderText("Không thể mở CSDL!");
+			alert.setHeaderText("Lỗi kết nối CSDL!");
 			alert.showAndWait();
 		}
 		launch(args);

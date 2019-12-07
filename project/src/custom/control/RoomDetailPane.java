@@ -14,7 +14,7 @@ public class RoomDetailPane extends BorderPane {
 	private String maPhong;
 	
 	public RoomDetailPane(String maPhong) {
-		File file = new File("src/application/room.png");	
+		File file = new File("room.png");	
 		ImageView imgView = new ImageView();
 		imgView.setImage(new Image(file.toURI().toString()));
 		imgView.setFitWidth(75);
